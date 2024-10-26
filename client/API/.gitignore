@@ -1,0 +1,6 @@
+# Ignore environment variables file
+.env
+/.env
+
+# Ignore instructions file
+/instructions.txt
