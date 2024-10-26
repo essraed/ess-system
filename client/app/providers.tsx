@@ -22,9 +22,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     initializeUserAndLanguageSettings(userStore);
   }, [userStore]);
 
-
-  // if (!userStore.appLoaded) return <LoadingComponent />
-
   return (
     <NextUIProvider>
       <StoreContext.Provider value={store}>

@@ -1,0 +1,33 @@
+/* sidebar.css */
+
+/* Common styles for the sidebar */
+.sidebar {
+    /* Common styles */
+  }
+  
+  /* Styles specifically for RTL direction */
+  :dir(rtl) .sidebar {
+    margin-right: 0; /* Adjust margins */
+    margin-left: auto; /* Adjust margins */
+  }
+  
+  /* Styles specifically for LTR direction */
+  :dir(ltr) .sidebar {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  /* Additional styles */
+  .sidebar-item {
+    text-align: right; /* Example for RTL alignment */
+  }
+  
+  .sidebar-footer {
+    flex-direction: row-reverse; /* Reverse order for RTL */
+  }
+  
+  /* Transition and animation styles */
+  .transition {
+    transition: all 0.3s ease;
+  }
+  
