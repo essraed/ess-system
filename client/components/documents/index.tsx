@@ -97,36 +97,16 @@ const Documents = () => {
   if (!documents) return <LoadingComponent />;
 
   return (
-    <div className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
-      {/* <ul className="flex">
-        <li className="flex gap-2">
-          <HouseIcon />
-          <Link href={"/"}>
-            <span>Home</span>
-          </Link>
-          <span> / </span>{" "}
-        </li>
-
-        <li className="flex gap-2">
-          <UsersIcon />
-          <span>Documents</span>
-          <span> / </span>{" "}
-        </li>
-        <li className="flex gap-2">
-          <span>List</span>
-        </li>
-      </ul> */}
-
+    <div className="my-5 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
       <h3 className="text-xl font-semibold">{t ('All')} {t ('Documents')}</h3>
-
       <div className="flex flex-col gap-5">
         <div>
-          {userStore.isAdmin() && <DocumentFilter pageSize={pageSize} />}
+          <DocumentFilter pageSize={pageSize} />
         </div>
         <div className="flex flex-row justify-between">
           <div className="flex items-center gap-2 w-2/6">
             <div className="w-full">
-              <Input
+              <Input radius="none"
                 placeholder={t("Search...")}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => {
@@ -136,11 +116,11 @@ const Documents = () => {
                 }}
               />
             </div>
-            <Button onClick={handleReset} variant="bordered">
+            <Button onClick={handleReset} variant="bordered" radius="none">
               <GrPowerReset size={20} />
             </Button>
           </div>
-          <Button as={Link} href="/documents/create" color="primary">
+          <Button as={Link} href="/documents/create" color="primary" radius="none">
             <IoMdAddCircleOutline size={24} />
             {t("Add new document")}
           </Button>
@@ -159,7 +139,7 @@ const Documents = () => {
         <div>
           {pagination && (
             <div dir="ltr" className="flex w-full justify-center">
-              <Pagination
+              <Pagination radius="none"
                 isCompact
                 showControls
                 showShadow

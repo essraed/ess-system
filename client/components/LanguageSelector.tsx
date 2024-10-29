@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/stores/store";
+import { GrLanguage } from "react-icons/gr";
 
 const LanguageSwitcher = () => {
   const { t } = useTranslation();
@@ -34,9 +35,11 @@ const LanguageSwitcher = () => {
   
 
   return (
-    <Dropdown>
+    <Dropdown radius="none">
       <DropdownTrigger>
-        <span className="text-3xl cursor-pointer">🌐</span>
+        <span className="text-3xl cursor-pointer text-slate-800">
+        <GrLanguage size={30} />
+        </span>
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Page size options"

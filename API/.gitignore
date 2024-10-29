@@ -1,31 +1,35 @@
-# ASP.NET Core specific
+# Ignore build output directories
 bin/
 obj/
-*.db
-*.mdf
-*.ldf
 
-# Visual Studio files
-.vs/
-.vscode/
-.idea/
-*.suo
+# Ignore user-specific files and configuration
 *.user
+*.suo
 *.userosscache
 *.sln.docstates
 
-# Configuration files
-appsettings*.json
+# Ignore environment and secrets files
+.env
+appsettings.*.json  # e.g., appsettings.Development.json, appsettings.Production.json
+appsettings.local.json  # Optional local override
 
-# Temporary files
+# Ignore Docker-related files
+docker-compose.override.yml  # If you use an override file for local dev settings
+Dockerfile.*
+
+# Ignore IDE-specific settings (e.g., VS Code and Visual Studio)
+.vscode/
+.vs/
+.idea/
+
+# Ignore dependency and package files created by .NET
+*.lock.json
+*.nupkg
+*.snupkg
+
+# Ignore crash and error logs
 *.log
-logs/
-*.pid
-*.swo
-*.swp
-*.tmp
-*.bak
 
-# OS generated files
-.DS_Store
+# Ignore OS-specific files
 Thumbs.db
+.DS_Store

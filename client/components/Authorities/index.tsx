@@ -28,6 +28,7 @@ import ConfirmationDialogComponent from "@/components/ConfirmationDialogComponen
 import AddAuthorityForm from "./AddAuthorityForm";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import PaginationComponent from "../PaginationComponent";
+import AuthoritiesTable from "./AuthoritiesTable";
 
 const Authorities = () => {
   const { t } = useTranslation();
@@ -100,12 +101,15 @@ const Authorities = () => {
   if (!authorities) return <LoadingComponent />;
 
   return (
-    <div className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4">
+    <div
+      className="my-10 px-4 lg:px-6 max-w-[95rem] mx-auto w-full flex flex-col gap-4 rounded-none"
+      style={{ borderRadius: "0 !important" }}
+    >
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
-          <AddAuthorityForm />
           <div className="flex items-center gap-2 w-2/6">
             <Input
+              radius="none"
               placeholder={t("Search...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -115,66 +119,24 @@ const Authorities = () => {
                 }
               }}
             />
-            <Button onClick={handleReset} variant="bordered">
+            <Button onClick={handleReset} variant="bordered" radius="none">
               <GrPowerReset size={20} />
             </Button>
           </div>
+          <AddAuthorityForm />
         </div>
       </div>
 
-      <Table aria-label="Authorities table">
-        <TableHeader>
-          <TableColumn>{t("Name")}</TableColumn>
-          <TableColumn>{t("Last Update")}</TableColumn>
-          <TableColumn>{t("Updated By")}</TableColumn>
-          <TableColumn>{t("Actions")}</TableColumn>
-        </TableHeader>
-        <TableBody items={authorities ?? []}>
-          {(authority) => (
-            <TableRow key={authority.id}>
-              <TableCell>{authority.name}</TableCell>
-              <TableCell className="w-2/12">
-                <div>
-                  <span>
-                    {formatDateTime(
-                      authority.updateDate?.toString() ||
-                      authority.createDate?.toString()
-                    ).date}
-                  </span>
-                  <br />
-                  <span>
-                    {formatDateTime(
-                      authority.updateDate?.toString() ||
-                      authority.createDate?.toString()
-                    ).time}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell>
-                {authority.updatedByName || authority.createdByName}
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-2 justify-center">
-                  <Button
-                   variant="light"
-                    onPress={() => confirmDelete(authority.id)}
-                    color="danger"
-                    title={ t ("Delete")}
-                  >
-                    <DeleteIcon size={20} fill="#FF0080" />
-                  </Button>
-                </div>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      <AuthoritiesTable
+        authorities={authorities}
+        confirmDelete={confirmDelete}
+      />
 
       <div className="flex items-center justify-between">
         <div>
           {pagination && (
             <div dir="ltr" className="flex w-full justify-center">
-              <Pagination
+              <Pagination radius="none"
                 isCompact
                 showControls
                 showShadow
@@ -187,7 +149,10 @@ const Authorities = () => {
           )}
         </div>
         <div>
-        <PaginationComponent handlePageSizeChange={handlePageSizeChange} pageSize={pageSize} />
+          <PaginationComponent
+            handlePageSizeChange={handlePageSizeChange}
+            pageSize={pageSize}
+          />
         </div>
       </div>
 

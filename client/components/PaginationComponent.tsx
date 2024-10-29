@@ -16,9 +16,9 @@ type Props = {
 const PaginationComponent = ({ handlePageSizeChange, pageSize }: Props) => {
   const { t } = useTranslation();
   return (
-    <Dropdown>
+    <Dropdown radius="none">
       <DropdownTrigger>
-        <Button>
+        <Button radius="none">
           {t("Page Size")}: {pageSize}
         </Button>
       </DropdownTrigger>

@@ -26,7 +26,7 @@ const UserDropdown = () => {
   }, [router]);
 
   return (
-    <Dropdown>
+    <Dropdown radius="none">
       <NavbarItem>
         <DropdownTrigger>
           <Avatar

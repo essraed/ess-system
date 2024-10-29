@@ -16,7 +16,6 @@ import {
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { DocumentModel } from "@/types/Document";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { formatDateTime } from "@/lib/utils";
 import { VerticalDotsIcon } from "../icons/table/VerticalDotsIcon";
 
@@ -39,17 +38,31 @@ const DocumentsTable = ({
   };
 
   return (
-    <Table aria-label="Documents table">
+    <Table aria-label="Documents table" radius="none">
       <TableHeader>
-        <TableColumn>{t("Brief")}</TableColumn>
-        {/* <TableColumn>{t("AI Result")}</TableColumn> */}
-        <TableColumn>{t("Last Update")}</TableColumn>
-        <TableColumn>{t("Update By")}</TableColumn>
-        <TableColumn>{t("Actions")}</TableColumn>
+        <TableColumn className="text-zinc-900 font-bold bg-white dark:bg-zinc-900 dark:text-white border-b-2">
+          {t("Brief")}
+        </TableColumn>
+        <TableColumn className="text-zinc-900 font-bold bg-white dark:bg-zinc-900 dark:text-white border-b-2">
+          {t("Last Update")}
+        </TableColumn>
+        <TableColumn className="text-zinc-900 font-bold bg-white dark:bg-zinc-900 dark:text-white border-b-2">
+          {t("Update By")}
+        </TableColumn>
+        <TableColumn className="text-zinc-900 font-bold bg-white dark:bg-zinc-900 dark:text-white border-b-2">
+          {t("Actions")}
+        </TableColumn>
       </TableHeader>
       <TableBody items={documents}>
         {(document) => (
-          <TableRow key={document.id}>
+          <TableRow
+            key={document.id}
+            className={`${
+              documents[documents.length - 1].id === document.id
+                ? ""
+                : "border-b"
+            }`}
+          >
             <TableCell>{document.brief}</TableCell>
             <TableCell>
               {document.updatedByName ? (
@@ -72,14 +85,17 @@ const DocumentsTable = ({
             </TableCell>
             <TableCell>
               <div className="relative flex justify-end items-center gap-2">
-                <Dropdown className="bg-background border-1 border-default-200">
+                <Dropdown
+                  radius="none"
+                  className="bg-background border-1 border-default-200"
+                >
                   <DropdownTrigger>
                     <Button isIconOnly radius="full" size="sm" variant="light">
                       <VerticalDotsIcon className="text-default-400" />
                     </Button>
                   </DropdownTrigger>
                   <DropdownMenu>
-                    <DropdownItem>
+                    <DropdownItem color="primary">
                       <Link
                         href={`/documents/details/${document.id}`}
                         className="flex items-center py-2"
@@ -87,7 +103,7 @@ const DocumentsTable = ({
                         {t("View")}
                       </Link>
                     </DropdownItem>
-                    <DropdownItem>
+                    <DropdownItem color="primary">
                       <Link
                         href={`/documents/update/${document.id}`}
                         className="flex items-center py-2"
@@ -95,7 +111,7 @@ const DocumentsTable = ({
                         {t("Edit")}
                       </Link>
                     </DropdownItem>
-                    <DropdownItem>
+                    <DropdownItem color="danger">
                       <Link
                         onClick={() => confirmDelete(document.id)}
                         className="flex items-center py-2"

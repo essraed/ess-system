@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@media print {
+:root {
+  --font-cairo: 'Cairo', sans-serif;
+}
 
+@media print {
   nav,
   header,
   button {
@@ -20,22 +23,28 @@
   }
 
   html,
-body {
-  padding: 0;
-  margin: 0;
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-cairo);
+    border-radius: none !important;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
-}
-
-html[lang='ar'] {
+html[lang="ar"] {
   direction: rtl;
   text-align: right;
 }
 
-html[lang='en'] {
+html[lang="en"] {
   direction: ltr;
   text-align: left;
+}
+
+.border-start-start-radius {
+  border-radius: 0 !important;
 }

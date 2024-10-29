@@ -15,7 +15,7 @@ const ConfirmationDialogComponent = ({ isOpen, onClose, onConfirm, title, descri
   const { t } = useTranslation();
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} radius='none'>
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
         <ModalBody>{description}</ModalBody>

@@ -19,27 +19,27 @@ namespace API.Extensions
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddDbContext<DataContext>(option =>
+            services.AddDbContext<DataContext>(options =>
             {
-                option.UseSqlServer(config.GetConnectionString("app-conn"));
+                options.UseSqlServer(config.GetConnectionString("app-conn"));
             });
 
             // Add Hangfire services.
-            services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(config.GetConnectionString("app-conn"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(10),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(10),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
-                    CommandTimeout = TimeSpan.FromMinutes(10),
-                }));
+            // services.AddHangfire(configuration => configuration
+            //     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            //     .UseSimpleAssemblyNameTypeSerializer()
+            //     .UseRecommendedSerializerSettings()
+            //     .UseSqlServerStorage(config.GetConnectionString("app-conn"), new SqlServerStorageOptions
+            //     {
+            //         CommandBatchMaxTimeout = TimeSpan.FromMinutes(10),
+            //         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(10),
+            //         QueuePollInterval = TimeSpan.Zero,
+            //         UseRecommendedIsolationLevel = true,
+            //         DisableGlobalLocks = true,
+            //         CommandTimeout = TimeSpan.FromMinutes(10),
+            //     }));
 
-            services.AddHangfireServer();
+            // services.AddHangfireServer();
 
             services.AddMvc();
 
@@ -62,11 +62,11 @@ namespace API.Extensions
             services.AddScoped<EmailService>();
             services.AddScoped<FileService>();
 
-            
+
 
             // Report services
             services.AddWkhtmltopdf("wkhtmltopdf");
-            
+
 
 
             return services;

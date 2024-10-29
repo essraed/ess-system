@@ -72,20 +72,20 @@ const DocumentFilter = ({ pageSize }: Props) => {
 
   return (
     <div className="flex items-center gap-2 justify-between">
-      <Input
+      <Input radius="none"
         type="date"
         value={fromDate}
         onChange={(e) => handleFromDateChange(e)}
         label={t("From Date")}
       />
-      <Input
+      <Input radius="none"
         type="date"
         value={toDate}
         onChange={(e) => handleToDateChange(e)}
         label={t("To Date")}
       />
 
-      <Autocomplete
+      <Autocomplete radius="none"
         label={t("Users List")}
         placeholder={t("Search an user")}
         defaultItems={usersIdName}
@@ -98,7 +98,7 @@ const DocumentFilter = ({ pageSize }: Props) => {
         )}
       </Autocomplete>
 
-      <Autocomplete
+      <Autocomplete radius="none"
         label={t("External Authority")} // Translate "External Authority"
         placeholder={t("Search an authority")} // Translate "Search an authority"
         defaultItems={authoritiesForDropdown ?? []}

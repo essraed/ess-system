@@ -40,7 +40,7 @@ const AddAuthorityForm = () => {
 
   return (
     <>
-      <Button onPress={() => handleModalOpen()} color="primary">
+      <Button onPress={() => handleModalOpen()} color="primary" radius="none">
         <IoMdAddCircleOutline size={24} />
         {t('Add New Authority')}
       </Button>

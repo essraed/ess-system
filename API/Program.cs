@@ -40,9 +40,9 @@ app.UseRouting();
 
 app.UseStaticFiles();
 
-app.UseHangfireDashboard("/dashboard");
+// app.UseHangfireDashboard("/dashboard");
 
-RecurringJob.AddOrUpdate("write-hello-job", () => Console.WriteLine("Hello"), "*/30 * * * * *");
+// RecurringJob.AddOrUpdate("write-hello-job", () => Console.WriteLine("Hello"), "*/30 * * * * *");
 
 
 // app.UseHangfireDashboard("/dashboard", new DashboardOptions { 

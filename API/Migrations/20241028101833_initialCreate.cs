@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,38 +49,6 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Documents",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Brief = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    AiResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Documents", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Mails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ToEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Mails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,6 +157,96 @@ namespace API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Authorities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Authorities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Authorities_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Authorities_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ToEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Mails_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Mails_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Documents",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AiResult = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Documents_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Documents_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Documents_Authorities_AuthorityId",
+                        column: x => x.AuthorityId,
+                        principalTable: "Authorities",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -226,6 +285,41 @@ namespace API.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authorities_CreatedById",
+                table: "Authorities",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authorities_UpdatedById",
+                table: "Authorities",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Documents_AuthorityId",
+                table: "Documents",
+                column: "AuthorityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Documents_CreatedById",
+                table: "Documents",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Documents_UpdatedById",
+                table: "Documents",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mails_CreatedById",
+                table: "Mails",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mails_UpdatedById",
+                table: "Mails",
+                column: "UpdatedById");
         }
 
         /// <inheritdoc />
@@ -254,6 +348,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Authorities");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
-import { fontSans } from "@/config/fonts";
 import clsx from "clsx";
+import { fontCairo } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: "Next.js",
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={clsx("font-sans antialiased", fontSans.className)}>
+      <body className={`mx-5 w-auto ${clsx("font-cairo antialiased", fontCairo.className)}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

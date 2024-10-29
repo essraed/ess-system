@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React from "react";
 import { Sidebar } from "./sidebar.styles";
 import { Avatar, Tooltip } from "@nextui-org/react";
@@ -11,6 +11,8 @@ import { SidebarMenu } from "./sidebar-menu";
 import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 const SidebarWrapper = () => {
@@ -19,15 +21,22 @@ const SidebarWrapper = () => {
   const { t } = useTranslation();
 
   return (
-    <aside className="h-screen z-[20] sticky top-0" dir={collapsed ? 'rtl' : 'ltr'}>
+    <aside className="h-screen z-[20] sticky top-0">
       {collapsed ? (
         <div className={Sidebar.Overlay()} onClick={setCollapsed} />
       ) : null}
-      <div className={Sidebar({ collapsed })}>
+      <div
+        className={Sidebar({
+          collapsed: collapsed,
+        })}
+      >
+        <Link href='/' className={Sidebar.Header()}>
+          <Image src="/logo.png" width={300} height={40} alt="logo" />
+        </Link>
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
             <SidebarItem
-              title={t('Home')}
+              title={ t ('Home')}
               icon={<HomeIcon />}
               isActive={pathname === "/"}
               href="/"
@@ -45,12 +54,36 @@ const SidebarWrapper = () => {
                 icon={<AccountsIcon />}
                 href="/authority"
               />
+              {/* <CollapseItems
+                icon={<BalanceIcon />}
+                items={["Banks Accounts", "Credit Cards", "Loans"]}
+                title="Balances"
+              /> */}
+
               <SidebarItem
                 isActive={pathname === "/reports"}
                 title={t("Reports")}
                 icon={<ReportsIcon />}
               />
             </SidebarMenu>
+
+            {/* <SidebarMenu title="General">
+              <SidebarItem
+                isActive={pathname === "/developers"}
+                title="Developers"
+                icon={<DevIcon />}
+              />
+              <SidebarItem
+                isActive={pathname === "/view"}
+                title="View Test Data"
+                icon={<ViewIcon />}
+              />
+              <SidebarItem
+                isActive={pathname === "/settings"}
+                title="Settings"
+                icon={<SettingsIcon />}
+              />
+            </SidebarMenu> */}
           </div>
           <div className={Sidebar.Footer()}>
             <Tooltip content={"Settings"} color="primary">
@@ -76,4 +109,4 @@ const SidebarWrapper = () => {
   );
 };
 
-export default SidebarWrapper;
+export default SidebarWrapper

@@ -2,19 +2,21 @@
 using API.DTOs;
 using API.Interfaces;
 using API.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class DocumentsController : ControllerBase
     {
         private readonly IDocumentService _documentService;
 
-        public DocumentsController(IDocumentService DocumentService)
+        public DocumentsController(IDocumentService documentService)
         {
-            _documentService = DocumentService;
+            _documentService = documentService;
         }
 
         [HttpGet("download-pdf")]
