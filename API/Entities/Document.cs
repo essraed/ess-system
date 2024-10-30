@@ -26,5 +26,7 @@ namespace API.Entities
 
         public string? UpdatedById { get; set; }
         public AppUser? UpdatedBy {get; set; }
+
+        public bool? IsActive { get; set; }
     }
 }

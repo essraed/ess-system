@@ -1,7 +1,6 @@
 using API.Data;
 using API.Extensions;
 using API.Entities;
-using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;

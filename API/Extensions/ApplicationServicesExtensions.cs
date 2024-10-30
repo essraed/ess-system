@@ -4,8 +4,6 @@ using API.Mappings;
 using API.Services;
 using DinkToPdf;
 using DinkToPdf.Contracts;
-using Hangfire;
-using Hangfire.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Wkhtmltopdf.NetCore;
 
@@ -46,6 +44,9 @@ namespace API.Extensions
             // Auto Mappers
             services.AddAutoMapper(typeof(DocumentProfile).Assembly);
             services.AddAutoMapper(typeof(AuthorityProfile).Assembly);
+            services.AddAutoMapper(typeof(CarProfile).Assembly);
+            services.AddAutoMapper(typeof(BookingProfile).Assembly);
+            services.AddAutoMapper(typeof(ServicesProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -58,6 +59,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
             services.AddScoped(typeof(IDocumentService), typeof(DocumentService));
             services.AddScoped(typeof(IChatGptService), typeof(ChatGptService));
+            services.AddScoped(typeof(ICarService), typeof(CarService));
             services.AddScoped<IAuthorityService, AuthorityService>();
             services.AddScoped<EmailService>();
             services.AddScoped<FileService>();

@@ -1,0 +1,119 @@
+using System.Security.Claims;
+using API.Data;
+using API.DTOs;
+using API.DTOs.ServiceDto;
+using API.Entities;
+using API.Helpers;
+using API.Interfaces;
+using API.RequestParams;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+public class ServiceService : IServiceService
+{
+    private readonly DataContext _context;
+    private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+    public ServiceService(DataContext context, IMapper mapper,
+        IHttpContextAccessor httpContextAccessor)
+    {
+        _context = context;
+        _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public async Task<PagedList<ServiceDto>> GetAllServicesAsync(ServiceParams serviceParams)
+    {
+        var query = _context.Services
+            .Include(x => x.CreatedBy)
+            .Include(x => x.UpdatedBy)
+            .AsNoTracking()
+            .AsQueryable();
+
+        return await PagedList<ServiceDto>.CreateAsync(
+            query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
+            serviceParams.PageNumber,
+            serviceParams.PageSize);
+    }
+    
+    public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
+    {
+        var service = await _context.Services.FindAsync(id);
+        if (service == null)
+        {
+            throw new KeyNotFoundException($"Service with id {id} not found.");
+        }
+        return _mapper.Map<ServiceDto>(service);
+    }
+
+    public async Task<ServiceDto> AddServiceAsync(ServiceSaveDto model)
+    {
+        if (await _context.Services.AnyAsync(x => x.Name == model.Name))
+        {
+            throw new Exception("Service already exists.");
+        }
+
+        var service = _mapper.Map<Service>(model);
+
+        service.CreateDate = DateTime.UtcNow;
+        service.CreatedById = GetCurrentUserId();
+
+        _context.Services.Add(service);
+
+        await _context.SaveChangesAsync();
+
+        return _mapper.Map<ServiceDto>(service);
+    }
+
+    public async Task UpdateServiceAsync(Guid id, ServiceSaveDto model)
+    {
+        var service = await _context.Services.FindAsync(id);
+
+        if (service == null)
+        {
+            throw new KeyNotFoundException($"Service with id {id} not found.");
+        }
+
+        _mapper.Map(model, service);
+
+        service.UpdateDate = DateTime.UtcNow;
+        service.UpdatedById = GetCurrentUserId();
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result)
+        {
+            throw new Exception("Failed to update the Service.");
+        }
+    }
+
+    public async Task DeleteServiceAsync(Guid id)
+    {
+        var service = await _context.Services.FindAsync(id);
+
+        if (service == null)
+        {
+            throw new KeyNotFoundException($"Service with id {id} not found.");
+        }
+
+        _context.Services.Remove(service);
+
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result)
+        {
+            throw new Exception("Failed to delete the Service.");
+        }
+    }
+
+    private string GetCurrentUserId()
+    {
+        return _httpContextAccessor
+            .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                ?? string.Empty;
+    }
+
+}
