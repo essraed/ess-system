@@ -61,6 +61,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IChatGptService), typeof(ChatGptService));
             services.AddScoped(typeof(ICarService), typeof(CarService));
             services.AddScoped<IAuthorityService, AuthorityService>();
+            services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<EmailService>();
             services.AddScoped<FileService>();
 

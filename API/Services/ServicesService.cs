@@ -30,6 +30,7 @@ public class ServiceService : IServiceService
         var query = _context.Services
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
+            .Include(x => x.ServiceOptions)
             .AsNoTracking()
             .AsQueryable();
 
@@ -41,11 +42,17 @@ public class ServiceService : IServiceService
     
     public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
     {
-        var service = await _context.Services.FindAsync(id);
+        var service = await _context.Services
+            .Include(x => x.CreatedBy)
+            .Include(x => x.UpdatedBy)
+            .Include(x => x.ServiceOptions)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
         if (service == null)
         {
             throw new KeyNotFoundException($"Service with id {id} not found.");
         }
+
         return _mapper.Map<ServiceDto>(service);
     }
 
