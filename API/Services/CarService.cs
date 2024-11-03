@@ -23,7 +23,11 @@ public class CarService : ICarService
 
     public async Task<List<CarDto>> GetAllCarsAsync()
     {
-        return _mapper.Map<List<CarDto>>(await _context.Cars.Include(x => x.CreatedBy).ToListAsync());
+        return _mapper.Map<List<CarDto>>(
+            await _context.Cars
+            .Where(x => !x.IsDeleted)
+            .Include(x => x.CreatedBy)
+            .ToListAsync());
     }
 
 
@@ -65,7 +69,7 @@ public class CarService : ICarService
             throw new KeyNotFoundException($"Car with id {id} not found.");
         }
 
-        _context.Cars.Remove(car);
+        car.IsDeleted = true;
 
         var result = await _context.SaveChangesAsync() > 0;
 
@@ -80,20 +84,5 @@ public class CarService : ICarService
         return _httpContextAccessor
             .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? null!;
-    }
-
-    public async Task<bool> CreateBooking(BookingSaveDto model)
-    {
-        if (model is not null) return false!;
-
-        var  booking = _mapper.Map<Booking>(model);
-
-        _context.Bookings.Add(booking);
-
-        var result = await _context.SaveChangesAsync() > 0;
-
-        if (result) return true;
-
-        return false;
     }
 }

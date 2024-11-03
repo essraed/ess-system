@@ -169,7 +169,7 @@ namespace API.Services
         {
             return _httpContextAccessor
                 .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                    ?? string.Empty;
+                    ?? null!;
         }
     }
 }

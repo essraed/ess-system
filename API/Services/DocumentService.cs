@@ -144,9 +144,10 @@ namespace API.Services
 
             if (documentParams.To != null)
             {
-                query = query.Where(x => x.CreateDate <= documentParams.To);
+                var toDate = documentParams.To.Value.AddDays(1);
+                query = query.Where(x => x.CreateDate <= toDate);
             }
-            
+
             if (documentParams.AuthorityId != null || documentParams.AuthorityId != Guid.Empty)
             {
                 query = query.Where(x => x.AuthorityId == documentParams.AuthorityId);
@@ -251,7 +252,7 @@ namespace API.Services
         {
             return _httpContextAccessor
                 .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                    ?? string.Empty;
+                    ?? null!;
         }
 
         string HtmlEncode(string input)

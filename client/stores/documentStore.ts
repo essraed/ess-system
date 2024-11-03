@@ -32,7 +32,10 @@ export default class DocumentStore {
   addDocument = async (data: FormData): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Documents.create(data);
-      return { status: 'success', data: response as string }
+      runInAction(() => {
+        this.documents = this.documents ? [...this.documents, response] : [response];
+      });
+      return { status: 'success', data: response.id };
 
     } catch (error) {
       handleErrors(error as string | ZodIssue[])

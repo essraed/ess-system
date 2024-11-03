@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://192.168.7.120:5000");
 // Add services to the container.
 builder.Services.AddControllers(opt =>
 {
@@ -19,7 +20,7 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
 
-var app = builder.Build();
+var app = builder.Build();   
 
 // Configure the HTTP request pipeline.
 

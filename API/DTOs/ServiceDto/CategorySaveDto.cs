@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs.ServiceDto
 {
-    public class ServiceCategorySaveDto
+    public class CategorySaveDto
     {
         [Required]
         public string? Name { get; set; }

@@ -28,7 +28,7 @@ const CreateIndex = () => {
     const result = await documentStore.addDocument(formData);
 
     if (result.status === 'success') {
-      toast.success(result.data);
+      toast.success('Letter created successfully');
       router.push('/documents');
     } else {
       setSummaryErrors(handleErrors(result.error));

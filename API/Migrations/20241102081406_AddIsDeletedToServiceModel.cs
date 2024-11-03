@@ -5,24 +5,25 @@
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIsActiveFieldToDocument : Migration
+    public partial class AddIsDeletedToServiceModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Documents",
+                name: "IsDeleted",
+                table: "Services",
                 type: "bit",
-                nullable: true);
+                nullable: false,
+                defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Documents");
+                name: "IsDeleted",
+                table: "Services");
         }
     }
 }

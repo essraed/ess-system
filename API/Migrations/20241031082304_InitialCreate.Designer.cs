@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241030074713_AddCarModule")]
-    partial class AddCarModule
+    [Migration("20241031082304_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,33 @@ namespace API.Migrations
                     b.HasIndex("UpdatedById");
 
                     b.ToTable("Authorities");
+                });
+
+            modelBuilder.Entity("API.Entities.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BookingById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CarId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("EndBookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingById");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("API.Entities.Car", b =>
@@ -239,6 +266,100 @@ namespace API.Migrations
                     b.HasIndex("UpdatedById");
 
                     b.ToTable("Mails");
+                });
+
+            modelBuilder.Entity("API.Entities.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<Guid?>("ServiceCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ServiceCategoryId");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ServiceCategories");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AdditionalFee")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("ServiceOptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -389,6 +510,21 @@ namespace API.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
+            modelBuilder.Entity("API.Entities.Booking", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "BookingBy")
+                        .WithMany()
+                        .HasForeignKey("BookingById");
+
+                    b.HasOne("API.Entities.Car", "Car")
+                        .WithMany("Bookings")
+                        .HasForeignKey("CarId");
+
+                    b.Navigation("BookingBy");
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("API.Entities.Car", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
@@ -434,6 +570,45 @@ namespace API.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.Service", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.ServiceCategory", "ServiceCategory")
+                        .WithMany("Services")
+                        .HasForeignKey("ServiceCategoryId");
+
+                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ServiceCategory");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceCategory", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceOption", b =>
+                {
+                    b.HasOne("API.Entities.Service", "Service")
+                        .WithMany("ServiceOptions")
+                        .HasForeignKey("ServiceId");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -495,6 +670,21 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Authority", b =>
                 {
                     b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("API.Entities.Car", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("API.Entities.Service", b =>
+                {
+                    b.Navigation("ServiceOptions");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceCategory", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

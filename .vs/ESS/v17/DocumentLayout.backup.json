@@ -1,7 +1,20 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Projects\\ESS\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\documents\\projects\\ess-system\\api\\dtos\\servicedto\\servicesavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\dtos\\servicedto\\servicesavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\documents\\projects\\ess-system\\api\\dtos\\servicedto\\serviceoptionsavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\dtos\\servicedto\\serviceoptionsavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\documents\\projects\\ess-system\\api\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServiceOptionSaveDto.cs",
+              "DocumentMoniker": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\DTOs\\ServiceDto\\ServiceOptionSaveDto.cs",
+              "RelativeDocumentMoniker": "API\\DTOs\\ServiceDto\\ServiceOptionSaveDto.cs",
+              "ToolTip": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\DTOs\\ServiceDto\\ServiceOptionSaveDto.cs",
+              "RelativeToolTip": "API\\DTOs\\ServiceDto\\ServiceOptionSaveDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T10:25:03.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServiceSaveDto.cs",
+              "DocumentMoniker": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
+              "RelativeDocumentMoniker": "API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
+              "ToolTip": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
+              "RelativeToolTip": "API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T09:22:35.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ServicesController.cs",
+              "DocumentMoniker": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\Controllers\\ServicesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ServicesController.cs",
+              "ToolTip": "C:\\Users\\E013M\\Documents\\Projects\\ess-system\\API\\Controllers\\ServicesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ServicesController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAA5wCkAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T09:22:20.323Z",
+              "EditorCaption": ""
             }
           ]
         }

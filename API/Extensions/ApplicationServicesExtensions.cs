@@ -47,6 +47,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(CarProfile).Assembly);
             services.AddAutoMapper(typeof(BookingProfile).Assembly);
             services.AddAutoMapper(typeof(ServicesProfile).Assembly);
+            services.AddAutoMapper(typeof(WorkingTimesProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -62,6 +63,9 @@ namespace API.Extensions
             services.AddScoped(typeof(ICarService), typeof(CarService));
             services.AddScoped<IAuthorityService, AuthorityService>();
             services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IWorkingTimeService, WorkingTimeService>();
             services.AddScoped<EmailService>();
             services.AddScoped<FileService>();
 

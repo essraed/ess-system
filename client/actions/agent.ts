@@ -1,4 +1,3 @@
-
 import { AuthoritySchema } from "@/lib/schemas/authoritySchema";
 import { LoginSchema } from "@/lib/schemas/loginSchema";
 import { RegisterSchema } from "@/lib/schemas/registerSchema";
@@ -9,66 +8,92 @@ import { DocumentModel, DocumentUpdateModel } from "@/types/Document";
 import { PagedResponse } from "@/types/pagination";
 import { User, UserIdAndName } from "@/types/User";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { CarData, CarInput } from "@/types/car";
+import { CategoryData, CategoryInput } from "@/types/category";
+import { ServiceData, ServiceInput } from "@/types/service";
+import { WorkingTimeData, WorkingTimeInput } from "@/types/workingTime";
+import { BookingData, BookingInput } from "@/types/booking";
 
-
-// const sleep = (delay: number) => {
-//     return new Promise((resolve) => {
-//         setTimeout(resolve, delay);
-//     })
-// }
-
-
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = 'http://192.168.7.120:5000/api/';
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 axios.interceptors.request.use(config => {
     const token = store.userStore.token;
     if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `Bearer ${token}`;
         config.headers['Content-Type'] = 'application/json';
-    };
+    }
     return config;
-})
+});
 
 axios.interceptors.response.use(
     response => response,
     (error: AxiosError) => {
-        const { data, status } = error.response as AxiosResponse;
+        const { data, status } = error.response || {};
+        if (error.code === 'ECONNABORTED' || error.message.includes('Network Error')) {
+            throw 'The backend server is not reachable. Please check if the backend is running.';
+        }
         switch (status) {
             case 400:
-                if (Array.isArray(data)) {
-                    const modalStateErrors: string[] = [];
-                    for (const key in data) {
-                        if (data[key]) {
-                            modalStateErrors.push(data[key].description);
-                        }
-                    }
-                    throw modalStateErrors;
-                } else {
-                    throw typeof data === 'string' ? data : 'Something went wrong';
-                }
-
+                throw typeof data === 'string' ? data : 'Something went wrong';
             case 401:
-                throw 'Unauthorized'
+                throw 'Unauthorized';
             case 403:
-                throw 'Forbidden'
+                throw 'Forbidden';
             case 404:
-                throw 'Not Found'
+                throw 'Not Found';
             case 500:
-                throw 'Internal Server Error'
+                throw 'Internal Server Error';
             default:
-                throw 'An unknown error occurred'
+                throw 'An unknown error occurred';
         }
     }
 );
-
 
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
+}
+
+const Cars = {
+    getAll: () => requests.get<CarData[]>('cars/getAll'),
+    getById: (id: string) => requests.get<CarData>(`cars/${id}`),
+    create: (car: CarInput) => requests.post<CarData>('cars', car),
+    delete: (id: string) => requests.del<string>(`cars/${id}`)
+}
+
+const Categories = {
+    getAll: () => requests.get<CategoryData[]>('categories'),
+    getById: (id: string) => requests.get<CategoryData>(`categories/${id}`),
+    create: (category: CategoryInput) => requests.post<CategoryData>('categories', category),
+    delete: (id: string) => requests.del<string>(`categories/${id}`)
+}
+
+const Services = {
+    getAll: (params: URLSearchParams) => axios.get<PagedResponse<ServiceData[]>>('services/getAll', { params }).then(responseBody),
+    getById: (id: string) => requests.get<ServiceData>(`services/${id}`),
+    create: (categoryId: string, service: ServiceInput) => requests.post<ServiceData>(`services/${categoryId}`, service),
+    update: (id: string, service: ServiceInput) => requests.put<string>(`services/${id}`, service),
+    delete: (id: string) => requests.del<string>(`services/${id}`)
+}
+
+const WorkingTime = {
+    getAll: () => requests.get<WorkingTimeData[]>('workingtime'),
+    create: (workingTime: WorkingTimeInput) => requests.post<WorkingTimeData>('workingtime', workingTime)
+}
+
+const Bookings = {
+    getAll: (params: URLSearchParams) => axios.get<PagedResponse<BookingData[]>>('booking', { params }).then(responseBody),
+    getById: (id: string) => requests.get<BookingData>(`booking/${id}`),
+    getAvailableSlots: (date: string) => requests.get<string[]>(`booking/available-slots/${date}`),
+    create: (booking: BookingInput) => requests.post<BookingData>('booking', booking),
+    delete: (id: string) => requests.del<string>(`booking/${id}`),
+    setStatusInProcess: (id: string) => requests.put<string>(`booking/${id}/status/in-process`, {}),
+    setStatusRejected: (id: string) => requests.put<string>(`booking/${id}/status/rejected`, {}),
+    setStatusFinished: (id: string) => requests.put<string>(`booking/${id}/status/finished`, {})
 }
 
 const Account = {
@@ -85,7 +110,7 @@ const AiHelper = {
 const Documents = {
     list: (params: URLSearchParams) => axios.get<PagedResponse<DocumentModel[]>>('documents', { params }).then(responseBody),
     getById: (id: string) => requests.get<DocumentModel>(`documents/${id}`),
-    create: (document: FormData) => requests.post<string>('documents', document),
+    create: (document: FormData) => requests.post<DocumentModel>('documents', document),
     update: (id: string, documentUpdateDto: DocumentUpdateModel) => requests.put<string>(`documents/${id}`, documentUpdateDto),
     delete: (id: string) => requests.del<string>(`documents/${id}`)
 }
@@ -94,7 +119,7 @@ const Authority = {
     list: (params: URLSearchParams) => axios.get<PagedResponse<AuthorityModel[]>>('authority/getAll', { params }).then(responseBody),
     listForDropdown: () => requests.get<AuthorityModel[]>('authority/getAllForDropdown'),
     getById: (id: string) => requests.get<AuthorityModel>(`authority/${id}`),
-    create: (document: AuthoritySchema) => requests.post<string>('authority', document),
+    create: (document: AuthoritySchema) => requests.post<AuthorityModel>('authority', document),
     update: (id: string, documentUpdateDto: AuthoritySchema) => requests.put<string>(`authority/${id}`, documentUpdateDto),
     delete: (id: string) => requests.del<string>(`authority/${id}`)
 };
@@ -104,6 +129,11 @@ const agent = {
     AiHelper,
     Documents,
     Authority,
-}
+    Cars,
+    Categories,
+    Services,
+    WorkingTime,
+    Bookings
+};
 
 export default agent;

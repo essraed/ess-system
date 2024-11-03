@@ -18,6 +18,8 @@ namespace API.Entities
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<Booking>? Bookings { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using API.Data;
-using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Entities;
 using API.Helpers;
@@ -28,6 +27,7 @@ public class ServiceService : IServiceService
     public async Task<PagedList<ServiceDto>> GetAllServicesAsync(ServiceParams serviceParams)
     {
         var query = _context.Services
+            .Where(x => !x.IsDeleted)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
@@ -39,7 +39,7 @@ public class ServiceService : IServiceService
             serviceParams.PageNumber,
             serviceParams.PageSize);
     }
-    
+
     public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
     {
         var service = await _context.Services
@@ -56,15 +56,23 @@ public class ServiceService : IServiceService
         return _mapper.Map<ServiceDto>(service);
     }
 
-    public async Task<ServiceDto> AddServiceAsync(ServiceSaveDto model)
+    public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)
     {
         if (await _context.Services.AnyAsync(x => x.Name == model.Name))
         {
             throw new Exception("Service already exists.");
         }
 
+        var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
+
+        if (category == null)
+        {
+            throw new KeyNotFoundException($"Category with id {categoryId} not found.");
+        }
+
         var service = _mapper.Map<Service>(model);
 
+        service.CategoryId = categoryId;
         service.CreateDate = DateTime.UtcNow;
         service.CreatedById = GetCurrentUserId();
 
@@ -83,6 +91,11 @@ public class ServiceService : IServiceService
         {
             throw new KeyNotFoundException($"Service with id {id} not found.");
         }
+
+        // delete all service options.
+        await _context.ServiceOptions
+            .Where(x => x.ServiceId == id)
+            .ExecuteDeleteAsync();
 
         _mapper.Map(model, service);
 
@@ -106,7 +119,7 @@ public class ServiceService : IServiceService
             throw new KeyNotFoundException($"Service with id {id} not found.");
         }
 
-        _context.Services.Remove(service);
+        service.IsDeleted = true;
 
         var result = await _context.SaveChangesAsync() > 0;
 
@@ -120,7 +133,7 @@ public class ServiceService : IServiceService
     {
         return _httpContextAccessor
             .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                ?? string.Empty;
+                ?? null!;
     }
 
 }

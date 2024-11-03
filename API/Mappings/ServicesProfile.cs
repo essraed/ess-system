@@ -1,4 +1,3 @@
-using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Entities;
 using AutoMapper;
@@ -10,11 +9,11 @@ namespace API.Mappings
         public ServicesProfile()
         {
             // for category
-            CreateMap<ServiceCategory, ServiceCategoryDto>()
+            CreateMap<Category, CategoryDto>()
                 .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty));
 
-            CreateMap<ServiceSaveDto, Service>();
+            CreateMap<CategorySaveDto, Category>();
             ;
 
             // for service
@@ -24,7 +23,8 @@ namespace API.Mappings
                 .ForMember(dest => dest.UpdateByName, opt => opt.MapFrom(src =>
                     src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty));
 
-            CreateMap<ServiceSaveDto, Service>();
+            CreateMap<ServiceSaveDto, Service>()
+             .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions));
 
 
             // for options

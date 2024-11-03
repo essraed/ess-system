@@ -23,7 +23,10 @@ export default class AuthorityStore {
   addAuthority = async (data: AuthoritySchema): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Authority.create(data);
-      return { status: 'success', data: response as string };
+      runInAction(() => {
+        this.authorities = this.authorities ? [...this.authorities, response] : [response];
+      });
+      return { status: 'success', data: response.id };
     } catch (error) {
       console.error("Error: ", error);
       return { status: 'error', error: error as string };

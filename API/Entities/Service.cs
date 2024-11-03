@@ -1,5 +1,7 @@
 
+
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
@@ -13,8 +15,10 @@ namespace API.Entities
         public string? PictureUrl { get; set; }
 
         [Required]
+         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalPrice { get; set; }
 
         public DateTime? CreateDate { get; set; }
@@ -26,11 +30,13 @@ namespace API.Entities
         public string? UpdatedById { get; set; }
         public AppUser? UpdatedBy {get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
 
         // related tables
 
-        public Guid? ServiceId { get; set; }
-        public ServiceCategory? ServiceCategory { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
 
         public ICollection<ServiceOption>? ServiceOptions { get; set; }

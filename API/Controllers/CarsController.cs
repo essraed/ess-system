@@ -1,6 +1,5 @@
 using API.DTOs;
 using API.Interfaces;
-using API.RequestParams;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,24 +44,6 @@ namespace API.Controllers
             {
                 var cars = await _carsService.AddCarAsync(model);
                 return Ok(cars);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred while creating the Car: {ex.Message}");
-            }
-        }
-
-        [HttpPost("CreateBooking")]
-        public async Task<IActionResult> CreateBooking([FromBody] BookingSaveDto model)
-        {
-            try
-            {
-                var result = await _carsService.CreateBooking(model);
-
-                if (result)
-                    return Ok("Booking successfully");
-                
-                return Ok("An error occurred while creating the Car");
             }
             catch (Exception ex)
             {

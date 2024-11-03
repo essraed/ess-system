@@ -25,6 +25,10 @@ namespace API.Data
                 .HasForeignKey(d => d.UpdatedById)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Booking>()
+                .Property(x => x.BookingStatus)
+                .HasConversion<string>();
+
         }
 
         public DbSet<Document> Documents { get; set; }
@@ -33,7 +37,8 @@ namespace API.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Service> Services { get; set; }
-        public DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<ServiceOption> ServiceOptions { get; set; }
+        public DbSet<WorkingTime> WorkingTimes { get; set; }
     }
 }

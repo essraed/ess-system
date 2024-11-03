@@ -9,6 +9,7 @@ namespace API.Mappings
         public BookingProfile()
         {
             CreateMap<BookingSaveDto, Booking>();
+            CreateMap<Booking, BookingDto>();
         }
     }
 }
