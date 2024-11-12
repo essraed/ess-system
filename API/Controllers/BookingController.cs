@@ -97,23 +97,23 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id}/status/in-process")]
-        public async Task<IActionResult> SetBookingStateInProcess(Guid id)
-        {
-            try
-            {
-                await _bookingService.SetBookingStateInProcess(id);
-                return Ok("Booking status set to 'In Process'.");
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred while updating booking status: {ex.Message}");
-            }
-        }
+        // [HttpPut("{id}/status/in-process")]
+        // public async Task<IActionResult> SetBookingStateInProcess(Guid id)
+        // {
+        //     try
+        //     {
+        //         await _bookingService.SetBookingStateInProcess(id);
+        //         return Ok("Booking status set to 'In Process'.");
+        //     }
+        //     catch (KeyNotFoundException ex)
+        //     {
+        //         return NotFound(ex.Message);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return BadRequest($"An error occurred while updating booking status: {ex.Message}");
+        //     }
+        // }
 
         [HttpPut("{id}/status/rejected")]
         public async Task<IActionResult> SetBookingStateRejected(Guid id)

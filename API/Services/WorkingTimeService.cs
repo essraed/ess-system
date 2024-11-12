@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,7 @@ namespace API.Services
             // Create the new entry
             var newWorkingTime = _mapper.Map<WorkingTime>(workingTimeSaveDto);
 
-            newWorkingTime.CreateDate = DateTime.UtcNow;
+            newWorkingTime.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
             _context.WorkingTimes.Add(newWorkingTime);
             await _context.SaveChangesAsync();

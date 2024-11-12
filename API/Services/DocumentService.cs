@@ -148,7 +148,7 @@ namespace API.Services
                 query = query.Where(x => x.CreateDate <= toDate);
             }
 
-            if (documentParams.AuthorityId != null || documentParams.AuthorityId != Guid.Empty)
+            if (documentParams.AuthorityId != null && documentParams.AuthorityId != Guid.Empty)
             {
                 query = query.Where(x => x.AuthorityId == documentParams.AuthorityId);
             }
@@ -175,7 +175,7 @@ namespace API.Services
             {
                 var document = _mapper.Map<Document>(model);
 
-                document.CreateDate = DateTime.UtcNow;
+                document.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
                 document.CreatedById = GetCurrentUserId();
 
                 _context.Documents.Add(document);
@@ -207,7 +207,7 @@ namespace API.Services
                 }
                 _mapper.Map(model, document);
 
-                document.UpdateDate = DateTime.UtcNow;
+                document.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
                 document.UpdatedById = GetCurrentUserId();
 
                 var result = await _context.SaveChangesAsync() > 0;

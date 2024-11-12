@@ -9,10 +9,10 @@ namespace API.Mappings
         public AuthorityProfile()
         {
             CreateMap<Authority, AuthorityDto>()
-                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src => 
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => 
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
                     
-                .ForMember(dest => dest.UpdatedByName, opt => opt.MapFrom(src => 
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => 
                     src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty));
 
             CreateMap<AuthoritySaveDto, Authority>();

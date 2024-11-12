@@ -10,7 +10,7 @@ namespace API.Mappings
         {
             // for category
             CreateMap<Category, CategoryDto>()
-                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src =>
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty));
 
             CreateMap<CategorySaveDto, Category>();
@@ -18,7 +18,7 @@ namespace API.Mappings
 
             // for service
             CreateMap<Service, ServiceDto>()
-                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src =>
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
                 .ForMember(dest => dest.UpdateByName, opt => opt.MapFrom(src =>
                     src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty));

@@ -55,7 +55,7 @@ namespace API.Controllers
             if (await _userManager.Users.AnyAsync(x => x.Email == model.Email))
             {
                 ModelState.AddModelError("email", "Email Taken");
-                return ValidationProblem("Email Taken");
+                return BadRequest("Email Taken");
             }
 
             var user = new AppUser

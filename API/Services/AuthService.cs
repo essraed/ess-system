@@ -54,7 +54,7 @@ namespace API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(_jwt.DurationInDays),
+                Expires = TimeHelper.GetCurrentTimeInAbuDhabi().AddDays(_jwt.DurationInDays),
                 SigningCredentials = creds,
             };
 

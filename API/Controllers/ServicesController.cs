@@ -19,7 +19,7 @@ namespace API.Controllers
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAllServices([FromQuery]ServiceParams serviceParams)
+        public async Task<IActionResult> GetAllServices([FromQuery] ServiceParams serviceParams)
         {
             return Ok(await _serviceService.GetAllServicesAsync(serviceParams));
         }

@@ -9,6 +9,9 @@ namespace API.Entities
 
         [Required]
         public string Name { get; set; } = default!;
+
+        public string? PictureUrl { get; set; }
+        
         public DateTime? CreateDate { get; set; }
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy {get; set; }

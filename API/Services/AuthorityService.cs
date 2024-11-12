@@ -66,7 +66,7 @@ public class AuthorityService : IAuthorityService
 
         var authority = _mapper.Map<Authority>(model);
 
-        authority.CreateDate = DateTime.UtcNow;
+        authority.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         authority.CreatedById = GetCurrentUserId();
 
         _context.Authorities.Add(authority);
@@ -87,7 +87,7 @@ public class AuthorityService : IAuthorityService
 
         _mapper.Map(model, authority);
 
-        authority.UpdateDate = DateTime.UtcNow;
+        authority.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         authority.UpdatedById = GetCurrentUserId();
 
         var result = await _context.SaveChangesAsync() > 0;

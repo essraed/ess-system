@@ -132,9 +132,6 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BookingById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
 
@@ -177,6 +174,9 @@ namespace API.Migrations
                     b.Property<Guid?>("ServiceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
@@ -184,8 +184,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookingById");
 
                     b.HasIndex("CarId");
 
@@ -248,6 +246,9 @@ namespace API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -357,6 +358,10 @@ namespace API.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -369,6 +374,15 @@ namespace API.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("PriceVIP")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<float?>("Rate")
+                        .HasColumnType("real");
+
+                    b.Property<string>("ServiceVipName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18, 2)");
@@ -399,6 +413,12 @@ namespace API.Migrations
                     b.Property<decimal>("AdditionalFee")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<Guid?>("BookingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -407,6 +427,8 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
 
                     b.HasIndex("ServiceId");
 
@@ -594,10 +616,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Booking", b =>
                 {
-                    b.HasOne("API.Entities.AppUser", "BookingBy")
-                        .WithMany()
-                        .HasForeignKey("BookingById");
-
                     b.HasOne("API.Entities.Car", "Car")
                         .WithMany("Bookings")
                         .HasForeignKey("CarId");
@@ -613,8 +631,6 @@ namespace API.Migrations
                     b.HasOne("API.Entities.AppUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
-
-                    b.Navigation("BookingBy");
 
                     b.Navigation("Car");
 
@@ -704,9 +720,15 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.ServiceOption", b =>
                 {
+                    b.HasOne("API.Entities.Booking", "Booking")
+                        .WithMany("ServiceOptions")
+                        .HasForeignKey("BookingId");
+
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany("ServiceOptions")
                         .HasForeignKey("ServiceId");
+
+                    b.Navigation("Booking");
 
                     b.Navigation("Service");
                 });
@@ -779,6 +801,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Authority", b =>
                 {
                     b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("API.Entities.Booking", b =>
+                {
+                    b.Navigation("ServiceOptions");
                 });
 
             modelBuilder.Entity("API.Entities.Car", b =>

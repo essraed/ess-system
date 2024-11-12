@@ -2,6 +2,7 @@ using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using MailKit.Net.Smtp;
 using MimeKit;
 
@@ -67,11 +68,11 @@ namespace API.Services
                     Subject = model.Subject,
                     Body = model.Body,
                     FilePaths = filePaths != null ? string.Join(";", filePaths) : null,
-                    CreateDate = DateTime.UtcNow,
-                    UpdateDate = DateTime.UtcNow
+                    CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                    UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi()
                 };
 
-                mail.CreateDate = DateTime.UtcNow;
+                mail.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
                 mail.CreatedById = GetCurrentUserId();
 
                 await _context.Mails.AddAsync(mail);

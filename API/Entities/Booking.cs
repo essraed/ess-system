@@ -1,6 +1,6 @@
 
-
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using API.Helpers;
 
 namespace API.Entities
@@ -30,14 +30,14 @@ namespace API.Entities
         public DateTime? BookingDate { get; set; }
         public DateTime? EndBookingDate { get; set; }
 
+        // [Required]
+        // [Column(TypeName = "decimal(18, 2)")]
+        // public decimal Price { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? TotalPrice { get; set; }
 
         // relate tables
-        public Guid? ServiceId { get; set; }
-        public Service? Service { get; set; }
-
-        public string? BookingById { get; set; }
-        public AppUser? BookingBy { get; set; }
-
         public Guid? CarId { get; set; }
         public Car? Car { get; set; }
 
@@ -49,5 +49,10 @@ namespace API.Entities
 
         public string? UpdatedById { get; set; }
         public AppUser? UpdatedBy { get; set; }
+
+        public Guid? ServiceId { get; set; }
+        public Service? Service { get; set; }
+
+        public List<ServiceOption>? ServiceOptions { get; set; }
     }
 }

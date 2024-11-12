@@ -34,10 +34,14 @@ public class ServiceService : IServiceService
             .AsNoTracking()
             .AsQueryable();
 
-        return await PagedList<ServiceDto>.CreateAsync(
-            query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
-            serviceParams.PageNumber,
-            serviceParams.PageSize);
+        if (serviceParams.CategoryId != Guid.Empty && serviceParams.CategoryId != null) {
+            query = query.Where(x => x.CategoryId == serviceParams.CategoryId);
+        }
+
+            return await PagedList<ServiceDto>.CreateAsync(
+                query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
+                serviceParams.PageNumber,
+                serviceParams.PageSize);
     }
 
     public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
@@ -73,7 +77,7 @@ public class ServiceService : IServiceService
         var service = _mapper.Map<Service>(model);
 
         service.CategoryId = categoryId;
-        service.CreateDate = DateTime.UtcNow;
+        service.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         service.CreatedById = GetCurrentUserId();
 
         _context.Services.Add(service);
@@ -99,7 +103,7 @@ public class ServiceService : IServiceService
 
         _mapper.Map(model, service);
 
-        service.UpdateDate = DateTime.UtcNow;
+        service.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         service.UpdatedById = GetCurrentUserId();
 
         var result = await _context.SaveChangesAsync() > 0;

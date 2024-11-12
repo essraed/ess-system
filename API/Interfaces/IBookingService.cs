@@ -16,7 +16,7 @@ namespace API.Interfaces
 
         Task DeleteBookingAsync(Guid id);
 
-        Task SetBookingStateInProcess(Guid id);
+        // Task SetBookingStateInProcess(Guid id);
 
         Task SetBookingStateRejected(Guid id);
         

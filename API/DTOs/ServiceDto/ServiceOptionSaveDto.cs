@@ -9,6 +9,8 @@ namespace API.Entities
         [Required]
         public string Name { get; set; } = default!;
 
+        public string? Description { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal AdditionalFee { get; set; }

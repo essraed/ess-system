@@ -3,7 +3,6 @@ namespace API.Helpers
     public enum BookingStatus
     {
         New,        // جديد
-        InProcess,  // قيد المعالجة
         Rejected,   // مرفوض
         Finished    // منتهي
     }
@@ -15,7 +14,7 @@ namespace API.Helpers
             return status switch
             {
                 BookingStatus.New => "New",
-                BookingStatus.InProcess => "In Process",
+                // BookingStatus.InProcess => "In Process",
                 BookingStatus.Rejected => "Rejected",
                 BookingStatus.Finished => "Finished",
                 _ => "Unknown"

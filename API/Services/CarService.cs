@@ -2,6 +2,7 @@ using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +51,7 @@ public class CarService : ICarService
 
         var car = _mapper.Map<Car>(model);
 
-        car.CreateDate = DateTime.UtcNow;
+        car.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         car.CreatedById = GetCurrentUserId();
 
         _context.Cars.Add(car);

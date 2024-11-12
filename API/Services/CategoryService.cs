@@ -2,6 +2,7 @@ using System.Security.Claims;
 using API.Data;
 using API.DTOs.ServiceDto;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ public class CategoryService : ICategoryService
     {
         return _mapper.Map<List<CategoryDto>>(
             await _context.Categories
+            .Include(x => x.CreatedBy)
             .Where(x => !x.IsDeleted)
             .ToListAsync());
     }
@@ -33,10 +35,12 @@ public class CategoryService : ICategoryService
     {
         var category = await _context.Categories
             .Include(x => x.Services).FirstOrDefaultAsync(x => x.Id == id);
+        
         if (category == null)
         {
             throw new KeyNotFoundException($"Category with id {id} not found.");
         }
+        
         return _mapper.Map<CategoryDto>(category);
     }
 
@@ -49,7 +53,7 @@ public class CategoryService : ICategoryService
 
         var category = _mapper.Map<Category>(model);
 
-        category.CreateDate = DateTime.UtcNow;
+        category.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         category.CreatedById = GetCurrentUserId();
 
         _context.Categories.Add(category);

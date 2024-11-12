@@ -11,6 +11,6 @@ namespace API.DTOs
         public TimeOnly ToTime { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreateDate { get; set; }
-        public string? CreatedByName { get; set; }
+        public string? CreatedBy { get; set; }
     }
 }

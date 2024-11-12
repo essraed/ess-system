@@ -75,19 +75,19 @@ public class BookingService : IBookingService
 
     public async Task<List<TimeOnly>> GetAvailableSlotsAsync(DateOnly date)
     {
-        if (date < DateOnly.FromDateTime(DateTime.Now))
+        if (date < DateOnly.FromDateTime(TimeHelper.GetCurrentTimeInAbuDhabi()))
         {
             throw new Exception("Booking date must be in the future.");
         }
 
-        var currentTimeOnly = TimeOnly.FromDateTime(DateTime.Now);
+        var currentTimeOnly = TimeOnly.FromDateTime(TimeHelper.GetCurrentTimeInAbuDhabi());
         var availableSlots = new List<TimeOnly>();
 
         // Get available working hours for the given day of the week
         var workingTimeAvailable = await _workingTimeService
             .GetAvailableWorkingTimes(date.DayOfWeek);
 
-        var workingFrom = date > DateOnly.FromDateTime(DateTime.Now)
+        var workingFrom = date > DateOnly.FromDateTime(TimeHelper.GetCurrentTimeInAbuDhabi())
             ? workingTimeAvailable.FromTime
             : workingTimeAvailable.FromTime > currentTimeOnly
                 ? workingTimeAvailable.FromTime
@@ -105,7 +105,6 @@ public class BookingService : IBookingService
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
                         (b.BookingStatus == BookingStatus.New ||
-                         b.BookingStatus == BookingStatus.InProcess ||
                          b.BookingStatus == BookingStatus.Finished))
             .ToListAsync();
 
@@ -133,7 +132,7 @@ public class BookingService : IBookingService
             {
                 availableSlots.Add(currentStartTime);
             }
-            else
+            else // for finish status
             {
                 // Find the closest overlapping booking
                 var overlappingBooking = bookings
@@ -145,9 +144,9 @@ public class BookingService : IBookingService
                     .FirstOrDefault(); // Get the first overlapping booking
 
                 // If there is an overlapping booking, move the current start time to the end of that booking
-                if (overlappingBooking != null && overlappingBooking.EndBookingDate.HasValue)
+                if (overlappingBooking != null && overlappingBooking.BookingStatus == BookingStatus.Finished)
                 {
-                    currentStartTime = TimeOnly.FromTimeSpan(overlappingBooking.EndBookingDate.Value.TimeOfDay);
+                    currentStartTime = TimeOnly.FromTimeSpan(overlappingBooking.EndBookingDate!.Value.TimeOfDay);
                     continue; // Continue to the next iteration
                 }
             }
@@ -189,7 +188,7 @@ public class BookingService : IBookingService
         ValidateBookingConditionsAsync(booking);
 
         // Set additional booking properties
-        booking.CreateDate = DateTime.UtcNow;
+        booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();
         booking.BookingStatus = BookingStatus.New;
 
@@ -214,18 +213,18 @@ public class BookingService : IBookingService
         if (!result) throw new Exception("Failed to delete the Booking.");
     }
 
-    public async Task SetBookingStateInProcess(Guid id)
-    {
-        var booking = await _context.Bookings.FindAsync(id);
-        if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
+    // public async Task SetBookingStateInProcess(Guid id)
+    // {
+    //     var booking = await _context.Bookings.FindAsync(id);
+    //     if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
-        booking.BookingStatus = BookingStatus.InProcess;
-        booking.UpdatedById = GetCurrentUserId();
-        booking.UpdateDate = DateTime.UtcNow;
+    //     booking.BookingStatus = BookingStatus.InProcess;
+    //     booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+    //     booking.UpdatedById = GetCurrentUserId();
 
-        var result = await _context.SaveChangesAsync() > 0;
-        if (!result) throw new Exception("Failed to change booking status to 'In Process'.");
-    }
+    //     var result = await _context.SaveChangesAsync() > 0;
+    //     if (!result) throw new Exception("Failed to change booking status to 'In Process'.");
+    // }
 
     public async Task SetBookingStateRejected(Guid id)
     {
@@ -234,7 +233,7 @@ public class BookingService : IBookingService
 
         booking.BookingStatus = BookingStatus.Rejected;
         booking.UpdatedById = GetCurrentUserId();
-        booking.UpdateDate = DateTime.UtcNow;
+        booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'Rejected'.");
@@ -246,9 +245,9 @@ public class BookingService : IBookingService
         if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
         booking.BookingStatus = BookingStatus.Finished;
-        booking.EndBookingDate = DateTime.UtcNow;
+        booking.EndBookingDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.UpdatedById = GetCurrentUserId();
-        booking.UpdateDate = DateTime.UtcNow;
+        booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         ValidateBookingConditionsAsync(booking);
 
@@ -271,7 +270,7 @@ public class BookingService : IBookingService
             throw new InvalidOperationException("Service ID is required.");
 
         // Check if the BookingDate is in the future
-        if (booking.BookingDate.HasValue && booking.BookingDate.Value < DateTime.UtcNow)
+        if (booking.BookingDate.HasValue && booking.BookingDate.Value < TimeHelper.GetCurrentTimeInAbuDhabi())
             throw new InvalidOperationException("Booking date must be in the future.");
 
         // Check if the EndBookingDate is at least 30 minutes after the BookingDate

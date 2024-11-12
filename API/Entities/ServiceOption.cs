@@ -11,6 +11,8 @@ namespace API.Entities
         [Required]
         public string Name { get; set; } = default!;
 
+        public string? Description { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal AdditionalFee { get; set; }
@@ -19,5 +21,8 @@ namespace API.Entities
         // related tables
         public Guid? ServiceId { get; set; }
         public Service? Service { get; set; }
+        
+        public Guid? BookingId { get; set; }
+        public Booking? Booking { get; set; }
     }
 }

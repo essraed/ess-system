@@ -10,7 +10,7 @@ namespace API.DTOs
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
-        public string? CreatedByName { get; set; }
-        public string? UpdatedByName { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
     }
 }

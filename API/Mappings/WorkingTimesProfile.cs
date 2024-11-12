@@ -10,7 +10,7 @@ namespace API.Mappings
         public WorkingTimesProfile()
         {
             CreateMap<WorkingTime, WorkingTimeDto>()
-                .ForMember(dest => dest.CreatedByName, opt => opt.MapFrom(src =>
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty));
 
             CreateMap<WorkingTime, WorkingTimeAvailableDto>();

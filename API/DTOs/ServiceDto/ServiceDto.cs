@@ -8,16 +8,17 @@ namespace API.DTOs.ServiceDto
         public Guid Id { get; set; }
 
         public string Name { get; set; } = default!;
-        public decimal Price { get; set; }
-
+        public string Description { get; set; } = default!;
+        public float? Rate { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? PriceVIP { get; set; }
+        public string? ServiceVipName { get; set; }
         public decimal? TotalPrice { get; set; }
-
+        public string? PictureUrl { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-
-        public string? CreatedByName { get; set; }
+        public string? CreatedBy { get; set; }
         public string? UpdateByName { get; set; }
-
 
         // related tables
         public ICollection<ServiceOptionDto>? ServiceOptions { get; set; }

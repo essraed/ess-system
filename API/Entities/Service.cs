@@ -11,24 +11,31 @@ namespace API.Entities
 
         [Required]
         public string Name { get; set; } = default!;
-
-        public string? PictureUrl { get; set; }
-
+        
         [Required]
-         [Column(TypeName = "decimal(18, 2)")]
+        public string Description { get; set; }  = default!;
+        public string? PictureUrl { get; set; }
+        public float? Rate { get; set; }
+        
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
-         [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? PriceVIP { get; set; }
+        public string? ServiceVipName { get; set; }
+        
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalPrice { get; set; }
 
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }
-        public AppUser? CreatedBy {get; set; }
+        public AppUser? CreatedBy { get; set; }
 
         public string? UpdatedById { get; set; }
-        public AppUser? UpdatedBy {get; set; }
+        public AppUser? UpdatedBy { get; set; }
 
         public bool IsDeleted { get; set; } = false;
 

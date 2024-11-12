@@ -17,72 +17,80 @@ public class ChatGptService : IChatGptService
 
     public async Task<string> GetResponseFromChatGpt(UserPromptDto userPrompt)
     {
+return @"
+The error occurs because the Table component expects data, columns, rowsPerPageOptions, and optionally pageSize, but you are passing value instead of data. This mismatch is causing TypeScript to throw a type error.
 
-        // Determine if the user input is Arabic by checking some key fields
-        bool isArabic = IsArabic(userPrompt.Brief);
+Solution
 
-        var authority = await _context.Authorities.FindAsync(userPrompt.AuthorityId);
+Change the Prop Name: Instead of using value as a prop, use data to match the Props type.
+
+Define the columns Prop: The columns prop is required by Props, so you should pass it along with data and rowsPerPageOptions.
+";
+        // // Determine if the user input is Arabic by checking some key fields
+        // bool isArabic = IsArabic(userPrompt.Brief);
+
+        // var authority = await _context.Authorities.FindAsync(userPrompt.AuthorityId);
 
 
-        // Build the content based on the detected language
-        var messageContent = isArabic
-            ? $@"
-            استخدم المعلومات التالية لإعداد رسالة موجهة إلى [اسم المستلم]:
-            إليك التفاصيل:
-            - ملخص: {userPrompt.Brief}
-            - الاسم: {userPrompt.Name}
-            - العنوان: {userPrompt.Address}
-            - جهة خارجية أو اسم المستلم: {authority?.Name}
-            - رقم الهوية الإماراتية: {userPrompt.EmiratesId}
-            - البريد الإلكتروني: {userPrompt.Email}
-            - الهاتف: {userPrompt.Phone}
+        // // Build the content based on the detected language
+        // var messageContent = isArabic
+        //     ? $@"
+        //     استخدم المعلومات التالية لإعداد رسالة موجهة إلى [اسم المستلم]:
+        //     إليك التفاصيل:
+        //     - ملخص: {userPrompt.Brief}
+        //     - الاسم: {userPrompt.Name}
+        //     - العنوان: {userPrompt.Address}
+        //     - جهة خارجية أو اسم المستلم: {authority?.Name}
+        //     - رقم الهوية الإماراتية: {userPrompt.EmiratesId}
+        //     - البريد الإلكتروني: {userPrompt.Email}
+        //     - الهاتف: {userPrompt.Phone}
 
-            من فضلك اكتب الرسالة بطريقة مهنية وواضحة."
-            : $@"
-            Use the following information to prepare a message directed to [Recipient Name]:
-            Here are the details:
-            - Brief: {userPrompt.Brief}
-            - Name: {userPrompt.Name}
-            - Address: {userPrompt.Address}
-            - External authority or party or Recipient Name: {authority?.Name}
-            - Emirates ID: {userPrompt.EmiratesId}
-            - Email: {userPrompt.Email}
-            - Phone: {userPrompt.Phone}
+        //     من فضلك اكتب الرسالة بطريقة مهنية وواضحة."
+        //     : $@"
+        //     Use the following information to prepare a message directed to [Recipient Name]:
+        //     Here are the details:
+        //     - Brief: {userPrompt.Brief}
+        //     - Name: {userPrompt.Name}
+        //     - Address: {userPrompt.Address}
+        //     - External authority or party or Recipient Name: {authority?.Name}
+        //     - Emirates ID: {userPrompt.EmiratesId}
+        //     - Email: {userPrompt.Email}
+        //     - Phone: {userPrompt.Phone}
 
-            Please write the message in a professional and clear manner.";
+        //     Please write the message in a professional and clear manner.";
 
-        // Prepare the request body
-        var requestBody = new
-        {
-            model = "gpt-4-turbo",
-            messages = new[] { new
-        {
-            role = "user",
-            content = messageContent
-        }},
-            max_tokens = 1000
-        };
+        // // Prepare the request body
+        // var requestBody = new
+        // {
+        //     model = "gpt-4-turbo",
+        //     messages = new[] { new
+        // {
+        //     role = "user",
+        //     content = messageContent
+        // }},
+        //     max_tokens = 1000
+        // };
 
-        // Make the request to OpenAI API
-        using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
-        {
-            Headers = { { "Authorization", $"Bearer {_chatGptApiKey}" } },
-            Content = JsonContent.Create(requestBody)
-        };
+        // // Make the request to OpenAI API
+        // using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
+        // {
+        //     Headers = { { "Authorization", $"Bearer {_chatGptApiKey}" } },
+        //     Content = JsonContent.Create(requestBody)
+        // };
 
-        var response = await _httpClient.SendAsync(request);
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception("Failed to get a response from ChatGPT");
-        }
+        // var response = await _httpClient.SendAsync(request);
+        // if (!response.IsSuccessStatusCode)
+        // {
+        //     throw new Exception("Failed to get a response from ChatGPT");
+        // }
 
-        var jsonResponse = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<ChatGptResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        // var jsonResponse = await response.Content.ReadAsStringAsync();
+        // var result = JsonSerializer.Deserialize<ChatGptResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        var content = result?.Choices?.FirstOrDefault()?.Message?.Content ?? string.Empty;
+        // var content = result?.Choices?.FirstOrDefault()?.Message?.Content ?? string.Empty;
 
-        // If the original content was in Arabic, assume the response is in Arabic and format accordingly
-        return isArabic ? FormatTextForHtml(content) : FormatTextForHtml(content);
+        // // If the original content was in Arabic, assume the response is in Arabic and format accordingly
+        // return isArabic ? FormatTextForHtml(content) : FormatTextForHtml(content);
     }
 
     private static bool IsArabic(string text)
