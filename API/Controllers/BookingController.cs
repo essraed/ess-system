@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BookingDto>> AddBooking(BookingSaveDto model)
+        public async Task<ActionResult<BookingDto>> AddBooking([FromBody] BookingSaveDto model)
         {
             try
             {

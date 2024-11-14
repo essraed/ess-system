@@ -9,35 +9,38 @@ type Props = {
 };
 
 const BookingIndex = ({ service }: Props) => {
-  
- 
-  
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
- 
+
   const [selectedOptionsPrice, setSelectedOptionsPrice] = useState<number>(0);
-  const [selectedServiceOptionsIds, setSelectedServiceOptionsIds] = useState<
-    string[]
-  >([]);
+  const [selectedServiceOptionsId, setSelectedServiceOptionsId] = useState<string | undefined>(undefined);
 
   const handleSelectedPrice = (price: number) => {
     setSelectedPrice(price);
   };
 
   function handleServiceOptions(id: string, price: number) {
-    if (selectedServiceOptionsIds && selectedServiceOptionsIds.includes(id)) {
-      setSelectedServiceOptionsIds([
-        ...selectedServiceOptionsIds.filter((item) => item !== id),
-      ]);
-      setSelectedOptionsPrice(selectedOptionsPrice - price);
+    if (selectedServiceOptionsId && selectedServiceOptionsId.includes(id)) {
+      setSelectedServiceOptionsId(undefined);
+      setSelectedOptionsPrice(0);
     } else {
-      setSelectedServiceOptionsIds([...selectedServiceOptionsIds, id]);
-      setSelectedOptionsPrice(selectedOptionsPrice + price);
+      setSelectedServiceOptionsId(id);
+      setSelectedOptionsPrice(price);
     }
+
+    // if (selectedServiceOptionsId && selectedServiceOptionsId.includes(id)) {
+    //   setSelectedServiceOptionsId([
+    //     ...selectedServiceOptionsId.filter((item) => item !== id),
+    //   ]);
+    //   setSelectedOptionsPrice(selectedOptionsPrice - price);
+    // } else {
+    //   setSelectedServiceOptionsId([...selectedServiceOptionsId, id]);
+    //   setSelectedOptionsPrice(selectedOptionsPrice + price);
+    // }
   }
 
-  useEffect(()=> {
-    setSelectedPrice(service.price)
-  }, [service])
+  useEffect(() => {
+    setSelectedPrice(service.price);
+  }, [service]);
 
   if (!service) return <p>Loading...</p>;
 
@@ -103,11 +106,12 @@ const BookingIndex = ({ service }: Props) => {
                   <BookingAddon
                     serviceData={service}
                     handleServiceOptions={handleServiceOptions}
-                    selectedServiceOptionsIds={selectedServiceOptionsIds}
+                    selectedServiceOptionsId={selectedServiceOptionsId}
                   />
                   <BookingForm
                     serviceId={service.id}
-                    serviceOptionIds={selectedServiceOptionsIds}
+                    serviceOptionId={selectedServiceOptionsId}
+                    totalPrice={selectedPrice + selectedOptionsPrice}
                   />
                 </div>
               </div>

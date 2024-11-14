@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 
 type Props = {
   serviceData: ServiceData;
-  selectedServiceOptionsIds: string[];
+  selectedServiceOptionsId:  string | undefined;
   handleServiceOptions: (serviceId: string, fee: number) => void;
 };
 
 const BookingAddon = ({
   serviceData,
-  selectedServiceOptionsIds,
+  selectedServiceOptionsId,
   handleServiceOptions,
 }: Props) => {
   const { t } = useTranslation();
@@ -32,8 +32,8 @@ const BookingAddon = ({
               </div>
               <span className="adon-price">{item.additionalFee} AED</span>
 
-              {selectedServiceOptionsIds &&
-              selectedServiceOptionsIds.includes(item.id) ? (
+              {selectedServiceOptionsId &&
+              selectedServiceOptionsId.includes(item.id) ? (
                 <Button
                   radius="sm"
                   isDisabled={item.additionalFee === 0}

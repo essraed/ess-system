@@ -12,7 +12,7 @@ namespace API.Interfaces
         Task<BookingDto> GetBookingByIdAsync(Guid id);
 
         Task<BookingDto> AddBookingAsync(BookingSaveDto model);
-        Task<List<TimeOnly>> GetAvailableSlotsAsync(DateOnly date);
+        Task<List<string>> GetAvailableSlotsAsync(DateOnly date);
 
         Task DeleteBookingAsync(Guid id);
 

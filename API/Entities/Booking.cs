@@ -53,6 +53,9 @@ namespace API.Entities
         public Guid? ServiceId { get; set; }
         public Service? Service { get; set; }
 
-        public List<ServiceOption>? ServiceOptions { get; set; }
+        public Guid? ServiceOptionId { get; set; }
+        public ServiceOption? ServiceOption { get; set; }
+
+        // public List<ServiceOption>? ServiceOptions { get; set; }
     }
 }

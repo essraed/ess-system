@@ -12,4 +12,6 @@ namespace API.DTOs
 
         public Guid? AuthorityId { get; set; }
     }
+
 }
+

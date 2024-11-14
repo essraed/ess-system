@@ -1,5 +1,5 @@
 
-namespace API.Entities
+namespace API.DTOs.ServiceDto
 {
     public class CategoryDto
     {
