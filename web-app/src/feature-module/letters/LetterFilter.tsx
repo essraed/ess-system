@@ -5,11 +5,7 @@ import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import React, { useEffect, useState } from "react";
-import {
-  Autocomplete,
-  AutocompleteItem,
-  Input,
-} from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
@@ -19,10 +15,6 @@ type Props = {
 };
 
 const LetterFilter = ({ pageSize }: Props) => {
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
-  const { t } = useTranslation();
-
   const {
     documentStore: {
       setDateFilter,
@@ -30,6 +22,8 @@ const LetterFilter = ({ pageSize }: Props) => {
       setPagingParams,
       setSelectedAuthority,
       setSelectedUser,
+      fromDate: startDate,
+      toDate: endDate,
       userId,
       authorityId,
     },
@@ -37,19 +31,31 @@ const LetterFilter = ({ pageSize }: Props) => {
     authorityStore: { authoritiesForDropdown, loadAuthoritiesForDropdown },
   } = useStore();
 
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const { t } = useTranslation();
+
   const handleFilter = () => {
-    console.log("from Date: ", fromDate);
+    console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pageSize)); // Reset to first page when searching
     loadDocuments();
   };
 
+  useEffect(() => {
+    setFromDate(startDate);
+    setToDate(endDate);
+    
+  }, [startDate, endDate]);
+
   const handleUserSelect = (authorityName: string) => {
     setSelectedUser(authorityName);
+    loadDocuments();
   };
 
   const handleAuthoritySelect = (authorityName: string) => {
     setSelectedAuthority(authorityName);
+    loadDocuments();
   };
 
   useEffect(() => {
@@ -76,59 +82,54 @@ const LetterFilter = ({ pageSize }: Props) => {
     <div className="section-search page-search">
       <div className="container">
         <div className="search-box-banner">
-         <div className="sm:flex items-center justify-between gap-2">
-         
-         
-         
-         
-          <Input 
-            className="mb-2"
-            type="date"
-            value={fromDate}
-            onChange={(e) => handleFromDateChange(e)}
-            label={t("From Date")}
-          />
-          <Input 
-            className="mb-2"
-            type="date"
-            value={toDate}
-            onChange={(e) => handleToDateChange(e)}
-            label={t("To Date")}
-          />
+          <div className="sm:flex items-center justify-between gap-2">
+            <Input
+              className="mb-2"
+              type="date"
+              value={fromDate}
+              onChange={(e) => handleFromDateChange(e)}
+              label={t("From Date")}
+            />
+            <Input
+              className="mb-2"
+              type="date"
+              value={toDate}
+              onChange={(e) => handleToDateChange(e)}
+              label={t("To Date")}
+            />
 
-          <Autocomplete
-            className="mb-2"
-            label={t("Users List")}
-            placeholder={t("Search an user")}
-            defaultItems={usersIdName}
-            onSelectionChange={(key) =>
-              handleUserSelect(key?.toString() as string)
-            }
-          >
-            {(item) => (
-              <AutocompleteItem key={item.id}>
-                {item.displayName}
-              </AutocompleteItem>
-            )}
-          </Autocomplete>
+            <Autocomplete
+              className="mb-2"
+              label={t("Users List")}
+              placeholder={t("Search an user")}
+              defaultItems={usersIdName}
+              value={userId}
+              onSelectionChange={(key) =>
+                handleUserSelect(key?.toString() as string)
+              }
+            >
+              {(item) => (
+                <AutocompleteItem key={item.id}>
+                  {item.displayName}
+                </AutocompleteItem>
+              )}
+            </Autocomplete>
 
-          <Autocomplete
-       className="mb-2"
-            label={t("External Authority")} // Translate "External Authority"
-            placeholder={t("Search an authority")} // Translate "Search an authority"
-            defaultItems={authoritiesForDropdown ?? []}
-            onSelectionChange={(key) =>
-              handleAuthoritySelect(key?.toString() as string)
-            }
-          >
-            {(item) => (
-              <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>
-            )}
-          </Autocomplete>
-         
-         
-         
-         </div>
+            <Autocomplete
+              value={authorityId ?? ''}
+              className="mb-2"
+              label={t("External Authority")} // Translate "External Authority"
+              placeholder={t("Search an authority")} // Translate "Search an authority"
+              defaultItems={authoritiesForDropdown ?? []}
+              onSelectionChange={(key) =>
+                handleAuthoritySelect(key?.toString() as string)
+              }
+            >
+              {(item) => (
+                <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>
+              )}
+            </Autocomplete>
+          </div>
         </div>
       </div>
     </div>

@@ -83,4 +83,7 @@ export const all_routes = {
 
   // services
   serivceDetails: "/listings/service-details/:id",
+
+  // booging
+  bookingDetails: "/listings/booking/booking-details/:id",
 };

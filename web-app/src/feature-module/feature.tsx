@@ -6,6 +6,9 @@ import {
   // set_current_route_array,
   set_is_mobile_sidebar,
 } from "../core/data/redux/action";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../app/stores/store";
+import { initializeUserAndLanguageSettings } from "../lib/userLanguageSettings";
 // import { useLocation } from "react-router-dom";
 
 const Feature = () => {
@@ -27,6 +30,12 @@ const Feature = () => {
   //   dispatch(set_is_mobile_sidebar(false));
   // };
 
+  const { userStore } = useStore();
+
+  useEffect(() => {
+    initializeUserAndLanguageSettings(userStore);
+  }, [userStore]);
+
   useEffect(() => {
     dispatch(set_is_mobile_sidebar(false));
   }, [location, dispatch]);
@@ -40,4 +49,4 @@ const Feature = () => {
   );
 };
 
-export default Feature;
+export default observer (Feature);

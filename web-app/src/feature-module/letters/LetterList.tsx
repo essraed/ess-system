@@ -30,6 +30,7 @@ const LetterList = () => {
       clearDocuments,
       setDateFilter,
       setSelectedAuthority,
+      setSelectedUser,
     },
     userStore,
   } = useStore();
@@ -54,6 +55,7 @@ const LetterList = () => {
     setSearchQuery("");
     setDateFilter("", "");
     setSelectedAuthority("");
+    setSelectedUser("");
     setPagingParams(new PagingParams(1, pageSize));
     loadDocuments(); // Reload documents after resetting filters
   };

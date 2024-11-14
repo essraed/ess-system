@@ -63,6 +63,7 @@ import LetterEdit from "../letters/LetterEdit";
 import LetterFormIndex from "../letters/create/LetterFormIndex";
 import AuthorityDashboard from "../authorities/AuthorityDashboard";
 import ServiceDetails from "../services/ServiceDetails";
+import BookingDetails from "../booking/BookingDetails";
 // import BookingCalendar from "../user/bookings-calendar";
 
 const routes = all_routes;
@@ -139,6 +140,11 @@ export const listingroutes = [
   {
     path: routes.serivceDetails,
     element: <ServiceDetails />,
+  },
+  // booking
+  {
+    path: routes.bookingDetails,
+    element: <BookingDetails />,
   },
 ];
 

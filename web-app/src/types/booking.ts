@@ -1,6 +1,6 @@
 
 export enum BookingStatus {
-    Pending = 'New',
+    Pending = 'Pending',
     InProcess = 'InProcess',
     Rejected = 'Rejected',
     Finished = 'Finished',
@@ -16,7 +16,9 @@ export interface BookingData {
     longitude?: number;
     bookingStatus?: BookingStatus;
     bookingDate?: Date;
-    endBookingDate?: Date;           
+    endBookingDate?: Date; 
+    totalPrice: number;
+    serviceName: string;          
     isVIP?: boolean;           
 }
 

@@ -30,6 +30,7 @@ public class BookingService : IBookingService
         var query = _context.Bookings
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
+            .Include(x => x.Service)
             .AsNoTracking()
             .AsQueryable();
 
@@ -101,7 +102,7 @@ public class BookingService : IBookingService
         var bookings = await _context.Bookings
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
-                        (b.BookingStatus == BookingStatus.New ||
+                        (b.BookingStatus == BookingStatus.InProcess ||
                          b.BookingStatus == BookingStatus.Finished))
             .ToListAsync();
 
@@ -171,7 +172,7 @@ public class BookingService : IBookingService
         ValidateBookingConditionsAsync(booking);
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();
-        booking.BookingStatus = BookingStatus.New;
+        booking.BookingStatus = BookingStatus.InProcess;
 
         // var serviceOptions = model?.serviceOptionIds != null && model.serviceOptionIds.Any()
         //     ? await _context.ServiceOptions

@@ -8,7 +8,7 @@ import { bookingSchema, BookingSchema } from "../../lib/schemas/bookingSchema";
 import { useStore } from "../../app/stores/store";
 import { DatePicker } from "antd";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import L from "leaflet";
+import L, { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   Autocomplete,
@@ -17,6 +17,9 @@ import {
   Input,
 } from "@nextui-org/react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { SearchIcon } from "../icons/SearchIcon";
+import SearchMapInput from "../common/SearchMapInput";
 
 // Custom hook for capturing the user's click on the map
 const LocationPicker = ({
@@ -36,7 +39,7 @@ const LocationPicker = ({
 
 type Props = {
   serviceId: string;
-  serviceOptionId: string | undefined
+  serviceOptionId: string | undefined;
   totalPrice: number;
 };
 
@@ -45,11 +48,13 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     bookingStore: { getAvailableSlots, availableSlots, addBooking },
   } = useStore();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   // Set today's date as the initial value for the DatePicker
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
+  const [locationDetails, setLocationDetails] = useState<string>("");
 
   const {
     register,
@@ -61,8 +66,6 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     resolver: zodResolver(bookingSchema),
     mode: "onTouched",
   });
-
-  const watchAllFields = watch();
 
   const onSubmit = async (data: BookingSchema) => {
     data.totalPrice = totalPrice;
@@ -89,6 +92,7 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     const result = await addBooking(data);
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
+      navigate(`/listings/booking/booking-details/${result.data}`);
     } else {
       toast.error(`${t("Error")}: ${result.error}`);
     }
@@ -116,10 +120,28 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
 
   const items = (availableSlots ?? []).map((item) => ({ label: item }));
 
+  async function fetchLocationDetails(lat: number, lng: number) {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+      );
+      const data = await response.json();
+      if (data && data.display_name) {
+        setLocationDetails(data.display_name);
+      } else {
+        setLocationDetails("Location details not found");
+      }
+    } catch (error) {
+      console.error("Error fetching location details:", error);
+      setLocationDetails("Error fetching location details");
+    }
+  }
+
   useEffect(() => {
     if (selectedLat && selectedLng) {
       setValue("latitude", selectedLat);
       setValue("longitude", selectedLng);
+      fetchLocationDetails(selectedLat, selectedLng);
     }
     if (date) {
       setValue("bookingDate", date.toDateString());
@@ -132,6 +154,8 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     iconAnchor: [15, 30],
     popupAnchor: [0, -30],
   });
+  
+  const position: LatLngExpression | undefined = [selectedLat ?? 25.276987, selectedLng ?? 55.296249] // [25.276987, 55.296249];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -172,6 +196,7 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
           label={t("Address")}
           variant="bordered"
           {...register("address")}
+          value={locationDetails}
           isInvalid={!!errors.address}
           errorMessage={errors.address?.message}
         />
@@ -180,7 +205,9 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
         <div className="flex items-center gap-5">
           <div className="flex-1">
             <DatePicker
-              onChange={(newDate) => setDate(newDate ? newDate.toDate() : undefined)}
+              onChange={(newDate) =>
+                setDate(newDate ? newDate.toDate() : undefined)
+              }
               placeholder={t("Pickup Date")}
             />
           </div>
@@ -201,9 +228,24 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
           )}
         </Autocomplete>
 
-        <div style={{ height: "400px" }} className="my-5">
+        <div style={{ height: "400px" }}>
+          {/* <Input
+            placeholder="Search location..."
+            radius="none"
+            className="w-full border rounded-t-lg"
+            variant="bordered"
+            startContent={<SearchIcon className="text-gray-500" />}
+          /> */}
+
+<SearchMapInput
+          onSearch={(lat, lng) => {
+            setSelectedLat(lat);
+            setSelectedLng(lng);
+          }}
+        />
+
           <MapContainer
-            center={[25.276987, 55.296249]} 
+            center={position}
             zoom={12}
             style={{ height: "100%", width: "100%" }}
           >
@@ -224,19 +266,17 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
             </div>
           ) : null}
         </div>
-
-        {/* Submit Button */}
-        <Button
-          radius="sm"
-          isLoading={isSubmitting}
-          isDisabled={!isValid || !selectedLat || !selectedLng}
-          fullWidth
-          color="primary"
-          type="submit"
-        >
-          {t("Book")}
-        </Button>
       </div>
+      <Button
+        className="mt-20"
+        radius="sm"
+        isLoading={isSubmitting}
+        fullWidth
+        color="primary"
+        type="submit"
+      >
+        {t("Book")}
+      </Button>
     </form>
   );
 };

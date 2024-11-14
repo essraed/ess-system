@@ -1,17 +1,23 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { all_routes } from "./all_routes";
+import { observer } from "mobx-react-lite";
+import { initializeUserAndLanguageSettings } from "../../lib/userLanguageSettings";
 
-export default function RequireAuth() {
-    const {userStore: {isLoggedIn}} = useStore();
+export default observer( function RequireAuth() {
+    const {userStore} = useStore();
     const location = useLocation();
 
-    if (!isLoggedIn) {
+    useEffect(() => {
+      initializeUserAndLanguageSettings(userStore);
+    }, [userStore]);
+
+    if (!userStore.isLoggedIn) {
         toast.error('Unauthorized!');
         return <Navigate to={all_routes.homeOne} state={{from: location}} />
     }
 
     return <Outlet />
-}
+})

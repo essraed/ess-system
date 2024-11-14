@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   authenticationRoute,
   blogroutes,
@@ -13,9 +13,19 @@ import Footer from "../common/footer";
 import Progress from "../common/progressbar";
 import { all_routes } from "./all_routes";
 import RequireAuth from "./RequireAuth";
+import { observer } from "mobx-react-lite";
+import { initializeUserAndLanguageSettings } from "../../lib/userLanguageSettings";
+import { useStore } from "../../app/stores/store";
 
 const AllRoutes = () => {
   const routes =all_routes
+
+  const { userStore } = useStore();
+
+  useEffect(() => {
+    initializeUserAndLanguageSettings(userStore);
+  }, [userStore]);
+  
   const HeaderLayout = () => (
     <>
       <Outlet />
@@ -85,4 +95,4 @@ const AllRoutes = () => {
     </>
   );
 };
-export default AllRoutes;
+export default observer (AllRoutes);

@@ -22,7 +22,9 @@ namespace API.Mappings
                            : src.BookingDate.ToDateTime(TimeOnly.Parse(src.BookingTime)).AddHours(2)));
 
             // Mapping Booking to BookingDto
-            CreateMap<Booking, BookingDto>();
+            CreateMap<Booking, BookingDto>()
+                .ForMember(dest => dest.ServiceName, opt =>
+                    opt.MapFrom(src => src.Service!.Name));
         }
     }
 }
