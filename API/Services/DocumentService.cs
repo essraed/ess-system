@@ -127,11 +127,6 @@ namespace API.Services
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(documentParams.SearchTerm))
-            {
-                query = query.Where(x => x.Brief.Contains(documentParams.SearchTerm));
-            }
-
             if (!string.IsNullOrEmpty(documentParams.UserId))
             {
                 query = query.Where(x => x.CreatedById == documentParams.UserId);
@@ -142,10 +137,9 @@ namespace API.Services
                 query = query.Where(x => x.CreateDate >= documentParams.From);
             }
 
-            if (documentParams.To != null)
+            if (!string.IsNullOrEmpty(documentParams.SearchTerm))
             {
-                var toDate = documentParams.To.Value.AddDays(1);
-                query = query.Where(x => x.CreateDate <= toDate);
+                query = query.Where(x => x.Brief.Contains(documentParams.SearchTerm));
             }
 
             if (documentParams.AuthorityId != null && documentParams.AuthorityId != Guid.Empty)

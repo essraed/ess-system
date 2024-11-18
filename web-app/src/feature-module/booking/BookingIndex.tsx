@@ -12,7 +12,10 @@ const BookingIndex = ({ service }: Props) => {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
 
   const [selectedOptionsPrice, setSelectedOptionsPrice] = useState<number>(0);
-  const [selectedServiceOptionsId, setSelectedServiceOptionsId] = useState<string | undefined>(undefined);
+  const [selectedServiceOptionsId, setSelectedServiceOptionsId] = useState<
+    string | undefined
+  >(undefined);
+  const [isAtHome, setIsAtHome] = useState(false);
 
   const handleSelectedPrice = (price: number) => {
     setSelectedPrice(price);
@@ -65,9 +68,10 @@ const BookingIndex = ({ service }: Props) => {
                 <ul className="nav">
                   {service?.priceVIP && (
                     <li
-                      onClick={() =>
-                        handleSelectedPrice(service?.priceVIP ?? service.price)
-                      }
+                      onClick={() => {
+                        handleSelectedPrice(service?.priceVIP ?? service.price);
+                        setIsAtHome(true);
+                      }}
                     >
                       <label
                         className="booking_custom_check"
@@ -84,7 +88,10 @@ const BookingIndex = ({ service }: Props) => {
                       </label>
                     </li>
                   )}
-                  <li onClick={() => handleSelectedPrice(service.price)}>
+                  <li onClick={() => {
+                    handleSelectedPrice(service.price)
+                    setIsAtHome(false)
+                  }}>
                     <label
                       className={`booking_custom_check ${service?.priceVIP ? "" : "active"}`}
                       data-bs-toggle="tab"
@@ -112,6 +119,7 @@ const BookingIndex = ({ service }: Props) => {
                     serviceId={service.id}
                     serviceOptionId={selectedServiceOptionsId}
                     totalPrice={selectedPrice + selectedOptionsPrice}
+                    IsAtHome={isAtHome}
                   />
                 </div>
               </div>

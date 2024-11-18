@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { bookingSchema, BookingSchema } from "../../lib/schemas/bookingSchema";
 import { useStore } from "../../app/stores/store";
 import { DatePicker } from "antd";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L, { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
@@ -18,50 +18,33 @@ import {
 } from "@nextui-org/react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import { SearchIcon } from "../icons/SearchIcon";
-import SearchMapInput from "../common/SearchMapInput";
-
-// Custom hook for capturing the user's click on the map
-const LocationPicker = ({
-  onLocationChange,
-}: {
-  onLocationChange: (lat: number, lng: number) => void;
-}) => {
-  useMapEvents({
-    click(event: any) {
-      const { lat, lng } = event.latlng;
-      onLocationChange(lat, lng); // Update the lat/lng when user clicks
-    },
-  });
-
-  return null;
-};
+import SearchMapInput from "../common/map/SearchMapInput";
+import LocationPicker from "../common/map/LocationPicker";
 
 type Props = {
   serviceId: string;
   serviceOptionId: string | undefined;
   totalPrice: number;
+  IsAtHome: boolean;
 };
 
-const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
+const BookingForm = ({ serviceId, serviceOptionId, totalPrice, IsAtHome }: Props) => {
   const {
     bookingStore: { getAvailableSlots, availableSlots, addBooking },
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // Set today's date as the initial value for the DatePicker
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedLat, setSelectedLat] = useState<number | undefined>(undefined);
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
-  const [locationDetails, setLocationDetails] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
 
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting, isValid },
-    watch,
+    formState: { errors, isSubmitting },
   } = useForm<BookingSchema>({
     resolver: zodResolver(bookingSchema),
     mode: "onTouched",
@@ -86,6 +69,8 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     data.bookingDate = moment(date).format("YYYY-MM-DD");
     data.latitude = selectedLat;
     data.longitude = selectedLng;
+    data.address = address;
+    data.isVIP = IsAtHome;
 
     console.log("Booking data: ", data);
 
@@ -127,13 +112,13 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
       );
       const data = await response.json();
       if (data && data.display_name) {
-        setLocationDetails(data.display_name);
+        setAddress(data.display_name); // Update local state with fetched address
       } else {
-        setLocationDetails("Location details not found");
+        setAddress("Location details not found");
       }
     } catch (error) {
       console.error("Error fetching location details:", error);
-      setLocationDetails("Error fetching location details");
+      setAddress("Error fetching location details");
     }
   }
 
@@ -154,8 +139,11 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
     iconAnchor: [15, 30],
     popupAnchor: [0, -30],
   });
-  
-  const position: LatLngExpression | undefined = [selectedLat ?? 25.276987, selectedLng ?? 55.296249] // [25.276987, 55.296249];
+
+  const position: LatLngExpression | undefined = [
+    selectedLat ?? 25.276987,
+    selectedLng ?? 55.296249,
+  ];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -195,8 +183,8 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
           radius="sm"
           label={t("Address")}
           variant="bordered"
-          {...register("address")}
-          value={locationDetails}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           isInvalid={!!errors.address}
           errorMessage={errors.address?.message}
         />
@@ -205,11 +193,13 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
         <div className="flex items-center gap-5">
           <div className="flex-1">
             <DatePicker
+              className="sm:w-1/2 w-full"
               onChange={(newDate) =>
                 setDate(newDate ? newDate.toDate() : undefined)
               }
               placeholder={t("Pickup Date")}
             />
+            <span></span>
           </div>
         </div>
 
@@ -229,20 +219,12 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice }: Props) => {
         </Autocomplete>
 
         <div style={{ height: "400px" }}>
-          {/* <Input
-            placeholder="Search location..."
-            radius="none"
-            className="w-full border rounded-t-lg"
-            variant="bordered"
-            startContent={<SearchIcon className="text-gray-500" />}
-          /> */}
-
-<SearchMapInput
-          onSearch={(lat, lng) => {
-            setSelectedLat(lat);
-            setSelectedLng(lng);
-          }}
-        />
+          <SearchMapInput
+            onSearch={(lat, lng) => {
+              setSelectedLat(lat);
+              setSelectedLng(lng);
+            }}
+          />
 
           <MapContainer
             center={position}

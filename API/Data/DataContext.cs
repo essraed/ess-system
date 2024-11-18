@@ -32,7 +32,6 @@ namespace API.Data
         }
 
         public DbSet<Document> Documents { get; set; }
-        public DbSet<Mail> Mails { get; set; }
         public DbSet<Authority> Authorities { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -40,5 +39,7 @@ namespace API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<ServiceOption> ServiceOptions { get; set; }
         public DbSet<WorkingTime> WorkingTimes { get; set; }
+        public DbSet<FileEntity> Files { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

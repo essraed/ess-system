@@ -1,7 +1,6 @@
 using API.DTOs;
 using API.Entities;
 using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
 
 namespace API.Mappings
 {

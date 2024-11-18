@@ -42,81 +42,78 @@ const BookingDetails = () => {
   });
 
   return (
-    <div className="max-w-3xl mx-auto my-5 p-5 space-y-5">
+    <div className="max-w-3xl mx-auto m-3 space-y-6">
       {/* User Information Section */}
-      <Card className="p-5">
-        <h3 className="text-xl font-bold mb-3">Customer Information</h3>
+      <Card className="p-6 shadow-md border border-gray-200">
+        <h3 className="text-2xl font-bold text-gray-800 mb-4">Customer Information</h3>
         <Divider />
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 space-y-4">
           <div>
-            <p className="font-semibold">Name:</p>
-            <p className="text-gray-700">{customerName}</p>
+            <p className="font-medium text-gray-700">Name:</p>
+            <p className="text-gray-600">{customerName}</p>
           </div>
           <div>
-            <p className="font-semibold">Phone:</p>
-            <p className="text-gray-700">{phone}</p>
+            <p className="font-medium text-gray-700">Phone:</p>
+            <p className="text-gray-600">{phone}</p>
           </div>
           <div>
-            <p className="font-semibold">Email:</p>
-            <p className="text-gray-700">{email}</p>
+            <p className="font-medium text-gray-700">Email:</p>
+            <p className="text-gray-600">{email}</p>
+          </div>
+          <div>
+            <p className="font-medium text-gray-700">Address:</p>
+            <p className="text-gray-600">{address}</p>
           </div>
         </div>
-      </Card>
 
-      {/* Booking Information Section */}
-      <Card className="p-5">
-        <h3 className="text-xl font-bold mb-3">Booking Information</h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Booking Information</h3>
         <Divider />
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 space-y-4">
           <div>
-            <p className="font-semibold">Service:</p>
-            <p className="text-gray-700">{serviceName}</p>
+            <p className="font-medium text-gray-700">Service:</p>
+            <p className="text-gray-600">{serviceName}</p>
+          </div>
+          <div className="flex flex-col">
+            <p className="font-medium text-gray-700 text-lg">Total Price:</p>
+            <div className="flex items-center gap-2 mt-2 bg-gray-100 border border-gray-300 px-4 py-3 rounded-lg shadow-inner">
+              <span className="text-red-600 font-semibold text-xl">
+                {totalPrice} AED
+              </span>
+            </div>
           </div>
           <div>
-            <p className="font-semibold">Total Price:</p>
-            <p className="text-gray-700 border border-red-500 p-2 rounded-lg">
-              {totalPrice} AED
-            </p>
-          </div>
-          <div>
-            <p className="font-semibold">Booking Date:</p>
-            <p className="text-gray-700">
+            <p className="font-medium text-gray-700">Booking Date:</p>
+            <p className="text-gray-600">
               {formatDateTime(bookingDate?.toString())}
             </p>
           </div>
-          {address && (
-            <div>
-              <p className="font-semibold">Address:</p>
-              <p className="text-gray-700">{address}</p>
-            </div>
-          )}
         </div>
+
+        {/* Map Section */}
+        {latitude && longitude && (
+          <>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Location</h3>
+            <Divider />
+            <div className="h-72 mt-4 rounded-lg overflow-hidden border border-gray-300">
+              <MapContainer
+                center={[latitude, longitude]}
+                zoom={15}
+                style={{ height: "100%", width: "100%" }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={[latitude, longitude]} icon={customIcon}>
+                  <Popup>{address || "Booking Location"}</Popup>
+                </Marker>
+              </MapContainer>
+            </div>
+          </>
+        )}
+
+        {/* Confirm Button */}
+        <Button color="primary" className="mt-8 w-full" size="lg">
+          Confirm Booking
+        </Button>
       </Card>
-
-      {/* Map Section */}
-      {latitude && longitude && (
-        <Card className="p-5">
-          <h3 className="text-xl font-bold mb-3">Location</h3>
-          <Divider />
-          <div className="h-72 mt-4">
-            <MapContainer
-              center={[latitude, longitude]}
-              zoom={15}
-              style={{ height: "100%", width: "100%" }}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker position={[latitude, longitude]} icon={customIcon}>
-                <Popup>{address || "Booking Location"}</Popup>
-              </Marker>
-            </MapContainer>
-          </div>
-        </Card>
-      )}
-
-      {/* Confirm Button */}
-      <Button color="primary" className="mt-6 w-full">
-        Confirm Booking
-      </Button>
     </div>
   );
 };
