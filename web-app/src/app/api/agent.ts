@@ -11,6 +11,7 @@ import { BookingData } from "../../types/booking";
 import { CarData, CarInput } from "../../types/car";
 import { CategoryData } from "../../types/category";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
+import { NotificationData } from "../../types/notification";
 import { PagedResponse } from "../../types/pagination";
 import { ServiceData } from "../../types/service";
 import { User, UserIdAndName } from "../../types/User";
@@ -173,6 +174,13 @@ const Authority = {
   delete: (id: string) => requests.del<string>(`authority/${id}`),
 };
 
+
+const Notifications = {
+  getAll: (params: URLSearchParams) => axios.get<NotificationData[]>("notification", {params }).then(responseBody),
+  ReadToggle: (id: string) => requests.put<string>(`notification/${id}`, {}),
+};
+
+
 const agent = {
   Account,
   AiHelper,
@@ -183,6 +191,7 @@ const agent = {
   Services,
   WorkingTime,
   Bookings,
+  Notifications,
 };
 
 export default agent;

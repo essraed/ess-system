@@ -5,13 +5,15 @@ import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useDispatch, useSelector } from "react-redux";
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useStore } from "../../app/stores/store";
+import { Navbar } from "@nextui-org/react";
+import { observer } from "mobx-react-lite";
+import NotificationsDropdown from "./NotificationsDropdown";
 
 const Header = () => {
   const routes = all_routes;
   const location = useLocation();
-
   const {
-    userStore: { logout, isLoggedIn },
+    userStore: { logout, isLoggedIn, isAdmin },
   } = useStore();
 
   const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const Header = () => {
                   alt="Logo"
                 />
               </Link>
+
               <Link to={routes.homeOne} className="navbar-brand logo-small">
                 <ImageWithBasePath
                   src="assets/img/logo-small.png"
@@ -520,8 +523,20 @@ const Header = () => {
             <ul className="nav header-navbar-rht">
               {isLoggedIn ? (
                 <>
+                  {isAdmin && (
+                    <li className="nav-item">
+                      <Navbar>
+                        <NotificationsDropdown />
+                      </Navbar>
+                    </li>
+                  )}
+
                   <li className="nav-item">
-                    <Link className="nav-link header-login" to="#" onClick={logout}>
+                    <Link
+                      className="nav-link header-login"
+                      to="#"
+                      onClick={logout}
+                    >
                       <span>
                         <i className="fa-regular fa-user" />
                       </span>
@@ -557,4 +572,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default observer(Header);

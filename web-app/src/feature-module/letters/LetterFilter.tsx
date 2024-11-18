@@ -36,7 +36,6 @@ const LetterFilter = ({ pageSize }: Props) => {
   const { t } = useTranslation();
 
   const handleFilter = () => {
-    console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pageSize)); // Reset to first page when searching
     loadDocuments();
@@ -118,8 +117,8 @@ const LetterFilter = ({ pageSize }: Props) => {
             <Autocomplete
               value={authorityId ?? ''}
               className="mb-2"
-              label={t("External Authority")} // Translate "External Authority"
-              placeholder={t("Search an authority")} // Translate "Search an authority"
+              label={t("External Authority")}
+              placeholder={t("Search an authority")} 
               defaultItems={authoritiesForDropdown ?? []}
               onSelectionChange={(key) =>
                 handleAuthoritySelect(key?.toString() as string)

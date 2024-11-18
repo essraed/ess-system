@@ -56,20 +56,24 @@ namespace API.Extensions
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
+            // RignalR
+            services.AddSignalR();
+
             // Services
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
             services.AddScoped(typeof(IDocumentService), typeof(DocumentService));
             services.AddScoped(typeof(IChatGptService), typeof(ChatGptService));
             services.AddScoped(typeof(ICarService), typeof(CarService));
-            services.AddScoped<IAuthorityService, AuthorityService>();
-            services.AddScoped<IServiceService, ServiceService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IBookingService, BookingService>();
-            services.AddScoped<IWorkingTimeService, WorkingTimeService>();
+            services.AddScoped(typeof(IFileService), typeof(FileService));
+            services.AddScoped(typeof(IAuthorityService), typeof(AuthorityService));
+            services.AddScoped(typeof(IServiceService), typeof(ServiceService));
+            services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+            services.AddScoped(typeof(IBookingService), typeof(BookingService));
+            services.AddScoped(typeof(IWorkingTimeService), typeof(WorkingTimeService));
+            services.AddScoped(typeof(IFileService), typeof(FileService));
+            
             services.AddScoped<EmailService>();
-            services.AddScoped<FileService>();
-
-
+            services.AddScoped<NotificationService>();
 
             // Report services
             services.AddWkhtmltopdf("wkhtmltopdf");

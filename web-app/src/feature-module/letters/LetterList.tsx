@@ -45,9 +45,12 @@ const LetterList = () => {
   };
 
   const handleSearch = () => {
+
+    console.log('handlesearch', searchQuery);
+    
     setSearchTerm(searchQuery);
     setPagingParams(new PagingParams(1, pageSize));
-    loadDocuments(); // Reload documents with the new search term
+    loadDocuments(); 
   };
 
   const handleReset = () => {

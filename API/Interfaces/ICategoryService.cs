@@ -1,5 +1,4 @@
 using API.DTOs.ServiceDto;
-using API.Entities;
 
 namespace API.Interfaces
 {

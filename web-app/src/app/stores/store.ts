@@ -7,6 +7,7 @@ import CategoryStore from "./categoryStore";
 import ServiceStore from "./serviceStore";
 import WorkingTimeStore from "./workingTimeStore";
 import BookingStore from "./bookingStore";
+import NotificationStore from "./notificationStore";
 
 interface Store {
     userStore: UserStore,
@@ -17,6 +18,7 @@ interface Store {
     serviceStore: ServiceStore,
     workingTimeStore: WorkingTimeStore,
     bookingStore: BookingStore,
+    notificationStore: NotificationStore
 }
 
 export const store: Store = {
@@ -28,6 +30,7 @@ export const store: Store = {
     serviceStore: new ServiceStore(),
     workingTimeStore: new WorkingTimeStore(),
     bookingStore: new BookingStore(),
+    notificationStore: new NotificationStore(),
 }
 
 export const StoreContext = createContext(store);

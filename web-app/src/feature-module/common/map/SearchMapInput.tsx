@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { SearchIcon } from '../icons/SearchIcon';
 import { Button, Input } from '@nextui-org/react';
 import toast from 'react-hot-toast';
+import { SearchIcon } from '../../icons/SearchIcon';
 
 type Props = {
     onSearch: (lat: number, lng: number) => void

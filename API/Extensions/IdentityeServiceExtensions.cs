@@ -12,9 +12,10 @@ namespace API.Extensions
 {
     public static class IdentityeServiceExtensions
     {
-        public static IServiceCollection AddIdentityServices (this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(opt => {
+            services.AddIdentityCore<AppUser>(opt =>
+            {
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = false;
             })
@@ -29,7 +30,8 @@ namespace API.Extensions
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Key"]!));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt => {
+                .AddJwtBearer(opt =>
+                {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -43,10 +45,11 @@ namespace API.Extensions
             {
                 opt.AddPolicy("Allow-Origin", policy =>
                 {
-                    policy.AllowAnyMethod()
+                    policy
+                        .WithOrigins("http://localhost:3000")
                         .AllowAnyHeader()
-                        .AllowAnyOrigin();
-                        // .WithOrigins("http://localhost:3000", "http://localhost:4200");
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                 });
             });
 
