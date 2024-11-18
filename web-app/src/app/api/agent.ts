@@ -86,10 +86,34 @@ const Cars = {
 };
 
 const Categories = {
-  getAll: () => requests.get<CategoryData[]>("categories"),
+  getAll: (params: URLSearchParams) =>
+    axios
+      .get<PagedResponse<CategoryData[]>>("categories", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<CategoryData>(`categories/${id}`),
-  create: (category: CategorySchema) =>
-    requests.post<CategoryData>("categories", category),
+  listForDropdown: () =>
+    requests.get<CategoryData[]>("categories/getAllForDropdown"),
+  create: (formData:FormData) => {
+    return fetch("https://localhost:44393/api/categories", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to create category");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Category created", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error creating category:", error);
+        throw error;
+      });
+  },
+
   delete: (id: string) => requests.del<string>(`categories/${id}`),
 };
 
@@ -99,8 +123,30 @@ const Services = {
       .get<PagedResponse<ServiceData[]>>("services/getAll", { params })
       .then(responseBody),
   getById: (id: string) => requests.get<ServiceData>(`services/${id}`),
-  create: (categoryId: string, service: ServiceSchema) =>
-    requests.post<ServiceData>(`services/${categoryId}`, service),
+
+
+  create: (formData: ServiceSchema) =>  requests.post<ServiceData>("services",formData)
+    //  fetch("https://localhost:44393/api/services", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Failed to create Service");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log("Service created", data);
+    //     return data;
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error creating Service:", error);
+    //     throw error;
+    //   });
+  ,
+
+
   update: (id: string, service: ServiceSchema) =>
     requests.put<string>(`services/${id}`, service),
   delete: (id: string) => requests.del<string>(`services/${id}`),

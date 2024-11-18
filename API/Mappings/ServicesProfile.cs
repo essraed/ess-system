@@ -21,7 +21,8 @@ namespace API.Mappings
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
                 .ForMember(dest => dest.UpdateByName, opt => opt.MapFrom(src =>
-                    src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty));
+                    src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty))
+                .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions));
 
             CreateMap<ServiceSaveDto, Service>()
              .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions));

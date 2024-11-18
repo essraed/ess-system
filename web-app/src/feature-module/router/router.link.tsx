@@ -64,6 +64,12 @@ import LetterFormIndex from "../letters/create/LetterFormIndex";
 import AuthorityDashboard from "../authorities/AuthorityDashboard";
 import ServiceDetails from "../services/ServiceDetails";
 import BookingDetails from "../booking/BookingDetails";
+import CategoryDashboard from "../Categories/CategoryDashboard";
+import CategoryDetails from "../Categories/CategoryDetails";
+import CategoryForm from "../Categories/Create/CategoryForm";
+import ServiceDashboard from "../ServicesForDashboard/ServiceDashboard";
+import ServiceForm from "../ServicesForDashboard/Create/ServiceForm";
+import ServicesDetailsForDashboard from "../ServicesForDashboard/ServicesDetailsForDashboard";
 // import BookingCalendar from "../user/bookings-calendar";
 
 const routes = all_routes;
@@ -145,6 +151,32 @@ export const listingroutes = [
   {
     path: routes.bookingDetails,
     element: <BookingDetails />,
+  },
+  // category
+  {
+    path: routes.categoryDashboard,
+    element: <CategoryDashboard />,
+  },
+  {
+    path: routes.categoryDetails,
+    element: <CategoryDetails />,
+  },
+  {
+    path: routes.categoryCreate,
+    element: <CategoryForm />,
+  },
+  // Service
+  {
+    path: routes.serviceDashboard,
+    element: <ServiceDashboard />,
+  },
+  {
+    path: routes.ServiceDetails,
+    element: <ServicesDetailsForDashboard />,
+  },
+  {
+    path: routes.serviceCreate,
+    element: <ServiceForm />,
   },
 ];
 

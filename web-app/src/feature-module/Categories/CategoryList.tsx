@@ -19,7 +19,7 @@ const CategoryList = () => {
     loadCategories();
   }, [loadCategories, userStore.token]);
 
-  if (!categories) return <p>Loading...</p>;
+  if (!Array.isArray(categories)) return <p>Loading...</p>;
 
   const categoryInitial = {
     id: "",

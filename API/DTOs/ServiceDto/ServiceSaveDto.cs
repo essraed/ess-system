@@ -17,6 +17,10 @@ namespace API.DTOs.ServiceDto
 
         public string? ServiceVipName { get; set; }
 
+        //public IFormFile? pictureFile { get; set; }
+
+        public Guid categoryId { get; set; }
+
         public List<ServiceOptionSaveDto>? ServiceOptions { get; set; }
     }
 }

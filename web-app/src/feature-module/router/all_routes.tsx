@@ -86,4 +86,14 @@ export const all_routes = {
 
   // booging
   bookingDetails: "/listings/booking/booking-details/:id",
+  //Categoriea
+  categoryDashboard:"/listings/categories",
+  categoryDetails: "/listings/categories/view/:id",
+  categoryEdit: "/listings/categories/edit/:id",
+  categoryCreate: "/listings/categories/add",
+  //Services
+  serviceDashboard:"/listings/services",
+  ServiceDetails: "/listings/services/view/:id",
+  serviceEdit: "/listings/services/edit/:id",
+  serviceCreate: "/listings/services/add",
 };

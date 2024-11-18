@@ -46,6 +46,13 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\net8.0\" />
+    <Folder Include="Documents\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\1111105d-fe28-4c52-bc14-e13b00b03928.png" />
+    <None Include="wwwroot\Images\3a7d5d19-78a5-4561-9dde-343a43eb752a.jpg" />
   </ItemGroup>
 
 </Project>

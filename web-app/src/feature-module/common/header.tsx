@@ -177,6 +177,24 @@ const Header = () => {
                     >
                       <Link to={routes.listingDetails}>Listing Details</Link>
                     </li>
+                    <li
+                      className={
+                        location.pathname.includes(routes.categoryDashboard)
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.categoryDashboard}>Category List</Link>
+                    </li>
+                    <li
+                      className={
+                        location.pathname.includes(routes.serviceDashboard)
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.serviceDashboard}>Service List</Link>
+                    </li>
                   </ul>
                 </li>
                 <li

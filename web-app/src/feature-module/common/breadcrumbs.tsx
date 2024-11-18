@@ -28,7 +28,11 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname.startsWith(routes.letterDetails.slice(0, -3)) ||
     location.pathname.startsWith(routes.letterEdit.slice(0, -3)) ||
     location.pathname === routes.letterDashboard ||
-    location.pathname === routes.authorityDashboard
+    location.pathname === routes.authorityDashboard||
+    location.pathname === routes.categoryDashboard ||
+    location.pathname.startsWith(routes.categoryDetails.slice(0, -3)) ||
+    location.pathname === routes.serviceDashboard ||
+    location.pathname.startsWith(routes.ServiceDetails.slice(0, -3)) 
   ) {
     addButton = (
       <div className="breadcrumb-bar">

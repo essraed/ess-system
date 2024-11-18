@@ -25,7 +25,7 @@ const Table = ({
   routeUrl,
 }: Props) => {
   const action = (rowData: any) => {
-    const { id, brief } = rowData;
+    const { id } = rowData;
 
     return (
       <div className="dropdown dropdown-action">
@@ -39,31 +39,21 @@ const Table = ({
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
           {routeUrl !== all_routes.authorityDashboard && (
-            <Link
-              className="dropdown-item"
-              to={`${routeUrl}/view/${id}`}
-              // data-bs-toggle="modal"
-              // data-bs-target="#view_invoice"
-            >
+            <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
           )}
           <Link
             className="dropdown-item"
             to="#"
-            onClick={() => confirmDelete(id)} // Use ID in delete handler
+            onClick={() => confirmDelete(id)}
             data-bs-toggle="modal"
             data-bs-target="#delete_account"
           >
             <i className="feather icon-trash-2 me-1"></i> Delete
           </Link>
           {routeUrl !== all_routes.authorityDashboard && (
-            <Link
-              className="dropdown-item"
-              to={`${routeUrl}/edit/${id}`}
-              // data-bs-toggle="modal"
-              // data-bs-target="#edit_modal"
-            >
+            <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
               <i className="feather icon-edit me-1"></i> Edit
             </Link>
           )}
@@ -74,6 +64,22 @@ const Table = ({
 
   const confirmDelete = (id: string) => {
     setDeleteId(id);
+  };
+
+  // Custom function to render nested serviceOptions data
+  const renderServiceOptions = (rowData: any) => {
+    if (rowData.serviceOptions && rowData.serviceOptions.length > 0) {
+      return (
+        <div>
+          {rowData.serviceOptions.map((option: any, index: number) => (
+            <div key={index}>
+              <span>{option.name}</span> - <span>{option.additionalFee}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return <span>No options available</span>;
   };
 
   if (!data) return <p>Loading...</p>;
@@ -88,17 +94,24 @@ const Table = ({
     >
       {data &&
         Object.keys(data[0] || {})
-          .filter((key) => !exceptColumns.includes(key)) // Filter out the "id" column
+          .filter((key) => !exceptColumns.includes(key)) // Filter out the columns you don't want to display
           .map((key) => (
             <Column
               key={key}
               field={key}
               header={separateCamelCase(key)}
-            ></Column>
+              // Check if the column contains nested data (array or object)
+              body={(rowData: any) => {
+                if (key === "serviceOptions") {
+                  return renderServiceOptions(rowData); // Render custom for serviceOptions
+                }
+                return rowData[key]; // Default rendering for other columns
+              }}
+            />
           ))}
 
-      {status && <Column field="status" header="Status" body={status}></Column>}
-      <Column field="action" header="Action" body={action}></Column>
+      {status && <Column field="status" header="Status" body={status} />}
+      <Column field="action" header="Action" body={action} />
     </DataTable>
   );
 };

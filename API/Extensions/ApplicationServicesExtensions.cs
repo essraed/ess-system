@@ -19,7 +19,7 @@ namespace API.Extensions
             services.AddSwaggerGen();
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(config.GetConnectionString("app-conn"));
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
 
             // Add Hangfire services.

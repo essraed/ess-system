@@ -38,12 +38,12 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("{categoryId}")]
-        public async Task<IActionResult> Create(Guid categoryId, ServiceSaveDto model)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]ServiceSaveDto model)
         {
             try
             {
-                var service = await _serviceService.AddServiceAsync(categoryId, model);
+                var service = await _serviceService.AddServiceAsync(model.categoryId, model);
                 return Ok(service);
             }
             catch (Exception ex)

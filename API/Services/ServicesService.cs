@@ -8,7 +8,7 @@ using API.RequestParams;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-
+using API.Helpers;
 public class ServiceService : IServiceService
 {
     private readonly DataContext _context;
@@ -38,6 +38,27 @@ public class ServiceService : IServiceService
             query = query.Where(x => x.CategoryId == serviceParams.CategoryId);
         }
 
+         if (!string.IsNullOrEmpty(serviceParams.SearchTerm))
+        {
+            query = query.Where(x => x.Name.Contains(serviceParams.SearchTerm));
+        }
+
+        if (!string.IsNullOrEmpty(serviceParams.UserId))
+        {
+            query = query.Where(x => x.CreatedById == serviceParams.UserId);
+        }
+
+        if (serviceParams.From != null)
+        {
+            query = query.Where(x => x.CreateDate >= serviceParams.From);
+        }
+
+        if (serviceParams.To != null)
+        {
+            var toDate = serviceParams.To.Value.AddDays(1);
+            query = query.Where(x => x.CreateDate <= toDate);
+        }
+
             return await PagedList<ServiceDto>.CreateAsync(
                 query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
                 serviceParams.PageNumber,
@@ -62,6 +83,8 @@ public class ServiceService : IServiceService
 
     public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)
     {
+
+       
         if (await _context.Services.AnyAsync(x => x.Name == model.Name))
         {
             throw new Exception("Service already exists.");
@@ -74,11 +97,15 @@ public class ServiceService : IServiceService
             throw new KeyNotFoundException($"Category with id {categoryId} not found.");
         }
 
+
+        //var pictureUrl = UploadingImages.StoreFile(pictureFile);
+
         var service = _mapper.Map<Service>(model);
 
         service.CategoryId = categoryId;
         service.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         service.CreatedById = GetCurrentUserId();
+        //service.PictureUrl =UploadingImages.GetImagePath(pictureUrl);
 
         _context.Services.Add(service);
 

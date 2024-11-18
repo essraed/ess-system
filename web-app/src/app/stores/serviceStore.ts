@@ -1,8 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { PaginationData, PagingParams } from "../../types/pagination";
-import { ServiceData, ServiceInput } from "../../types/service";
+
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
+import { ServiceData, ServiceInput } from "../../types/service";
+import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 
 
 export default class ServiceStore {
@@ -12,6 +14,9 @@ export default class ServiceStore {
   pagingParams = new PagingParams();
   searchTerm?: string = "";
   categoryId?: string = "";
+  fromDate: string = "";
+  toDate: string = "";
+  userId: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -19,15 +24,12 @@ export default class ServiceStore {
 
   // Add Service
   addService = async (
-    categoryId: string,
-    data: ServiceInput
+   formData:ServiceSchema
   ): Promise<ActionResult<string>> => {
     try {
-      const response = await agent.Services.create(categoryId, data);
+      const response = await agent.Services.create(formData);
       runInAction(() => {
-        this.services = this.services
-          ? [...this.services, response]
-          : [response];
+        this.services = this.services ? [...this.services, response] : [response];
       });
       return { status: "success", data: response.id };
     } catch (error) {
@@ -123,5 +125,12 @@ export default class ServiceStore {
   
   setCategoryIdParam = (categoryId: string) => {
     this.categoryId = categoryId;
+  };
+  setDateFilter = (from: string, to: string) => {
+    this.fromDate = from;
+    this.toDate = to;
+  };
+  setSelectedUser = (userId: string) => {
+    this.userId = userId;
   };
 }

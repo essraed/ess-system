@@ -102,7 +102,9 @@ export default class DocumentStore {
         data.map((item) => {
           letterList.push({
             ...item,
-            updateDate: item.updateDate ? formatDateTime(item.updateDate?.toString()) : formatDateTime(item.createDate?.toString()),
+            updateDate: item.updateDate
+              ? formatDateTime(item.updateDate?.toString())
+              : formatDateTime(item.createDate?.toString()),
           });
         });
 
