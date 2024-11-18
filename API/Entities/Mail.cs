@@ -15,7 +15,6 @@ namespace API.Entities
         [Required]
         public string Body { get; set; } = default!;
 
-        public string? FilePaths { get; set; }  // Store multiple file paths separated by ";"
         
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }

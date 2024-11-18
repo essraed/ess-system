@@ -75,3 +75,7 @@ export function separateCamelCase(str: string): string {
   const capitalised = capitalizeFirstLetter(str)
   return capitalised.replace(/([a-z])([A-Z])/g, '$1 $2');
 }
+
+export function convertEnumToString<T>(value: number, enumType: T) {
+  return enumType[value as unknown as keyof typeof enumType];
+}

@@ -1,6 +1,3 @@
-
-using System.ComponentModel;
-
 namespace API.DTOs
 {
     public class WorkingTimeDto

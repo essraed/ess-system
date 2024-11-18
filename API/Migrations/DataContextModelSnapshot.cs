@@ -167,6 +167,9 @@ namespace API.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("NotificationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -191,6 +194,8 @@ namespace API.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("NotificationId");
 
                     b.HasIndex("ServiceId");
 
@@ -306,13 +311,13 @@ namespace API.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("API.Entities.Mail", b =>
+            modelBuilder.Entity("API.Entities.FileEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Body")
+                    b.Property<string>("ContentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -322,16 +327,16 @@ namespace API.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FilePaths")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
+                    b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ToEmail")
+                    b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Size")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -345,7 +350,51 @@ namespace API.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Mails");
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("API.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoreDetailsUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
@@ -624,6 +673,10 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("API.Entities.Notification", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId");
+
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
@@ -639,6 +692,8 @@ namespace API.Migrations
                     b.Navigation("Car");
 
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Notification");
 
                     b.Navigation("Service");
 
@@ -688,7 +743,22 @@ namespace API.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
-            modelBuilder.Entity("API.Entities.Mail", b =>
+            modelBuilder.Entity("API.Entities.FileEntity", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.Notification", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
                         .WithMany()

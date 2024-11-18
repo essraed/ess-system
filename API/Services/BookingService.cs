@@ -172,7 +172,7 @@ public class BookingService : IBookingService
         ValidateBookingConditionsAsync(booking);
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();
-        booking.BookingStatus = BookingStatus.InProcess;
+        booking.BookingStatus = BookingStatus.Pending;
 
         // var serviceOptions = model?.serviceOptionIds != null && model.serviceOptionIds.Any()
         //     ? await _context.ServiceOptions

@@ -35,8 +35,6 @@ export default class UserStore {
     try {
       const user = await agent.Account.login(creds);
 
-      console.log('user:::: ', user);
-
       // reslove Mobx strict mode
       runInAction(() => {
         this.setToken(user.token);
@@ -54,7 +52,6 @@ export default class UserStore {
   getUser = async () => {
     try {
       const user = await agent.Account.current();
-      console.log('User: ', user);
 
       // reslove Mobx strict mode
       runInAction(() => this.user = user);
@@ -120,11 +117,11 @@ export default class UserStore {
     return this.user?.roles && Array.isArray(this.user.roles) ? this.user.roles.includes(role) : false;
   };  
 
-  isAdmin = (): boolean => {
-    return this.hasRole('ADMIN');
-  };
+  get isAdmin () {
+    return this.hasRole('ADMIN')
+  }
 
   isUser = (): boolean => {
     return this.hasRole('USER');
-  };
+  }
 }
