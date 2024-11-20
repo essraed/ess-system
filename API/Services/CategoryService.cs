@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using API.Data;
-using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Entities;
 using API.Helpers;

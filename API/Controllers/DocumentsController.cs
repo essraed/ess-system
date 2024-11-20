@@ -1,5 +1,6 @@
 
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using API.RequestParams;
 using Microsoft.AspNetCore.Authorization;

@@ -9,17 +9,17 @@ namespace API.Interfaces
     {
         Task<PagedList<BookingDto>> GetAllBookingsAsync(BookingParams bookingParams);
 
-        Task<BookingDto> GetBookingByIdAsync(Guid id);
+        Task<BookingDetilasDto> GetBookingByIdAsync(Guid id);
 
         Task<BookingDto> AddBookingAsync(BookingSaveDto model);
         Task<List<string>> GetAvailableSlotsAsync(DateOnly date);
 
         Task DeleteBookingAsync(Guid id);
 
-        // Task SetBookingStateInProcess(Guid id);
+        Task SetBookingStateInProcess(Guid id);
 
-        Task SetBookingStateRejected(Guid id);
-        
-        Task SetBookingStateFinished(Guid id);
+        Task SetBookingStateCanceled(Guid id);
+
+        Task SetBookingStateCompleted(Guid id);
     }
 }

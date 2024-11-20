@@ -1,7 +1,9 @@
 using API.DTOs;
+using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.RequestParams;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +15,11 @@ namespace API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;
+        private readonly IGenericService<Service> _genericService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService, IGenericService<Service> genericService)
         {
+            _genericService = genericService;
             _bookingService = bookingService;
         }
 
@@ -33,8 +37,14 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("get-all-dropdown")]
+        public async Task<IActionResult> GetAllDropdown()
+        {
+            return Ok(await _genericService.GetAllDropdownAsync());
+        }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookingDto>> GetBookingById(Guid id)
+        public async Task<ActionResult<BookingDetilasDto>> GetBookingById(Guid id)
         {
             try
             {
@@ -97,31 +107,13 @@ namespace API.Controllers
             }
         }
 
-        // [HttpPut("{id}/status/in-process")]
-        // public async Task<IActionResult> SetBookingStateInProcess(Guid id)
-        // {
-        //     try
-        //     {
-        //         await _bookingService.SetBookingStateInProcess(id);
-        //         return Ok("Booking status set to 'In Process'.");
-        //     }
-        //     catch (KeyNotFoundException ex)
-        //     {
-        //         return NotFound(ex.Message);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return BadRequest($"An error occurred while updating booking status: {ex.Message}");
-        //     }
-        // }
-
-        [HttpPut("{id}/status/rejected")]
-        public async Task<IActionResult> SetBookingStateRejected(Guid id)
+        [HttpPut("{id}/status/in-process")]
+        public async Task<IActionResult> SetBookingStateInProcess(Guid id)
         {
             try
             {
-                await _bookingService.SetBookingStateRejected(id);
-                return Ok("Booking status set to 'Rejected'.");
+                await _bookingService.SetBookingStateInProcess(id);
+                return Ok("Booking status set to 'In Process'.");
             }
             catch (KeyNotFoundException ex)
             {
@@ -133,13 +125,31 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id}/status/finished")]
-        public async Task<IActionResult> SetBookingStateFinished(Guid id)
+        [HttpPut("{id}/status/canceled")]
+        public async Task<IActionResult> SetBookingStateCanceled(Guid id)
         {
             try
             {
-                await _bookingService.SetBookingStateFinished(id);
-                return Ok("Booking status set to 'Finished'.");
+                await _bookingService.SetBookingStateCanceled(id);
+                return Ok("Booking status set to 'Canceled'.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while updating booking status: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{id}/status/completed")]
+        public async Task<IActionResult> SetBookingStateCompleted(Guid id)
+        {
+            try
+            {
+                await _bookingService.SetBookingStateCompleted(id);
+                return Ok("Booking status set to 'Completed'.");
             }
             catch (KeyNotFoundException ex)
             {

@@ -2,10 +2,10 @@ namespace API.Helpers
 {
     public enum BookingStatus
     {
-        Pending,    // جديد
-        InProcess, // قيد الاجراء
-        Rejected,   // مرفوض
-        Finished    // منتهي
+        Pending,    // New
+        InProcess, // After payment will change to in process.
+        Canceled,   // Cancell
+        Completed    // Done
     }
 
     public static class BookingStatusExtensions
@@ -16,9 +16,8 @@ namespace API.Helpers
             {
                 BookingStatus.Pending => "Pending",
                 BookingStatus.InProcess => "InProcess",
-                // BookingStatus.InProcess => "In Process",
-                BookingStatus.Rejected => "Rejected",
-                BookingStatus.Finished => "Finished",
+                BookingStatus.Canceled => "Canceled",
+                BookingStatus.Completed => "Completed",
                 _ => "Unknown"
             };
         }

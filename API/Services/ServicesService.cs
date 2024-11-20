@@ -15,6 +15,7 @@ public class ServiceService : IServiceService
     private readonly IHttpContextAccessor _httpContextAccessor;
 
 
+
     public ServiceService(DataContext context, IMapper mapper,
         IHttpContextAccessor httpContextAccessor)
     {

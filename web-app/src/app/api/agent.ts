@@ -7,10 +7,11 @@ import { RegisterSchema } from "../../lib/schemas/registerSchema";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { UserPromptSchema } from "../../lib/schemas/UserPromptSchema";
 import { AuthorityModel } from "../../types/AuthorityModel";
-import { BookingData } from "../../types/booking";
+import { BookingData, BookingDetailsData } from "../../types/booking";
 import { CarData, CarInput } from "../../types/car";
 import { CategoryData } from "../../types/category";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
+import { DropdownType } from "../../types/Dropdown";
 import { NotificationData } from "../../types/notification";
 import { PagedResponse } from "../../types/pagination";
 import { ServiceData } from "../../types/service";
@@ -93,6 +94,7 @@ const Categories = {
       .then(responseBody),
   getById: (id: string) => requests.get<CategoryData>(`categories/${id}`),
   listForDropdown: () =>
+
     requests.get<CategoryData[]>("categories/getAllForDropdown"),
   create: (formData:CategorySchema) => requests.post<CategoryData>("categories",formData),
   delete: (id: string) => requests.del<string>(`categories/${id}`),
@@ -144,19 +146,24 @@ const Bookings = {
     axios
       .get<PagedResponse<BookingData[]>>("booking", { params })
       .then(responseBody),
-  getById: (id: string) => requests.get<BookingData>(`booking/${id}`),
+  getById: (id: string) => requests.get<BookingDetailsData>(`booking/${id}`),
   getAvailableSlots: (date: string) =>
     requests.get<string[]>(`booking/available-slots/${date}`),
-  create: (booking: BookingSchema) =>
-    requests.post<BookingData>("booking", booking),
+  create: (booking: BookingSchema) => requests.post<BookingData>("booking", booking),
   delete: (id: string) => requests.del<string>(`booking/${id}`),
+
+  // Dropdown
+  dropdownList: () => requests.get<DropdownType[]>("booking/get-all-dropdown"),
+  
+  // Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
-  setStatusRejected: (id: string) =>
-    requests.put<string>(`booking/${id}/status/rejected`, {}),
-  setStatusFinished: (id: string) =>
-    requests.put<string>(`booking/${id}/status/finished`, {}),
+  setStatusCanceled: (id: string) =>
+    requests.put<string>(`booking/${id}/status/canceled`, {}),
+  setStatusCompleted: (id: string) =>
+    requests.put<string>(`booking/${id}/status/completed`, {}),
 };
+
 
 const Account = {
   current: () => requests.get<User>("account"),
@@ -191,7 +198,7 @@ const Authority = {
       .get<PagedResponse<AuthorityModel[]>>("authority/getAll", { params })
       .then(responseBody),
   listForDropdown: () =>
-    requests.get<AuthorityModel[]>("authority/getAllForDropdown"),
+    requests.get<DropdownType[]>("authority/get-all-dropdown"),
   getById: (id: string) => requests.get<AuthorityModel>(`authority/${id}`),
   create: (document: AuthoritySchema) =>
     requests.post<AuthorityModel>("authority", document),

@@ -58,6 +58,6 @@ namespace API.Entities
 
         public Notification? Notification { get; set; }
 
-        // public List<ServiceOption>? ServiceOptions { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

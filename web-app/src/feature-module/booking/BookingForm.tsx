@@ -77,7 +77,7 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice, IsAtHome }: Props
     const result = await addBooking(data);
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
-      navigate(`/listings/booking/booking-details/${result.data}`);
+      navigate(`/listings/booking/view/${result.data}`);
     } else {
       toast.error(`${t("Error")}: ${result.error}`);
     }
