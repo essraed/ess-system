@@ -12,6 +12,7 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 import { all_routes } from "../router/all_routes";
 import { Dropdown } from "primereact/dropdown";
+import { dialogFlags } from "../../constants/contants";
 
 const BookingList = () => {
   const navigate = useNavigate();
@@ -103,12 +104,6 @@ const BookingList = () => {
     { name: "25" },
     { name: "30" },
   ];
-
-  const dialogFlags = {
-    deleteDialog: "delete_dialog",
-    completeDialog: "complete_dialog",
-    cancelDialog: "cancel_dialog",
-  };
 
   return (
     <div className="col-lg-12">

@@ -50,7 +50,7 @@ const Table = ({
             to="#"
             onClick={() => confirmDialog(id)}
             data-bs-toggle="modal"
-            data-bs-target={`#${dialogFlags.deleteDialog} ?? '#delete_dialog'`}
+            data-bs-target={`#${dialogFlags.deleteDialog ?? 'delete_dialog'}`}
             >
             <i className="feather icon-trash-2 me-1"></i> Delete
           </Link>
