@@ -60,16 +60,16 @@ import LetterDetails from "../letters/LetterDetails";
 import LetterEdit from "../letters/LetterEdit";
 import LetterFormIndex from "../letters/create/LetterFormIndex";
 import AuthorityDashboard from "../authorities/AuthorityDashboard";
-import ServiceDetails from "../services/ServiceDetails";
 import BookingDetails from "../booking/BookingDetails";
 import CategoryDashboard from "../Categories/CategoryDashboard";
 import CategoryDetails from "../Categories/CategoryDetails";
-import ServiceDashboard from "../ServicesDashboard/ServiceDashboard";
-import ServiceDashboardDetails from "../ServicesDashboard/ServiceDashboardDetails";
-import ServiceCreate from "../ServicesDashboard/ServiceCreate";
-import ServiceUpdate from "../ServicesDashboard/ServiceUpdate";
+import ServiceDashboard from "../Services/ServiceDashboard";
+import ServiceDashboardDetails from "../Services/ServiceDashboardDetails";
+import ServiceCreate from "../Services/ServiceCreate";
+import ServiceUpdate from "../Services/ServiceUpdate";
 import CategoryForm from "../Categories/CategoryForm";
 import BookingDashboard from "../booking/BookingDashboard";
+import ServiceDetails from "../Services/ServiceDetails";
 
 // import BookingCalendar from "../user/bookings-calendar";
 
