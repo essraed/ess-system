@@ -142,6 +142,16 @@ const Header = () => {
                     >
                       <Link to={routes.letterDashboard}>Letter List</Link>
                     </li>
+                   
+                    <li
+                      className={
+                        location.pathname.includes(routes.bookingDashboard)
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.bookingDashboard}>booking List</Link>
+                    </li>
 
                     <li
                       className={
@@ -541,7 +551,7 @@ const Header = () => {
             <ul className="nav header-navbar-rht">
               {isLoggedIn ? (
                 <>
-                  {isAdmin && (
+                  {isAdmin() && (
                     <li className="nav-item">
                       <Navbar>
                         <NotificationsDropdown />

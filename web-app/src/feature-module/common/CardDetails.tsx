@@ -1,7 +1,7 @@
 // PaymentDetails.js
 import React from "react";
 import { formatDateTime, separateCamelCase } from "../../lib/utils";
-import { Img_Server_Path } from "../../environment";
+import { IMAGE_SERVER_PATH } from "../../environment";
 
 type Props = {
   data: any;
@@ -21,7 +21,7 @@ const CardDetails = ({ data }: Props) => {
                   {/* <div className="col-lg-6 col-md-6">
                     {data.pictureUrl && (
                       <img
-                        src={`${Img_Server_Path}${data.pictureUrl}`}
+                        src={`${IMAGE_SERVER_PATH}${data.pictureUrl}`}
                         alt={data.name}
                         style={{ maxWidth: "100%", height: "70%" }}
                       />
