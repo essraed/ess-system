@@ -2,9 +2,9 @@
 import UserStore from "../app/stores/userStore";
 import i18n from "./i18n";
 
-export function initializeUserAndLanguageSettings(userStore: UserStore) {
+export async function initializeUserAndLanguageSettings(userStore: UserStore) {
     if (userStore.token) {
-      userStore.getUser().finally(() => userStore.setAppLoaded());
+      await userStore.getUser().finally(() => userStore.setAppLoaded());
       const lang = localStorage.getItem("language");
       
       if (lang === 'ar') {
