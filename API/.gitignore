@@ -34,4 +34,5 @@ Dockerfile.*
 Thumbs.db
 .DS_Store
 
-Migrations/
+appsettings.json
+appsettings.Development.json
