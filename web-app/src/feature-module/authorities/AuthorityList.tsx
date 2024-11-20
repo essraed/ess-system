@@ -16,6 +16,7 @@ import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import handleErrors from "../../lib/utils";
 import AuthorityForm from "./AuthorityForm";
+import { dialogFlags } from "../../constants/contants";
 
 const AuthorityList = () => {
   const { t } = useTranslation();
@@ -181,7 +182,8 @@ const AuthorityList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-                  setDeleteId={setDeleteId}
+                  dialogFlags={dialogFlags}
+                  setSelectedId={setDeleteId}
                   exceptColumns={["id", "createDate"]}
                   data={authorities}
                   pageSize={pageSize}
@@ -199,7 +201,7 @@ const AuthorityList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog
+      <ConfirmDialog modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(

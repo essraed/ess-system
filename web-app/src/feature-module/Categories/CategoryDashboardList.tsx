@@ -14,6 +14,7 @@ import { Dropdown } from "primereact/dropdown";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
 import CategoryForm from "./CategoryForm";
+import { dialogFlags } from "../../constants/contants";
 
 
 const CategoryDashboardList = () => {
@@ -179,7 +180,8 @@ const CategoryDashboardList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-                  setDeleteId={setDeleteId}
+                  dialogFlags={dialogFlags}
+                  setSelectedId={setDeleteId}
                   exceptColumns={["id", "pictureUrl"]}
                   data={categories}
                   pageSize={pageSize} // Use pageSize state variable here
@@ -197,7 +199,7 @@ const CategoryDashboardList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog
+      <ConfirmDialog modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(
