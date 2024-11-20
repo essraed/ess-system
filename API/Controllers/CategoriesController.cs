@@ -51,11 +51,11 @@ namespace API.Controllers
 
         // POST: api/categories
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> AddCategory([FromForm] CategorySaveDto categorySaveDto)
+        public async Task<ActionResult<CategoryDto>> AddCategory([FromBody]CategorySaveDto categorySaveDto)
         {
             try
             {
-                var createdCategory = await _categoryService.AddCategoryAsync(categorySaveDto, categorySaveDto.pictureFile);
+                var createdCategory = await _categoryService.AddCategoryAsync(categorySaveDto);
                 return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);
             }
             catch (Exception ex)

@@ -3,7 +3,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
-import { ServiceData, ServiceInput } from "../../types/service";
+import { ServiceData } from "../../types/service";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 
 
@@ -41,7 +41,7 @@ export default class ServiceStore {
   // Update Service
   updateService = async (
     id: string,
-    data: ServiceInput
+    data: ServiceSchema
   ): Promise<ActionResult<string>> => {
     try {
       await agent.Services.update(id, data);

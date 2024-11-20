@@ -8,7 +8,6 @@ using API.RequestParams;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using API.Helpers;
 public class ServiceService : IServiceService
 {
     private readonly DataContext _context;
@@ -31,14 +30,16 @@ public class ServiceService : IServiceService
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
+            .Include(x => x.Category)
             .AsNoTracking()
             .AsQueryable();
 
-        if (serviceParams.CategoryId != Guid.Empty && serviceParams.CategoryId != null) {
+        if (serviceParams.CategoryId != Guid.Empty && serviceParams.CategoryId != null)
+        {
             query = query.Where(x => x.CategoryId == serviceParams.CategoryId);
         }
 
-         if (!string.IsNullOrEmpty(serviceParams.SearchTerm))
+        if (!string.IsNullOrEmpty(serviceParams.SearchTerm))
         {
             query = query.Where(x => x.Name.Contains(serviceParams.SearchTerm));
         }
@@ -59,10 +60,10 @@ public class ServiceService : IServiceService
             query = query.Where(x => x.CreateDate <= toDate);
         }
 
-            return await PagedList<ServiceDto>.CreateAsync(
-                query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
-                serviceParams.PageNumber,
-                serviceParams.PageSize);
+        return await PagedList<ServiceDto>.CreateAsync(
+            query.ProjectTo<ServiceDto>(_mapper.ConfigurationProvider),
+            serviceParams.PageNumber,
+            serviceParams.PageSize);
     }
 
     public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
@@ -71,6 +72,7 @@ public class ServiceService : IServiceService
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
+            .Include(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (service == null)
@@ -84,7 +86,7 @@ public class ServiceService : IServiceService
     public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)
     {
 
-       
+
         if (await _context.Services.AnyAsync(x => x.Name == model.Name))
         {
             throw new Exception("Service already exists.");

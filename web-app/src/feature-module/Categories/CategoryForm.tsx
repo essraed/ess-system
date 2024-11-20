@@ -7,8 +7,9 @@ import { observer } from "mobx-react-lite";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { useStore } from "../../../app/stores/store";
-import { categorySchema, CategorySchema } from "../../../lib/schemas/categorySchema";
+import { useStore } from "../../app/stores/store";
+import { categorySchema, CategorySchema } from "../../lib/schemas/categorySchema";
+
 
 const CategoryForm = () => {
   const { categoryStore, userStore } = useStore();
@@ -22,33 +23,27 @@ const CategoryForm = () => {
     mode: "onTouched",
   });
 
-  const [formFile, setFormFile] = useState<File | null>(null);
+  // const [formFile, setFormFile] = useState<File | null>(null);
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files ? e.target.files[0] : null;
-    setFormFile(file); 
-  }
+  // function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const file = e.target.files ? e.target.files[0] : null;
+  //   setFormFile(file);
+  // }
 
   const onSubmit = async (data: CategorySchema) => {
-
-    const formData = new FormData();
-
-    Object.keys(data).forEach((key) => {
-      if (data[key as keyof CategorySchema]) {
-        formData.append(key, data[key as keyof CategorySchema]);
+    try {
+      const result = await categoryStore.addCategory(data);
+      if (result.status === "success") {
+        toast.success("Category added successfully");
+      } else {
+        toast.error("Error: " + result.error);
       }
-    });
-
-    if (formFile) {
-      formData.append("pictureFile", formFile); // "pictureFile" should match the name expected by your API
-    }
-    const result = await categoryStore.addCategory(formData); // Send file along with data
-    if (result.status === "success") {
-      toast.success("Category added successfully");
-    } else {
-      toast.error("Error: " + result.error);
+    } catch (error) {
+      toast.error("An unexpected error occurred.");
+      console.error("Submission error:", error);
     }
   };
+  
 
   return (
     <>
@@ -83,24 +78,26 @@ const CategoryForm = () => {
               </button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col" content="multipart/form-data" >
+              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
                 <Input
-                  className="my-3 "
+                  className="my-3"
                   label={t("Category Name")}
                   variant="bordered"
                   {...register("name")}
-                  isInvalid={!!errors.name}
-                  errorMessage={errors.name?.message as string}
+                  isInvalid={!!errors?.name}
+                  errorMessage={
+                    errors?.name?.message ? errors.name.message : ""
+                  }
                 />
 
-                <Input
+                {/* <Input
                   className="my-3 "
                   label={t("Category Picture")}
                   variant="bordered"
                   type="file"
                   onChange={handleFileChange}
-                />
-    
+                /> */}
+
                 <div className="modal-btn" onClick={handleSubmit(onSubmit)}>
                   <Link to="#" className="btn btn-secondary w-100">
                     {t("Create Category")}

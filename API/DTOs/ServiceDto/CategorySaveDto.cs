@@ -7,6 +7,6 @@ namespace API.DTOs.ServiceDto
     {
         [Required]
         public string? Name { get; set; }
-        public IFormFile pictureFile { get; set; }
+        // public IFormFile pictureFile { get; set; }
     }
 }

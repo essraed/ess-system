@@ -38,7 +38,6 @@ import UserBookingUpcoming from "../user/user-booking-upcoming";
 import UserBookingComplete from "../user/user-booking-complete";
 import { UserBookingInprogress } from "../user/user-booking-inprogress";
 import UserPayment from "../user/userpayment";
-import BookingAddon from "../booking/BookingAddon";
 import BookingDetail from "../booking/booking-detail";
 import BookingPayment from "../booking/booking-payment";
 import BookingSuccess from "../booking/booking-success";
@@ -47,7 +46,6 @@ import HomeTwo from "../home/home-two/home-two";
 import HomeThree from "../home/home-three/home-three";
 import OurTeam from "../pages/ourteam/ourTeam";
 import ComingSoon from "../pages/comingsoon/comingsoon";
-import UserWallet from "../user/wallet/userwallet";
 import PrivacyPolicy from "../pages/privacypolicy/privacypolicy";
 import AboutUs from "../pages/aboutus";
 import InvoiceDetails from "../booking/invoice";
@@ -66,10 +64,11 @@ import ServiceDetails from "../services/ServiceDetails";
 import BookingDetails from "../booking/BookingDetails";
 import CategoryDashboard from "../Categories/CategoryDashboard";
 import CategoryDetails from "../Categories/CategoryDetails";
-import CategoryForm from "../Categories/Create/CategoryForm";
-import ServiceDashboard from "../ServicesForDashboard/ServiceDashboard";
-import ServiceForm from "../ServicesForDashboard/Create/ServiceForm";
-import ServicesDetailsForDashboard from "../ServicesForDashboard/ServicesDetailsForDashboard";
+import ServiceDashboard from "../ServicesDashboard/ServiceDashboard";
+import ServiceDashboardDetails from "../ServicesDashboard/ServiceDashboardDetails";
+import ServiceCreate from "../ServicesDashboard/ServiceCreate";
+import ServiceUpdate from "../ServicesDashboard/ServiceUpdate";
+import CategoryForm from "../Categories/CategoryForm";
 // import BookingCalendar from "../user/bookings-calendar";
 
 const routes = all_routes;
@@ -172,11 +171,15 @@ export const listingroutes = [
   },
   {
     path: routes.ServiceDetails,
-    element: <ServicesDetailsForDashboard />,
+    element: <ServiceDashboardDetails />,
   },
   {
     path: routes.serviceCreate,
-    element: <ServiceForm />,
+    element: <ServiceCreate />,
+  },
+  {
+    path: routes.serviceEdit,
+    element: <ServiceUpdate />,
   },
 ];
 

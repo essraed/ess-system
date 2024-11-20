@@ -4,6 +4,7 @@ import { ActionResult } from "../../types";
 import { PaginationData, PagingParams } from "../../types/pagination";
 import { CategoryData, CategoryInput } from "../../types/category";
 import { formatDateTime } from "../../lib/utils";
+import { CategorySchema } from "../../lib/schemas/categorySchema";
 
 export default class CategoryStore {
   categories: CategoryData[] | null = null;
@@ -21,7 +22,9 @@ export default class CategoryStore {
   }
 
   // Add Category
-  addCategory = async (formData:FormData): Promise<ActionResult<string>> => {
+  addCategory = async (
+    formData: CategorySchema
+  ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Categories.create(formData);
       runInAction(() => {
@@ -99,9 +102,9 @@ export default class CategoryStore {
         data.map((item) => {
           categoryList.push({
             ...item,
-            createDate: item.createDate ?
-              formatDateTime(item.createDate?.toString()):
-              "",
+            createDate: item.createDate
+              ? formatDateTime(item.createDate?.toString())
+              : "",
           });
         });
 
@@ -120,8 +123,7 @@ export default class CategoryStore {
     } catch (error) {
       console.error(error);
     }
-  }
-
+  };
 
   // Load category by ID
   getCategory = async (id: string) => {

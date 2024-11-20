@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\services\\servicesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\desktop\\esslast\\ess-system\\api\\mappings\\servicesprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\mappings\\servicesprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\desktop\\esslast\\ess-system\\api\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\controllers\\servicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\desktop\\esslast\\ess-system\\api\\dtos\\servicedto\\servicesavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\dtos\\servicedto\\servicesavedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\desktop\\esslast\\ess-system\\api\\mappings\\servicesprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|solutionrelative:api\\mappings\\servicesprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63B3C923-6124-4BFD-9754-CBE8A73E5C98}|API\\API.csproj|c:\\users\\e013m\\desktop\\esslast\\ess-system\\api\\interfaces\\iserviceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -114,16 +114,15 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ServicesProfile.cs",
               "DocumentMoniker": "C:\\Users\\E013M\\Desktop\\EssLast\\ess-system\\API\\Mappings\\ServicesProfile.cs",
               "RelativeDocumentMoniker": "API\\Mappings\\ServicesProfile.cs",
               "ToolTip": "C:\\Users\\E013M\\Desktop\\EssLast\\ess-system\\API\\Mappings\\ServicesProfile.cs",
               "RelativeToolTip": "API\\Mappings\\ServicesProfile.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCIAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T13:31:16.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-16T13:31:16.634Z"
             },
             {
               "$type": "Document",
@@ -135,8 +134,7 @@
               "RelativeToolTip": "API\\Extensions\\ApplicationServicesExtensions.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAiwBYAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T06:02:36.476Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-15T06:02:36.476Z"
             },
             {
               "$type": "Document",
@@ -148,12 +146,11 @@
               "RelativeToolTip": "API\\Data\\DataContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T06:08:58.661Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-15T06:08:58.661Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ServicesController.cs",
               "DocumentMoniker": "C:\\Users\\E013M\\Desktop\\EssLast\\ess-system\\API\\Controllers\\ServicesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ServicesController.cs",
@@ -161,12 +158,11 @@
               "RelativeToolTip": "API\\Controllers\\ServicesController.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAD4vyYAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T09:22:20.323Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T09:22:20.323Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ServiceSaveDto.cs",
               "DocumentMoniker": "C:\\Users\\E013M\\Desktop\\EssLast\\ess-system\\API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
               "RelativeDocumentMoniker": "API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
@@ -174,8 +170,7 @@
               "RelativeToolTip": "API\\DTOs\\ServiceDto\\ServiceSaveDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-31T09:22:35.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-31T09:22:35.153Z"
             },
             {
               "$type": "Document",
@@ -197,7 +192,7 @@
               "RelativeDocumentMoniker": "API\\Services\\ServicesService.cs",
               "ToolTip": "C:\\Users\\E013M\\Desktop\\EssLast\\ess-system\\API\\Services\\ServicesService.cs",
               "RelativeToolTip": "API\\Services\\ServicesService.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAqwHgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-16T08:09:54.278Z",
               "EditorCaption": ""
@@ -212,8 +207,7 @@
               "RelativeToolTip": "API\\Controllers\\CategoriesController.cs",
               "ViewState": "AgIAACkAAAAAAAAAAAAAAEEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T14:34:14.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T14:34:14.592Z"
             },
             {
               "$type": "Document",
@@ -225,8 +219,7 @@
               "RelativeToolTip": "API\\Interfaces\\IServiceService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T10:06:59.215Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-16T10:06:59.215Z"
             },
             {
               "$type": "Document",
@@ -238,8 +231,7 @@
               "RelativeToolTip": "API\\Services\\CategoryService.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAQwGYAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T14:34:59.182Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T14:34:59.182Z"
             },
             {
               "$type": "Document",
@@ -275,8 +267,7 @@
               "RelativeToolTip": "API\\DTOs\\ServiceDto\\CategorySaveDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T11:19:59.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-15T11:19:59.008Z"
             },
             {
               "$type": "Document",

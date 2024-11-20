@@ -2,7 +2,7 @@
 
 namespace API.RequestParams
 {
-    public class CategoryParams:PaginParams
+    public class CategoryParams : PaginParams
     {
         public string? SearchTerm { get; set; }
         public DateTime? From { get; set; }

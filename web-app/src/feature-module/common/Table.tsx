@@ -2,7 +2,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { separateCamelCase } from "../../lib/utils";
+import { formatDateTime, separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
 
 type Props = {
@@ -38,7 +38,7 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {routeUrl !== all_routes.authorityDashboard && (
+          {routeUrl !== all_routes.authorityDashboard &&  (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
@@ -52,7 +52,7 @@ const Table = ({
           >
             <i className="feather icon-trash-2 me-1"></i> Delete
           </Link>
-          {routeUrl !== all_routes.authorityDashboard && (
+          {routeUrl !== all_routes.authorityDashboard && routeUrl !== all_routes.categoryDashboard && (
             <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
               <i className="feather icon-edit me-1"></i> Edit
             </Link>
@@ -102,8 +102,8 @@ const Table = ({
               header={separateCamelCase(key)}
               // Check if the column contains nested data (array or object)
               body={(rowData: any) => {
-                if (key === "serviceOptions") {
-                  return renderServiceOptions(rowData); // Render custom for serviceOptions
+                if (key === "createDate"|| key==="updateDate") {
+                  return formatDateTime(rowData[key]); // Render custom for serviceOptions
                 }
                 return rowData[key]; // Default rendering for other columns
               }}

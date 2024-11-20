@@ -16,6 +16,8 @@ namespace API.DTOs.ServiceDto
         public DateTime? UpdateDate { get; set; }
         public string? CreatedBy { get; set; }
         public string? UpdateByName { get; set; }
+        public string? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
 
         // related tables
         public ICollection<ServiceOptionDto>? ServiceOptions { get; set; }

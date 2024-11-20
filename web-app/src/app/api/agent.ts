@@ -94,27 +94,7 @@ const Categories = {
   getById: (id: string) => requests.get<CategoryData>(`categories/${id}`),
   listForDropdown: () =>
     requests.get<CategoryData[]>("categories/getAllForDropdown"),
-  create: (formData:FormData) => {
-    return fetch("https://localhost:44393/api/categories", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to create category");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Category created", data);
-        return data;
-      })
-      .catch((error) => {
-        console.error("Error creating category:", error);
-        throw error;
-      });
-  },
-
+  create: (formData:CategorySchema) => requests.post<CategoryData>("categories",formData),
   delete: (id: string) => requests.del<string>(`categories/${id}`),
 };
 

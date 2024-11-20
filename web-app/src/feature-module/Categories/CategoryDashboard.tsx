@@ -3,8 +3,7 @@ import Breadcrumbs from '../common/breadcrumbs'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../app/stores/store'
 import CategoryFilter from './CategoryFilter'
-import CategoryList from './CategoryList'
-import CategoryListForDashboard from './CategoryListForDashboard'
+import CategoryDashboardList from './CategoryDashboardList'
 
 const CategoryDashboard = () => {
   
@@ -27,7 +26,7 @@ const CategoryDashboard = () => {
           {/* //here the table */}
 
           {/* Payments Table */}
-          <CategoryListForDashboard/>
+          <CategoryDashboardList/>
 
           {/* /Payments Table */}
         </div>

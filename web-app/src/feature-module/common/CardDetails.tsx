@@ -18,7 +18,7 @@ const CardDetails = ({ data }: Props) => {
             <div className="card-body">
               <div className="payment-details">
                 <div className="row">
-                  <div className="col-lg-6 col-md-6">
+                  {/* <div className="col-lg-6 col-md-6">
                     {data.pictureUrl && (
                       <img
                         src={`${Img_Server_Path}${data.pictureUrl}`}
@@ -26,7 +26,7 @@ const CardDetails = ({ data }: Props) => {
                         style={{ maxWidth: "100%", height: "70%" }}
                       />
                     )}
-                  </div>
+                  </div> */}
                   <div className="col-lg-6 col-md-6">
                     <div className="invoice-total-box">
                       <div className="invoice-total-inner">
