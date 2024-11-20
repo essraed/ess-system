@@ -180,14 +180,6 @@ public class BookingService : IBookingService
         booking.CreatedById = GetCurrentUserId();
         booking.BookingStatus = BookingStatus.Pending;
 
-        // var serviceOptions = model?.serviceOptionIds != null && model.serviceOptionIds.Any()
-        //     ? await _context.ServiceOptions
-        //         .Where(x => model.serviceOptionIds.Contains(x.Id.ToString()))
-        //         .ToListAsync()
-        //     : new List<ServiceOption>();
-
-        // booking.ServiceOptions = serviceOptions;
-
         _context.Bookings.Add(booking);
         await _context.SaveChangesAsync();
 
@@ -242,8 +234,6 @@ public class BookingService : IBookingService
         booking.EndBookingDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.UpdatedById = GetCurrentUserId();
         booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
-
-        ValidateBookingConditionsAsync(booking);
 
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'Completed'.");

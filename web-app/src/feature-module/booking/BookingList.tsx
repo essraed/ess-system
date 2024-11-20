@@ -6,7 +6,6 @@ import Paginator from "../common/Paginator";
 import ConfirmDialog from "../common/ConfirmDialog";
 import Table from "../common/Table";
 import { GrPowerReset } from "react-icons/gr";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import { useStore } from "../../app/stores/store";
 import toast from "react-hot-toast";
 import { Button } from "@nextui-org/react";
@@ -27,13 +26,15 @@ const BookingList = () => {
       clearBookings,
       setDateFilter,
       setServiceFilter,
+      setStatusCanceled,
+      setStatusCompleted,
     },
     userStore
   } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [pageSize, setPageSize] = useState(10);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleGetNext = (page: number) => {
     setPagingParams(new PagingParams(page, pageSize));
@@ -56,8 +57,22 @@ const BookingList = () => {
   };
 
   const handleDelete = async () => {
-    if (deleteId) {
-      await deleteBooking(deleteId);
+    if (selectedId) {
+      await deleteBooking(selectedId);
+      loadBookings();
+      navigate(location.pathname, { replace: true });
+    }
+  };
+  const handleComplete = async () => {
+    if (selectedId) {
+      await setStatusCompleted(selectedId);
+      loadBookings();
+      navigate(location.pathname, { replace: true });
+    }
+  };
+  const handleCancel = async () => {
+    if (selectedId) {
+      await setStatusCanceled(selectedId);
       loadBookings();
       navigate(location.pathname, { replace: true });
     }
@@ -88,6 +103,12 @@ const BookingList = () => {
     { name: "25" },
     { name: "30" },
   ];
+
+  const dialogFlags = {
+    deleteDialog: "delete_dialog",
+    completeDialog: "complete_dialog",
+    cancelDialog: "cancel_dialog",
+  };
 
   return (
     <div className="col-lg-12">
@@ -187,7 +208,8 @@ const BookingList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-                  setDeleteId={setDeleteId}
+                  dialogFlags={dialogFlags}
+                  setSelectedId={setSelectedId}
                   exceptColumns={["id", "aiResult", "createDate", "address", "email", "createdBy", "updatedBy"]}
                   data={bookings}
                   pageSize={pageSize}
@@ -205,10 +227,20 @@ const BookingList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog
+      <ConfirmDialog modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title="Confirm Delete"
         description="Are you sure you want to delete this booking?"
+      />
+      <ConfirmDialog modalId={dialogFlags.completeDialog}
+        onConfirm={handleComplete}
+        title="Confirm Setting As Completed"
+        description="Are you sure you want to set this booking as completed?"
+      />
+      <ConfirmDialog modalId={dialogFlags.cancelDialog}
+        onConfirm={handleCancel}
+        title="Confirm Cancel"
+        description="Are you sure you want to cancel this booking?"
       />
     </div>
   );

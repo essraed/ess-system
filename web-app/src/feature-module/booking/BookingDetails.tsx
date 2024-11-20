@@ -8,6 +8,8 @@ import { useStore } from "../../app/stores/store";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
 import { useParams } from "react-router-dom";
 import { BookingStatus } from "../../types/booking";
+import BackToButton from "../common/BackToButton";
+import { all_routes } from "../router/all_routes";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -59,15 +61,16 @@ const BookingDetails = () => {
   };
 
   const statusColor = statusColors[bookingStatus ?? 0];
-  
+
   return (
     <div className="max-w-5xl mx-auto m-3 space-y-6">
       <Card className="p-6 shadow-md border border-gray-200">
         {/* Customer Information Section */}
-        <div className="flex items-center gap-5 justify-between mb-2">
-          <h3 className="text-2xl font-bold text-gray-800 ">
-            Customer Information
-          </h3>
+        <div className="flex items-center gap-5 justify-between mb-6">
+          <BackToButton
+            label="Back to bookings"
+            href={all_routes.bookingDashboard}
+          />
           {totalPrice && (
             <div className="flex items-center gap-2 px-4 py-2 border rounded">
               <p className="text-red-600 font-semibold text-xl">
@@ -76,6 +79,9 @@ const BookingDetails = () => {
             </div>
           )}
         </div>
+        <h3 className="text-2xl font-bold text-gray-800  mb-2">
+          Customer Information
+        </h3>
         <Divider />
         <div className="mt-4 grid grid-cols-2 gap-6">
           {customerName && (

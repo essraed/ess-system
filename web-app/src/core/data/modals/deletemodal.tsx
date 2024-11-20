@@ -11,7 +11,7 @@ const DeleteModal = ({modelName}: Props) => {
       {/* Delete Modal */}
       <div
         className="modal new-modal fade"
-        id="delete_account"
+        id="delete_dialog"
         data-keyboard="false"
         data-backdrop="static"
       >

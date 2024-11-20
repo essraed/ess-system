@@ -74,8 +74,8 @@ export default class BookingStore {
           bookingList.push({
             ...item,
             updateDate: item.updateDate
-              ? formatDateTime(item.updateDate?.toString())
-              : formatDateTime(item.createDate?.toString()),
+              ? item.updateDate?.toString()
+              : item.createDate?.toString(),
             bookingDate: formatDateTime(item.bookingDate?.toString()),
             bookingStatus: convertEnumToString(Number(item.bookingStatus), BookingStatus)
           });
