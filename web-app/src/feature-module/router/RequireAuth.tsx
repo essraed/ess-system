@@ -5,19 +5,20 @@ import toast from "react-hot-toast";
 import { all_routes } from "./all_routes";
 import { observer } from "mobx-react-lite";
 import { initializeUserAndLanguageSettings } from "../../lib/userLanguageSettings";
+import { render } from "@fullcalendar/core/preact";
 
 export default observer( function RequireAuth() {
     const {userStore} = useStore();
     const location = useLocation();
 
     useEffect(() => {
-      initializeUserAndLanguageSettings(userStore);
+      initializeUserAndLanguageSettings(userStore).then(() => {
+        if (!userStore.isLoggedIn) {
+          toast.error('Unauthorized!');
+          return <Navigate to={all_routes.homeOne} state={{from: location}} />
+      }
+      });
     }, [userStore]);
-
-    if (!userStore.isLoggedIn) {
-        toast.error('Unauthorized!');
-        return <Navigate to={all_routes.homeOne} state={{from: location}} />
-    }
 
     return <Outlet />
 })
