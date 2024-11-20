@@ -14,13 +14,14 @@ public class AuthorityService : IAuthorityService
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
-
+    public IGenericService<Authority> _genericService;
 
     public AuthorityService(DataContext context, IMapper mapper,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, IGenericService<Authority> genericService)
     {
-        _context = context;
         _mapper = mapper;
+        _context = context;
+        _genericService = genericService;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -42,9 +43,10 @@ public class AuthorityService : IAuthorityService
             authorityParams.PageNumber,
             authorityParams.PageSize);
     }
-    public async Task<List<AuthorityDto>> GetAllAuthoritiesForDropdownAsync()
+    
+    public async Task<List<DropdownDto>> GetAllDropdownAsync()
     {
-        return _mapper.Map<List<AuthorityDto>>(await _context.Authorities.ToListAsync());
+        return _mapper.Map<List<DropdownDto>>(await _genericService.GetAllDropdownAsync());
     }
 
     public async Task<AuthorityDto> GetAuthorityByIdAsync(Guid id)

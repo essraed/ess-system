@@ -17,7 +17,8 @@ public class BookingService : IBookingService
     private readonly IWorkingTimeService _workingTimeService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IWorkingTimeService workingTimeService)
+    public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
+        IWorkingTimeService workingTimeService)
     {
         _mapper = mapper;
         _context = context;
@@ -55,23 +56,26 @@ public class BookingService : IBookingService
             query = query.Where(x => x.ServiceId.Equals(bookingParams.ServiceId));
         }
 
-        return await PagedList<BookingDto>.CreateAsync(
-            query.ProjectTo<BookingDto>(_mapper.ConfigurationProvider),
-            bookingParams.PageNumber,
-            bookingParams.PageSize);
+        var bookings = query.ProjectTo<BookingDto>(_mapper.ConfigurationProvider);
+
+        return await PagedList<BookingDto>.CreateAsync(bookings, bookingParams.PageNumber, bookingParams.PageSize);
     }
 
-    public async Task<BookingDto> GetBookingByIdAsync(Guid id)
+
+
+    public async Task<BookingDetilasDto> GetBookingByIdAsync(Guid id)
     {
         var booking = await _context.Bookings
             .Include(x => x.Service)
+            .Include(x => x.CreatedBy)
+            .Include(x => x.UpdatedBy)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (booking == null)
         {
             throw new KeyNotFoundException($"Booking with id {id} not found.");
         }
-        return _mapper.Map<BookingDto>(booking);
+        return _mapper.Map<BookingDetilasDto>(booking);
     }
 
     public async Task<List<string>> GetAvailableSlotsAsync(DateOnly date)
@@ -86,6 +90,8 @@ public class BookingService : IBookingService
 
         var workingTimeAvailable = await _workingTimeService
             .GetAvailableWorkingTimes(date.DayOfWeek);
+
+        if (workingTimeAvailable == null) throw new Exception("You have set working times.");
 
         var workingFrom = date > DateOnly.FromDateTime(TimeHelper.GetCurrentTimeInAbuDhabi())
             ? workingTimeAvailable.FromTime
@@ -103,7 +109,7 @@ public class BookingService : IBookingService
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
                         (b.BookingStatus == BookingStatus.InProcess ||
-                         b.BookingStatus == BookingStatus.Finished))
+                         b.BookingStatus == BookingStatus.Completed))
             .ToListAsync();
 
         var currentStartTime = workingFrom;
@@ -136,7 +142,7 @@ public class BookingService : IBookingService
                     .OrderBy(b => b.EndBookingDate!.Value)
                     .FirstOrDefault();
 
-                if (overlappingBooking != null && overlappingBooking.BookingStatus == BookingStatus.Finished)
+                if (overlappingBooking != null && overlappingBooking.BookingStatus == BookingStatus.Completed)
                 {
                     currentStartTime = TimeOnly.FromTimeSpan(overlappingBooking.EndBookingDate!.Value.TimeOfDay);
                     continue;
@@ -193,31 +199,46 @@ public class BookingService : IBookingService
         var booking = await _context.Bookings.FindAsync(id);
         if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
-        _context.Bookings.Remove(booking);
+        booking.IsDeleted = true;
 
         var result = await _context.SaveChangesAsync() > 0;
+
         if (!result) throw new Exception("Failed to delete the Booking.");
     }
 
-    public async Task SetBookingStateRejected(Guid id)
+
+    // After payment will change to in process.
+    public async Task SetBookingStateInProcess(Guid id)
     {
         var booking = await _context.Bookings.FindAsync(id);
         if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
-        booking.BookingStatus = BookingStatus.Rejected;
+        booking.BookingStatus = BookingStatus.InProcess;
         booking.UpdatedById = GetCurrentUserId();
         booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         var result = await _context.SaveChangesAsync() > 0;
-        if (!result) throw new Exception("Failed to change booking status to 'Rejected'.");
+        if (!result) throw new Exception("Failed to change booking status to 'InProcess'.");
     }
-
-    public async Task SetBookingStateFinished(Guid id)
+    public async Task SetBookingStateCanceled(Guid id)
     {
         var booking = await _context.Bookings.FindAsync(id);
         if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
-        booking.BookingStatus = BookingStatus.Finished;
+        booking.BookingStatus = BookingStatus.Canceled;
+        booking.UpdatedById = GetCurrentUserId();
+        booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) throw new Exception("Failed to change booking status to 'Canceled'.");
+    }
+
+    public async Task SetBookingStateCompleted(Guid id)
+    {
+        var booking = await _context.Bookings.FindAsync(id);
+        if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
+
+        booking.BookingStatus = BookingStatus.Completed;
         booking.EndBookingDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.UpdatedById = GetCurrentUserId();
         booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
@@ -225,7 +246,7 @@ public class BookingService : IBookingService
         ValidateBookingConditionsAsync(booking);
 
         var result = await _context.SaveChangesAsync() > 0;
-        if (!result) throw new Exception("Failed to change booking status to 'Finished'.");
+        if (!result) throw new Exception("Failed to change booking status to 'Completed'.");
     }
 
     private string GetCurrentUserId()

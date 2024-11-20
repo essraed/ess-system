@@ -158,6 +158,9 @@ namespace API.Migrations
                     b.Property<DateTime?>("EndBookingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<double?>("Latitude")
                         .HasColumnType("float");
 

@@ -70,6 +70,7 @@ import CategoryForm from "../Categories/Create/CategoryForm";
 import ServiceDashboard from "../ServicesForDashboard/ServiceDashboard";
 import ServiceForm from "../ServicesForDashboard/Create/ServiceForm";
 import ServicesDetailsForDashboard from "../ServicesForDashboard/ServicesDetailsForDashboard";
+import BookingDashboard from "../booking/BookingDashboard";
 // import BookingCalendar from "../user/bookings-calendar";
 
 const routes = all_routes;
@@ -148,6 +149,10 @@ export const listingroutes = [
     element: <ServiceDetails />,
   },
   // booking
+  {
+    path: routes.bookingDashboard,
+    element: <BookingDashboard />,
+  },
   {
     path: routes.bookingDetails,
     element: <BookingDetails />,

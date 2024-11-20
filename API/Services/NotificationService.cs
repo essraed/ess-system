@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -15,12 +16,15 @@ namespace API.Services
         private readonly IHubContext<NotificationHub> _hubContext;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public NotificationService(DataContext context, IHubContext<NotificationHub> hubContext, IMapper mapper)
+        public NotificationService(DataContext context, IHubContext<NotificationHub> hubContext,
+            IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _context = context;
             _hubContext = hubContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<NotificationDto>> GetAll(NotificationParams param)
@@ -28,12 +32,14 @@ namespace API.Services
             var query = _context.Notifications
                     .OrderBy(x => x.UpdateDate.HasValue ? x.UpdateDate : x.CreateDate)
                     .AsQueryable();
-            
-            if (param.IsRead != null) {
+
+            if (param.IsRead != null)
+            {
                 query = query.Where(x => x.IsRead == param.IsRead);
             }
 
-            if (param.Count != null && param.Count > 0) {
+            if (param.Count != null && param.Count > 0)
+            {
                 query = query.Take(param.Count ?? 0);
             }
 
@@ -47,7 +53,9 @@ namespace API.Services
                 Title = title,
                 Message = message,
                 Type = type,
-                MoreDetailsUrl = url
+                MoreDetailsUrl = url,
+                CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                CreatedById = GetCurrentUserId(),
             };
 
             _context.Notifications.Add(notification);
@@ -64,11 +72,20 @@ namespace API.Services
             if (notification != null)
             {
                 notification.IsRead = !notification.IsRead;
+                notification.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+
                 var result = await _context.SaveChangesAsync() > 0;
 
                 return result;
             }
             throw new Exception("Error occured during mark notification 'read'.");
+        }
+
+        private string GetCurrentUserId()
+        {
+            return _httpContextAccessor
+                .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? null!;
         }
     }
 }

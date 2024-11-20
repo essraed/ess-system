@@ -1,4 +1,6 @@
 using API.DTOs.ServiceDto;
+using API.Helpers;
+using API.RequestParams;
 
 namespace API.Interfaces
 {

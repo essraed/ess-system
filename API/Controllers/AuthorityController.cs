@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using API.RequestParams;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,12 @@ namespace API.Controllers
             return Ok(await _authorityService.GetAllAuthoritiesAsync(authorityParams));
         }
 
-        [HttpGet("getAllForDropdown")]
-        public async Task<IActionResult> GetAllAuthoritiesForDropdown()
+        
+
+        [HttpGet("get-all-dropdown")]
+        public async Task<IActionResult> GetAllDropdown()
         {
-            return Ok(await _authorityService.GetAllAuthoritiesForDropdownAsync());
+            return Ok(await _authorityService.GetAllDropdownAsync());
         }
 
         [HttpGet("{id}")]

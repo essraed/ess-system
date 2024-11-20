@@ -19,7 +19,7 @@ namespace API.Extensions
             services.AddSwaggerGen();
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(config.GetConnectionString("app-conn"));
             });
 
             // Add Hangfire services.
@@ -68,9 +68,10 @@ namespace API.Extensions
             services.AddScoped(typeof(IAuthorityService), typeof(AuthorityService));
             services.AddScoped(typeof(IServiceService), typeof(ServiceService));
             services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
-            services.AddScoped(typeof(IBookingService), typeof(BookingService));
             services.AddScoped(typeof(IWorkingTimeService), typeof(WorkingTimeService));
             services.AddScoped(typeof(IFileService), typeof(FileService));
+            services.AddScoped(typeof(IBookingService), typeof(BookingService));
+            services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             
             services.AddScoped<EmailService>();
             services.AddScoped<NotificationService>();

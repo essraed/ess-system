@@ -5,6 +5,7 @@ import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { ServiceData, ServiceInput } from "../../types/service";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
+import { DropdownType } from "../../types/Dropdown";
 
 
 export default class ServiceStore {
@@ -17,9 +18,21 @@ export default class ServiceStore {
   fromDate: string = "";
   toDate: string = "";
   userId: string = "";
+  servicesDropdown: DropdownType[] | null = null;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  loadServicesDropdown = async () => {
+    try {
+      const result = await agent.Bookings.dropdownList();
+      runInAction(() => {
+        this.servicesDropdown = result;
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // Add Service
