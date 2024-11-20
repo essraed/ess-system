@@ -117,7 +117,7 @@ export default class UserStore {
     return this.user?.roles && Array.isArray(this.user.roles) ? this.user.roles.includes(role) : false;
   };  
 
-  get isAdmin () {
+  isAdmin () {
     return this.hasRole('ADMIN')
   }
 

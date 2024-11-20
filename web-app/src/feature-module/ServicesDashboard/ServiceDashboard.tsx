@@ -3,7 +3,7 @@ import Breadcrumbs from '../common/breadcrumbs'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../app/stores/store'
 import ServiceFilter from './ServiceFilter'
-import ServiceListForDashboard from './ServiceListForDashboard'
+import ServiceDashboardList from './ServiceDashboardList'
 
 const ServiceDashboard = () => {
   
@@ -17,7 +17,7 @@ const ServiceDashboard = () => {
     <>
     {/* // table filters */}
     <div className="listing-page">
-      <Breadcrumbs title="Categorys" subtitle="Listings" />
+      <Breadcrumbs title="Services" subtitle="Listings" />
       {/* Search */}
       <ServiceFilter pageSize={pagination?.pageSize}/>
       {/* /Search */}
@@ -30,7 +30,7 @@ const ServiceDashboard = () => {
           {/* //here the table */}
 
           {/* Payments Table */}
-          <ServiceListForDashboard/>
+          <ServiceDashboardList/>
 
           {/* /Payments Table */}
         </div>

@@ -68,3 +68,5 @@ yarn.lock
 # Others
 .vscode/
 .history
+
+src/environment.tsx

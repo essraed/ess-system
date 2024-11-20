@@ -12,10 +12,8 @@ import ConfirmDialog from "../common/ConfirmDialog";
 import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
-import ServiceForm from "./Create/ServiceForm";
 
-
-const ServiceListForDashboard = () => {
+const ServiceDashboardList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,10 +80,10 @@ const ServiceListForDashboard = () => {
       toast.error("Unauthorized");
     } else {
       loadServices();
-      console.log("services",services);
+      console.log("services", services);
     }
   }, [userStore.token, loadServices]);
-  
+
   if (!Array.isArray(services)) return <p>Loading...</p>;
 
   const number = [
@@ -166,7 +164,20 @@ const ServiceListForDashboard = () => {
                               />
                             </label>
                           </li>
-                          <ServiceForm />
+                          <li>
+                            <Link
+                              to={all_routes.serviceCreate}
+                              className="btn-maintance btn btn-primary"
+                            >
+                              Add Service
+                              <span className="ms-2">
+                                <i
+                                  className="fe feather icon-add"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -178,7 +189,7 @@ const ServiceListForDashboard = () => {
               <div className="table-responsive dashboard-table">
                 <Table
                   setDeleteId={setDeleteId}
-                  exceptColumns={["id","pictureUrl"]}
+                  exceptColumns={["id", "pictureUrl", "rate", "totalPrice","categoryId","serviceVipName","serviceOptions"]}
                   data={services}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
@@ -206,4 +217,4 @@ const ServiceListForDashboard = () => {
   );
 };
 
-export default observer(ServiceListForDashboard);
+export default observer(ServiceDashboardList);

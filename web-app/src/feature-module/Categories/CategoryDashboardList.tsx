@@ -13,9 +13,10 @@ import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
-import CategoryForm from "./Create/CategoryForm";
+import CategoryForm from "./CategoryForm";
 
-const CategoryListForDashboard = () => {
+
+const CategoryDashboardList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,7 +85,7 @@ const CategoryListForDashboard = () => {
       loadCategories();
     }
   }, [userStore.token, loadCategories]);
-  
+
   if (!Array.isArray(categories)) return <p>Loading...</p>;
 
   const number = [
@@ -165,7 +166,9 @@ const CategoryListForDashboard = () => {
                               />
                             </label>
                           </li>
-                          <CategoryForm />
+                          <li>
+                            <CategoryForm />
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -177,7 +180,7 @@ const CategoryListForDashboard = () => {
               <div className="table-responsive dashboard-table">
                 <Table
                   setDeleteId={setDeleteId}
-                  exceptColumns={["id","pictureUrl"]}
+                  exceptColumns={["id", "pictureUrl"]}
                   data={categories}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
@@ -205,4 +208,4 @@ const CategoryListForDashboard = () => {
   );
 };
 
-export default observer(CategoryListForDashboard);
+export default observer(CategoryDashboardList);

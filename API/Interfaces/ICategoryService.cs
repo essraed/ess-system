@@ -1,4 +1,8 @@
+
+
 using API.DTOs.ServiceDto;
+using API.Helpers;
+using API.RequestParams;
 
 namespace API.Interfaces
 {
@@ -6,7 +10,7 @@ namespace API.Interfaces
     {
         Task<PagedList<CategoryDto>> GetAllCategoriesAsync(CategoryParams categoryParams);
         Task DeleteCategoryAsync(Guid id);
-        Task<CategoryDto> AddCategoryAsync(CategorySaveDto model, IFormFile pictureFile);
+        Task<CategoryDto> AddCategoryAsync(CategorySaveDto model);
         Task<CategoryDto> GetCategoryByIdAsync(Guid id);
         Task<List<CategoryDto>> GetAllCategoriesForDropdownAsync();
     }

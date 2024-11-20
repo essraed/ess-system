@@ -9,7 +9,6 @@ using API.RequestParams;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using API.Helpers;
 
 public class CategoryService : ICategoryService
 {
@@ -81,20 +80,20 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryDto>(category);
     }
 
-    public async Task<CategoryDto> AddCategoryAsync(CategorySaveDto model, IFormFile? pictureFile)
+    public async Task<CategoryDto> AddCategoryAsync(CategorySaveDto model)
     {
 
         if (await _context.Categories.AnyAsync(x => x.Name == model.Name))
         {
             throw new Exception("Category already exists.");
         }
-        var pictureUrl = UploadingImages.StoreFile(pictureFile);
+        // var pictureUrl = UploadingImages.StoreFile(pictureFile);
 
         var category = _mapper.Map<Category>(model);
 
         category.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         category.CreatedById = GetCurrentUserId();
-        category.PictureUrl =UploadingImages.GetImagePath(pictureUrl); 
+        // category.PictureUrl =UploadingImages.GetImagePath(pictureUrl); 
 
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
