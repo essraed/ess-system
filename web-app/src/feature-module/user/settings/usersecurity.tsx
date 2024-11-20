@@ -259,7 +259,7 @@ const UserSecurity = () => {
                           to="#"
                           className="btn btn-danger"
                           data-bs-toggle="modal"
-                          data-bs-target="#delete_account"
+                          data-bs-target="#delete_dialog"
                         >
                           Delete
                         </Link>

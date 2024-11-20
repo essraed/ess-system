@@ -11,8 +11,9 @@ type Props = {
   pageSize?: number;
   status?: ReactNode;
   exceptColumns: string[];
-  setDeleteId: (id: string) => void;
+  setSelectedId: (id: string) => void;
   routeUrl: string;
+  dialogFlags: any
 };
 
 const Table = ({
@@ -21,8 +22,9 @@ const Table = ({
   pageSize,
   status,
   exceptColumns,
-  setDeleteId,
+  setSelectedId,
   routeUrl,
+  dialogFlags,
 }: Props) => {
   const action = (rowData: any) => {
     const { id } = rowData;
@@ -38,7 +40,7 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {routeUrl !== all_routes.authorityDashboard &&  (
+          {routeUrl !== all_routes.authorityDashboard && (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
@@ -46,15 +48,38 @@ const Table = ({
           <Link
             className="dropdown-item"
             to="#"
-            onClick={() => confirmDelete(id)}
+            onClick={() => confirmDialog(id)}
             data-bs-toggle="modal"
-            data-bs-target="#delete_account"
-          >
+            data-bs-target={`#${dialogFlags.deleteDialog} ?? '#delete_dialog'`}
+            >
             <i className="feather icon-trash-2 me-1"></i> Delete
           </Link>
-          {routeUrl !== all_routes.authorityDashboard && routeUrl !== all_routes.categoryDashboard && (
-            <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
-              <i className="feather icon-edit me-1"></i> Edit
+          {routeUrl !== all_routes.authorityDashboard &&
+            routeUrl !== all_routes.categoryDashboard && (
+              <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
+                <i className="feather icon-edit me-1"></i> Edit
+              </Link>
+            )}
+          {routeUrl === all_routes.bookingDashboard && (
+            <Link
+            className="dropdown-item"
+            to="#"
+            onClick={() => confirmDialog(id)}
+            data-bs-toggle="modal"
+            data-bs-target={`#${dialogFlags.completeDialog}`}
+            >
+              <i className="feather icon-trash-2 me-1"></i> Set as Completed
+            </Link>
+          )}
+          {routeUrl === all_routes.bookingDashboard && (
+            <Link
+              className="dropdown-item"
+              to="#"
+              onClick={() => confirmDialog(id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.cancelDialog}`}
+            >
+              <i className="feather icon-trash-2 me-1"></i> Cancel booking
             </Link>
           )}
         </div>
@@ -62,8 +87,8 @@ const Table = ({
     );
   };
 
-  const confirmDelete = (id: string) => {
-    setDeleteId(id);
+  const confirmDialog = (id: string) => {
+    setSelectedId(id);
   };
 
   // Custom function to render nested serviceOptions data
@@ -102,7 +127,7 @@ const Table = ({
               header={separateCamelCase(key)}
               // Check if the column contains nested data (array or object)
               body={(rowData: any) => {
-                if (key === "createDate"|| key==="updateDate") {
+                if (key === "createDate" || key === "updateDate") {
                   return formatDateTime(rowData[key]); // Render custom for serviceOptions
                 }
                 return rowData[key]; // Default rendering for other columns
@@ -110,8 +135,7 @@ const Table = ({
             />
           ))}
 
-      {status && 
-      <Column field="status" header="Status" body={status} />}
+      {status && <Column field="status" header="Status" body={status} />}
       <Column field="action" header="Action" body={action} />
     </DataTable>
   );

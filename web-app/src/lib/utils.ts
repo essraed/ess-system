@@ -14,6 +14,8 @@ export function capitalize(str: string) {
 export function formatDateTime(dateString: string | undefined): string {
   if (!dateString) return ""
 
+  console.log('dateString: ', dateString);
+  
   const date = new Date(dateString);
 
   // Format the date part as DD-MM-YYYY
@@ -29,6 +31,8 @@ export function formatDateTime(dateString: string | undefined): string {
     minute: "2-digit",
     hour12: true,
   });
+
+  console.log(`dateString: ${datePart} ${timePart}`);
 
   return `${datePart} ${timePart}`;
 }

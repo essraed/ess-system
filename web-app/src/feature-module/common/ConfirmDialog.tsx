@@ -7,19 +7,21 @@ interface Props {
   onConfirm: () => void;
   title: string;
   description: string;
+  modalId: string;
 }
 
 const ConfirmDialog = ({
   onConfirm,
   title,
   description,
+  modalId
 }: Props) => {
   const { t } = useTranslation();
   return (
 
 <div
   className="modal new-modal fade"
-  id="delete_account"
+  id={modalId}
   data-keyboard="false"
   data-backdrop="static"
 >
@@ -39,7 +41,7 @@ const ConfirmDialog = ({
                   data-bs-dismiss="modal"
                   className="btn btn-secondary w-100"
                 >
-                  Delete
+                  Confirm
                 </Link>
               </div>
               <div className="col-6" >
@@ -48,7 +50,7 @@ const ConfirmDialog = ({
                   data-bs-dismiss="modal"
                   className="btn btn-primary w-100"
                 >
-                  Cancel
+                  Close
                 </Link>
               </div>
             </div>
