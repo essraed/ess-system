@@ -12,6 +12,6 @@ namespace API.Interfaces
         Task<AuthorityDto> AddAuthorityAsync(AuthoritySaveDto model);
         Task UpdateAuthorityAsync(Guid id, AuthoritySaveDto model);
         Task DeleteAuthorityAsync(Guid id);
-        Task<List<AuthorityDto>> GetAllAuthoritiesForDropdownAsync();
+        Task<List<DropdownDto>> GetAllDropdownAsync();
     }
 }

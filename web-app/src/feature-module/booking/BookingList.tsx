@@ -1,38 +1,34 @@
-
-
-import React, { useEffect, useState } from "react";
-import Table from "../common/Table";
-import { Button } from "@nextui-org/react";
-import { GrPowerReset } from "react-icons/gr";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
-import ConfirmDialog from "../common/ConfirmDialog";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Paginator from "../common/Paginator";
-import { Dropdown } from "primereact/dropdown";
+import ConfirmDialog from "../common/ConfirmDialog";
+import Table from "../common/Table";
+import { GrPowerReset } from "react-icons/gr";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { useStore } from "../../app/stores/store";
+import toast from "react-hot-toast";
+import { Button } from "@nextui-org/react";
+import React from "react";
 import { all_routes } from "../router/all_routes";
-import handleErrors from "../../lib/utils";
-import AuthorityForm from "./AuthorityForm";
+import { Dropdown } from "primereact/dropdown";
 
-const AuthorityList = () => {
-  const { t } = useTranslation();
+const BookingList = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const {
-    authorityStore: {
-      authorities,
-      loadAuthorities,
-      setPagingParams,
+  const { bookingStore: {
+      bookings,
+      loadBookings,
+      deleteBooking,
       pagination,
       setSearchTerm,
-      deleteAuthority,
-      clearAuthorities
+      setPagingParams,
+      clearBookings,
+      setDateFilter,
+      setServiceFilter,
     },
-    userStore,
+    userStore
   } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,32 +37,28 @@ const AuthorityList = () => {
 
   const handleGetNext = (page: number) => {
     setPagingParams(new PagingParams(page, pageSize));
-    loadAuthorities();
+    loadBookings();
   };
 
   const handleSearch = () => {
     setSearchTerm(searchQuery);
     setPagingParams(new PagingParams(1, pageSize));
-    loadAuthorities(); // Reload documents with the new search term
+    loadBookings();
   };
 
   const handleReset = () => {
     setSearchTerm("");
     setSearchQuery("");
+    setDateFilter("", "");
+    setServiceFilter("");
     setPagingParams(new PagingParams(1, pageSize));
-    loadAuthorities(); // Reload documents after resetting filters
+    loadBookings();
   };
 
   const handleDelete = async () => {
     if (deleteId) {
-      const result = await deleteAuthority(deleteId);
-      if (result.status === "success") {
-        toast.success(result.data);
-        navigate(all_routes.letterDashboard);
-      } else {
-        handleErrors(result.error);
-      }
-      loadAuthorities(); // Reload documents after deletion
+      await deleteBooking(deleteId);
+      loadBookings();
       navigate(location.pathname, { replace: true });
     }
   };
@@ -74,22 +66,22 @@ const AuthorityList = () => {
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
-    loadAuthorities(); // Reload documents with new page size
+    loadBookings();
   };
 
   useEffect(() => {
     if (!userStore.token) {
-      clearAuthorities();
+      clearBookings();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
-      loadAuthorities();
+      loadBookings();
     }
-  }, [userStore.token, loadAuthorities]);
+  }, [userStore.token, loadBookings]);
 
-  if (!authorities) return <p>Loading...</p>;
+  if (!bookings) return <p>Loading...</p>;
 
-  const number = [
+  const pageSizeOptions = [
     { name: "10" },
     { name: "15" },
     { name: "20" },
@@ -137,7 +129,7 @@ const AuthorityList = () => {
                                 onChange={(e) =>
                                   handlePageSizeChange(Number(e.value.name))
                                 }
-                                options={number}
+                                options={pageSizeOptions}
                                 optionLabel="name"
                                 placeholder={String(pageSize)}
                               />
@@ -145,7 +137,7 @@ const AuthorityList = () => {
                           </li>
                           <li>
                             <Button
-                              onClick={handleReset} // Directly call handleReset without arrow function
+                              onClick={handleReset}
                               variant="bordered"
                             >
                               Reset <GrPowerReset size={20} />
@@ -167,10 +159,24 @@ const AuthorityList = () => {
                               />
                             </label>
                           </li>
-                          <li>
-
-                          <AuthorityForm />
-                          </li>
+                          {/* <li>
+                            <div
+                              className="view-all text-center aos-init aos-animate"
+                              data-aos="fade-down"
+                            >
+                              <Link
+                                to={all_routes.bookingCreate}
+                                className="btn btn-view-custom d-inline-flex align-items-center"
+                              >
+                                <span>
+                                  <IoMdAddCircleOutline
+                                    size={24}
+                                    className=""
+                                  />
+                                </span>
+                              </Link>
+                            </div>
+                          </li> */}
                         </ul>
                       </div>
                     </div>
@@ -182,11 +188,11 @@ const AuthorityList = () => {
               <div className="table-responsive dashboard-table">
                 <Table
                   setDeleteId={setDeleteId}
-                  exceptColumns={["id", "createDate"]}
-                  data={authorities}
+                  exceptColumns={["id", "aiResult", "createDate", "address", "email", "createdBy", "updatedBy"]}
+                  data={bookings}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
-                  routeUrl={all_routes.authorityDashboard}
+                  routeUrl={all_routes.bookingDashboard}
                 />
               </div>
               <div className="mx-auto pt-2">
@@ -201,13 +207,11 @@ const AuthorityList = () => {
       </div>
       <ConfirmDialog
         onConfirm={handleDelete}
-        title={t("Confirm Delete")}
-        description={`${t("Are you sure you want to delete this")} ${t(
-          "authority"
-        )}${t("?")}`}
+        title="Confirm Delete"
+        description="Are you sure you want to delete this booking?"
       />
     </div>
   );
 };
 
-export default observer(AuthorityList);
+export default observer(BookingList);

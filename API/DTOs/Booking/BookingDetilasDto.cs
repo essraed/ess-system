@@ -2,7 +2,7 @@ using API.Helpers;
 
 namespace API.DTOs
 {
-    public class BookingDto
+    public class BookingDetilasDto
     {
         public Guid Id { get; set; }
 
@@ -14,7 +14,13 @@ namespace API.DTOs
 
         public string? Address { get; set; }
 
+        public double? Latitude { get; set; }
+
+        public double? Longitude { get; set; }
+
         public decimal? TotalPrice { get; set; }
+
+        public string? Note { get; set; }
 
         public string ServiceName { get; set; } = default!;
 
@@ -28,8 +34,14 @@ namespace API.DTOs
         
         public DateTime? UpdateDate { get; set; }
 
+        public string? ServiceOptionName { get; set; }
+
+        public decimal? ServiceOptionFee { get; set; }
+
         public BookingStatus? BookingStatus { get; set; }
 
         public DateTime? BookingDate { get; set; }
+        
+        public DateTime? EndBookingDate { get; set; }
     }
 }

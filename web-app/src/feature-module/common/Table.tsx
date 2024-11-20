@@ -110,7 +110,8 @@ const Table = ({
             />
           ))}
 
-      {status && <Column field="status" header="Status" body={status} />}
+      {status && 
+      <Column field="status" header="Status" body={status} />}
       <Column field="action" header="Action" body={action} />
     </DataTable>
   );
