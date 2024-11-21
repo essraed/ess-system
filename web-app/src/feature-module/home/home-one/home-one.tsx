@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 import dayjs from "dayjs";
 import { TimePicker } from "antd";
 import ImageWithBasePath from "../../../core/data/img/ImageWithBasePath";
@@ -17,7 +18,10 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 import { observer } from "mobx-react-lite";
+
+
 import ServiceList from "../../services/ServiceList";
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
 const HomeOne = () => {
   const routes = all_routes;
@@ -28,6 +32,8 @@ const HomeOne = () => {
   // const onChange = (time: Dayjs, timeString: string) => {
   //   console.log(time, timeString);
   // };
+
+  
   const handleItemClick = (index: number) => {
     setSelectedItems((prevSelectedItems) => {
       const updatedSelectedItems = [...prevSelectedItems];
@@ -155,156 +161,329 @@ const HomeOne = () => {
     <>
       <Header />
       {/* Banner */}
+
+<div className="float-sm">
+  <div className="fl-fl float-fb">
+  <i className="feather feather-facebook"></i>
+      <a href="" target="_blank"> Like us!</a>
+  </div>
+  <div className="fl-fl float-tw">
+    <i className="fa fa-twitter"></i>
+    <a href="" target="_blank">Follow us!</a>
+  </div>
+  <div className="fl-fl float-gp">
+    <i className="fa fa-google-plus"></i>
+    <a href="" target="_blank">Recommend us!</a>
+  </div>
+  <div className="fl-fl float-rs">
+    <i className="fa fa-rss"></i>
+    <a href="" target="_blank">Follow via RSS</a>
+  </div>
+  <div className="fl-fl float-ig">
+    <i className="fa fa-instagram"></i>
+    <a href="" target="_blank">Follow us!</a>
+  </div>
+  <div className="fl-fl float-pn">
+    <i className="fa fa-pinterest"></i>
+    <a href="" target="_blank">Follow us!</a>
+  </div>
+</div>
+
       <section className="banner-section banner-slider">
-        <div className="container">
+        <div className="container-fluid">
           <div className="home-banner">
             <div className="row align-items-center">
-              <div className="col-lg-6" data-aos="fade-down">
-                <p className="explore-text">
-                  {" "}
-                  <span>
-                    <i className="fa-solid fa-thumbs-up me-2"></i>
-                  </span>
-                  100% Trusted car rental platform in the World
-                </p>
-                <h1>
-                  <span>Find Your Best</span> <br />
-                  Dream Car for Rental
-                </h1>
-                <p>
-                  Experience the ultimate in comfort, performance, and
-                  sophistication with our luxury car rentals. From sleek sedans
-                  and stylish coupes to spacious SUVs and elegant convertibles,
-                  we offer a range of premium vehicles to suit your preferences
-                  and lifestyle.
-                </p>
-                <div className="view-all">
-                  <Link
-                    to={routes.listingGrid}
-                    className="btn btn-view d-inline-flex align-items-center "
-                  >
-                    View all Cars{" "}
-                    <span>
-                      <i className="feather icon-arrow-right ms-2" />
-                    </span>
-                  </Link>
-                </div>
-              </div>
-              <div className="col-lg-6" data-aos="fade-down">
-                <div className="banner-imgs">
-                  <ImageWithBasePath
-                    src="assets/img/car-right.png"
-                    className="img-fluid aos"
-                    alt="bannerimage"
-                  />
-                </div>
-              </div>
+
+
+
+
             </div>
           </div>
         </div>
       </section>
       {/* /Banner */}
-      {/* Search */}
-      <div className="section-search">
-        <div className="container">
-          <div className="search-box-banner">
-            <form>
-              <ul className="align-items-center">
-                <li className="column-group-main">
-                  <div className="input-block">
-                    <label>Pickup Location</label>
-                    <div className="group-img">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Enter City, Airport, or Address"
-                      />
-                      <span>
-                        <i className="feather icon-map-pin" />
-                      </span>
-                    </div>
-                  </div>
-                </li>
-                <li className="column-group-main">
-                  <div className="input-block">
-                    <label>Pickup Date</label>
-                  </div>
-                  <div className="input-block-wrapp">
-                    <div className="input-block date-widget">
-                      <div className="group-img">
-                        <Calendar
-                          value={date1}
-                          onChange={() => setDate1(null)}
-                          placeholder="04/11/2023"
-                        />
-                        {/* <input type="text" className="form-control datetimepicker" placeholder="04/11/2023" /> */}
-                        <span>
-                          <i className="feather icon-calendar"></i>
-                        </span>
+
+      <section className="section-top">
+        <div id="Services" className="homesection servicessection saa viewon">
+          <div className="custom-container">
+            <div className="row">
+              <h2 className="section-title">Our Services</h2>
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-07.png" className="img-fluid" alt="DHA" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="input-block time-widge">
-                      <div className="group-img">
-                        <TimePicker
-                          placeholder="11:00 AM"
-                          className="form-control timepicker"
-                          defaultValue={dayjs("00:00:00", "HH:mm:ss")}
-                        />
-                        <span>
-                          <i className="feather icon-clock"></i>
-                        </span>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">MEDICAL DHA</a>
+                            </h3>
+                            <p>Medical Fitness Services and Occupational Health Screening Services for Visa</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </li>
-                <li className="column-group-main">
-                  <div className="input-block">
-                    <label>Return Date</label>
-                  </div>
-                  <div className="input-block-wrapp">
-                    <div className="input-block date-widge">
-                      <div className="group-img">
-                        <Calendar
-                          value={date2}
-                          onChange={() => setDate2(null)}
-                          placeholder="04/11/2023"
-                        />
-                        <span>
-                          <i className="feather icon-calendar" />
-                        </span>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-05.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Typing Services</a>
+                            </h3>
+                            <p>Our Typing services are designed to simplify the documentation process</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
                       </div>
                     </div>
-                    <div className="input-block time-widge">
-                      <div className="group-img">
-                        <TimePicker
-                          placeholder="11:00 AM"
-                          className="form-control timepicker"
-                          defaultValue={dayjs("00:00:00", "HH:mm:ss")}
-                        />
-                        <span>
-                          <i className="feather icon-clock"></i>
-                        </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-02.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Amer Services</a>
+                            </h3>
+                            <p>Simplify Your Entry Process with Our Amer Services</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </li>
-                <li className="column-group-last">
-                  <div className="input-block">
-                    <div className="search-btn">
-                      <button className="btn search-button" type="submit">
-                        {" "}
-                        <i className="fa fa-search" aria-hidden="true" />
-                        Search
-                      </button>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-01.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">DET Services</a>
+                            </h3>
+<p>
+Center ensures a smooth conduit for individuals and businesses to engage with DET
+</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </li>
-              </ul>
-            </form>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-08.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Golden Visa Services</a>
+                            </h3>
+<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-08.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Premium Services</a>
+                            </h3>
+<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-06.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Tasheel Services</a>
+                            </h3>
+<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+                <div className="listing-item">
+                  <div className="listing-img">
+                    <div className="img-slider owl-carousel owl-loaded owl-drag">
+                      <div className="owl-stage-outer">
+                        <div className="owl-stage">
+                          <div className="owl-item cloned">
+                            <div className="slide-images">
+                              <a href="listing-details.html">
+                                <img src="assets/img/shini photos for web-04.png" className="img-fluid" alt="Amer" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="listing-content">
+                        <div className="listing-features d-flex align-items-end justify-content-between">
+                          <div className="list-rating">
+
+                            <h3 className="listing-title">
+                              <a href="listing-details.html">Fast Track Services</a>
+                            </h3>
+<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                          </div>
+                        </div>
+                        <div className="view-more-btn text-center">
+                          <a href="listing-grid.html" className="btn btn-secondary">View  More</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-      </div>
-      {/* /Search */}
+      </section>
+
+
       {/* services */}
       <section className="section services">
         <div className="service-right">
@@ -400,145 +579,10 @@ const HomeOne = () => {
       </section>
       {/* /services */}
       {/* Popular Services */}
-      <section className="section popular-services popular-explore">
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Explore Most Popular Cars</h2>
-            <p>
-              Lorem Ipsum has been the industry standard dummy text ever since
-              the 1500s,
-            </p>
-          </div>
-          {/* /Heading title */}
 
-          <CategoryList />
-
-          <div className="tab-content">
-            <div className="tab-pane active" id="Carmazda">
-              <div className="row">
-                <>
-                  <ServiceList />
-                </>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       {/* /Popular Services */}
       {/* Popular Cartypes */}
-      <section className="section popular-car-type">
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Most Popular Cartypes</h2>
-            <p>
-              Most popular worldwide Car Category due to their reliability,
-              affordability, and features.
-            </p>
-          </div>
-          {/* /Heading title */}
-          <div className="row">
-            <div className="popular-slider-group ">
-              <div className="popular-cartype-slider">
-                <Slider {...settings} className="service-slider">
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-01.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Crossover</h6>
-                      <p>35 Cars</p>
-                    </div>
-                  </div>
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-02.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Sports Coupe</h6>
-                      <p>45 Cars</p>
-                    </div>
-                  </div>
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-03.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Sedan</h6>
-                      <p>15 Cars</p>
-                    </div>
-                  </div>
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-04.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Pickup</h6>
-                      <p>17 Cars</p>
-                    </div>
-                  </div>
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-05.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Family MPV</h6>
-                      <p>24 Cars</p>
-                    </div>
-                  </div>
-                  <div className="listing-owl-item">
-                    <div className="listing-owl-group">
-                      <div className="listing-owl-img">
-                        <ImageWithBasePath
-                          src="assets/img/cars/mp-vehicle-05.png"
-                          className="img-fluid"
-                          alt="Popular Cartypes"
-                        />
-                      </div>
-                      <h6>Family MPV</h6>
-                      <p>24 Cars</p>
-                    </div>
-                  </div>
-                </Slider>
-              </div>
-            </div>
-          </div>
-          {/* View More */}
-          <div className="view-all text-center" data-aos="fade-down">
-            <Link
-              to={routes.listingGrid}
-              className="btn btn-view d-inline-flex align-items-center"
-            >
-              View all Cars{" "}
-              <span>
-                <i className="feather icon-arrow-right ms-2" />
-              </span>
-            </Link>
-          </div>
-          {/* View More */}
-        </div>
-      </section>
+
       {/* /Popular Cartypes */}
       {/* Facts By The Numbers */}
       <section className="section facts-number">
@@ -684,555 +728,7 @@ const HomeOne = () => {
       </section>
       {/* /Facts By The Numbers */}
       {/* Rental deals */}
-      <section className="section popular-services">
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Recommended Car Rental deals</h2>
-            <p>Here are some versatile options that cater to different needs</p>
-          </div>
-          {/* /Heading title */}
-          <div className="row">
-            <div className="popular-slider-group">
-              <div className=" rental-deal-slider ">
-                <Slider {...rentalslideroption} className="rental-slider">
-                  {/* owl carousel item */}
-                  <div className="rental-car-item">
-                    <div className="listing-item mb-0">
-                      <div className="listing-img">
-                        <Link to={routes.listingDetails}>
-                          <img
-                            src="assets/img/cars/rental-car-01.jpg"
-                            className="img-fluid"
-                            alt="Toyota"
-                          />
-                        </Link>
-                        <div
-                          className="fav-item justify-content-end"
-                          key={55}
-                          onClick={() => handleItemClick(55)}
-                        >
-                          <Link
-                            to="#"
-                            className={`fav-icon ${
-                              selectedItems[55] ? "selected" : ""
-                            }`}
-                          >
-                            <i className="feather  icon-heart" />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="listing-content">
-                        <div className="listing-features">
-                          <div className="fav-item-rental">
-                            <div className="featured-text">
-                              $400<span>/day</span>
-                            </div>
-                          </div>
-                          <div className="list-rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <span>(5.0)</span>
-                          </div>
-                          <h3 className="listing-title">
-                            <Link to={routes.listingDetails}>
-                              BMW 640 XI Gran Turismo
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="listing-details-group">
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-01.svg"
-                                  alt="Auto"
-                                />
-                              </span>
-                              <p>Auto</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-02.svg"
-                                  alt="10 KM"
-                                />
-                              </span>
-                              <p>10 KM</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-03.svg"
-                                  alt="Petrol"
-                                />
-                              </span>
-                              <p>Diesel</p>
-                            </li>
-                          </ul>
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-04.svg"
-                                  alt="Power"
-                                />
-                              </span>
-                              <p>Power</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-07.svg"
-                                  alt={"2018"}
-                                />
-                              </span>
-                              <p>AC</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-06.svg"
-                                  alt="Persons"
-                                />
-                              </span>
-                              <p>5 Persons</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="listing-button">
-                          <Link
-                            to={routes.listingDetails}
-                            className="btn btn-order"
-                          >
-                            <span>
-                              <i className="feather icon-calendar me-2" />
-                            </span>
-                            Rent Now
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /owl carousel item */}
-                  {/* owl carousel item */}
-                  <div className="rental-car-item">
-                    <div className="listing-item mb-0">
-                      <div className="listing-img">
-                        <Link to={routes.listingDetails}>
-                          <img
-                            src="assets/img/cars/rental-car-02.jpg"
-                            className="img-fluid"
-                            alt="Toyota"
-                          />
-                        </Link>
-                        <div
-                          className="fav-item justify-content-end"
-                          key={56}
-                          onClick={() => handleItemClick(56)}
-                        >
-                          <Link
-                            to="#"
-                            className={`fav-icon ${
-                              selectedItems[56] ? "selected" : ""
-                            }`}
-                          >
-                            <i className="feather  icon-heart" />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="listing-content">
-                        <div className="listing-features">
-                          <div className="fav-item-rental">
-                            <div className="featured-text">
-                              $210<span>/day</span>
-                            </div>
-                          </div>
-                          <div className="list-rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <span>(5.0)</span>
-                          </div>
-                          <h3 className="listing-title">
-                            <Link to={routes.listingDetails}>
-                              Camz Ferrari Portofino M
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="listing-details-group">
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-01.svg"
-                                  alt="Auto"
-                                />
-                              </span>
-                              <p>Auto</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-02.svg"
-                                  alt="10 KM"
-                                />
-                              </span>
-                              <p>30 KM</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-03.svg"
-                                  alt="Petrol"
-                                />
-                              </span>
-                              <p>Diesel</p>
-                            </li>
-                          </ul>
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-04.svg"
-                                  alt="Power"
-                                />
-                              </span>
-                              <p>Power</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-07.svg"
-                                  alt={"2018"}
-                                />
-                              </span>
-                              <p>AC</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-06.svg"
-                                  alt="Persons"
-                                />
-                              </span>
-                              <p>5 Persons</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="listing-button">
-                          <Link
-                            to={routes.listingDetails}
-                            className="btn btn-order"
-                          >
-                            <span>
-                              <i className="feather icon-calendar me-2" />
-                            </span>
-                            Rent Now
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /owl carousel item */}
-                  {/* owl carousel item */}
-                  <div className="rental-car-item">
-                    <div className="listing-item mb-0">
-                      <div className="listing-img">
-                        <div className="img-slider listing-page-slider">
-                          <Slider {...imgslideroption}>
-                            <div className="slide-images">
-                              <Link to={routes.listingDetails}>
-                                <img
-                                  src="assets/img/cars/rental-car-03.jpg"
-                                  className="img-fluid"
-                                  alt="Toyota"
-                                />
-                              </Link>
-                            </div>
-                            <div className="slide-images">
-                              <Link to={routes.listingDetails}>
-                                <img
-                                  src="assets/img/cars/rental-car-03-slider1.jpg"
-                                  className="img-fluid"
-                                  alt="Toyota"
-                                />
-                              </Link>
-                            </div>
-                            <div className="slide-images">
-                              <Link to={routes.listingDetails}>
-                                <img
-                                  src="assets/img/cars/rental-car-03-slider2.jpg"
-                                  className="img-fluid"
-                                  alt="Toyota"
-                                />
-                              </Link>
-                            </div>
-                            <div className="slide-images">
-                              <Link to={routes.listingDetails}>
-                                <img
-                                  src="assets/img/cars/rental-car-03-slider3.jpg"
-                                  className="img-fluid"
-                                  alt="Toyota"
-                                />
-                              </Link>
-                            </div>
-                          </Slider>
-                        </div>
-                        <div
-                          className="fav-item justify-content-end"
-                          key={57}
-                          onClick={() => handleItemClick(57)}
-                        >
-                          <Link
-                            to="#"
-                            className={`fav-icon ${
-                              selectedItems[57] ? "selected" : ""
-                            }`}
-                          >
-                            <i className="feather  icon-heart" />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="listing-content">
-                        <div className="listing-features">
-                          <div className="fav-item-rental">
-                            <div className="featured-text">
-                              $380<span>/day</span>
-                            </div>
-                          </div>
-                          <div className="list-rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <span>(5.0)</span>
-                          </div>
-                          <h3 className="listing-title">
-                            <Link to={routes.listingDetails}>
-                              Mercedes-Benz
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="listing-details-group">
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-01.svg"
-                                  alt="Auto"
-                                />
-                              </span>
-                              <p>Auto</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-02.svg"
-                                  alt="10 KM"
-                                />
-                              </span>
-                              <p>30 KM</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-03.svg"
-                                  alt="Petrol"
-                                />
-                              </span>
-                              <p>Diesel</p>
-                            </li>
-                          </ul>
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-04.svg"
-                                  alt="Power"
-                                />
-                              </span>
-                              <p>Power</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-07.svg"
-                                  alt={"2018"}
-                                />
-                              </span>
-                              <p>AC</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-06.svg"
-                                  alt="Persons"
-                                />
-                              </span>
-                              <p>5 Persons</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="listing-button">
-                          <Link
-                            to={routes.listingDetails}
-                            className="btn btn-order"
-                          >
-                            <span>
-                              <i className="feather icon-calendar me-2" />
-                            </span>
-                            Rent Now
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /owl carousel item */}
-                  {/* owl carousel item */}
-                  <div className="rental-car-item">
-                    <div className="listing-item mb-0">
-                      <div className="listing-img">
-                        <Link to={routes.listingDetails}>
-                          <img
-                            src="assets/img/cars/rental-car-04.jpg"
-                            className="img-fluid"
-                            alt="Toyota"
-                          />
-                        </Link>
-                        <div
-                          className="fav-item justify-content-end"
-                          key={58}
-                          onClick={() => handleItemClick(58)}
-                        >
-                          <Link
-                            to="#"
-                            className={`fav-icon ${
-                              selectedItems[58] ? "selected" : ""
-                            }`}
-                          >
-                            <i className="feather  icon-heart" />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="listing-content">
-                        <div className="listing-features">
-                          <div className="fav-item-rental">
-                            <span className="featured-text">$250/day</span>
-                          </div>
-                          <div className="list-rating">
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <i className="fas fa-star filled" />
-                            <span>(4.5)</span>
-                          </div>
-                          <h3 className="listing-title">
-                            <Link to={routes.listingDetails}>Range Rover</Link>
-                          </h3>
-                        </div>
-                        <div className="listing-details-group">
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-01.svg"
-                                  alt="Auto"
-                                />
-                              </span>
-                              <p>Auto</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-02.svg"
-                                  alt="10 KM"
-                                />
-                              </span>
-                              <p>28 KM</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-03.svg"
-                                  alt="Petrol"
-                                />
-                              </span>
-                              <p>Petrol</p>
-                            </li>
-                          </ul>
-                          <ul>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-04.svg"
-                                  alt="Power"
-                                />
-                              </span>
-                              <p>Power</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-07.svg"
-                                  alt={"2018"}
-                                />
-                              </span>
-                              <p>AC</p>
-                            </li>
-                            <li>
-                              <span>
-                                <img
-                                  src="assets/img/icons/car-parts-06.svg"
-                                  alt="Persons"
-                                />
-                              </span>
-                              <p>5 Persons</p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="listing-button">
-                          <Link
-                            to={routes.listingDetails}
-                            className="btn btn-order"
-                          >
-                            <span>
-                              <i className="feather icon-calendar me-2" />
-                            </span>
-                            Rent Now
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /owl carousel item */}
-                </Slider>
-              </div>
-            </div>
-          </div>
 
-          {/* View More */}
-          <div className="view-all text-center" data-aos="fade-down">
-            <Link
-              to={routes.listingGrid}
-              className="btn btn-view d-inline-flex align-items-center"
-            >
-              Go to all Cars{" "}
-              <span>
-                <i className="feather icon-arrow-right ms-2" />
-              </span>
-            </Link>
-          </div>
-          {/* View More */}
-        </div>
-      </section>
       {/* /Rental deals */}
       {/* Why Choose Us */}
       <section className="section why-choose popular-explore">
@@ -1329,65 +825,7 @@ const HomeOne = () => {
       </section>
       {/* /Why Choose Us */}
       {/* About us Testimonials */}
-      <section className="section about-testimonial testimonials-section">
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2 className="title text-white">What People say about us? </h2>
-            <p className="description text-white">
-              Discover what our customers have think about us
-            </p>
-          </div>
-          {/* /Heading title */}
-          <div className="owl-carousel about-testimonials testimonial-group mb-0 owl-theme">
-            {/* /Carousel Item  */}
-            {/* Carousel Item */}
-            <Slider {...setting}>
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="testimonial-item d-flex">
-                  <div className="card flex-fill">
-                    <div className="card-body">
-                      <div className="quotes-head" />
-                      <div className="review-box">
-                        <div className="review-profile">
-                          <div className="review-img">
-                            <ImageWithBasePath
-                              src={testimonial.image}
-                              className="img-fluid"
-                              alt="img"
-                            />
-                          </div>
-                        </div>
-                        <div className="review-details">
-                          <h6>{testimonial.name}</h6>
-                          <div className="list-rating">
-                            <div className="list-rating-star">
-                              {[...Array(Math.floor(testimonial.rating))].map(
-                                (_, i) => (
-                                  <i key={i} className="fas fa-star filled" />
-                                )
-                              )}
-                            </div>
-                            <p>
-                              <span>({testimonial.rating})</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <p>{testimonial.review}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
 
-            {/* /Carousel Item  */}
-            {/* Carousel Item */}
-
-            {/* /Carousel Item  */}
-          </div>
-        </div>
-      </section>
       {/* About us Testimonials */}
       {/* FAQ  */}
       <section className="section faq-section bg-light-primary">
@@ -1544,314 +982,7 @@ const HomeOne = () => {
       </section>
       {/* /FAQ */}
       {/* Pricing Plan */}
-      <section className="pricing-section pricing-page pricing-section-bottom">
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Transparent Pricing For you</h2>
-            <p>Choose a package that suits you</p>
-          </div>
-          {/* /Heading title */}
-          {/* Plan Selected */}
-          <div className="plan-selected" data-aos="fade-down">
-            <h4>Monthly</h4>
-            <div className="status-toggle me-2 ms-2">
-              <input
-                id="list-rating_1"
-                className="px-4 check"
-                type="checkbox"
-              />
-              <label
-                htmlFor="list-rating_1"
-                className="px-4 checktoggle checkbox-bg"
-              >
-                checkbox
-              </label>
-            </div>
-            <h4>Annually</h4>
-          </div>
-          {/* /Plan Selected */}
-          <div className="row">
-            <div
-              className="col-lg-3 d-flex col-md-6 col-12"
-              data-aos="fade-down"
-            >
-              <div className="price-card price-selected flex-fill">
-                <div className="price-head">
-                  <h2>Save more with Good Plans</h2>
-                  <p>
-                    Choose a plan and get onboard in Minutes, then get $100 with
-                    next payment
-                  </p>
-                </div>
-                <div className="price-body">
-                  <ImageWithBasePath
-                    className="img-fluid"
-                    src="assets/img/price-plan.png"
-                    alt="Price Plan"
-                  />
-                </div>
-              </div>
-            </div>
-            <>
-              <div
-                className="col-lg-3 d-flex col-md-6 col-12"
-                data-aos="fade-down"
-              >
-                <div className="price-card flex-fill">
-                  <div className="price-head">
-                    <div className="price-level">
-                      <h6>Basic Rental </h6>
-                      <p>For the basics</p>
-                    </div>
-                    <h4>$49</h4>
-                    <span>Per user per month</span>
-                  </div>
-                  <div className="price-details">
-                    <ul>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        50% Downpayment
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Insurance not Included
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Doorstep delivery
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        Safe &amp; Sanitized
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        No Long term Commitment
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        Refundable deposit has to pay
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        No Flexible timing &amp; extension
-                      </li>
-                    </ul>
-                    <Link to={routes.login} className="btn viewdetails-btn">
-                      Buy Package
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 d-flex col-md-6 col-12"
-                data-aos="fade-down"
-              >
-                <div className="price-card flex-fill active">
-                  <div className="price-head">
-                    <div className="price-level price-level-popular">
-                      <h6>Recommended</h6>
-                      <p>For the Users</p>
-                    </div>
-                    <h4>$95</h4>
-                    <span>Per user per month</span>
-                  </div>
-                  <div className="price-details">
-                    <ul>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        50% Downpayment
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Insurance not Included
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Doorstep delivery
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Safe &amp; Sanitized
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Long term Commitment 1 month
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        Refundable deposit has to pay
-                      </li>
-                      <li className="price-uncheck">
-                        <span>
-                          <i className="fa-regular fa-circle-xmark" />
-                        </span>
-                        No Flexible timing &amp; extension
-                      </li>
-                    </ul>
-                    <Link
-                      to={routes.login}
-                      className="btn viewdetails-btn btn-popular"
-                    >
-                      Buy Package
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 d-flex col-md-6 col-12"
-                data-aos="fade-down"
-              >
-                <div className="price-card flex-fill">
-                  <div className="price-head">
-                    <div className="price-level">
-                      <h6>Pro</h6>
-                      <p>For the Pro</p>
-                    </div>
-                    <h4>$154</h4>
-                    <span>Per user per month</span>
-                  </div>
-                  <div className="price-details">
-                    <ul>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        50% Downpayment
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Insurance not Included
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Doorstep delivery
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Safe &amp; Sanitized
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        Long term Commitment 1 month
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        No Refundable deposit
-                      </li>
-                      <li className="price-check">
-                        <span>
-                          <i className="fa-regular fa-circle-check" />
-                        </span>
-                        No Flexible timing &amp; extension
-                      </li>
-                    </ul>
-                    <Link to={routes.login} className="btn viewdetails-btn">
-                      Buy Package
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </>
-          </div>
-          {/* App Available */}
-          <div className="user-app-group">
-            <div className="app-left">
-              <ImageWithBasePath
-                src="assets/img/bg/app-left.png"
-                className="img-fluid"
-                alt="App Available"
-              />
-            </div>
-            <div className="app-right">
-              <ImageWithBasePath
-                src="assets/img/bg/app-right.png"
-                className="img-fluid"
-                alt="App Available"
-              />
-            </div>
-            <div className="row">
-              <div className="col-lg-7">
-                <div className="userapp-heading">
-                  <h2 data-aos="fade-down">
-                    Dreamsrental User Friendly App Available
-                  </h2>
-                  <p data-aos="fade-down">
-                    Appropriately monetize one-to-one interfaces rather than
-                    cutting-edge Competently disinte rmediate backward.
-                  </p>
-                  <div className="download-btn">
-                    <div className="app-avilable" data-aos="fade-down">
-                      <Link to="#">
-                        <ImageWithBasePath
-                          src="assets/img/play-store.svg"
-                          alt="PlayStore"
-                        />
-                      </Link>
-                    </div>
-                    <div className="app-avilable" data-aos="fade-down">
-                      <Link to="#">
-                        <ImageWithBasePath
-                          src="assets/img/apple.svg"
-                          alt="AppStore"
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-5 d-none d-lg-block">
-                <div className="car-holder">
-                  <ImageWithBasePath
-                    className="app-car img-fluid"
-                    src="assets/img/app-car.png"
-                    alt="App Available"
-                    data-aos="fade-down"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* /App Available */}
-        </div>
-      </section>
+
       {/* /Pricing Plan */}
       <>
         {/* Blog Section */}

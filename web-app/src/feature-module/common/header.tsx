@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useStore } from "../../app/stores/store";
 
+
+
 const Header = () => {
   const routes = all_routes;
   const location = useLocation();
@@ -30,9 +32,58 @@ const Header = () => {
 
   return (
     <>
+
+
+
       <header className="header">
-        <div className="container-fluid">
+        <div className="custom-container">
+          <div className="row">
+          <div className="col-md-6 col-6">
+            <Link to={routes.homeOne} className="navbar-brand logo">
+              <ImageWithBasePath
+                src="assets/img/ESSLogo.png"
+                className="img-fluid"
+                alt="Logo"
+              />
+            </Link>
+          </div>
+          <div className="col-md-6 col-6 text-right rightLogo"> 
+                        <ul className="nav header-navbar-rht">
+            {isLoggedIn ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link header-login" to="#" onClick={logout}>
+                    <span>
+                      <i className="fa-regular fa-user" />
+                    </span>
+                    Logout
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link header-login" to={routes.login}>
+                    <span>
+                      <i className="fa-regular fa-user" />
+                    </span>
+                    Sign In
+                  </Link>
+                </li>
+        
+              </>
+            )}
+          </ul>
+
+
+          </div>
+  
+             </div>
+
+             </div>
           <nav className="navbar navbar-expand-lg header-nav">
+          <div className="custom-container">
+
             <div className="navbar-header">
               <Link id="mobile_btn" to="#" onClick={handleClick}>
                 <span className="bar-icon">
@@ -41,13 +92,7 @@ const Header = () => {
                   <span />
                 </span>
               </Link>
-              <Link to={routes.homeOne} className="navbar-brand logo">
-                <ImageWithBasePath
-                  src="assets/img/logo.svg"
-                  className="img-fluid"
-                  alt="Logo"
-                />
-              </Link>
+
               <Link to={routes.homeOne} className="navbar-brand logo-small">
                 <ImageWithBasePath
                   src="assets/img/logo-small.png"
@@ -60,7 +105,7 @@ const Header = () => {
               <div className="menu-header">
                 <Link to={routes.homeOne} className="menu-logo">
                   <ImageWithBasePath
-                    src="assets/img/logo.svg"
+                    src="assets/img/ESS KBC LOGO transparent-01-01.png"
                     className="img-fluid"
                     alt="Logo"
                   />
@@ -76,44 +121,25 @@ const Header = () => {
                 </Link>
               </div>
               <ul className="main-nav">
+
                 <li
-                  className={`has-submenu ${location.pathname.includes("index") ? "active" : ""}`}
+                  className={
+                    location.pathname.includes(routes.homeOne) ? "active" : ""
+                  }
                 >
-                  <Link to="#" onClick={mobileSubmenus}>
-                    Home <i className="fas fa-chevron-down" />
-                  </Link>
-                  <ul
-                    className={`submenu ${mobileSubmenu ? "d-block" : "d-none"}`}
-                  >
-                    <li
-                      className={
-                        location.pathname.includes(routes.homeOne)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.homeOne}>Home 1</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.homeTwo)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.homeTwo}>Home 2</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.homeThree)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.homeThree}>Home 3</Link>
-                    </li>
-                  </ul>
+                  <Link to={routes.homeOne}>Home</Link>
                 </li>
+
+                <li
+                  className={
+                    location.pathname.includes(routes.aboutUs) ? "active" : ""
+                  }
+                >
+                  <Link to={routes.aboutUs}>Aboutus</Link>
+                </li>
+
+
+
                 <li
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
@@ -320,12 +346,11 @@ const Header = () => {
                       </ul>
                     </li>
                     <li
-                      className={`has-submenu ${
-                        location.pathname.includes("booking") ||
+                      className={`has-submenu ${location.pathname.includes("booking") ||
                         location.pathname.includes("invoice")
-                          ? "active"
-                          : ""
-                      }`}
+                        ? "active"
+                        : ""
+                        }`}
                     >
                       <Link to="#">Booking</Link>
                       <ul className="submenu">
@@ -466,42 +491,7 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>
-                <li
-                  className={`has-submenu ${location.pathname.includes("blog") ? "active" : ""}`}
-                >
-                  <Link to="#">
-                    Blog <i className="fas fa-chevron-down" />
-                  </Link>
-                  <ul className="submenu">
-                    <li
-                      className={
-                        location.pathname.includes(routes.blogList)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.blogList}>Blog List</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.blogGrid)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.blogGrid}>Blog Grid</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.blogDetails)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.blogDetails}>Blog Details</Link>
-                    </li>
-                  </ul>
-                </li>
+
                 <li
                   className={
                     location.pathname.includes(routes.contactUs) ? "active" : ""
@@ -517,41 +507,9 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <ul className="nav header-navbar-rht">
-              {isLoggedIn ? (
-                <>
-                  <li className="nav-item">
-                    <Link className="nav-link header-login" to="#" onClick={logout}>
-                      <span>
-                        <i className="fa-regular fa-user" />
-                      </span>
-                      Logout
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <Link className="nav-link header-login" to={routes.login}>
-                      <span>
-                        <i className="fa-regular fa-user" />
-                      </span>
-                      Sign In
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link header-reg" to={routes.register}>
-                      <span>
-                        <i className="fa-solid fa-lock" />
-                      </span>
-                      Sign Up
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
+</div>
           </nav>
-        </div>
+      
       </header>
     </>
   );
