@@ -4,6 +4,7 @@ import { WorkingTimeData } from '../../types/workingTime';
 import agent from '../api/agent';
 import { PaginationData, PagingParams } from '../../types/pagination';
 import { WorkingTimeSchema } from '../../lib/schemas/workingTimeSchema ';
+import { formatDateTime, formatTimeOnly } from '../../lib/utils';
 
 
 export default class WorkingTimeStore {
@@ -34,13 +35,22 @@ export default class WorkingTimeStore {
 
   // Load Working Times
   loadWorkingTimes = async () => {
-    this.loadingInitial = true;
+    const wtimes: WorkingTimeData [] = []
     try {
-      const result = await agent.WorkingTime.getAll();
+      const response = await agent.WorkingTime.getAll();
+
       runInAction(() => {
-        this.workingTimes = result;
+        response.map((item) => {
+          wtimes.push({
+            ...item,
+            createDate: formatDateTime(item.createDate),
+            createdBy: item.createdBy ? item.createdBy : 'No set',
+            fromTime: formatTimeOnly(item.fromTime),
+            toTime: formatTimeOnly(item.toTime)
+          });
+        });
+        this.workingTimes = wtimes
       });
-      this.loadingInitial = false;
     } catch (error) {
       console.error("Error loading working times: ", error);
       this.loadingInitial = false;

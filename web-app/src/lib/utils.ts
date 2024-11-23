@@ -14,8 +14,6 @@ export function capitalize(str: string) {
 export function formatDateTime(dateString: string | undefined): string {
   if (!dateString) return ""
 
-  console.log('dateString: ', dateString);
-  
   const date = new Date(dateString);
 
   // Format the date part as DD-MM-YYYY
@@ -32,10 +30,23 @@ export function formatDateTime(dateString: string | undefined): string {
     hour12: true,
   });
 
-  console.log(`dateString: ${datePart} ${timePart}`);
-
   return `${datePart} ${timePart}`;
 }
+
+export function formatTimeOnly(timeString: string | undefined): string {
+  if (!timeString) return "";
+
+  const [hours, minutes, seconds] = timeString.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, seconds || 0);
+
+  return date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 
 export async function saveToken(token: string | null | undefined) {
   if (typeof window === 'undefined') return null;

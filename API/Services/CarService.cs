@@ -36,7 +36,10 @@ public class CarService : ICarService
         if (!string.IsNullOrWhiteSpace(carParams.SearchTerm))
         {
             var searchTerm = carParams.SearchTerm.Trim().ToLower();
-            query = query.Where(x => x.Name.ToLower().Contains(searchTerm) || (!string.IsNullOrEmpty(x.Model) && x.Model.ToLower().Contains(searchTerm)));
+            query = query.Where(x => x.Name.ToLower().Contains(searchTerm) ||
+                (!string.IsNullOrEmpty(x.Model) && x.Model.ToLower().Contains(searchTerm)) ||
+                (!string.IsNullOrEmpty(x.PlateNumber) && x.PlateNumber.ToLower().Contains(searchTerm))
+                );
         }
 
 

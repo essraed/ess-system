@@ -4,6 +4,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { CarSchema } from "../../lib/schemas/CarSchema";
+import { formatDateTime } from "../../lib/utils";
 
 export default class CarStore {
   cars: CarData[] | null  = null;
@@ -94,14 +95,23 @@ export default class CarStore {
 
   // Load Cars
   loadCars = async () => {
-    this.loadingInitial = true;
+    const cars: CarData[] = [];
     try {
       const result = await agent.Cars.getAll(this.axiosParams);
       runInAction(() => {
         runInAction(() => {
             const { pageNumber, pageSize, data, pageCount, totalCount } = result;
             this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
-            this.cars = data;
+
+            data.map((item) => {
+              cars.push({
+                ...item,
+                createDate: formatDateTime(item.createDate),
+                createdBy: item.createdBy ? item.createdBy : 'No set'
+              });
+            });
+
+            this.cars = cars;
           });
       });
     } catch (error) {

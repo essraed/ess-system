@@ -47,7 +47,7 @@ const WorkingTimeForm = () => {
           className="flex items-center gap-2 btn btn-primary"
         >
           <IoMdAddCircleOutline size={20} />
-          {t("Add New WorkingTime")}
+          {t("Update WorkingTime")}
         </Link>
       )}
 
@@ -60,7 +60,7 @@ const WorkingTimeForm = () => {
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title"> {t("Add New WorkingTime")}</h4>
+              <h4 className="modal-title"> {t("Update WorkingTime")}</h4>
               <button
                 type="button"
                 className="close-btn"

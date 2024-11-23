@@ -5,6 +5,6 @@ export interface CarData {
     name: string;
     plateNumber: string;
     model?: string;
-    createDate?: Date;
+    createDate?: string;
     createdBy?: string;
 }
