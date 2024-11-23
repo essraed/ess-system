@@ -20,7 +20,7 @@ namespace API.Mappings
             CreateMap<Service, ServiceDto>()
     .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
         src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
-    .ForMember(dest => dest.UpdateByName, opt => opt.MapFrom(src =>
+    .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src =>
         src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty))
     .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions))
     .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>

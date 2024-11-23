@@ -9,7 +9,8 @@ namespace API.Mappings
     {
         public NotificationMappingProfile()
         {
-            CreateMap<Notification, NotificationDto>();
+            CreateMap<Notification, NotificationDto>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()));;
         }
     }
 }

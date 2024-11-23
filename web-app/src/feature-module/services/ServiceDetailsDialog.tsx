@@ -78,7 +78,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                         <p className="font-medium text-gray-700">Price:</p>
                       </div>
                       <p className="text-gray-600">
-                        {currentService?.priceVIP} AED
+                        {currentService?.priceVIP} 
                       </p>
                     </div>
                   )}
@@ -87,14 +87,14 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       <p className="font-medium text-gray-700">
                         Service Price:
                       </p>
-                      <p className="text-gray-600">{currentService?.price}AED</p>
+                      <p className="text-gray-600">{currentService?.price}</p>
                     </div>
                   )}
                   {currentService?.createDate && (
                     <div>
                       <p className="font-medium text-gray-700">Create Date:</p>
                       <p className="text-gray-600">
-                        {formatDateTime(currentService?.createDate?.toString())}
+                        {currentService?.createDate?.toString()}
                       </p>
                     </div>
                   )}
@@ -102,7 +102,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                     <div>
                       <p className="font-medium text-gray-700">Update Date:</p>
                       <p className="text-gray-600">
-                        {formatDateTime(currentService.updateDate?.toString())}
+                        {currentService.updateDate?.toString()}
                       </p>
                     </div>
                   )}

@@ -9,7 +9,7 @@ const NotificationDashboard = () => {
     <>
     {/* // table filters */}
     <div className="listing-page">
-      <Breadcrumbs title="Categorys" subtitle="Listings" />
+      <Breadcrumbs title="Notifications" subtitle="Listings" />
       {/* Search */}
       <NotificationFilter/>
       {/* /Search */}

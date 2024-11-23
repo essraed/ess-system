@@ -3,7 +3,7 @@ export interface CategoryData {
   name: string;
   pictureUrl?: string;
   Description?: string;
-  createDate?: Date | string;
+  createDate?: string;
   createdBy?: string;
 }
 

@@ -3,12 +3,12 @@ import agent from "../api/agent";
 import { NotificationData, NotificationType } from "../../types/notification";
 import { SIGNALR_HUB_URL } from "../../environment";
 import * as signalR from "@microsoft/signalr";
-import { convertEnumToString } from "../../lib/utils";
+import { convertEnumToString, formatDateTime } from "../../lib/utils";
 import { ActionResult } from "../../types";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 export default class NotificationStore {
-  notifications: NotificationData[] = [];
+  notifications: NotificationData[] | undefined = [];
   unreadCount: number = 0;
   takeCount: number | null = null;
   connection: signalR.HubConnection | null = null;
@@ -58,8 +58,8 @@ export default class NotificationStore {
             );
 
             // Check if notification already exists
-            if (!this.notifications.find((n) => n.id === id)) {
-              this.notifications.unshift({
+            if (!this.notifications?.find((n) => n.id === id)) {
+              this.notifications?.unshift({
                 id: id,
                 title,
                 message: message,
@@ -100,13 +100,29 @@ export default class NotificationStore {
   };
 
   loadNotifications = async () => {
+    const notificationList: NotificationData[] = [];
     try {
       const result = await agent.Notifications.getAll(this.axiosParams);
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
 
-        this.notifications = data;
+        data.map((item) => {
+          notificationList.push({
+            ...item,
+            createDate: item.createDate
+              ? formatDateTime(item.createDate)
+              : "No Set",
+            updateDate: item.updateDate
+              ? formatDateTime(item.updateDate?.toString())
+              : "No Set",
+            moreDetailsUrl: item.moreDetailsUrl
+              ? item.moreDetailsUrl
+              : "#",
+          });
+        });
+
+        this.notifications = notificationList;
 
         this.unreadCount = data.filter((n) => !n.isRead).length;
       });
@@ -125,6 +141,19 @@ export default class NotificationStore {
     }
   };
 
+  deleteNotification = async (id: string): Promise<ActionResult<string>> => {
+    try {
+      const response = await agent.Notifications.delete(id);
+      runInAction(() => {
+        this.notifications = this.notifications?.filter(item => item.id !== id)
+      })
+      return { status: "success", data: response };
+    } catch (error) {
+      console.error("Failed to mark notification as read", error);
+      return { status: "error", error: error as string };
+    }
+  };
+  
   get axiosParams() {
     const params = new URLSearchParams();
 

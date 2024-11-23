@@ -1,3 +1,4 @@
+import { dayOfWeekMap } from "../../constants/contants";
 import { PUBLIC_API_URL } from "../../environment";
 import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
@@ -74,16 +75,6 @@ axios.interceptors.response.use(
     }
   }
 );
-
-const dayOfWeekMap: { [key: string]: number } = {
-  Sunday: 0,
-  Monday: 1,
-  Tuesday: 2,
-  Wednesday: 3,
-  Thursday: 4,
-  Friday: 5,
-  Saturday: 6,
-};
 
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
@@ -242,6 +233,7 @@ const Notifications = {
   ReadToggle: (id: string) => requests.put<string>(`notification/${id}`, {}),
   create: (notification: NotificationSchema) =>
     requests.post<NotificationData>("notification", notification),
+  delete: (id: string) => requests.del<string>(`notification/${id}`),
 };
 
 

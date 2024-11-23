@@ -55,7 +55,7 @@ namespace API.Controllers
             try
             {
                 var createdCategory = await _categoryService.AddCategoryAsync(categorySaveDto);
-                return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);
+                return Ok(createdCategory);
             }
             catch (Exception ex)
             {
