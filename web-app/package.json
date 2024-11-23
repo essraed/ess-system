@@ -23,6 +23,7 @@
     "bootstrap": "^5.3.3",
     "depcheck": "^1.4.7",
     "feather-icons-react": "^0.7.0",
+    "font-awesome": "^4.7.0",
     "framer-motion": "^11.11.11",
     "google-map-react": "^2.2.1",
     "html2pdf.js": "^0.10.2",

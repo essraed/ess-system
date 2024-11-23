@@ -93,13 +93,7 @@ const Header = () => {
                 </span>
               </Link>
 
-              <Link to={routes.homeOne} className="navbar-brand logo-small">
-                <ImageWithBasePath
-                  src="assets/img/logo-small.png"
-                  className="img-fluid"
-                  alt="Logo"
-                />
-              </Link>
+    
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
@@ -144,7 +138,7 @@ const Header = () => {
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
                   <Link to="#">
-                    Listings <i className="fas fa-chevron-down" />
+                  Booking Services <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
                     <li
@@ -154,7 +148,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.listingGrid}>Listing Grid</Link>
+                      <Link to={routes.listingGrid}>Amer Services</Link>
                     </li>
                     <li
                       className={

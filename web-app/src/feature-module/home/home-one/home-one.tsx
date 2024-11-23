@@ -18,10 +18,8 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 import { observer } from "mobx-react-lite";
-
-
+import '../../../../node_modules/font-awesome/css/font-awesome.min.css'; 
 import ServiceList from "../../services/ServiceList";
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
 const HomeOne = () => {
   const routes = all_routes;
@@ -162,9 +160,12 @@ const HomeOne = () => {
       <Header />
       {/* Banner */}
 
-<div className="float-sm">
+      
+
+  
+      <div className="float-sm">
   <div className="fl-fl float-fb">
-  <i className="feather feather-facebook"></i>
+  <i className="fa fa-facebook"></i>
       <a href="" target="_blank"> Like us!</a>
   </div>
   <div className="fl-fl float-tw">
@@ -187,6 +188,10 @@ const HomeOne = () => {
     <i className="fa fa-pinterest"></i>
     <a href="" target="_blank">Follow us!</a>
   </div>
+  <div className="fl-fl float-yt">
+    <i className="fa fa-youtube"></i>
+    <a href="" target="_blank">Follow us!</a>
+  </div>
 </div>
 
       <section className="banner-section banner-slider">
@@ -202,6 +207,8 @@ const HomeOne = () => {
         </div>
       </section>
       {/* /Banner */}
+{/* Why Choose Us */}
+
 
       <section className="section-top">
         <div id="Services" className="homesection servicessection saa viewon">
@@ -329,7 +336,7 @@ const HomeOne = () => {
                               <a href="listing-details.html">DET Services</a>
                             </h3>
 <p>
-Center ensures a smooth conduit for individuals and businesses to engage with DET
+We ensures a smooth conduit for individuals and businesses to engage
 </p>
                           </div>
                         </div>
@@ -484,108 +491,11 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
       </section>
 
 
-      {/* services */}
-      <section className="section services">
-        <div className="service-right">
-          <ImageWithBasePath
-            src="assets/img/bg/service-right.svg"
-            className="img-fluid"
-            alt="services right"
-          />
-        </div>
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>How It Works</h2>
-            <p>
-              Booking a car rental is a straightforward process that typically
-              involves the following steps
-            </p>
-          </div>
-          {/* /Heading title */}
-          <div className="services-work">
-            <div className="row">
-              <div
-                className="col-lg-4 col-md-4 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="services-group service-date flex-fill">
-                  <div className="services-icon border-secondary">
-                    <ImageWithBasePath
-                      className="icon-img bg-secondary"
-                      src="assets/img/icons/services-icon-01.svg"
-                      alt="Choose Locations"
-                    />
-                  </div>
-                  <div className="services-content">
-                    <h3>1. Choose Date & Locations</h3>
-                    <p>
-                      Determine the date & location for your car rental.
-                      Consider factors such as your travel itinerary,
-                      pickup/drop-off locations (e.g., airport, city center),
-                      and duration of rental.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-md-4 col-12  d-flex"
-                data-aos="fade-down"
-              >
-                <div className="services-group service-loc flex-fill">
-                  <div className="services-icon border-warning">
-                    <ImageWithBasePath
-                      className="icon-img bg-warning"
-                      src="assets/img/icons/services-icon-02.svg"
-                      alt="Choose Locations"
-                    />
-                  </div>
-                  <div className="services-content">
-                    <h3>2. Pick-Up Locations</h3>
-                    <p>
-                      Check the availability of your desired vehicle type for
-                      your chosen dates and location. Ensure that the rental
-                      rates, taxes, fees, and any additional charges.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-md-4 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="services-group service-book flex-fill">
-                  <div className="services-icon border-dark">
-                    <ImageWithBasePath
-                      className="icon-img bg-dark"
-                      src="assets/img/icons/services-icon-03.svg"
-                      alt="Choose Locations"
-                    />
-                  </div>
-                  <div className="services-content">
-                    <h3>3. Book your Car</h3>
-                    <p>
-                      Once you`&lsquo;`ve found car rental option, proceed to
-                      make a reservation. Provide the required information,
-                      including your details, driver`&lsquo;`s license, contact
-                      info, and payment details.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* /services */}
-      {/* Popular Services */}
-
-      {/* /Popular Services */}
-      {/* Popular Cartypes */}
-
-      {/* /Popular Cartypes */}
-      {/* Facts By The Numbers */}
       <section className="section facts-number">
+      <div id="Services" className="homesection servicessection saa viewon">
+
+
+
         <div className="facts-left">
           <ImageWithBasePath
             src="assets/img/bg/facts-left.png"
@@ -600,14 +510,10 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
             alt="facts right"
           />
         </div>
-        <div className="container">
+        <div className="custom-container">
           {/* Heading title*/}
           <div className="section-heading" data-aos="fade-down">
-            <h2 className="title text-white">Facts By The Numbers</h2>
-            <p className="description text-white">
-              Here are some dreamsrent interesting facts presented by the
-              numbers
-            </p>
+          <h2 className="section-title">Facts By The Numbers</h2>
           </div>
           {/* /Heading title */}
           <div className="counter-group">
@@ -634,7 +540,7 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                         />
                         K<br />
                       </h4>
-                      <p> Happy Customer </p>
+                      <p> Happy Customers </p>
                     </div>
                   </div>
                 </div>
@@ -655,13 +561,13 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                       <h4>
                         <CountUp
                           className="counterUp"
-                          end={2547}
+                          end={2}
                           duration={3}
                           separator=","
                         />
                         +<br />
                       </h4>
-                      <p>Count of Cars</p>
+                      <p>Count of Centers</p>
                     </div>
                   </div>
                 </div>
@@ -689,7 +595,7 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                         K+
                         <br />
                       </h4>
-                      <p>Car Center Solutions</p>
+                      <p>Strategic Partners</p>
                     </div>
                   </div>
                 </div>
@@ -717,113 +623,21 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                         K+
                         <br />
                       </h4>
-                      <p>Total Kilometer</p>
+                      <p>Trusting Companies</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
       {/* /Facts By The Numbers */}
       {/* Rental deals */}
 
       {/* /Rental deals */}
-      {/* Why Choose Us */}
-      <section className="section why-choose popular-explore">
-        <div className="choose-left">
-          <ImageWithBasePath
-            src="assets/img/bg/choose-left.png"
-            className="img-fluid"
-            alt="Why Choose Us"
-          />
-        </div>
-        <div className="container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-            <h2>Why Choose Us</h2>
-            <p>
-              Lorem Ipsum has been the industry standard dummy text ever since
-              the 1500s,
-            </p>
-          </div>
-          {/* /Heading title */}
-          <div className="why-choose-group">
-            <div className="row">
-              <div
-                className="col-lg-4 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="card flex-fill">
-                  <div className="card-body">
-                    <div className="choose-img choose-black">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-selection.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="choose-content">
-                      <h4>Easy &amp; Fast Booking</h4>
-                      <p>
-                        Completely carinate e business testing process whereas
-                        fully researched customer service. Globally extensive
-                        content with quality.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="card flex-fill">
-                  <div className="card-body">
-                    <div className="choose-img choose-secondary">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-crown.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="choose-content">
-                      <h4>Many Pickup Location</h4>
-                      <p>
-                        Enthusiastically magnetic initiatives with
-                        cross-platform sources. Dynamically target testing
-                        procedures through effective.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-4 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="card flex-fill">
-                  <div className="card-body">
-                    <div className="choose-img choose-primary">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-user-check.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="choose-content">
-                      <h4>Customer Satisfaction</h4>
-                      <p>
-                        Globally user centric method interactive. Seamlessly
-                        revolutionize unique portals corporate collaboration.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* /Why Choose Us */}
+      
       {/* About us Testimonials */}
 
       {/* About us Testimonials */}
@@ -1014,7 +828,7 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                     </p>
                     <h3 className="blog-title">
                       <Link to={routes.blogDetails}>
-                        The 2023 Ford F-150 Raptor – A First Look
+                         2024 - DED Opening
                       </Link>
                     </h3>
                     <p className="blog-description">
@@ -1063,7 +877,7 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                     </p>
                     <h3 className="blog-title">
                       <Link to={routes.blogDetails}>
-                        Tesla Model S: Top Secret Car Collector’s Garage
+                        National Day
                       </Link>
                     </h3>
                     <p className="blog-description">
@@ -1112,8 +926,7 @@ Center ensures a smooth conduit for individuals and businesses to engage with DE
                     </p>
                     <h3 className="blog-title">
                       <Link to={routes.blogDetails}>
-                        Dedicated To Cars, Covering Everything
-                      </Link>
+Best Employee of the Month                      </Link>
                     </h3>
                     <p className="blog-description">
                       Known for its irreverent take on car culture, offers a mix

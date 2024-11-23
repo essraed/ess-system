@@ -42,17 +42,11 @@ const Footer = () => {
                           <Link to={routes.aboutUs}>Our Company</Link>
                         </li>
                         <li>
-                          <Link to="#">Shop Toyota</Link>
+                          <Link to="#">Services</Link>
                         </li>
                         <li>
-                          <Link to="#">Dreamsrentals USA</Link>
+                          <Link to="#">Contact</Link>
                         </li>
-                        <li>
-                          <Link to="#">Dreamsrentals Worldwide</Link>
-                        </li>
-                        <li>
-                          <Link to="#">Dreamsrental Category</Link>
-                        </li>										
                       </ul>
                     </div>
                     {/* /Footer Widget */}
@@ -60,22 +54,22 @@ const Footer = () => {
                   <div className="col-lg-4 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
-                      <h5 className="footer-title">Vehicles Type</h5>
+                      <h5 className="footer-title">Booking Services</h5>
                       <ul>
                         <li>
-                          <Link to="#">All  Vehicles</Link>
+                          <Link to="#">All  Services</Link>
                         </li>
                         <li>
-                          <Link to="#">SUVs</Link>
+                          <Link to="#">Medical DHA</Link>
                         </li>
                         <li>
-                          <Link to="#">Trucks</Link>
+                          <Link to="#">Typing Services</Link>
                         </li>
                         <li>
-                          <Link to="#">Cars</Link>
+                          <Link to="#">Golden Visa Services</Link>
                         </li>
                         <li>
-                          <Link to="#">Crossovers</Link>
+                          <Link to="#">Attestation Services</Link>
                         </li>								
                       </ul>
                     </div>
@@ -87,20 +81,11 @@ const Footer = () => {
                       <h5 className="footer-title">Quick links</h5>
                       <ul>
                         <li>
-                          <Link to="#">My Account</Link>
+                          <Link to="#">Privacy Policy</Link>
                         </li>
                         <li>
-                          <Link to="#">Champaigns</Link>
+                          <Link to="#">Faq</Link>
                         </li>
-                        <li>
-                          <Link to="#">Dreamsrental Dealers</Link>
-                        </li>
-                        <li>
-                          <Link to="#">Deals and Incentive</Link>
-                        </li>
-                        <li>
-                          <Link to="#">Financial Services</Link>
-                        </li>								
                       </ul>
                     </div>
                     {/* /Footer Widget */}
@@ -114,13 +99,13 @@ const Footer = () => {
                     <div className="footer-address">											
                       <span><i className="feather icon-phone-call" /></span>
                       <div className="addr-info">
-                        <Link to="tel:+1(888)7601940">+ 1 (888) 760 1940</Link>
+                        <Link to="tel:+1(888)7601940">+ 971 (04) 342 6666</Link>
                       </div>
                     </div>
                     <div className="footer-address">
                       <span><i className="feather icon-mail" /></span>
                       <div className="addr-info">
-                        <Link to="mailto:support@example.com">support@example.com</Link>
+                        <Link to="mailto:support@example.com">info@ess.ae</Link>
                       </div>
                     </div>
                     <div className="update-form">
@@ -164,7 +149,7 @@ const Footer = () => {
               <div className="row align-items-center">
                 <div className="col-md-6">
                   <div className="copyright-text">
-                    <p>© 2024 Dreams Rent. All Rights Reserved.</p>
+                    <p>© 2024 Karama Business Center. All Rights Reserved.</p>
                   </div>
                 </div>
                 <div className="col-md-6">
