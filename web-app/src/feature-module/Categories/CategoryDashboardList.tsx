@@ -15,7 +15,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
 import CategoryForm from "./CategoryForm";
 import { dialogFlags } from "../../constants/contants";
-
+import CategoryDetails from "./CategoryDetails";
 
 const CategoryDashboardList = () => {
   const { t } = useTranslation();
@@ -199,13 +199,16 @@ const CategoryDashboardList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(
           "category"
         )}${t("?")}`}
       />
+
+      <CategoryDetails modalId={dialogFlags.categoryDialog} />
     </div>
   );
 };

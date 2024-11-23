@@ -116,7 +116,7 @@ namespace API.Services
             var fileEntity = await _context.Files.FindAsync(fileId);
             if (fileEntity == null) throw new Exception("File not found.");
 
-            await DeleteFileOrImageAsync(fileEntity.FilePath);
+            DeleteFileOrImage(fileEntity.FilePath);
 
             string newFilePath = await SaveFileAsync(newFile, directory, isImage);
 
@@ -140,7 +140,7 @@ namespace API.Services
         }
 
         // Delete from server
-        private async Task DeleteFileOrImageAsync(string filePath)
+        private void DeleteFileOrImage(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -154,7 +154,7 @@ namespace API.Services
             var fileEntity = await _context.Files.FindAsync(fileId);
             if (fileEntity == null) throw new Exception("File not found.");
 
-            await DeleteFileOrImageAsync(fileEntity.FilePath);
+            DeleteFileOrImage(fileEntity.FilePath);
 
             _context.Files.Remove(fileEntity);
             await _context.SaveChangesAsync();

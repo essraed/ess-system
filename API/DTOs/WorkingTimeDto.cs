@@ -3,7 +3,7 @@ namespace API.DTOs
     public class WorkingTimeDto
     {
         public Guid Id { get; set; }
-        public DayOfWeek Day { get; set; }
+        public string Day { get; set; }
         public TimeOnly FromTime { get; set; }
         public TimeOnly ToTime { get; set; }
         public bool IsActive { get; set; }

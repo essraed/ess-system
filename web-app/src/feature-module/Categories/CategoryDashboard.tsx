@@ -7,15 +7,13 @@ import CategoryDashboardList from './CategoryDashboardList'
 
 const CategoryDashboard = () => {
   
-  const {categoryStore: {pagination}} = useStore();
-
   return (
     <>
     {/* // table filters */}
     <div className="listing-page">
       <Breadcrumbs title="Categorys" subtitle="Listings" />
       {/* Search */}
-      <CategoryFilter pageSize={pagination?.pageSize}/>
+      <CategoryFilter/>
       {/* /Search */}
     </div>
     
@@ -36,4 +34,4 @@ const CategoryDashboard = () => {
   )
 }
 
-export default observer (CategoryDashboard)
+export default CategoryDashboard

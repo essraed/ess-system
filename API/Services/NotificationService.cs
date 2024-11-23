@@ -6,6 +6,7 @@ using API.Helpers;
 using API.Hubs;
 using API.RequestParams;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,10 +28,11 @@ namespace API.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<NotificationDto>> GetAll(NotificationParams param)
+        public async Task<PagedList<NotificationDto>> GetAll(NotificationParams param)
         {
             var query = _context.Notifications
                     .OrderBy(x => x.UpdateDate.HasValue ? x.UpdateDate : x.CreateDate)
+                    .AsNoTracking()
                     .AsQueryable();
 
             if (param.IsRead != null)
@@ -43,7 +45,25 @@ namespace API.Services
                 query = query.Take(param.Count ?? 0);
             }
 
-            return _mapper.Map<List<NotificationDto>>(await query.ToListAsync());
+
+            if (param.From != null)
+            {
+                query = query.Where(x =>
+                    (x.UpdateDate ?? x.CreateDate) >= param.From);
+            }
+
+            if (param.To != null)
+            {
+                var toDate = param.To.Value.AddDays(1);
+                query = query.Where(x =>
+                    (x.UpdateDate ?? x.CreateDate) <= toDate);
+            }
+
+
+            return await PagedList<NotificationDto>.CreateAsync(
+             query.ProjectTo<NotificationDto>(_mapper.ConfigurationProvider),
+             param.PageNumber,
+             param.PageSize);
         }
 
         public async Task SendNotification(string message, string title, NotificationType type, string? url)

@@ -4,7 +4,9 @@ using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using API.RequestParams;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 public class CarService : ICarService
@@ -22,13 +24,27 @@ public class CarService : ICarService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<List<CarDto>> GetAllCarsAsync()
+    public async Task<PagedList<CarDto>> GetAllCarsAsync(CarParams carParams)
     {
-        return _mapper.Map<List<CarDto>>(
-            await _context.Cars
+        var query =
+            _context.Cars
             .Where(x => !x.IsDeleted)
             .Include(x => x.CreatedBy)
-            .ToListAsync());
+            .AsNoTracking()
+                .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(carParams.SearchTerm))
+        {
+            var searchTerm = carParams.SearchTerm.Trim().ToLower();
+            query = query.Where(x => x.Name.ToLower().Contains(searchTerm) || (!string.IsNullOrEmpty(x.Model) && x.Model.ToLower().Contains(searchTerm)));
+        }
+
+
+        return await PagedList<CarDto>.CreateAsync(
+           query.ProjectTo<CarDto>(_mapper.ConfigurationProvider),
+           carParams.PageNumber,
+           carParams.PageSize);
+
     }
 
 

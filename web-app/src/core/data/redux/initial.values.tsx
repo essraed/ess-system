@@ -4,7 +4,8 @@ import { listingListData } from "../json/listinglist_data";
 import { ourTeamData } from "../json/ourteam_data";
 import { pricingData } from "../json/pricing_data";
 import { testimonial } from "../json/testimonial_data";
-import { userWalletData } from "../json/userwallet_data";
+import { userWalletData } from "../json/user_wallet";
+
 
 const initialState = {
   listing_grid: listingGridData,

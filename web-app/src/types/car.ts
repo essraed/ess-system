@@ -1,9 +1,4 @@
 
-export interface CarInput {
-    name: string;
-    plateNumber: string;
-    model?: string;
-}
 
 export interface CarData {
     id: string;

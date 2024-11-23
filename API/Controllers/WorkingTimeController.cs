@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<WorkingTimeDto>> Create(WorkingTimeSaveDto workingTimeSaveDto)
+        public async Task<ActionResult<WorkingTimeDto>> Create([FromBody] WorkingTimeSaveDto workingTimeSaveDto)
         {
             var workingTimeDto = await _workingTimeService.CreateAsync(workingTimeSaveDto);
             return CreatedAtAction(nameof(GetAll), new { id = workingTimeDto.Id }, workingTimeDto);
