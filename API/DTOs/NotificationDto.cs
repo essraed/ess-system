@@ -11,5 +11,8 @@ namespace API.DTOs
         public bool IsRead { get; set; }
         public NotificationType Type { get; set; } // General, Alert, Reminder.
         public string? MoreDetailsUrl { get; set; }
+
+        public DateTime? CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 }

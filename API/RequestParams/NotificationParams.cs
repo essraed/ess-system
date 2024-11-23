@@ -6,5 +6,8 @@ namespace API.RequestParams
     {
         public int? Count { get; set; }
         public bool? IsRead { get; set; }
+
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
     }
 }

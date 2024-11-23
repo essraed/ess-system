@@ -10,12 +10,6 @@ export interface WorkingTimeData {
     createdBy?: string; 
 }
 
-export interface WorkingTimeInput { 
-    day: DayOfWeek; 
-    fromTime: string; 
-    toTime: string; 
-}
-
 
 
 

@@ -1,14 +1,17 @@
 import { PUBLIC_API_URL } from "../../environment";
 import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
+import { CarSchema } from "../../lib/schemas/CarSchema";
 import { CategorySchema } from "../../lib/schemas/categorySchema";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
+import { NotificationSchema } from "../../lib/schemas/notificationSchema";
 import { RegisterSchema } from "../../lib/schemas/registerSchema";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { UserPromptSchema } from "../../lib/schemas/UserPromptSchema";
+import { WorkingTimeSchema } from "../../lib/schemas/workingTimeSchema ";
 import { AuthorityModel } from "../../types/AuthorityModel";
 import { BookingData, BookingDetailsData } from "../../types/booking";
-import { CarData, CarInput } from "../../types/car";
+import { CarData } from "../../types/car";
 import { CategoryData } from "../../types/category";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
 import { DropdownType } from "../../types/Dropdown";
@@ -16,7 +19,7 @@ import { NotificationData } from "../../types/notification";
 import { PagedResponse } from "../../types/pagination";
 import { ServiceData } from "../../types/service";
 import { User, UserIdAndName } from "../../types/User";
-import { WorkingTimeData, WorkingTimeInput } from "../../types/workingTime";
+import { WorkingTimeData } from "../../types/workingTime";
 import { store } from "../stores/store";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -72,6 +75,16 @@ axios.interceptors.response.use(
   }
 );
 
+const dayOfWeekMap: { [key: string]: number } = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+};
+
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>
@@ -81,9 +94,11 @@ const requests = {
 };
 
 const Cars = {
-  getAll: () => requests.get<CarData[]>("cars/getAll"),
+  getAll: (params: URLSearchParams) =>axios
+  .get<PagedResponse<CarData[]>>("cars", { params })
+  .then(responseBody),
   getById: (id: string) => requests.get<CarData>(`cars/${id}`),
-  create: (car: CarInput) => requests.post<CarData>("cars", car),
+  create: (car: CarSchema) => requests.post<CarData>("cars", car),
   delete: (id: string) => requests.del<string>(`cars/${id}`),
 };
 
@@ -135,11 +150,23 @@ const Services = {
   delete: (id: string) => requests.del<string>(`services/${id}`),
 };
 
+
 const WorkingTime = {
   getAll: () => requests.get<WorkingTimeData[]>("workingtime"),
-  create: (workingTime: WorkingTimeInput) =>
-    requests.post<WorkingTimeData>("workingtime", workingTime),
+  create: (workingTime: WorkingTimeSchema) =>
+  {
+    const mappedData = {
+      ...workingTime,
+      day: dayOfWeekMap[workingTime.day],
+    };
+    console.log("working after convert",mappedData)
+    return  requests.post<WorkingTimeData>("workingtime", mappedData)
+  }
+    ,
 };
+// Helper function to ensure the time is in the correct format (HH:mm)
+
+
 
 const Bookings = {
   getAll: (params: URLSearchParams) =>
@@ -211,8 +238,10 @@ const Authority = {
 
 
 const Notifications = {
-  getAll: (params: URLSearchParams) => axios.get<NotificationData[]>("notification", {params }).then(responseBody),
+  getAll: (params: URLSearchParams) => axios.get<PagedResponse<NotificationData[]>>("notification", {params }).then(responseBody),
   ReadToggle: (id: string) => requests.put<string>(`notification/${id}`, {}),
+  create: (notification: NotificationSchema) =>
+    requests.post<NotificationData>("notification", notification),
 };
 
 

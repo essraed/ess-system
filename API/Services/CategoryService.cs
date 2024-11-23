@@ -69,6 +69,7 @@ public class CategoryService : ICategoryService
     {
         var category = await _context.Categories
         .Include(x => x.Services)
+        .Include(x=>x.CreatedBy)
         .FirstOrDefaultAsync(x => x.Id == id);
 
         if (category == null)

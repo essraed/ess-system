@@ -3,10 +3,11 @@ import Breadcrumbs from "../common/breadcrumbs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useSelector } from "react-redux";
-import { ContactUs } from "../../core/data/interface/interface";
+
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { Link } from "react-router-dom";
 import Header from "../common/header";
+import { ContactUs } from "../../core/data/interface/interface";
 
 const Contact = () => {
   const data = useSelector((state: ContactUs) => state.contactdata);

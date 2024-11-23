@@ -99,16 +99,16 @@ export default class CategoryStore {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
 
-        data.map((item) => {
-          categoryList.push({
-            ...item,
-            createDate: item.createDate
-              ? formatDateTime(item.createDate?.toString())
-              : "",
-          });
-        });
+        // data.map((item) => {
+        //   categoryList.push({
+        //     ...item,
+        //     createDate: item.createDate
+        //       ? formatDateTime(item.createDate?.toString())
+        //       : "",
+        //   });
+        // });
 
-        this.categories = categoryList;
+        this.categories = data;
       });
     } catch (error) {
       console.error("Error loading categories:", error);
