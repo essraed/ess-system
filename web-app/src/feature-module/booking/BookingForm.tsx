@@ -20,6 +20,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import SearchMapInput from "../common/map/SearchMapInput";
 import LocationPicker from "../common/map/LocationPicker";
+import InputMask from "react-input-mask";
 
 type Props = {
   serviceId: string;
@@ -28,7 +29,12 @@ type Props = {
   IsAtHome: boolean;
 };
 
-const BookingForm = ({ serviceId, serviceOptionId, totalPrice, IsAtHome }: Props) => {
+const BookingForm = ({
+  serviceId,
+  serviceOptionId,
+  totalPrice,
+  IsAtHome,
+}: Props) => {
   const {
     bookingStore: { getAvailableSlots, availableSlots, addBooking },
   } = useStore();
@@ -44,6 +50,7 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice, IsAtHome }: Props
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<BookingSchema>({
     resolver: zodResolver(bookingSchema),
@@ -159,14 +166,22 @@ const BookingForm = ({ serviceId, serviceOptionId, totalPrice, IsAtHome }: Props
         />
 
         {/* Phone */}
-        <Input
-          radius="sm"
-          label={t("Phone")}
-          variant="bordered"
-          {...register("phone")}
-          isInvalid={!!errors.phone}
-          errorMessage={errors.phone?.message}
-        />
+        <InputMask
+          mask="+971 50 999 9999"
+          maskChar="_"
+          value={watch("phone")}
+          onChange={(e: any) => setValue("phone", e.target.value)}
+        >
+          {() => (
+            <Input
+              radius="sm"
+              label={t("Phone")}
+              variant="bordered"
+              isInvalid={!!errors.phone}
+              errorMessage={errors.phone?.message}
+            />
+          )}
+        </InputMask>
 
         {/* Email */}
         <Input

@@ -19,6 +19,9 @@ public class BookingService : IBookingService
     private readonly INotificationService _notificationService;
     private readonly IEmailService _emailService;
 
+    private readonly string _email = "raf-se@hotmail.com";
+    private string _subject = "Your Notification";
+
     public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
         IWorkingTimeService workingTimeService, INotificationService notificationService, IEmailService emailService)
     {
@@ -198,7 +201,17 @@ public class BookingService : IBookingService
                     $"Booking/view/{booking.Id}",
                     booking.EndBookingDate);
 
-                await _emailService.SendEmailAsync("raf-se@hotmail.com", "test", "test booking email");
+                string _body = $@"
+                    <p>Dear Admin</p>
+                    <p>We wanted to inform you about the following update:</p>
+                    <h3>Booking Confirmation</h3>
+                    <p>booking is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}</p>
+                    <p>Thank you for your attention.</p>
+                    <p>Best regards,<br/></p>
+                    <p><small>This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.</small></p>
+                ";
+
+                await _emailService.SendEmailAsync(_email, _subject, _body);
             }
             catch (Exception) { }
 
