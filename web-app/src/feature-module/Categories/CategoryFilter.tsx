@@ -10,17 +10,15 @@ import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
 
-type Props = {
-  pageSize?: number;
-};
 
-const CategoryFilter = ({ pageSize }: Props) => {
+const CategoryFilter = () => {
   const {
     categoryStore: {
       setDateFilter,
       loadCategories,
       setPagingParams,
       setSelectedUser,
+      pagination,
       fromDate: startDate,
       toDate: endDate,
       userId,
@@ -35,7 +33,7 @@ const CategoryFilter = ({ pageSize }: Props) => {
   const handleFilter = () => {
     console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
-    setPagingParams(new PagingParams(1, pageSize)); // Reset to first page when searching
+    setPagingParams(new PagingParams(1, pagination?.pageSize)); // Reset to first page when searching
     loadCategories();
   };
 

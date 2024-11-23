@@ -2,6 +2,7 @@ using API.Helpers;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace API.Data
 {
@@ -11,7 +12,8 @@ namespace API.Data
         public static async Task SeedData(DataContext context,
             UserManager<AppUser> userManager,
             RoleManager<IdentityRole> _roleManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IWebHostEnvironment _environment)
         {
             try
             {
@@ -30,14 +32,14 @@ namespace API.Data
                     }
 
                     await context.SaveChangesAsync();
-                    
+
                     var Admin = new AppUser
                     {
                         DisplayName = "Manager",
                         UserName = "Manager",
                         Email = "manager@manager.com"
                     };
-                    
+
                     var createdUser = await userManager.CreateAsync(Admin, "Pa$$w0rd");
 
                     if (createdUser.Succeeded)
@@ -54,6 +56,27 @@ namespace API.Data
                             // Save changes after adding the user to the role
                             await context.SaveChangesAsync();
                         }
+                    }
+                }
+
+                if (!context.Categories.Any())
+                {
+                    var filePath = Path.Combine(_environment.WebRootPath, "seed", "categoryData.json");
+
+                    if (File.Exists(filePath))
+                    {
+                        var jsonData = await File.ReadAllTextAsync(filePath); // Read the file content
+                        var categories = JsonConvert.DeserializeObject<List<Category>>(jsonData); // Deserialize the JSON content
+
+                        if (categories != null)
+                        {
+                            context.Categories.AddRange(categories);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException($"The file '{filePath}' was not found.");
                     }
                 }
 

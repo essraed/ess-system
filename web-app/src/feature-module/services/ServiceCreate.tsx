@@ -29,9 +29,8 @@ const ServiceCreate = () => {
         <CardHeader className="flex flex-col items-center justify-center">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center gap-3">
-              <GiBriefcase size={40} />
               <h1 className="text-3xl font-semibold">
-                {t("Generate ChatGPT Result")}
+                {t("Create Service")}
               </h1>
             </div>
           </div>

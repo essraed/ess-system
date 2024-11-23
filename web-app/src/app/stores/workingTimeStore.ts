@@ -1,20 +1,25 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { ActionResult } from '../../types';
-import { WorkingTimeData, WorkingTimeInput } from '../../types/workingTime';
+import { WorkingTimeData } from '../../types/workingTime';
 import agent from '../api/agent';
+import { PaginationData, PagingParams } from '../../types/pagination';
+import { WorkingTimeSchema } from '../../lib/schemas/workingTimeSchema ';
 
 
 export default class WorkingTimeStore {
   workingTimes: WorkingTimeData[] | null | undefined = null;
   currentWorkingTime: WorkingTimeData | null = null;
   loadingInitial = false;
+  pagination: PaginationData | null = null;
+  pagingParams = new PagingParams();
+  userId: string = "";
 
   constructor() {
     makeAutoObservable(this);
   }
 
   // Add Working Time
-  addWorkingTime = async (workingTime: WorkingTimeInput): Promise<ActionResult<string>> => {
+  addWorkingTime = async (workingTime: WorkingTimeSchema): Promise<ActionResult<string>> => {
     try {
       const response = await agent.WorkingTime.create(workingTime);
       runInAction(() => {
@@ -41,4 +46,21 @@ export default class WorkingTimeStore {
       this.loadingInitial = false;
     }
   };
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  setPagination = (pagination: PaginationData) => {
+    this.pagination = pagination;
+  };
+
+  clearNotification = () => {
+    this.workingTimes = null;
+  };
+
+  setSelectedUser = (userId: string) => {
+    this.userId = userId;
+  };
+
 }

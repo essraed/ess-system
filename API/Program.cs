@@ -55,12 +55,13 @@ using (var scope = app.Services.CreateScope())
     var loggerFactory = services.GetRequiredService<ILoggerFactory>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var webHostEnv = services.GetRequiredService<IWebHostEnvironment>();
 
     try
     {
         var context = services.GetRequiredService<DataContext>();
         await context.Database.MigrateAsync();
-        await Seed.SeedData(context, userManager, roleManager, loggerFactory);
+        await Seed.SeedData(context, userManager, roleManager, loggerFactory, webHostEnv);
     }
     catch (Exception ex)
     {

@@ -1,42 +1,83 @@
-import React, { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Button } from "@nextui-org/react";
-import html2pdf from "html2pdf.js";
-import { observer } from "mobx-react-lite";
-import { useStore } from "../../app/stores/store";
-import { all_routes } from "../router/all_routes";
-import BackToButton from "../common/BackToButton";
-import Breadcrumbs from "../common/breadcrumbs";
-import CardDetails from "../common/CardDetails";
 
-const CategoryDetails = () => {
-  // const { t } = useTranslation();
-  // const navigate = useNavigate();
-  const { id } = useParams();
+
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { useStore } from "../../app/stores/store";
+import { Divider } from "@nextui-org/react";
+import { formatDateTime } from "../../lib/utils";
+import { observer } from "mobx-react-lite";
+
+interface Props {
+  modalId: string;
+}
+
+const CategoryDetails = ({ modalId }: Props) => {
+  const { t } = useTranslation();
   const {
-    categoryStore: { currentCategory, getCategory },
+    categoryStore: { currentCategory },
   } = useStore();
 
-  // Ref to store the content for PDF generation
-
-  useEffect(() => {
-    if (id) {
-      getCategory(id); // Fetch the document using the id
-    }
-  }, [getCategory, id]);
+  // if (!currentCategory) return <p>loading .....</p>;
 
   return (
-<>
-<div className="listing-page">
-      <Breadcrumbs title="Details" subtitle="Listings / Letters" />
-    </div>
-    
-<div className="rounded-none p-10 space-y-4">
-     <BackToButton href={all_routes.categoryDashboard} label="Back to categories" />
+    <div
+      className="modal new-modal fade"
+      id={modalId}
+      data-keyboard="false"
+      data-backdrop="static"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-body">
+            <div className="max-w-5xl mx-auto m-3 space-y-6">
+              {/* Service Information Section */}
+              <div className="p-6">
+                <div className="flex items-center gap-5 justify-between mb-2">
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    Category Details
+                  </h3>
+                </div>
+                <Divider />
+                <div className="mt-4 grid grid-cols-2 gap-6">
+                  {currentCategory?.name && (
+                    <div>
+                      <p className="font-medium text-gray-700">Name:</p>
+                      <p className="text-gray-600">{currentCategory?.name}</p>
+                    </div>
+                  )}
+                  {currentCategory?.createDate && (
+                    <div>
+                      <p className="font-medium text-gray-700">Create Date:</p>
+                      <p className="text-gray-600">
+                        {formatDateTime(currentCategory?.createDate?.toString())}
+                      </p>
+                    </div>
+                  )}
+                  {currentCategory?.createdBy && (
+                    <div>
+                      <p className="font-medium text-gray-700">Created By:</p>
+                      <p className="text-gray-600">{currentCategory.createdBy}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-      <CardDetails data={currentCategory} />
+              {/* Close Button */}
+              <div className="flex justify-center mt-4">
+                <Link
+                  to="#"
+                  data-bs-dismiss="modal"
+                  className="btn btn-primary"
+                >
+                  Close
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</>
   );
 };
 

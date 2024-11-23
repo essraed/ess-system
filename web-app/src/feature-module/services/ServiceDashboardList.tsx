@@ -13,6 +13,7 @@ import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/contants";
+import ServiceDetailsDialog from "./ServiceDetailsDialog";
 
 const ServiceDashboardList = () => {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ const ServiceDashboardList = () => {
       clearServices,
       setDateFilter,
       setSelectedUser,
+      setCategoryIdParam,
     },
     userStore,
   } = useStore();
@@ -54,6 +56,7 @@ const ServiceDashboardList = () => {
     setSearchQuery("");
     setDateFilter("", "");
     setSelectedUser("");
+    setCategoryIdParam("");
     setPagingParams(new PagingParams(1, pageSize));
     loadServices(); // Reload services after resetting filters
   };
@@ -191,7 +194,15 @@ const ServiceDashboardList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "pictureUrl", "rate", "totalPrice","categoryId","serviceVipName","serviceOptions"]}
+                  exceptColumns={[
+                    "id",
+                    "pictureUrl",
+                    "rate",
+                    "totalPrice",
+                    "categoryId",
+                    "serviceVipName",
+                    "serviceOptions",
+                  ]}
                   data={services}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
@@ -208,13 +219,16 @@ const ServiceDashboardList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(
           "Service"
         )}${t("?")}`}
       />
+
+      <ServiceDetailsDialog modalId={dialogFlags.serviceDialog} />
     </div>
   );
 };

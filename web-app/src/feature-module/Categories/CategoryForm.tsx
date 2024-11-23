@@ -89,6 +89,16 @@ const CategoryForm = () => {
                     errors?.name?.message ? errors.name.message : ""
                   }
                 />
+                <Input
+                  className="my-3"
+                  label={t("Category Description")}
+                  variant="bordered"
+                  {...register("description")}
+                  isInvalid={!!errors?.description}
+                  errorMessage={
+                    errors?.description?.message ? errors.description.message : ""
+                  }
+                />
 
                 {/* <Input
                   className="my-3 "
