@@ -128,9 +128,6 @@ export default class ServiceStore {
           updateDate: result.updateDate
             ? formatDateTime(result.updateDate?.toString())
             : "No Set",
-          price: result.price + " AED",
-          totalPrice: result.totalPrice + " AED",
-          priceVIP: result.priceVIP + " AED",
           updatedBy: result.updatedBy ? result.updatedBy : "No Set",
         };
         this.currentService = service;
