@@ -12,7 +12,7 @@ import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/contants";
-import WorkingeForm from "./WorkingeForm";
+import WorkingeForm from "./WorkingTimeForm";
 
 const WorkingTimeList = () => {
   const { t } = useTranslation();

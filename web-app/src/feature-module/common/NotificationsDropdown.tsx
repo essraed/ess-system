@@ -52,7 +52,7 @@ const NotificationsDropdown = () => {
     initializeSignalR();
 
     return () => {
-      stopConnection(); // Clean up SignalR connection on unmount
+      stopConnection();
     };
   }, []);
 
@@ -60,11 +60,13 @@ const NotificationsDropdown = () => {
     updateNotifications();
   }, [loadNotifications]);
 
+  if (!notifications) return <p>Loading.......</p>
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
         <NavbarItem>
-          <Badge content={notifications.length} shape="circle" color="danger">
+          <Badge content={notifications?.length} shape="circle" color="danger">
             <NotificationIcon size={24} />
           </Badge>
         </NavbarItem>
@@ -76,7 +78,7 @@ const NotificationsDropdown = () => {
       >
         <DropdownSection title={`${unreadCount} Unread`}>
           {notifications &&
-            notifications.map((item, index) => (
+            notifications?.map((item, index) => (
               <DropdownItem
                 onClick={(e) => {
                   handleReadedToggle(e, item.id);

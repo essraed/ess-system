@@ -14,7 +14,7 @@ import {
   WorkingTimeSchema,
 } from "../../lib/schemas/workingTimeSchema ";
 
-const WorkingForm = () => {
+const WorkingTimeForm = () => {
   const { workingTimeStore, userStore } = useStore();
   const { t } = useTranslation();
   const {
@@ -130,4 +130,4 @@ const WorkingForm = () => {
   );
 };
 
-export default observer(WorkingForm);
+export default observer(WorkingTimeForm);
