@@ -11,12 +11,12 @@ export interface BookingData {
   phone: string;
   email: string;
   address?: string | null;
-  totalPrice?: number | null;
+  totalPrice?: string;
   serviceName: string;
   carName?: string | null;
   createdBy?: string | null;
   updatedBy?: string | null;
-  createDate?: string | null,
+  createDate?: string,
   updateDate?: string | null,
   bookingStatus?: BookingStatus;
   bookingDate?: string | null;

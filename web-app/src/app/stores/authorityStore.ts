@@ -1,10 +1,11 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { AuthorityModel } from '../../types/AuthorityModel';
+import { makeAutoObservable, runInAction } from "mobx";
+import { AuthorityModel } from "../../types/AuthorityModel";
 
-import { ActionResult } from '../../types';
-import { AuthoritySchema } from '../../lib/schemas/authoritySchema';
-import agent from '../api/agent';
-import { PaginationData, PagingParams } from '../../types/pagination';
+import { ActionResult } from "../../types";
+import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
+import agent from "../api/agent";
+import { PaginationData, PagingParams } from "../../types/pagination";
+import { formatDateTime } from "../../lib/utils";
 
 export default class AuthorityStore {
   authorities: AuthorityModel[] | null | undefined = null;
@@ -12,7 +13,7 @@ export default class AuthorityStore {
   currentAuthority: AuthorityModel | null = null;
   pagination: PaginationData | null = null;
   pagingParams = new PagingParams();
-  searchTerm: string = '';
+  searchTerm: string = "";
   loading = false;
   loadingInitial = false;
 
@@ -21,27 +22,34 @@ export default class AuthorityStore {
   }
 
   // Add Authority
-  addAuthority = async (data: AuthoritySchema): Promise<ActionResult<string>> => {
+  addAuthority = async (
+    data: AuthoritySchema
+  ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Authority.create(data);
       runInAction(() => {
-        this.authorities = this.authorities ? [...this.authorities, response] : [response];
+        this.authorities = this.authorities
+          ? [...this.authorities, response]
+          : [response];
       });
-      return { status: 'success', data: response.id };
+      return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error: ", error);
-      return { status: 'error', error: error as string };
+      return { status: "error", error: error as string };
     }
   };
 
   // Update Authority
-  updateAuthority = async (id: string, data: AuthoritySchema): Promise<ActionResult<string>> => {
+  updateAuthority = async (
+    id: string,
+    data: AuthoritySchema
+  ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Authority.update(id, data);
-      return { status: 'success', data: response as string };
+      return { status: "success", data: response as string };
     } catch (error) {
       console.error("Error: ", error);
-      return { status: 'error', error: error as string };
+      return { status: "error", error: error as string };
     }
   };
 
@@ -49,37 +57,43 @@ export default class AuthorityStore {
     try {
       await agent.Authority.delete(id);
       runInAction(() => {
-        this.authorities = this.authorities?.filter(a => a.id !== id) || null;
+        this.authorities = this.authorities?.filter((a) => a.id !== id) || null;
       });
-      return { status: 'success', data: 'Authority deleted successfully' };
+      return { status: "success", data: "Authority deleted successfully" };
     } catch (error) {
       console.error("Error deleting authority:", error);
-      return { status: 'error', error: error as string };
+      return { status: "error", error: error as string };
     }
-  }
+  };
 
-  createAuthority = async (authority: AuthoritySchema): Promise<ActionResult<string>> => {
+  createAuthority = async (
+    authority: AuthoritySchema
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Authority.create(authority);
-      await this.loadAuthorities();
-      return { status: 'success', data: 'Authority created successfully' };
+      const response = await agent.Authority.create(authority);
+      runInAction(() => {
+        this.authorities = this.authorities
+          ? [...this.authorities, {createDate: formatDateTime(response.createDate), ...response}]
+          : [response];
+      });
+      return { status: "success", data: "Authority created successfully" };
     } catch (error) {
       console.error("Error creating authority:", error);
-      return { status: 'error', error: error as string };
+      return { status: "error", error: error as string };
     }
   };
 
   get axiosParams() {
     const params = new URLSearchParams();
-    params.append('pageNumber', this.pagingParams.pageNumber.toString());
-    params.append('pageSize', this.pagingParams.pageSize.toString());
-    if (this.searchTerm) params.append('searchTerm', this.searchTerm);
+    params.append("pageNumber", this.pagingParams.pageNumber.toString());
+    params.append("pageSize", this.pagingParams.pageSize.toString());
+    if (this.searchTerm) params.append("searchTerm", this.searchTerm);
     return params;
   }
 
   clearAuthorities = () => {
     this.authorities = null;
-  }
+  };
 
   loadAuthoritiesForDropdown = async () => {
     this.loadingInitial = true;
@@ -93,17 +107,26 @@ export default class AuthorityStore {
       console.error(error);
       this.setLoadingInitial(false);
     }
-  }
+  };
 
   loadAuthorities = async () => {
-    this.loadingInitial = true;
+    const authorityList: AuthorityModel[] = [];
     try {
       const result = await agent.Authority.list(this.axiosParams);
 
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
-        this.authorities = data;
+
+        data.map((item) => {
+          authorityList.push({
+            ...item,
+            updateDate: item.updateDate ? formatDateTime(item.updateDate) : 'No set',
+            createDate: formatDateTime(item.createDate),
+            updatedBy: item.updatedBy ? item.updatedBy : 'No set',
+          });
+        });
+        this.authorities = authorityList;
       });
       this.setLoadingInitial(false);
     } catch (error) {

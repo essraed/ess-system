@@ -33,6 +33,7 @@ const CategoryDashboardList = () => {
       clearCategories,
       setDateFilter,
       setSelectedUser,
+      getCategory,
     },
     userStore,
   } = useStore();
@@ -96,6 +97,11 @@ const CategoryDashboardList = () => {
     { name: "25" },
     { name: "30" },
   ];
+
+  const getViewId = (id: string) => {
+    console.log("view id: ", id);
+    getCategory(id);
+  };
 
   return (
     <div className="col-lg-12">
@@ -179,7 +185,8 @@ const CategoryDashboardList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table 
+                  getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={["id", "pictureUrl","description"]}
