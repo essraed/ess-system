@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Data;
 using API.DTOs;
 using API.Entities;
@@ -12,11 +13,13 @@ namespace API.Services
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public WorkingTimeService(DataContext context, IMapper mapper)
+        public WorkingTimeService(DataContext context, IMapper mapper,IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
+            _httpContextAccessor=httpContextAccessor;
         }
 
         public async Task<IEnumerable<WorkingTimeDto>> GetAllAsync()
@@ -68,11 +71,19 @@ namespace API.Services
             var newWorkingTime = _mapper.Map<WorkingTime>(workingTimeSaveDto);
 
             newWorkingTime.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+            newWorkingTime.CreatedById = GetCurrentUserId();
 
             _context.WorkingTimes.Add(newWorkingTime);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<WorkingTimeDto>(newWorkingTime);
+        }
+
+        private string GetCurrentUserId()
+        {
+            return _httpContextAccessor
+                .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? null!;
         }
     }
 }

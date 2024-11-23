@@ -10,6 +10,7 @@ namespace API.Entities
         public TimeOnly FromTime { get; set; }
         public TimeOnly ToTime { get; set; }
 
+
         public bool IsActive { get; set; } = true;
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
@@ -18,3 +19,4 @@ namespace API.Entities
         public AppUser? CreatedBy { get; set; }
     }
 }
+

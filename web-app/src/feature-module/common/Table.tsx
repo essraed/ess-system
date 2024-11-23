@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { formatDateTime, separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
+import { useStore } from "../../app/stores/store";
 
 type Props = {
   data: any[];
@@ -13,7 +14,7 @@ type Props = {
   exceptColumns: string[];
   setSelectedId: (id: string) => void;
   routeUrl: string;
-  dialogFlags: any
+  dialogFlags: any;
 };
 
 const Table = ({
@@ -29,6 +30,11 @@ const Table = ({
   const action = (rowData: any) => {
     const { id } = rowData;
 
+    const {
+      serviceStore: { getService },
+      categoryStore: { getCategory },
+    } = useStore();
+
     return (
       <div className="dropdown dropdown-action">
         <Link
@@ -40,35 +46,61 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {routeUrl !== all_routes.authorityDashboard && (
+          {routeUrl === all_routes.serviceDashboard && (
+            <Link
+              className="dropdown-item"
+              to="#"
+              onClick={() => getService(id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.serviceDialog}`}
+            >
+              <i className="feather icon-file-plus me-1"></i> View
+            </Link>
+          )}
+          {routeUrl === all_routes.categoryDashboard && (
+            <Link
+              className="dropdown-item"
+              to="#"
+              onClick={() => getCategory(id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.categoryDialog}`}
+            >
+              <i className="feather icon-file-plus me-1"></i> View
+            </Link>
+          )}
+
+          {routeUrl === all_routes.letterDashboard && (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
           )}
+
           <Link
             className="dropdown-item"
             to="#"
             onClick={() => confirmDialog(id)}
             data-bs-toggle="modal"
-            data-bs-target={`#${dialogFlags.deleteDialog ?? 'delete_dialog'}`}
-            >
+            data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
+          >
             <i className="feather icon-trash-2 me-1"></i> Delete
           </Link>
           {routeUrl !== all_routes.authorityDashboard &&
-            routeUrl !== all_routes.categoryDashboard && (
+            routeUrl !== all_routes.categoryDashboard &&
+            routeUrl !== all_routes.carDashboard &&
+            routeUrl !== all_routes.WorkingTimeDashboard && (
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit me-1"></i> Edit
               </Link>
             )}
           {routeUrl === all_routes.bookingDashboard && (
             <Link
-            className="dropdown-item"
-            to="#"
-            onClick={() => confirmDialog(id)}
-            data-bs-toggle="modal"
-            data-bs-target={`#${dialogFlags.completeDialog}`}
+              className="dropdown-item"
+              to="#"
+              onClick={() => confirmDialog(id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.completeDialog}`}
             >
-              <i className="feather icon-trash-2 me-1"></i> Set as Completed
+              <i className="feather icon-trash-2 me-1"></i> view
             </Link>
           )}
           {routeUrl === all_routes.bookingDashboard && (
@@ -91,23 +123,7 @@ const Table = ({
     setSelectedId(id);
   };
 
-  // Custom function to render nested serviceOptions data
-  const renderServiceOptions = (rowData: any) => {
-    if (rowData.serviceOptions && rowData.serviceOptions.length > 0) {
-      return (
-        <div>
-          {rowData.serviceOptions.map((option: any, index: number) => (
-            <div key={index}>
-              <span>{option.name}</span> - <span>{option.additionalFee}</span>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return <span>No options available</span>;
-  };
-
-  if (!data) return <p>Loading...</p>;
+  // if (!data) return <p>Loading...</p>;
 
   return (
     <DataTable
@@ -136,7 +152,12 @@ const Table = ({
           ))}
 
       {status && <Column field="status" header="Status" body={status} />}
-      <Column field="action" header="Action" body={action} />
+      {routeUrl !== all_routes.WorkingTimeDashboard && (
+  <>
+    {console.log("Rendering Action column for route:", routeUrl)}
+    <Column field="action" header="Action" body={action} />
+  </>
+)}
     </DataTable>
   );
 };

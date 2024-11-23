@@ -116,6 +116,9 @@ export default class ServiceStore {
     params.append("pageSize", this.pagingParams.pageSize.toString());
     if (this.searchTerm) params.append("searchTerm", this.searchTerm);
     if (this.categoryId) params.append("categoryId", this.categoryId);
+    if (this.fromDate) params.append("from", this.fromDate);
+    if (this.toDate) params.append("to", this.toDate);
+    if (this.userId) params.append("userId", this.userId);
     return params;
   }
 

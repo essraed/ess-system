@@ -5,13 +5,19 @@ import { SIGNALR_HUB_URL } from "../../environment";
 import * as signalR from "@microsoft/signalr";
 import { convertEnumToString } from "../../lib/utils";
 import { ActionResult } from "../../types";
+import { PaginationData, PagingParams } from "../../types/pagination";
+import { NotificationSchema } from "../../lib/schemas/notificationSchema";
 
 export default class NotificationStore {
-  notifications: NotificationData[] = [];
+  notifications: NotificationData[] | null = [];
   unreadCount: number = 0;
   takeCount: number | null = null;
   connection: signalR.HubConnection | null = null;
   isRead: string | null = null;
+  pagination: PaginationData | null = null;
+  pagingParams = new PagingParams();
+  fromDate: string = "";
+  toDate: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -53,8 +59,8 @@ export default class NotificationStore {
             );
 
             // Check if notification already exists
-            if (!this.notifications.find((n) => n.id === id)) {
-              this.notifications.unshift({
+            if (!this.notifications?.find((n) => n.id === id)) {
+              this.notifications?.unshift({
                 id: id,
                 title,
                 message: message,
@@ -94,15 +100,46 @@ export default class NotificationStore {
     }
   };
 
+  get axiosParams() {
+    const params = new URLSearchParams();
+
+    if (this.takeCount) params.append("count", this.takeCount.toString());
+    if (this.isRead) params.append("isRead", this.isRead.toString());
+    if (this.fromDate) params.append("from", this.fromDate);
+    if (this.toDate) params.append("to", this.toDate);
+    params.append("pageNumber", this.pagingParams.pageNumber.toString());
+    params.append("pageSize", this.pagingParams.pageSize.toString());
+    return params;
+  }
+
   loadNotifications = async () => {
     try {
-      const notifications = await agent.Notifications.getAll(this.axiosParams);
+      const result = await agent.Notifications.getAll(this.axiosParams);
       runInAction(() => {
-        this.notifications = notifications;
-        this.unreadCount = notifications.filter((n) => !n.isRead).length;
+        const { pageNumber, pageSize, data, pageCount, totalCount } = result;
+        this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
+
+        this.notifications = data;
       });
     } catch (error) {
       console.error("Failed to load notifications", error);
+    }
+  };
+
+  addNotification = async (
+    notification: NotificationSchema
+  ): Promise<ActionResult<string>> => {
+    try {
+      const response = await agent.Notifications.create(notification);
+      runInAction(() => {
+        this.notifications = this.notifications
+          ? [...this.notifications, response]
+          : [response]; // Add new car to the list
+      });
+      return { status: "success", data: response.id };
+    } catch (error) {
+      console.error("Error adding notification: ", error);
+      return { status: "error", error: error as string };
     }
   };
 
@@ -116,20 +153,28 @@ export default class NotificationStore {
     }
   };
 
-  get axiosParams() {
-    const params = new URLSearchParams();
-
-    if (this.takeCount) params.append("count", this.takeCount.toString());
-    if (this.isRead) params.append("isRead", this.isRead.toString());
-
-    return params;
-  }
-
   setCountParam = (count: number) => {
     this.takeCount = count;
   };
 
   setIsReadParam = (isRead: boolean) => {
     this.isRead = String(isRead);
+  };
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  setPagination = (pagination: PaginationData) => {
+    this.pagination = pagination;
+  };
+
+  clearNotification = () => {
+    this.notifications = null;
+  };
+
+  setDateFilter = (from: string, to: string) => {
+    this.fromDate = from;
+    this.toDate = to;
   };
 }

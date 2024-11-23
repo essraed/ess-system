@@ -10,6 +10,8 @@ namespace API.Entities
         [Required]
         public string Name { get; set; } = default!;
 
+        public string? Description { get; set; }
+
         public string? PictureUrl { get; set; }
         
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
