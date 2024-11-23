@@ -106,31 +106,9 @@ const WorkingTimeList = () => {
                     <div className="product-filter-group">
                       <div className="sortbyset">
                         <ul className="d-flex">
+                        
                           <li>
-                            <span className="sortbytitle">Show : </span>
-                            <div className="sorting-select select-one">
-                              <Dropdown
-                                value={pageSize}
-                                onChange={(e) =>
-                                  handlePageSizeChange(Number(e.value.name))
-                                }
-                                options={number}
-                                optionLabel="name"
-                                placeholder={String(pageSize)}
-                              />
-                            </div>
-                          </li>
-                          <li>
-                            <Button
-                              onClick={handleReset} // Directly call handleReset without arrow function
-                              variant="bordered"
-                            >
-                              Reset <GrPowerReset size={20} />
-                            </Button>
-                          </li>
-                          <li>
-
-                          <WorkingeForm />
+                            <WorkingeForm />
                           </li>
                         </ul>
                       </div>
@@ -142,6 +120,7 @@ const WorkingTimeList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
+                  getViewId={() => {}}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={[

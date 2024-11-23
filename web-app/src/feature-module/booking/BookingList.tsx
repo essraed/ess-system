@@ -29,6 +29,7 @@ const BookingList = () => {
       setServiceFilter,
       setStatusCanceled,
       setStatusCompleted,
+      setStatusFilter,
     },
     userStore
   } = useStore();
@@ -53,6 +54,7 @@ const BookingList = () => {
     setSearchQuery("");
     setDateFilter("", "");
     setServiceFilter("");
+    setStatusFilter("");
     setPagingParams(new PagingParams(1, pageSize));
     loadBookings();
   };
@@ -202,7 +204,7 @@ const BookingList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table getViewId={() => {}}
                   dialogFlags={dialogFlags}
                   setSelectedId={setSelectedId}
                   exceptColumns={["id", "aiResult", "createDate", "address", "email", "createdBy", "updatedBy"]}

@@ -197,10 +197,10 @@ const LetterList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table getViewId={() => {}}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "aiResult", "createDate"]}
+                  exceptColumns={["id", "aiResult"]}
                   data={documents}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
