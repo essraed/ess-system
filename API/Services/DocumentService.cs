@@ -137,6 +137,13 @@ namespace API.Services
                 query = query.Where(x => x.CreateDate >= documentParams.From);
             }
 
+            if (documentParams.To != null)
+            {
+                var toDate = documentParams.To.Value.AddDays(1);
+                query = query.Where(x => x.CreateDate <= toDate);
+            }
+
+
             if (!string.IsNullOrEmpty(documentParams.SearchTerm))
             {
                 query = query.Where(x => x.Brief.Contains(documentParams.SearchTerm));

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
-import { formatDateTime } from "../../lib/utils";
 import { observer } from "mobx-react-lite";
 import { TbVip } from "react-icons/tb";
 
@@ -78,7 +77,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                         <p className="font-medium text-gray-700">Price:</p>
                       </div>
                       <p className="text-gray-600">
-                        {currentService?.priceVIP} 
+                        {currentService?.priceVIP} AED 
                       </p>
                     </div>
                   )}
@@ -87,7 +86,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       <p className="font-medium text-gray-700">
                         Service Price:
                       </p>
-                      <p className="text-gray-600">{currentService?.price}</p>
+                      <p className="text-gray-600">{currentService?.price} AED</p>
                     </div>
                   )}
                   {currentService?.createDate && (
