@@ -33,6 +33,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname.startsWith(routes.categoryDetails.slice(0, -3)) ||
     location.pathname === routes.serviceDashboard ||
     location.pathname.startsWith(routes.ServiceDetails.slice(0, -3)) ||
+    location.pathname.startsWith(routes.bookingDetails.slice(0, -3)) ||
     location.pathname === routes.bookingDashboard
   ) {
     addButton = (
