@@ -33,6 +33,10 @@ export default class NotificationStore {
 
   recieveNotification = () => {
     if (this.connection) {
+      // Remove any existing listener to avoid duplicates
+      this.connection.off("ReceiveNotification");
+
+      // Add the new listener
       this.connection.on(
         "ReceiveNotification",
         (
@@ -48,18 +52,18 @@ export default class NotificationStore {
               NotificationType
             );
 
-            this.notifications.unshift({
-              id: id,
-              title,
-              message: message,
-              isRead: false,
-              type: notificationType,
-              moreDetailsUrl: moreDetailsUrl,
-            });
-            this.unreadCount += 1;
-            console.log(
-              `New notification received: ${id} ${title} ${message} ${notificationType} ${moreDetailsUrl}`
-            );
+            // Check if notification already exists
+            if (!this.notifications.find((n) => n.id === id)) {
+              this.notifications.unshift({
+                id: id,
+                title,
+                message: message,
+                isRead: false,
+                type: notificationType,
+                moreDetailsUrl: moreDetailsUrl,
+              });
+              this.unreadCount += 1;
+            }
           });
         }
       );
@@ -67,6 +71,14 @@ export default class NotificationStore {
   };
 
   initializeSignalR = async () => {
+    if (
+      this.connection &&
+      this.connection.state === signalR.HubConnectionState.Connected
+    ) {
+      console.log("SignalR already initialized.");
+      return;
+    }
+
     try {
       this.connection = new signalR.HubConnectionBuilder()
         .withUrl(SIGNALR_HUB_URL)
@@ -114,10 +126,10 @@ export default class NotificationStore {
   }
 
   setCountParam = (count: number) => {
-    this.takeCount = count
-  }
+    this.takeCount = count;
+  };
 
   setIsReadParam = (isRead: boolean) => {
     this.isRead = String(isRead);
-  }
+  };
 }

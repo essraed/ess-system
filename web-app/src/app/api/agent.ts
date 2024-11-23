@@ -162,6 +162,8 @@ const Bookings = {
     requests.put<string>(`booking/${id}/status/canceled`, {}),
   setStatusCompleted: (id: string) =>
     requests.put<string>(`booking/${id}/status/completed`, {}),
+  setStatusPending: (id: string) =>
+    requests.put<string>(`booking/${id}/status/pending`, {}),
 };
 
 

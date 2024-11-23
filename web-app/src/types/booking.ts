@@ -41,7 +41,7 @@ export interface BookingDetailsData {
   updateDate?: string | null,
   serviceOptionName?: string | null;
   serviceOptionFee?: number | null;
-  bookingStatus?: BookingStatus | null;
+  bookingStatus?: BookingStatus;
   bookingDate?: Date | null;
   endBookingDate?: Date | null;
 }

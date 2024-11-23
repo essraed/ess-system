@@ -12,6 +12,7 @@ namespace API.Entities
 
         public string? PictureUrl { get; set; }
         
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy {get; set; }

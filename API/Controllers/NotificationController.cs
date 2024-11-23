@@ -1,6 +1,6 @@
 using API.Helpers;
+using API.Interfaces;
 using API.RequestParams;
-using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +11,9 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
-        private readonly NotificationService _notificatioService;
+        private readonly INotificationService _notificatioService;
 
-        public NotificationController(NotificationService notificationService)
+        public NotificationController(INotificationService notificationService)
         {
             _notificatioService = notificationService;
         }
@@ -26,9 +26,9 @@ namespace API.Controllers
 
 
         [HttpPost("send")]
-        public async Task<IActionResult> SendNotification(string Message, string Title, NotificationType Type, string? Url)
+        public async Task<IActionResult> SendNotification(string Message, string Title, NotificationType Type, string? Url, DateTime? endNotificationTime)
         {
-            await _notificatioService.SendNotification(Title, Message, Type, Url);
+            await _notificatioService.SendNotification(Title, Message, Type, Url, endNotificationTime);
 
             return Ok("Notification sent successfully");
         }

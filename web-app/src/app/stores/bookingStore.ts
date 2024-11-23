@@ -127,9 +127,10 @@ export default class BookingStore {
   };
 
   // Update Booking Status
-  setStatusInProcess = async (id: string) => {
+  setStatusInProcess = async (id: string) : Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.setStatusInProcess(id);
+      await this.getBooking(id)
       return { status: "success", data: "Booking status set to 'In Process'." };
     } catch (error) {
       console.error("Error updating booking status: ", error);
@@ -137,9 +138,21 @@ export default class BookingStore {
     }
   };
 
-  setStatusCanceled = async (id: string) => {
+  setStatusCanceled = async (id: string): Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.setStatusCanceled(id);
+      await this.getBooking(id)
+      return { status: "success", data: "Booking status set to 'Canceled'." };
+    } catch (error) {
+      console.error("Error updating booking status: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+ 
+  setStatusPending = async (id: string): Promise<ActionResult<string>> => {
+    try {
+      await agent.Bookings.setStatusPending(id);
+      await this.getBooking(id)
       return { status: "success", data: "Booking status set to 'Canceled'." };
     } catch (error) {
       console.error("Error updating booking status: ", error);
@@ -147,9 +160,10 @@ export default class BookingStore {
     }
   };
 
-  setStatusCompleted = async (id: string) => {
+  setStatusCompleted = async (id: string) : Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.setStatusCompleted(id);
+      await this.getBooking(id)
       return { status: "success", data: "Booking status set to 'Completed'." };
     } catch (error) {
       console.error("Error updating booking status: ", error);
@@ -177,6 +191,9 @@ export default class BookingStore {
 
   // New methods to set filters
   setStatusFilter = (status: string | null) => {
+
+    console.log('booking status: ', status);
+    
     this.bookingStatus = status;
   };
 

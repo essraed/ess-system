@@ -3,7 +3,6 @@ using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.RequestParams;
-using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -150,6 +149,24 @@ namespace API.Controllers
             {
                 await _bookingService.SetBookingStateCompleted(id);
                 return Ok("Booking status set to 'Completed'.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while updating booking status: {ex.Message}");
+            }
+        }
+        
+        [HttpPut("{id}/status/pending")]
+        public async Task<IActionResult> SetBookingStatePending(Guid id)
+        {
+            try
+            {
+                await _bookingService.SetBookingStatePending(id);
+                return Ok("Booking status set to 'Pending'.");
             }
             catch (KeyNotFoundException ex)
             {

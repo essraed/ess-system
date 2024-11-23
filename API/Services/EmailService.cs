@@ -1,10 +1,10 @@
-using API.DTOs;
+using API.Interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;
 
 namespace API.Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         // SMTP
         private readonly string _smtpServer = "smtp.gmail.com";
@@ -12,16 +12,16 @@ namespace API.Services
         private readonly string _smtpUsername = "raed.ali.alfarhan@gmail.com";
         private readonly string _smtpPassword = "bfxvsucywkfrzoqw";
 
-        public async Task<bool> SendEmailAsync(MailDto model)
+        public async Task<bool> SendEmailAsync(string toEmail, string subject,  string body)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Raed Alfarhan", _smtpUsername));
-            message.To.Add(new MailboxAddress("", model.ToEmail));
-            message.Subject = model.Subject;
+            message.To.Add(new MailboxAddress("", toEmail));
+            message.Subject = subject;
 
             var bodyBuilder = new BodyBuilder
             {
-                TextBody = model.Body
+                TextBody = body
             };
 
             message.Body = bodyBuilder.ToMessageBody();

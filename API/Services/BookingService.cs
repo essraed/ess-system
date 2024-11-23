@@ -16,12 +16,16 @@ public class BookingService : IBookingService
     private readonly IMapper _mapper;
     private readonly IWorkingTimeService _workingTimeService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly INotificationService _notificationService;
+    private readonly IEmailService _emailService;
 
     public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
-        IWorkingTimeService workingTimeService)
+        IWorkingTimeService workingTimeService, INotificationService notificationService, IEmailService emailService)
     {
+        _emailService = emailService;
         _mapper = mapper;
         _context = context;
+        _notificationService = notificationService;
         _workingTimeService = workingTimeService;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -35,9 +39,9 @@ public class BookingService : IBookingService
             .AsNoTracking()
             .AsQueryable();
 
-        if (!string.IsNullOrEmpty(bookingParams.BookingStatus))
+        if (bookingParams.BookingStatus != null)
         {
-            query = query.Where(x => x.BookingStatus.Equals(bookingParams.BookingStatus));
+            query = query.Where(x => x.BookingStatus == bookingParams.BookingStatus);
         }
 
         if (bookingParams.From.HasValue)
@@ -60,8 +64,6 @@ public class BookingService : IBookingService
 
         return await PagedList<BookingDto>.CreateAsync(bookings, bookingParams.PageNumber, bookingParams.PageSize);
     }
-
-
 
     public async Task<BookingDetilasDto> GetBookingByIdAsync(Guid id)
     {
@@ -109,7 +111,7 @@ public class BookingService : IBookingService
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
                         (b.BookingStatus == BookingStatus.InProcess ||
-                         b.BookingStatus == BookingStatus.Completed))
+                        b.BookingStatus == BookingStatus.Pending))
             .ToListAsync();
 
         var currentStartTime = workingFrom;
@@ -181,9 +183,29 @@ public class BookingService : IBookingService
         booking.BookingStatus = BookingStatus.Pending;
 
         _context.Bookings.Add(booking);
-        await _context.SaveChangesAsync();
 
-        return _mapper.Map<BookingDto>(booking);
+        var result = await _context.SaveChangesAsync() > 0;
+
+
+        if (result)
+        {
+            try
+            {
+                await _notificationService.SendNotification(
+                    $"Dear {booking.CustomerName}, your booking is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}.",
+                    "Booking Confirmation",
+                    NotificationType.Reminder,
+                    $"Booking/view/{booking.Id}",
+                    booking.EndBookingDate);
+
+                await _emailService.SendEmailAsync("raf-se@hotmail.com", "test", "test booking email");
+            }
+            catch (Exception) { }
+
+            return _mapper.Map<BookingDto>(booking);
+        }
+
+        throw new Exception("");
     }
 
     public async Task DeleteBookingAsync(Guid id)
@@ -223,6 +245,19 @@ public class BookingService : IBookingService
 
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'Canceled'.");
+    }
+
+    public async Task SetBookingStatePending(Guid id)
+    {
+        var booking = await _context.Bookings.FindAsync(id);
+        if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
+
+        booking.BookingStatus = BookingStatus.Pending;
+        booking.UpdatedById = GetCurrentUserId();
+        booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) throw new Exception("Failed to change booking status to 'Pending'.");
     }
 
     public async Task SetBookingStateCompleted(Guid id)

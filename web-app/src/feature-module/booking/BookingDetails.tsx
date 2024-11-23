@@ -6,15 +6,23 @@ import L from "leaflet";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BookingStatus } from "../../types/booking";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
 
 const BookingDetails = () => {
   const { id } = useParams();
-  const { bookingStore } = useStore();
-  const { getBooking, currentBooking, loadingInitial } = bookingStore;
+  const { bookingStore, userStore } = useStore();
+  const {
+    getBooking,
+    currentBooking,
+    loadingInitial,
+    setStatusCompleted,
+    setStatusCanceled,
+    setStatusInProcess,
+    setStatusPending,
+  } = bookingStore;
 
   useEffect(() => {
     if (id) {
@@ -22,6 +30,7 @@ const BookingDetails = () => {
     }
   }, [id, getBooking]);
 
+  
   if (loadingInitial || !currentBooking) {
     return <p className="text-gray-600">Loading booking details...</p>;
   }
@@ -54,23 +63,46 @@ const BookingDetails = () => {
   });
 
   const statusColors = {
-    [BookingStatus.Pending]: "text-yellow-600 border-yellow-600 bg-yellow-600",
-    [BookingStatus.InProcess]: "text-blue-600 border-blue-600 bg-blue-600",
-    [BookingStatus.Canceled]: "text-red-600 border-red-600 bg-red-600",
-    [BookingStatus.Completed]: "text-green-600 border-green-600 bg-green-600",
+    [BookingStatus.Pending]: {
+      text: "text-orange-500",
+      bg: "bg-orange-500",
+      border: "border-orange-500",
+    },
+    [BookingStatus.InProcess]: {
+      text: "text-sky-500",
+      bg: "bg-sky-500",
+      border: "border-sky-500",
+    },
+    [BookingStatus.Canceled]: {
+      text: "text-slate-500",
+      bg: "bg-slate-500",
+      border: "border-slate-500",
+    },
+    [BookingStatus.Completed]: {
+      text: "text-green-500",
+      bg: "bg-green-500",
+      border: "border-green-500",
+    },
   };
 
-  const statusColor = statusColors[bookingStatus ?? 0];
+  const bookingStatusNumber =
+    BookingStatus[bookingStatus?.toString() as keyof typeof BookingStatus];
+    
+  const statusColor = statusColors[bookingStatusNumber];
 
   return (
     <div className="max-w-5xl mx-auto m-3 space-y-6">
       <Card className="p-6 shadow-md border border-gray-200">
         {/* Customer Information Section */}
         <div className="flex items-center gap-5 justify-between mb-6">
-          <BackToButton
-            label="Back to bookings"
-            href={all_routes.bookingDashboard}
-          />
+          {userStore.isAdmin() ? (
+            <BackToButton
+              label="Back to bookings"
+              href={all_routes.bookingDashboard}
+            />
+          ) : (
+            <div></div>
+          )}
           {totalPrice && (
             <div className="flex items-center gap-2 px-4 py-2 border rounded">
               <p className="text-red-600 font-semibold text-xl">
@@ -124,14 +156,70 @@ const BookingDetails = () => {
           )}
 
           {bookingStatus && (
-            <div>
-              <p className="font-medium text-gray-700">Booking Status:</p>
-              <div className="flex items-center gap-2 rounded-2xl border p-1">
+            <div className="flex flex-col items-start gap-2">
+              <div
+                className={`inline-flex items-center gap-2 border-solid border-y-2 ${statusColor.border} rounded-2xl p-2 my-1 ${statusColor.text}`}
+              >
+                <p className="font-medium text-gray-700">Booking Status:</p>
                 <span className="rounded-full">
-                  <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+                  <div
+                    className={`w-2 h-2 ${statusColor.bg} rounded-full`}
+                  ></div>
                 </span>
-                <p className="text-gray-600">{bookingStatus}</p>
+                <p className="">{bookingStatus}</p>
               </div>
+
+              {bookingStatus === convertEnumToString(BookingStatus.InProcess, BookingStatus) && (
+                <div className="flex items-center gap-2">
+                  <Link
+                    to={""}
+                    onClick={() => setStatusCompleted(id ?? "")}
+                    className="text-blue-600 underline"
+                  >
+                    Set as completed
+                  </Link> |
+                  <Link
+                    to={""}
+                    onClick={() => setStatusPending(id ?? "")}
+                    className="text-blue-600 underline"
+                  >
+                    Set as Pending
+                  </Link>
+                </div>
+              )}
+
+              {bookingStatus === convertEnumToString(BookingStatus.Canceled, BookingStatus) && (
+                
+                  <Link
+                    to={""}
+                    onClick={() => setStatusInProcess(id ?? "")}
+                    className="text-blue-600 underline"
+                  >
+                    Set as In-Progress
+                  </Link> 
+                
+              )}
+
+              {bookingStatus ===
+                convertEnumToString(BookingStatus.Pending, BookingStatus) && (
+                <div className="flex items-center gap-2">
+                  <Link
+                    to={""}
+                    onClick={() => setStatusCanceled(id ?? "")}
+                    className="text-blue-600 underline"
+                  >
+                    Set as Canceled
+                  </Link>{" "}
+                  |
+                  <Link
+                    to={""}
+                    onClick={() => setStatusInProcess(id ?? "")}
+                    className="text-blue-600 underline"
+                  >
+                    Set as In-Progress
+                  </Link>
+                </div>
+              )}
             </div>
           )}
           {bookingDate && (

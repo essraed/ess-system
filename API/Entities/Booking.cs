@@ -27,7 +27,10 @@ namespace API.Entities
         public string? Note { get; set; }
         public BookingStatus? BookingStatus { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? BookingDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? EndBookingDate { get; set; }
 
         // [Required]
@@ -41,7 +44,10 @@ namespace API.Entities
         public Guid? CarId { get; set; }
         public Car? Car { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }

@@ -71,16 +71,13 @@ namespace API.Extensions
             services.AddScoped(typeof(IWorkingTimeService), typeof(WorkingTimeService));
             services.AddScoped(typeof(IFileService), typeof(FileService));
             services.AddScoped(typeof(IBookingService), typeof(BookingService));
+            services.AddScoped(typeof(INotificationService), typeof(NotificationService));
+            services.AddScoped(typeof(IEmailService), typeof(EmailService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-            
-            services.AddScoped<EmailService>();
-            services.AddScoped<NotificationService>();
 
             // Report services
             services.AddWkhtmltopdf("wkhtmltopdf");
-
-
-
+            
             return services;
         }
     }

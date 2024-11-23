@@ -28,7 +28,10 @@ namespace API.Entities
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalPrice { get; set; }
 
+[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }

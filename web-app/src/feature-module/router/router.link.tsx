@@ -63,13 +63,14 @@ import AuthorityDashboard from "../authorities/AuthorityDashboard";
 import BookingDetails from "../booking/BookingDetails";
 import CategoryDashboard from "../Categories/CategoryDashboard";
 import CategoryDetails from "../Categories/CategoryDetails";
-import ServiceDashboard from "../Services/ServiceDashboard";
-import ServiceDashboardDetails from "../Services/ServiceDashboardDetails";
-import ServiceCreate from "../Services/ServiceCreate";
-import ServiceUpdate from "../Services/ServiceUpdate";
+
 import CategoryForm from "../Categories/CategoryForm";
 import BookingDashboard from "../booking/BookingDashboard";
-import ServiceDetails from "../Services/ServiceDetails";
+import ServiceDetails from "../services/ServiceDetails";
+import ServiceDashboard from "../services/ServiceDashboard";
+import ServiceDashboardDetails from "../services/ServiceDashboardDetails";
+import ServiceCreate from "../services/ServiceCreate";
+import ServiceUpdate from "../services/ServiceUpdate";
 
 // import BookingCalendar from "../user/bookings-calendar";
 
