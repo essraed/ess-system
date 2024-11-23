@@ -182,7 +182,7 @@ const CategoryDashboardList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "pictureUrl"]}
+                  exceptColumns={["id", "pictureUrl","description"]}
                   data={categories}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}

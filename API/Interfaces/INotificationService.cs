@@ -9,5 +9,7 @@ namespace API.Interfaces
         Task<PagedList<NotificationDto>> GetAll(NotificationParams param);
         Task SendNotification(string message, string title, NotificationType type, string? url, DateTime? endNotificationTime);
         Task<bool> NotificationStatusToggle(Guid id);
+
+        Task<bool> DeleteNotificationAsync(Guid id);
     }
 }

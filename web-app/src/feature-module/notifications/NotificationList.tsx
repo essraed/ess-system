@@ -13,6 +13,7 @@ import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/contants";
 import NotificationForm from "./NotificationForm";
+import ConfirmDialog from "../common/ConfirmDialog";
 
 const NotificationList = () => {
   const { t } = useTranslation();
@@ -25,8 +26,8 @@ const NotificationList = () => {
       loadNotifications,
       setPagingParams,
       pagination,
-      clearNotification,
       setDateFilter,
+      deleteNotification,
     },
     userStore,
   } = useStore();
@@ -47,6 +48,14 @@ const NotificationList = () => {
     loadNotifications(); // Reload categories after resetting filters
   };
 
+  const handleDelete = async () => {
+    if (deleteId) {
+      await deleteNotification(deleteId);
+      loadNotifications();
+      navigate(location.pathname, { replace: true });
+    }
+  };
+
   const handlePageSizeChange = (newPageSize: number) => {
     console.log("newPageSize: ", newPageSize);
 
@@ -57,7 +66,7 @@ const NotificationList = () => {
 
   useEffect(() => {
     if (!userStore.token) {
-      clearNotification();
+      // clearNotification();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
@@ -148,7 +157,7 @@ const NotificationList = () => {
                   data={notifications}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
-                  routeUrl={all_routes.categoryDashboard}
+                  routeUrl={all_routes.notificationDashboard}
                 />
               </div>
               <div className="mx-auto pt-2">
@@ -162,7 +171,10 @@ const NotificationList = () => {
         </div>
       </div>
 
-      {/* <CategoryDetails modalId={dialogFlags.categoryDialog} /> */}
+      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+        onConfirm={handleDelete}
+        title="Confirm Delete"
+        description="Are you sure you want to delete this Notification?"  />
     </div>
   );
 };

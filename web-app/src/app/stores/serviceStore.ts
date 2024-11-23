@@ -6,7 +6,7 @@ import agent from "../api/agent";
 import { ServiceData } from "../../types/service";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { DropdownType } from "../../types/Dropdown";
-
+import { formatDateTime } from "../../lib/utils";
 
 export default class ServiceStore {
   services: ServiceData[] | null | undefined = null;
@@ -33,16 +33,18 @@ export default class ServiceStore {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   // Add Service
   addService = async (
-   formData:ServiceSchema
+    formData: ServiceSchema
   ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Services.create(formData);
       runInAction(() => {
-        this.services = this.services ? [...this.services, response] : [response];
+        this.services = this.services
+          ? [...this.services, response]
+          : [response];
       });
       return { status: "success", data: response.id };
     } catch (error) {
@@ -82,27 +84,56 @@ export default class ServiceStore {
 
   // Load All Services
   loadServices = async () => {
+    const serviceList: ServiceData[] = [];
     try {
       const result = await agent.Services.getAll(this.axiosParams);
-      
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
 
-        this.services = data;
+        data.map((item) => {
+          serviceList.push({
+            ...item,
+            createDate: item.createDate
+              ? formatDateTime(item.createDate?.toString())
+              : "No Set",
+            updateDate: item.updateDate
+              ? formatDateTime(item.updateDate?.toString())
+              : "No Set",
+            price: item.price + " AED",
+            totalPrice: item.totalPrice + " AED",
+            priceVIP: item.priceVIP + " AED",
+            updatedBy: item.updatedBy ? item.updatedBy : "No Set",
+          });
+        });
+
+        this.services = serviceList;
       });
     } catch (error) {
       console.error("Error loading services:", error);
     }
   };
-  
 
   // Load Single Service By ID
   getService = async (id: string) => {
+    let service: ServiceData | null = null;
     try {
       const result = await agent.Services.getById(id);
       runInAction(() => {
-        this.currentService = result;
+        service = {
+          ...result,
+          createDate: result.createDate
+            ? formatDateTime(result.createDate?.toString())
+            : "No Set",
+          updateDate: result.updateDate
+            ? formatDateTime(result.updateDate?.toString())
+            : "No Set",
+          price: result.price + " AED",
+          totalPrice: result.totalPrice + " AED",
+          priceVIP: result.priceVIP + " AED",
+          updatedBy: result.updatedBy ? result.updatedBy : "No Set",
+        };
+        this.currentService = service;
       });
     } catch (error) {
       console.error("Error loading service:", error);
@@ -138,7 +169,7 @@ export default class ServiceStore {
   setSearchTerm = (term: string) => {
     this.searchTerm = term;
   };
-  
+
   setCategoryIdParam = (categoryId: string) => {
     this.categoryId = categoryId;
   };

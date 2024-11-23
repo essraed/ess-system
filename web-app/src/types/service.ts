@@ -2,14 +2,14 @@ export interface ServiceData {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   rate: number;
-  priceVIP?: number;
+  priceVIP?: string;
   serviceVipName?: string;
-  totalPrice?: number;
+  totalPrice?: string;
   pictureUrl?: string; // Corresponds to the optional PictureUrl in C# ServiceDto
-  createDate?: Date;
-  updateDate?: Date;
+  createDate?: Date | string;
+  updateDate?: Date | string;
   createdBy?: string;
   updatedBy?: string;
   categoryId?: string;

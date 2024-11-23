@@ -41,7 +41,8 @@ namespace API.Services
                 query = query.Where(x => x.IsRead == param.IsRead);
 
                 // end notification
-                if (param.IsRead == false) {
+                if (param.IsRead == false)
+                {
                     var currentTime = TimeHelper.GetCurrentTimeInAbuDhabi();
 
                     query = query.Where(x => !x.EndNotificationDate.HasValue || (x.EndNotificationDate >= currentTime));
@@ -110,6 +111,27 @@ namespace API.Services
                 return result;
             }
             throw new Exception("Error occured during mark notification 'read'.");
+        }
+
+        public async Task<bool> DeleteNotificationAsync(Guid id)
+        {
+            var notification = await _context.Notifications.FindAsync(id);
+
+            if (notification == null)
+            {
+                throw new KeyNotFoundException($"notification with id {id} not found.");
+            }
+
+            _context.Notifications.Remove(notification);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (!result)
+            {
+                throw new Exception("Failed to delete the notification.");
+            }
+
+            return true;
         }
 
         private string GetCurrentUserId()

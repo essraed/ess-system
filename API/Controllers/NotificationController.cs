@@ -45,5 +45,18 @@ namespace API.Controllers
 
             return BadRequest("Failed to mark the notification as 'read'.");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> NotificationDelete(Guid id)
+        {
+            var result = await _notificatioService.DeleteNotificationAsync(id);
+
+            if (result)
+            {
+                return Ok("Notification deleted successfuly");
+            }
+
+            return BadRequest("Failed to delete notification");
+        }
     }
 }

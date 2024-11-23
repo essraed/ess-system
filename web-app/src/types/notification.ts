@@ -11,4 +11,6 @@ export interface NotificationData {
   isRead: boolean;
   type: NotificationType;
   moreDetailsUrl?: string;
+  createDate?: string;
+  updateDate?: string;
 }

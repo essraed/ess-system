@@ -50,7 +50,7 @@ const CategoryDetails = ({ modalId }: Props) => {
                     <div>
                       <p className="font-medium text-gray-700">Create Date:</p>
                       <p className="text-gray-600">
-                        {formatDateTime(currentCategory?.createDate?.toString())}
+                        {currentCategory?.createDate?.toString()}
                       </p>
                     </div>
                   )}

@@ -29,7 +29,10 @@ export default class CategoryStore {
       const response = await agent.Categories.create(formData);
       runInAction(() => {
         this.categories = this.categories
-          ? [...this.categories, response]
+          ? [
+              ...this.categories,
+              {...response, createDate: formatDateTime(response.createDate) },
+            ]
           : [response];
       });
       return { status: "success", data: response.id };
@@ -99,16 +102,15 @@ export default class CategoryStore {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
 
-        // data.map((item) => {
-        //   categoryList.push({
-        //     ...item,
-        //     createDate: item.createDate
-        //       ? formatDateTime(item.createDate?.toString())
-        //       : "",
-        //   });
-        // });
+        data.map((item) => {
+          categoryList.push({
+            ...item,
+            createDate: formatDateTime(item.createDate),
+            createdBy: item.createdBy ? item.createdBy : "No set",
+          });
+        });
 
-        this.categories = data;
+        this.categories = categoryList;
       });
     } catch (error) {
       console.error("Error loading categories:", error);
@@ -129,8 +131,15 @@ export default class CategoryStore {
   getCategory = async (id: string) => {
     try {
       const category = await agent.Categories.getById(id);
+      let categoryUpdate: CategoryData | null = null;
       runInAction(() => {
-        this.currentCategory = category;
+        categoryUpdate = {
+          ...category,
+          createDate: category.createDate
+            ? formatDateTime(category.createDate?.toString())
+            : "",
+        };
+        this.currentCategory = categoryUpdate;
       });
     } catch (error) {
       console.error("Error getting category:", error);

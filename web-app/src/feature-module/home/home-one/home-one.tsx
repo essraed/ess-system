@@ -16,7 +16,8 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 import { observer } from "mobx-react-lite";
-import ServiceList from "../../services/ServiceList";
+import ServiceList from "../../Services/ServiceList";
+
 
 
 const HomeOne = () => {

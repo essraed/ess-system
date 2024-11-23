@@ -86,8 +86,8 @@ const Table = ({
           </Link>
           {routeUrl !== all_routes.authorityDashboard &&
             routeUrl !== all_routes.categoryDashboard &&
-            routeUrl !== all_routes.carDashboard &&
-            routeUrl !== all_routes.WorkingTimeDashboard && (
+            routeUrl !== all_routes.carDashboard && 
+            routeUrl !== all_routes.notificationDashboard && (
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit me-1"></i> Edit
               </Link>
@@ -142,22 +142,13 @@ const Table = ({
               field={key}
               header={separateCamelCase(key)}
               // Check if the column contains nested data (array or object)
-              body={(rowData: any) => {
-                if (key === "createDate" || key === "updateDate") {
-                  return formatDateTime(rowData[key]); // Render custom for serviceOptions
-                }
-                return rowData[key]; // Default rendering for other columns
-              }}
             />
           ))}
 
       {status && <Column field="status" header="Status" body={status} />}
       {routeUrl !== all_routes.WorkingTimeDashboard && (
-  <>
-    {console.log("Rendering Action column for route:", routeUrl)}
-    <Column field="action" header="Action" body={action} />
-  </>
-)}
+        <Column field="action" header="Action" body={action} />
+      )}
     </DataTable>
   );
 };
