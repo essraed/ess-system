@@ -32,6 +32,7 @@ const ServiceDashboardList = () => {
       setDateFilter,
       setSelectedUser,
       setCategoryIdParam,
+      getService,
     },
     userStore,
   } = useStore();
@@ -191,7 +192,7 @@ const ServiceDashboardList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table getViewId={getService}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={[

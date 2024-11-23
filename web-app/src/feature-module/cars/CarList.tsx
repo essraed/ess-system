@@ -180,10 +180,10 @@ const CarList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table getViewId={() => {}}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "createDate"]}
+                  exceptColumns={["id"]}
                   data={cars ??[]}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

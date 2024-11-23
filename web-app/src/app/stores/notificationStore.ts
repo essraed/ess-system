@@ -8,7 +8,9 @@ import { ActionResult } from "../../types";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 export default class NotificationStore {
+
   notifications: NotificationData[] | undefined = [];
+
   unreadCount: number = 0;
   takeCount: number | null = null;
   connection: signalR.HubConnection | null = null;
@@ -165,6 +167,10 @@ export default class NotificationStore {
     params.append("pageSize", this.pagingParams.pageSize.toString());
     return params;
   }
+
+  clearNotification = () => {
+    this.notifications = undefined;
+  };
 
   setCountParam = (count: number) => {
     this.takeCount = count;

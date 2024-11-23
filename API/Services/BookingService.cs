@@ -42,6 +42,14 @@ public class BookingService : IBookingService
             .AsNoTracking()
             .AsQueryable();
 
+        if (!string.IsNullOrEmpty(bookingParams.SearchTerm))
+        {
+            query = query.Where(
+                x => x.CustomerName.Contains(bookingParams.SearchTerm) ||
+                x.Phone.Contains(bookingParams.SearchTerm)
+                );
+        }
+
         if (bookingParams.BookingStatus != null)
         {
             query = query.Where(x => x.BookingStatus == bookingParams.BookingStatus);

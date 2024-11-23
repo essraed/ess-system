@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { formatDateTime, separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
 import { useStore } from "../../app/stores/store";
+import { BookingStatus } from "../../types/booking";
+import StatusBadge from "./StatusBadge";
 
 type Props = {
   data: any[];
@@ -15,6 +17,7 @@ type Props = {
   setSelectedId: (id: string) => void;
   routeUrl: string;
   dialogFlags: any;
+  getViewId: (id: string) => void
 };
 
 const Table = ({
@@ -26,14 +29,10 @@ const Table = ({
   setSelectedId,
   routeUrl,
   dialogFlags,
+  getViewId,
 }: Props) => {
   const action = (rowData: any) => {
     const { id } = rowData;
-
-    const {
-      serviceStore: { getService },
-      categoryStore: { getCategory },
-    } = useStore();
 
     return (
       <div className="dropdown dropdown-action">
@@ -46,22 +45,11 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {routeUrl === all_routes.serviceDashboard && (
+          {(routeUrl === all_routes.categoryDashboard || routeUrl === all_routes.serviceDashboard) && (
             <Link
               className="dropdown-item"
               to="#"
-              onClick={() => getService(id)}
-              data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.serviceDialog}`}
-            >
-              <i className="feather icon-file-plus me-1"></i> View
-            </Link>
-          )}
-          {routeUrl === all_routes.categoryDashboard && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              onClick={() => getCategory(id)}
+              onClick={() => getViewId(id)}
               data-bs-toggle="modal"
               data-bs-target={`#${dialogFlags.categoryDialog}`}
             >
@@ -69,7 +57,7 @@ const Table = ({
             </Link>
           )}
 
-          {routeUrl === all_routes.letterDashboard && (
+          {(routeUrl === all_routes.letterDashboard || routeUrl === all_routes.bookingDashboard) && (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
@@ -87,7 +75,9 @@ const Table = ({
           {routeUrl !== all_routes.authorityDashboard &&
             routeUrl !== all_routes.categoryDashboard &&
             routeUrl !== all_routes.carDashboard && 
-            routeUrl !== all_routes.notificationDashboard && (
+            routeUrl !== all_routes.notificationDashboard && 
+            routeUrl !== all_routes.bookingDashboard && (
+
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit me-1"></i> Edit
               </Link>
@@ -100,7 +90,7 @@ const Table = ({
               data-bs-toggle="modal"
               data-bs-target={`#${dialogFlags.completeDialog}`}
             >
-              <i className="feather icon-trash-2 me-1"></i> view
+              <i className="feather icon-trash-2 me-1"></i> Set as Cmoplete
             </Link>
           )}
           {routeUrl === all_routes.bookingDashboard && (
@@ -123,6 +113,29 @@ const Table = ({
     setSelectedId(id);
   };
 
+  const statusColors = {
+    [BookingStatus.Pending]: {
+      text: "text-orange-500",
+      bg: "bg-orange-500",
+      border: "border-orange-500",
+    },
+    [BookingStatus.InProcess]: {
+      text: "text-sky-500",
+      bg: "bg-sky-500",
+      border: "border-sky-500",
+    },
+    [BookingStatus.Canceled]: {
+      text: "text-slate-500",
+      bg: "bg-slate-500",
+      border: "border-slate-500",
+    },
+    [BookingStatus.Completed]: {
+      text: "text-green-500",
+      bg: "bg-green-500",
+      border: "border-green-500",
+    },
+  };
+
   // if (!data) return <p>Loading...</p>;
 
   return (
@@ -135,17 +148,24 @@ const Table = ({
     >
       {data &&
         Object.keys(data[0] || {})
-          .filter((key) => !exceptColumns.includes(key)) // Filter out the columns you don't want to display
+          .filter((key) => !exceptColumns.includes(key))
           .map((key) => (
             <Column
               key={key}
               field={key}
               header={separateCamelCase(key)}
-              // Check if the column contains nested data (array or object)
+
+              body={(rowData: any) => {
+                if (key === "bookingStatus") {
+                  return <StatusBadge status={rowData[key]} />;
+                }
+                return rowData[key];
+              }}
             />
           ))}
 
       {status && <Column field="status" header="Status" body={status} />}
+
       {routeUrl !== all_routes.WorkingTimeDashboard && (
         <Column field="action" header="Action" body={action} />
       )}

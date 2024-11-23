@@ -102,12 +102,12 @@ export default class DocumentStore {
         data.map((item) => {
           letterList.push({
             ...item,
-            updateDate: item.updateDate
-              ? formatDateTime(item.updateDate?.toString())
-              : formatDateTime(item.createDate?.toString()),
+            createDate: formatDateTime(item.createDate),
+            updatedBy: item.updatedBy ? item.updatedBy : 'No set',
+            updateDate: item.updateDate ? formatDateTime(item.updateDate) : 'No set',
           });
         });
-
+        
         this.documents = letterList;
       });
     } catch (error) {

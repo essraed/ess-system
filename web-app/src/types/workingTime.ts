@@ -6,7 +6,7 @@ export interface WorkingTimeData {
     fromTime: string; 
     toTime: string; 
     isActive: boolean; 
-    createDate?: Date; 
+    createDate?: string; 
     createdBy?: string; 
 }
 

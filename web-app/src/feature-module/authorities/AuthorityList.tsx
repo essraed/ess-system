@@ -181,10 +181,10 @@ const AuthorityList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table
+                <Table getViewId={() => {}}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "createDate"]}
+                  exceptColumns={["id"]}
                   data={authorities}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
