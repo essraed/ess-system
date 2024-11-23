@@ -23,7 +23,6 @@ const NotificationsDropdown = () => {
       unreadCount,
       loadNotifications,
       initializeSignalR,
-      recieveNotification,
       stopConnection,
       ReadToggle,
       setCountParam,
@@ -47,11 +46,11 @@ const NotificationsDropdown = () => {
     await setIsReadParam(false);
     await setCountParam(7);
     await loadNotifications();
-  }
+  };
 
   useEffect(() => {
     initializeSignalR();
-  
+
     return () => {
       stopConnection(); // Clean up SignalR connection on unmount
     };
@@ -79,7 +78,8 @@ const NotificationsDropdown = () => {
           {notifications &&
             notifications.map((item, index) => (
               <DropdownItem
-                onClick={() => {
+                onClick={(e) => {
+                  handleReadedToggle(e, item.id);
                   if (item.moreDetailsUrl) {
                     navigate(`/listings/${item.moreDetailsUrl}`);
                   }
@@ -119,14 +119,16 @@ const NotificationsDropdown = () => {
           <DropdownItem>
             <Divider />
           </DropdownItem>
-         <DropdownItem>
-          {notifications.length > 7 &&
-            <Link to='#' className="flex items-center align-middle"
-            onClick={() => navigate("/notifications")}>
-          
-            View All
-          </Link>
-          }
+          <DropdownItem>
+            {notifications.length > 7 && (
+              <Link
+                to="#"
+                className="flex items-center align-middle"
+                onClick={() => navigate("/notifications")}
+              >
+                View All
+              </Link>
+            )}
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>
