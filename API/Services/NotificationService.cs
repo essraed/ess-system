@@ -4,6 +4,7 @@ using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using API.Hubs;
+using API.Interfaces;
 using API.RequestParams;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
-    public class NotificationService
+    public class NotificationService : INotificationService
     {
         private readonly IHubContext<NotificationHub> _hubContext;
         private readonly DataContext _context;
@@ -36,6 +37,15 @@ namespace API.Services
             if (param.IsRead != null)
             {
                 query = query.Where(x => x.IsRead == param.IsRead);
+
+                // end notification
+                if (param.IsRead == false) {
+                    var currentTime = TimeHelper.GetCurrentTimeInAbuDhabi();
+
+                    query = query.Where(x => !x.EndNotificationDate.HasValue || (x.EndNotificationDate >= currentTime));
+
+                    query = query.Where(x => !x.UpdateDate.HasValue);
+                }
             }
 
             if (param.Count != null && param.Count > 0)
@@ -46,7 +56,7 @@ namespace API.Services
             return _mapper.Map<List<NotificationDto>>(await query.ToListAsync());
         }
 
-        public async Task SendNotification(string message, string title, NotificationType type, string? url)
+        public async Task SendNotification(string message, string title, NotificationType type, string? url, DateTime? endNotificationTime)
         {
             var notification = new Notification
             {
@@ -56,6 +66,7 @@ namespace API.Services
                 MoreDetailsUrl = url,
                 CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
                 CreatedById = GetCurrentUserId(),
+                EndNotificationDate = endNotificationTime,
             };
 
             _context.Notifications.Add(notification);

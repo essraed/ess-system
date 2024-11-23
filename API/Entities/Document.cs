@@ -18,7 +18,10 @@ namespace API.Entities
         [ForeignKey("AuthorityId")]
         public Authority? Authority { get; set; }
 
+[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }

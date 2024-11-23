@@ -1,4 +1,6 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Entities
 {
     public class WorkingTime
@@ -9,6 +11,8 @@ namespace API.Entities
         public TimeOnly ToTime { get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy { get; set; }

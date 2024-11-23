@@ -10,7 +10,11 @@ namespace API.Entities
         public string FileUrl { get; set; } = default!;
 
         // related tables
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }

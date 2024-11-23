@@ -74,7 +74,7 @@ const BookingFilter = ({ pageSize }: Props) => {
 
   const statusDefaultItems = [
     { label: "Pending", value: "Pending" },
-    { label: "In Process", value: "In Process" },
+    { label: "In Process", value: "InProcess" },
     { label: "Completed", value: "Completed" },
     { label: "Canceled", value: "Canceled" },
   ];

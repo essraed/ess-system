@@ -1,4 +1,6 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Entities
 {
     public class FileEntity
@@ -10,7 +12,11 @@ namespace API.Entities
         public long? Size { get; set; }
 
         // related tables
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
 
         public string? CreatedById { get; set; }

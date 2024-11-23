@@ -6,7 +6,6 @@ import {
   DropdownSection,
   DropdownTrigger,
   NavbarItem,
-  Button,
   Divider,
 } from "@nextui-org/react";
 import React, { useEffect } from "react";
@@ -51,14 +50,14 @@ const NotificationsDropdown = () => {
   }
 
   useEffect(() => {
-    try {
-      initializeSignalR().then(() => {
-        recieveNotification();
-      });
-    } catch {
-      stopConnection();
-    }
+    initializeSignalR();
+  
+    return () => {
+      stopConnection(); // Clean up SignalR connection on unmount
+    };
+  }, []);
 
+  useEffect(() => {
     updateNotifications();
   }, [loadNotifications]);
 
@@ -82,7 +81,7 @@ const NotificationsDropdown = () => {
               <DropdownItem
                 onClick={() => {
                   if (item.moreDetailsUrl) {
-                    navigate(`/${item.moreDetailsUrl}`);
+                    navigate(`/listings/${item.moreDetailsUrl}`);
                   }
                 }}
                 classNames={{

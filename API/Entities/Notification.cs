@@ -1,4 +1,5 @@
 
+using System.ComponentModel.DataAnnotations;
 using API.Helpers;
 
 namespace API.Entities
@@ -13,8 +14,15 @@ namespace API.Entities
         public string? MoreDetailsUrl { get; set; }
 
         // related tables
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        public DateTime? EndNotificationDate { get; set; }
 
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy { get; set; }
