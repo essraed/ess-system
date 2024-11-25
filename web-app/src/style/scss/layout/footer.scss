@@ -3,7 +3,7 @@
 -----------------------*/
 
 .footer {
-	background: $__gray__dark;
+	background: #0d8992;
 	position: $__relative;
 	&::before {
 		content: "";
@@ -103,7 +103,7 @@
 					margin-bottom: 0;
 				}
 				a {
-					color: $__gray_light;
+					color: #FFFFFF;
 					font-size: $__font__size__14;
 					@include transition(all 0.5s ease-in-out);
 					&:hover {
@@ -138,7 +138,7 @@
 					width: 50px;
 					height: 50px;
 					background: $__warningcolor;
-					color: $__white;
+					color: #FFFFFF;
 					font-size: $__font__size__20;
 					border-radius: 4px;
 					@extend %flex-align-center;
@@ -149,7 +149,7 @@
 					a {	
 						font-weight: 400;
 						font-size: $__font__size__14;
-						color: $__gray_light;
+						color: #FFFFFF;
 					}
 				}
 			}
@@ -198,7 +198,7 @@
 		
 	}
 	.footer-bottom {
-		background: #212121;
+		background: #444644;
 		position: $__relative;
     	z-index: 99;
 		@include margin-padding(0, 20px 0);
@@ -215,7 +215,7 @@
 				}
 
 				p {
-					color: $__gray_light;	
+					color: #bdbdbd;	
 					font-size: $__font__size__14;				
 				}
 			}
@@ -392,7 +392,6 @@
         display: $__none;
     }
     &:before {
-        speak: $__none;
         font-size: $__font__size__18;
         line-height: 20px;
         font-style: $__normal;
@@ -445,7 +444,6 @@
         display: $__none;
     }
     &:before {
-        speak: $__none;
         font-size: $__font__size__18;
         line-height: 20px;
         font-style: $__normal;
