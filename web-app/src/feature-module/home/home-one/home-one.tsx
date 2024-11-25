@@ -18,7 +18,7 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 import { observer } from "mobx-react-lite";
-import '../../../../node_modules/font-awesome/css/font-awesome.min.css'; 
+import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 import ServiceList from "../../services/ServiceList";
 
 const HomeOne = () => {
@@ -31,7 +31,7 @@ const HomeOne = () => {
   //   console.log(time, timeString);
   // };
 
-  
+
   const handleItemClick = (index: number) => {
     setSelectedItems((prevSelectedItems) => {
       const updatedSelectedItems = [...prevSelectedItems];
@@ -160,39 +160,39 @@ const HomeOne = () => {
       <Header />
       {/* Banner */}
 
-      
 
-  
+
+
       <div className="float-sm">
-  <div className="fl-fl float-fb">
-  <i className="fa fa-facebook"></i>
-      <a href="" target="_blank"> Like us!</a>
-  </div>
-  <div className="fl-fl float-tw">
-    <i className="fa fa-twitter"></i>
-    <a href="" target="_blank">Follow us!</a>
-  </div>
-  <div className="fl-fl float-gp">
-    <i className="fa fa-google-plus"></i>
-    <a href="" target="_blank">Recommend us!</a>
-  </div>
-  <div className="fl-fl float-rs">
-    <i className="fa fa-rss"></i>
-    <a href="" target="_blank">Follow via RSS</a>
-  </div>
-  <div className="fl-fl float-ig">
-    <i className="fa fa-instagram"></i>
-    <a href="" target="_blank">Follow us!</a>
-  </div>
-  <div className="fl-fl float-pn">
-    <i className="fa fa-pinterest"></i>
-    <a href="" target="_blank">Follow us!</a>
-  </div>
-  <div className="fl-fl float-yt">
-    <i className="fa fa-youtube"></i>
-    <a href="" target="_blank">Follow us!</a>
-  </div>
-</div>
+        <div className="fl-fl float-fb">
+          <i className="fa fa-facebook"></i>
+          <a href="" target="_blank"> Like us!</a>
+        </div>
+        <div className="fl-fl float-tw">
+          <i className="fa fa-twitter"></i>
+          <a href="" target="_blank">Follow us!</a>
+        </div>
+        <div className="fl-fl float-gp">
+          <i className="fa fa-google-plus"></i>
+          <a href="" target="_blank">Recommend us!</a>
+        </div>
+        <div className="fl-fl float-rs">
+          <i className="fa fa-rss"></i>
+          <a href="" target="_blank">Follow via RSS</a>
+        </div>
+        <div className="fl-fl float-ig">
+          <i className="fa fa-instagram"></i>
+          <a href="" target="_blank">Follow us!</a>
+        </div>
+        <div className="fl-fl float-pn">
+          <i className="fa fa-pinterest"></i>
+          <a href="" target="_blank">Follow us!</a>
+        </div>
+        <div className="fl-fl float-yt">
+          <i className="fa fa-youtube"></i>
+          <a href="" target="_blank">Follow us!</a>
+        </div>
+      </div>
 
       <section className="banner-section banner-slider">
         <div className="container-fluid">
@@ -207,7 +207,7 @@ const HomeOne = () => {
         </div>
       </section>
       {/* /Banner */}
-{/* Why Choose Us */}
+      {/* Why Choose Us */}
 
 
       <section className="section-top">
@@ -335,9 +335,9 @@ const HomeOne = () => {
                             <h3 className="listing-title">
                               <a href="listing-details.html">DET Services</a>
                             </h3>
-<p>
-We ensures a smooth conduit for individuals and businesses to engage
-</p>
+                            <p>
+                              We ensures a smooth conduit for individuals and businesses to engage
+                            </p>
                           </div>
                         </div>
                         <div className="view-more-btn text-center">
@@ -371,7 +371,7 @@ We ensures a smooth conduit for individuals and businesses to engage
                             <h3 className="listing-title">
                               <a href="listing-details.html">Golden Visa Services</a>
                             </h3>
-<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                            <p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
                           </div>
                         </div>
                         <div className="view-more-btn text-center">
@@ -405,7 +405,7 @@ We ensures a smooth conduit for individuals and businesses to engage
                             <h3 className="listing-title">
                               <a href="listing-details.html">Premium Services</a>
                             </h3>
-<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                            <p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
                           </div>
                         </div>
                         <div className="view-more-btn text-center">
@@ -439,7 +439,7 @@ We ensures a smooth conduit for individuals and businesses to engage
                             <h3 className="listing-title">
                               <a href="listing-details.html">Tasheel Services</a>
                             </h3>
-<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                            <p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
                           </div>
                         </div>
                         <div className="view-more-btn text-center">
@@ -473,7 +473,7 @@ We ensures a smooth conduit for individuals and businesses to engage
                             <h3 className="listing-title">
                               <a href="listing-details.html">Fast Track Services</a>
                             </h3>
-<p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
+                            <p>Golden visa is one of the services provided by the Federal Authority for Identity</p>
                           </div>
                         </div>
                         <div className="view-more-btn text-center">
@@ -492,138 +492,122 @@ We ensures a smooth conduit for individuals and businesses to engage
 
 
       <section className="section facts-number">
-      <div id="Services" className="homesection servicessection saa viewon">
-
-
-
-        <div className="facts-left">
-          <ImageWithBasePath
-            src="assets/img/bg/facts-left.png"
-            className="img-fluid"
-            alt="facts left"
-          />
-        </div>
-        <div className="facts-right">
-          <ImageWithBasePath
-            src="assets/img/bg/facts-right.png"
-            className="img-fluid"
-            alt="facts right"
-          />
-        </div>
-        <div className="custom-container">
-          {/* Heading title*/}
-          <div className="section-heading" data-aos="fade-down">
-          <h2 className="section-title">Facts By The Numbers</h2>
-          </div>
-          {/* /Heading title */}
-          <div className="counter-group">
-            <div className="row">
-              <div
-                className="col-lg-3 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="count-group flex-fill">
-                  <div className="customer-count d-flex align-items-center">
-                    <div className="count-img">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-heart.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="count-content">
-                      <h4>
-                        <CountUp
-                          className="counterUp"
-                          end={16000}
-                          duration={3}
-                          separator=","
+        <div id="Services" className="homesection servicessection saa viewon">
+          <div className="custom-container">
+            {/* Heading title*/}
+            <div className="section-heading" data-aos="fade-down">
+              <h2 className="section-title">Facts By The Numbers</h2>
+            </div>
+            {/* /Heading title */}
+            <div className="counter-group">
+              <div className="row">
+                <div
+                  className="col-lg-3 col-md-6 col-12 d-flex"
+                  data-aos="fade-down"
+                >
+                  <div className="count-group flex-fill">
+                    <div className="customer-count d-flex align-items-center">
+                      <div className="count-img">
+                        <ImageWithBasePath
+                          src="assets/img/icons/bx-heart.svg"
+                          alt=""
                         />
-                        K<br />
-                      </h4>
-                      <p> Happy Customers </p>
+                      </div>
+                      <div className="count-content">
+                        <h4>
+                          <CountUp
+                            className="counterUp"
+                            end={16000}
+                            duration={3}
+                            separator=","
+                          />
+                          K<br />
+                        </h4>
+                        <p> Happy Customers </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="count-group flex-fill">
-                  <div className="customer-count d-flex align-items-center">
-                    <div className="count-img">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-car.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="count-content">
-                      <h4>
-                        <CountUp
-                          className="counterUp"
-                          end={2}
-                          duration={3}
-                          separator=","
+                <div
+                  className="col-lg-3 col-md-6 col-12 d-flex"
+                  data-aos="fade-down"
+                >
+                  <div className="count-group flex-fill">
+                    <div className="customer-count d-flex align-items-center">
+                      <div className="count-img">
+                        <ImageWithBasePath
+                          src="assets/img/icons/bx-car.svg"
+                          alt=""
                         />
-                        +<br />
-                      </h4>
-                      <p>Count of Centers</p>
+                      </div>
+                      <div className="count-content">
+                        <h4>
+                          <CountUp
+                            className="counterUp"
+                            end={2}
+                            duration={3}
+                            separator=","
+                          />
+                          +<br />
+                        </h4>
+                        <p>Count of Centers</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="count-group flex-fill">
-                  <div className="customer-count d-flex align-items-center">
-                    <div className="count-img">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-headphone.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="count-content">
-                      <h4>
-                        <CountUp
-                          className="counterUp"
-                          end={625}
-                          duration={3}
-                          separator=","
+                <div
+                  className="col-lg-3 col-md-6 col-12 d-flex"
+                  data-aos="fade-down"
+                >
+                  <div className="count-group flex-fill">
+                    <div className="customer-count d-flex align-items-center">
+                      <div className="count-img">
+                        <ImageWithBasePath
+                          src="assets/img/icons/bx-headphone.svg"
+                          alt=""
                         />
-                        K+
-                        <br />
-                      </h4>
-                      <p>Strategic Partners</p>
+                      </div>
+                      <div className="count-content">
+                        <h4>
+                          <CountUp
+                            className="counterUp"
+                            end={625}
+                            duration={3}
+                            separator=","
+                          />
+                          K+
+                          <br />
+                        </h4>
+                        <p>Strategic Partners</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-12 d-flex"
-                data-aos="fade-down"
-              >
-                <div className="count-group flex-fill">
-                  <div className="customer-count d-flex align-items-center">
-                    <div className="count-img">
-                      <ImageWithBasePath
-                        src="assets/img/icons/bx-history.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="count-content">
-                      <h4>
-                        <CountUp
-                          className="counterUp"
-                          end={200}
-                          duration={3}
-                          separator=","
+                <div
+                  className="col-lg-3 col-md-6 col-12 d-flex"
+                  data-aos="fade-down"
+                >
+                  <div className="count-group flex-fill">
+                    <div className="customer-count d-flex align-items-center">
+                      <div className="count-img">
+                        <ImageWithBasePath
+                          src="assets/img/icons/bx-history.svg"
+                          alt=""
                         />
-                        K+
-                        <br />
-                      </h4>
-                      <p>Trusting Companies</p>
+                      </div>
+                      <div className="count-content">
+                        <h4>
+                          <CountUp
+                            className="counterUp"
+                            end={200}
+                            duration={3}
+                            separator=","
+                          />
+                          K+
+                          <br />
+                        </h4>
+                        <p>Trusting Companies</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -631,13 +615,12 @@ We ensures a smooth conduit for individuals and businesses to engage
             </div>
           </div>
         </div>
-        </div>
       </section>
       {/* /Facts By The Numbers */}
       {/* Rental deals */}
 
       {/* /Rental deals */}
-      
+
       {/* About us Testimonials */}
 
       {/* About us Testimonials */}
@@ -805,153 +788,70 @@ We ensures a smooth conduit for individuals and businesses to engage
             {/* Heading title*/}
             <div className="section-heading" data-aos="fade-down">
               <h2>News &amp; Insights For You</h2>
-              <p>This blog post provides valuable insights into the benefits</p>
             </div>
             {/* /Heading title */}
             <div className="row">
               <div className="col-lg-4 col-md-6 d-lg-flex">
                 <div className="blog grid-blog">
                   <div className="blog-image">
-                    <Link to={routes.blogDetails}>
-                      <ImageWithBasePath
-                        className="img-fluid"
-                        src="assets/img/blog/blog-4.jpg"
-                        alt="Post Image"
-                      />
-                    </Link>
+                    <ImageWithBasePath
+                      className="img-fluid"
+                      src="assets/img/blog/DET_Opening.jpeg"
+                      alt="Post Image"
+                    />
+
                   </div>
                   <div className="blog-content">
-                    <p className="blog-category">
-                      <Link to="#">
-                        <span>Journey</span>
-                      </Link>
-                    </p>
                     <h3 className="blog-title">
-                      <Link to={routes.blogDetails}>
-                         2024 - DED Opening
-                      </Link>
+                      <a href="">
+
+                        2024 - DED Opening
+                      </a>
                     </h3>
-                    <p className="blog-description">
-                      Covers all aspects of the automotive industry with a focus
-                      on accessibility
-                    </p>
-                    <ul className="meta-item mb-0">
-                      <li>
-                        <div className="post-author">
-                          <div className="post-author-img">
-                            <ImageWithBasePath
-                              src="assets/img/profiles/avatar-04.jpg"
-                              alt="author"
-                            />
-                          </div>
-                          <Link to="#">
-                            {" "}
-                            <span> Hellan </span>
-                          </Link>
-                        </div>
-                      </li>
-                      <li className="date-icon">
-                        <i className="fa-solid fa-calendar-days" />{" "}
-                        <span>October 6, 2022</span>
-                      </li>
-                    </ul>
+
+
                   </div>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-lg-flex">
                 <div className="blog grid-blog">
                   <div className="blog-image">
-                    <Link to={routes.blogDetails}>
-                      <ImageWithBasePath
-                        className="img-fluid"
-                        src="assets/img/blog/blog-3.jpg"
-                        alt="Post Image"
-                      />
-                    </Link>
+                    <ImageWithBasePath
+                      className="img-fluid"
+                      src="assets/img/blog/2023_NationalDay.jpg"
+                      alt="Post Image"
+                    />
+
                   </div>
                   <div className="blog-content">
-                    <p className="blog-category">
-                      <Link to="#">
-                        <span>Tour &amp; tip</span>
-                      </Link>
-                    </p>
+
                     <h3 className="blog-title">
-                      <Link to={routes.blogDetails}>
-                        National Day
-                      </Link>
+                      <a href="">
+
+                        2023 - National Day Celeberation
+                      </a>
                     </h3>
-                    <p className="blog-description">
-                      Catering to driving enthusiasts, Road &amp; Track provides
-                      engaging content on...
-                    </p>
-                    <ul className="meta-item mb-0">
-                      <li>
-                        <div className="post-author">
-                          <div className="post-author-img">
-                            <ImageWithBasePath
-                              src="assets/img/profiles/avatar-13.jpg"
-                              alt="author"
-                            />
-                          </div>
-                          <Link to="#">
-                            {" "}
-                            <span> Alphonsa Daniel </span>
-                          </Link>
-                        </div>
-                      </li>
-                      <li className="date-icon">
-                        <i className="fa-solid fa-calendar-days" />{" "}
-                        <span>March 6, 2023</span>
-                      </li>
-                    </ul>
+
                   </div>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-lg-flex">
                 <div className="blog grid-blog">
                   <div className="blog-image">
-                    <Link to={routes.blogDetails}>
-                      <ImageWithBasePath
-                        className="img-fluid"
-                        src="assets/img/blog/blog-10.jpg"
-                        alt="Post Image"
-                      />
-                    </Link>
+                    <ImageWithBasePath
+                      className="img-fluid"
+                      src="assets/img/blog/BestEmployee_2024.jpg"
+                      alt="Post Image"
+                    />
+
                   </div>
                   <div className="blog-content">
-                    <p className="blog-category">
-                      <Link to="#">
-                        <span>Updates</span>
-                      </Link>
-                    </p>
                     <h3 className="blog-title">
-                      <Link to={routes.blogDetails}>
-Best Employee of the Month                      </Link>
+                      <a href="">
+                        Best Employee of the Month                      </a>
                     </h3>
-                    <p className="blog-description">
-                      Known for its irreverent take on car culture, offers a mix
-                      of news, reviews...
-                    </p>
-                    <ul className="meta-item mb-0">
-                      <li>
-                        <div className="post-author">
-                          <div className="post-author-img">
-                            <ImageWithBasePath
-                              src="assets/img/profiles/avatar-13.jpg"
-                              alt="author"
-                            />
-                          </div>
-                          <Link to="#">
-                            {" "}
-                            <span> Hellan</span>
-                          </Link>
-                        </div>
-                      </li>
-                      <li className="date-icon">
-                        <i className="fa-solid fa-calendar-days" />{" "}
-                        <span>March 6, 2023</span>
-                      </li>
-                    </ul>
+
+
                   </div>
                 </div>
               </div>
@@ -960,15 +860,15 @@ Best Employee of the Month                      </Link>
               className="view-all text-center aos-init aos-animate"
               data-aos="fade-down"
             >
-              <Link
-                to={routes.blogDetails}
+              <a
+                href="#"
                 className="btn btn-view-custom d-inline-flex align-items-center"
               >
-                View all Blogs{" "}
+                View all News{" "}
                 <span>
                   <i className="feather icon-arrow-right ms-2" />
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
         </section>

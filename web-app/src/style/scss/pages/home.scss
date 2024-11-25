@@ -2236,7 +2236,7 @@ border-radius: 10px 10px 0px 0px;
     }
 }  
 .section-heading {
-    text-align: center;
+    text-align: left;
     @include margin-padding(0 0 40px, null); 
         @include respond-below(custom991) {
             @include margin-padding(0 0 30px, null);
@@ -2251,9 +2251,9 @@ border-radius: 10px 10px 0px 0px;
         &:after {
             content: "";
             position: $__absolute;
-            background-image: url(../../../../public/assets/img/bg/title-head.png);            
-            background-position: center;
-            background-repeat: no-repeat;
+            //background-image: url(../../../../public/assets/img/bg/title-head.png);            
+            //background-position: center;
+            //background-repeat: no-repeat;
             left: 0;
             height: 11px;
             right: 0;
@@ -3007,7 +3007,12 @@ border-radius: 10px 10px 0px 0px;
     
 }
 .facts-number {
-    background: $__goose-gray;
+
+background-image:url(../../../../public/assets/img/shini-01-03.png);
+background-position: center;
+  background-repeat: no-repeat;
+
+    //background: $__goose-gray;
     @include respond-below(custom991) {
         padding-bottom: 35px;
     }
