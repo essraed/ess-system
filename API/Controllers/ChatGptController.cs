@@ -1,11 +1,9 @@
 using API.DTOs;
 using API.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class ChatGptController : ControllerBase
@@ -17,7 +15,6 @@ namespace API.Controllers
             _chatGptService = chatGptService;
         }
 
-        [AllowAnonymous]
         [HttpPost("generate-summary")]
         public async Task<IActionResult> GenerateSummary([FromBody] UserPromptDto prompt)
         {

@@ -191,7 +191,9 @@ namespace API.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PlateNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,48 +206,74 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Mails",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ToEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FilePaths = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    MoreDetailsUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndNotificationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mails", x => x.Id);
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Mails_AspNetUsers_CreatedById",
+                        name: "FK_Notifications_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Mails_AspNetUsers_UpdatedById",
+                        name: "FK_Notifications_AspNetUsers_UpdatedById",
                         column: x => x.UpdatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceCategories",
+                name: "WorkingTimes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<int>(type: "int", nullable: false),
+                    FromTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    ToTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceCategories", x => x.Id);
+                    table.PrimaryKey("PK_WorkingTimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServiceCategories_AspNetUsers_CreatedById",
+                        name: "FK_WorkingTimes_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -288,45 +316,23 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bookings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndBookingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    BookingById = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bookings_AspNetUsers_BookingById",
-                        column: x => x.BookingById,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Bookings_Cars_CarId",
-                        column: x => x.CarId,
-                        principalTable: "Cars",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rate = table.Column<float>(type: "real", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceVIP = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ServiceVipName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ServiceCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -342,9 +348,50 @@ namespace API.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Services_ServiceCategories_ServiceCategoryId",
-                        column: x => x.ServiceCategoryId,
-                        principalTable: "ServiceCategories",
+                        name: "FK_Services_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileEntities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileEntities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FileEntities_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FileEntities_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FileEntities_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_FileEntities_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
                         principalColumn: "Id");
                 });
 
@@ -354,6 +401,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdditionalFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -362,6 +410,67 @@ namespace API.Migrations
                     table.PrimaryKey("PK_ServiceOptions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ServiceOptions_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Latitude = table.Column<double>(type: "float", nullable: true),
+                    Longitude = table.Column<double>(type: "float", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndBookingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ServiceOptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Notifications_NotificationId",
+                        column: x => x.NotificationId,
+                        principalTable: "Notifications",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_ServiceOptions_ServiceOptionId",
+                        column: x => x.ServiceOptionId,
+                        principalTable: "ServiceOptions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id");
@@ -417,18 +526,43 @@ namespace API.Migrations
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_BookingById",
-                table: "Bookings",
-                column: "BookingById");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Bookings_CarId",
                 table: "Bookings",
                 column: "CarId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookings_CreatedById",
+                table: "Bookings",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_NotificationId",
+                table: "Bookings",
+                column: "NotificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_ServiceId",
+                table: "Bookings",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_ServiceOptionId",
+                table: "Bookings",
+                column: "ServiceOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_UpdatedById",
+                table: "Bookings",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cars_CreatedById",
                 table: "Cars",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_CreatedById",
+                table: "Categories",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
@@ -447,19 +581,38 @@ namespace API.Migrations
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mails_CreatedById",
-                table: "Mails",
+                name: "IX_FileEntities_CategoryId",
+                table: "FileEntities",
+                column: "CategoryId",
+                unique: true,
+                filter: "[CategoryId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileEntities_CreatedById",
+                table: "FileEntities",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Mails_UpdatedById",
-                table: "Mails",
+                name: "IX_FileEntities_ServiceId",
+                table: "FileEntities",
+                column: "ServiceId",
+                unique: true,
+                filter: "[ServiceId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileEntities_UpdatedById",
+                table: "FileEntities",
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceCategories_CreatedById",
-                table: "ServiceCategories",
+                name: "IX_Notifications_CreatedById",
+                table: "Notifications",
                 column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UpdatedById",
+                table: "Notifications",
+                column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceOptions_ServiceId",
@@ -467,19 +620,24 @@ namespace API.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Services_CategoryId",
+                table: "Services",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Services_CreatedById",
                 table: "Services",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Services_ServiceCategoryId",
-                table: "Services",
-                column: "ServiceCategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Services_UpdatedById",
                 table: "Services",
                 column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkingTimes_CreatedById",
+                table: "WorkingTimes",
+                column: "CreatedById");
         }
 
         /// <inheritdoc />
@@ -507,10 +665,10 @@ namespace API.Migrations
                 name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "Mails");
+                name: "FileEntities");
 
             migrationBuilder.DropTable(
-                name: "ServiceOptions");
+                name: "WorkingTimes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -519,13 +677,19 @@ namespace API.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
+                name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "ServiceOptions");
+
+            migrationBuilder.DropTable(
                 name: "Authorities");
 
             migrationBuilder.DropTable(
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "ServiceCategories");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

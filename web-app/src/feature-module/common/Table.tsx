@@ -51,7 +51,7 @@ const Table = ({
               to="#"
               onClick={() => getViewId(id)}
               data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.categoryDialog}`}
+              data-bs-target={`#${routeUrl}`}
             >
               <i className="feather icon-file-plus me-1"></i> View
             </Link>

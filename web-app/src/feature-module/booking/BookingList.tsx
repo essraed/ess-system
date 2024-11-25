@@ -12,7 +12,7 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 import { all_routes } from "../router/all_routes";
 import { Dropdown } from "primereact/dropdown";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 
 const BookingList = () => {
   const navigate = useNavigate();

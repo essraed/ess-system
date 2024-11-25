@@ -42,7 +42,7 @@ const BookingIndex = ({ service }: Props) => {
   }
 
   useEffect(() => {
-    setSelectedPrice(service.price);
+    setSelectedPrice(Number(service.price));
   }, [service]);
 
   if (!service) return <p>Loading...</p>;
@@ -58,7 +58,7 @@ const BookingIndex = ({ service }: Props) => {
                 <p>Total Cost:</p>
                 <span className="text-red-700 border p-2 rounded-lg">
                   {selectedPrice
-                    ? `${selectedPrice + selectedOptionsPrice} AED`
+                    ? `${(selectedPrice + selectedOptionsPrice).toFixed(2)} AED`
                     : "Price Not Available"}{" "}
                 </span>
               </h6>
@@ -69,7 +69,7 @@ const BookingIndex = ({ service }: Props) => {
                   {service?.priceVIP && (
                     <li
                       onClick={() => {
-                        handleSelectedPrice(service?.priceVIP ?? service.price);
+                        handleSelectedPrice(Number(service?.priceVIP) ?? Number(service.price));
                         setIsAtHome(true);
                       }}
                     >
@@ -89,7 +89,7 @@ const BookingIndex = ({ service }: Props) => {
                     </li>
                   )}
                   <li onClick={() => {
-                    handleSelectedPrice(service.price)
+                    handleSelectedPrice(Number(service.price))
                     setIsAtHome(false)
                   }}>
                     <label

@@ -50,6 +50,12 @@ namespace API.Services
             return Path.Combine(directory, uniqueFileName);
         }
 
+        public async Task<FileEntity> GetFileByIdAsync (Guid id)
+        {
+            if (id == Guid.Empty) throw new Exception($"File with id {id} not found.");
+            return await _context.FileEntities.FindAsync(id) ?? null!;
+        }
+
         // Save files & Images into server & db.
         public async Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false)
         {
@@ -71,7 +77,7 @@ namespace API.Services
                 CreatedById = GetCurrentUserId(),
             };
 
-            _context.Files.Add(fileEntity);
+            _context.FileEntities.Add(fileEntity);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<FileResponseDto>(fileEntity);
@@ -113,7 +119,7 @@ namespace API.Services
         // Update files & Images
         public async Task<FileResponseDto> UpdateFileAsync(Guid fileId, IFormFile newFile, string directory, bool isImage = false)
         {
-            var fileEntity = await _context.Files.FindAsync(fileId);
+            var fileEntity = await _context.FileEntities.FindAsync(fileId);
             if (fileEntity == null) throw new Exception("File not found.");
 
             DeleteFileOrImage(fileEntity.FilePath);
@@ -127,7 +133,7 @@ namespace API.Services
             fileEntity.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
             fileEntity.UpdatedById = GetCurrentUserId();
 
-            _context.Files.Update(fileEntity);
+            _context.FileEntities.Update(fileEntity);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<FileResponseDto>(fileEntity);
@@ -151,12 +157,12 @@ namespace API.Services
         // Delete from server & db
         public async Task DeleteFileAsync(Guid fileId)
         {
-            var fileEntity = await _context.Files.FindAsync(fileId);
+            var fileEntity = await _context.FileEntities.FindAsync(fileId);
             if (fileEntity == null) throw new Exception("File not found.");
 
             DeleteFileOrImage(fileEntity.FilePath);
 
-            _context.Files.Remove(fileEntity);
+            _context.FileEntities.Remove(fileEntity);
             await _context.SaveChangesAsync();
         }
 

@@ -7,7 +7,7 @@ export interface ServiceData {
   priceVIP?: string;
   serviceVipName?: string;
   totalPrice?: string;
-  pictureUrl?: string; // Corresponds to the optional PictureUrl in C# ServiceDto
+  filePath?: string; // Corresponds to the optional PictureUrl in C# ServiceDto
   createDate?: Date | string;
   updateDate?: Date | string;
   createdBy?: string;

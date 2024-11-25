@@ -65,11 +65,16 @@ namespace API.Data
 
                     if (File.Exists(filePath))
                     {
-                        var jsonData = await File.ReadAllTextAsync(filePath); // Read the file content
-                        var categories = JsonConvert.DeserializeObject<List<Category>>(jsonData); // Deserialize the JSON content
+                        var jsonData = await File.ReadAllTextAsync(filePath);
+                        var categories = JsonConvert.DeserializeObject<List<Category>>(jsonData);
 
                         if (categories != null)
                         {
+                            foreach (var category in categories)
+                            {
+                                category.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
+                            }
+
                             context.Categories.AddRange(categories);
                             await context.SaveChangesAsync();
                         }
@@ -79,6 +84,7 @@ namespace API.Data
                         throw new FileNotFoundException($"The file '{filePath}' was not found.");
                     }
                 }
+
 
             }
             catch (SystemException ex)

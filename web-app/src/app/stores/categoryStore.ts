@@ -105,8 +105,8 @@ export default class CategoryStore {
         data.map((item) => {
           categoryList.push({
             ...item,
-            createDate: formatDateTime(item.createDate),
-            createdBy: item.createdBy ? item.createdBy : "No set",
+            createDate: item.createDate ? formatDateTime(item.createDate) : "No set",
+            createdBy: item.createdBy ? item.createdBy : "System",
           });
         });
 
@@ -116,6 +116,18 @@ export default class CategoryStore {
       console.error("Error loading categories:", error);
     }
   };
+
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+    try {
+      await agent.Categories.uploadImage(formData);
+      return { status: "success", data: "Category image uploaded successfully" };
+    } catch (error) {
+      console.error("Error uploading Category: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
+
   loadCategoriesForDropdown = async () => {
     try {
       const result = await agent.Categories.listForDropdown();

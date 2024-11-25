@@ -39,7 +39,7 @@ namespace API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<ServiceOption> ServiceOptions { get; set; }
         public DbSet<WorkingTime> WorkingTimes { get; set; }
-        public DbSet<FileEntity> Files { get; set; }
+        public DbSet<FileEntity> FileEntities { get; set; }
         public DbSet<Notification> Notifications { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-import { dayOfWeekMap } from "../../constants/contants";
+import { dayOfWeekMap } from "../../constants/constants";
 import { PUBLIC_API_URL } from "../../environment";
 import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
@@ -16,6 +16,7 @@ import { CarData } from "../../types/car";
 import { CategoryData } from "../../types/category";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
 import { DropdownType } from "../../types/Dropdown";
+import { FileResponseData } from "../../types/filesTypes";
 import { NotificationData } from "../../types/notification";
 import { PagedResponse } from "../../types/pagination";
 import { ServiceData } from "../../types/service";
@@ -32,7 +33,11 @@ axios.interceptors.request.use((config) => {
   const token = store.userStore.token;
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
-    config.headers["Content-Type"] = "application/json";
+    if (config.data instanceof FormData) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    } else {
+      config.headers["Content-Type"] = "application/json";
+    }
   }
   return config;
 });
@@ -85,9 +90,8 @@ const requests = {
 };
 
 const Cars = {
-  getAll: (params: URLSearchParams) =>axios
-  .get<PagedResponse<CarData[]>>("cars", { params })
-  .then(responseBody),
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<CarData[]>>("cars", { params }).then(responseBody),
   getById: (id: string) => requests.get<CarData>(`cars/${id}`),
   create: (car: CarSchema) => requests.post<CarData>("cars", car),
   delete: (id: string) => requests.del<string>(`cars/${id}`),
@@ -100,10 +104,14 @@ const Categories = {
       .then(responseBody),
   getById: (id: string) => requests.get<CategoryData>(`categories/${id}`),
   listForDropdown: () =>
-
-    requests.get<CategoryData[]>("categories/getAllForDropdown"),
-  create: (formData:CategorySchema) => requests.post<CategoryData>("categories",formData),
+    requests.get<CategoryData[]>("categories/authorities-dropdown"),
+  create: (formData: CategorySchema) =>
+    requests.post<CategoryData>("categories", formData),
   delete: (id: string) => requests.del<string>(`categories/${id}`),
+  uploadImage: (formData: FormData) =>
+    axios
+      .post<string>("categories/upload-image", formData)
+      .then(responseBody),
 };
 
 const Services = {
@@ -113,51 +121,30 @@ const Services = {
       .then(responseBody),
   getById: (id: string) => requests.get<ServiceData>(`services/${id}`),
 
+  create: (formData: ServiceSchema) =>
+    requests.post<ServiceData>("services/create-service", formData),
 
-  create: (formData: ServiceSchema) =>  requests.post<ServiceData>("services",formData)
-    //  fetch("https://localhost:44393/api/services", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Failed to create Service");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log("Service created", data);
-    //     return data;
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error creating Service:", error);
-    //     throw error;
-    //   });
-  ,
-
-
+  uploadImage: (formData: FormData) =>
+    axios
+      .post<string>("services/upload-image", formData)
+      .then(responseBody),
   update: (id: string, service: ServiceSchema) =>
     requests.put<string>(`services/${id}`, service),
   delete: (id: string) => requests.del<string>(`services/${id}`),
 };
 
-
 const WorkingTime = {
   getAll: () => requests.get<WorkingTimeData[]>("workingtime"),
-  create: (workingTime: WorkingTimeSchema) =>
-  {
+  create: (workingTime: WorkingTimeSchema) => {
     const mappedData = {
       ...workingTime,
       day: dayOfWeekMap[workingTime.day],
     };
-    console.log("working after convert",mappedData)
-    return  requests.post<WorkingTimeData>("workingtime", mappedData)
-  }
-    ,
+    console.log("working after convert", mappedData);
+    return requests.post<WorkingTimeData>("workingtime", mappedData);
+  },
 };
 // Helper function to ensure the time is in the correct format (HH:mm)
-
-
 
 const Bookings = {
   getAll: (params: URLSearchParams) =>
@@ -167,12 +154,13 @@ const Bookings = {
   getById: (id: string) => requests.get<BookingDetailsData>(`booking/${id}`),
   getAvailableSlots: (date: string) =>
     requests.get<string[]>(`booking/available-slots/${date}`),
-  create: (booking: BookingSchema) => requests.post<BookingData>("booking", booking),
+  create: (booking: BookingSchema) =>
+    requests.post<BookingData>("booking", booking),
   delete: (id: string) => requests.del<string>(`booking/${id}`),
 
   // Dropdown
   dropdownList: () => requests.get<DropdownType[]>("booking/get-all-dropdown"),
-  
+
   // Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
@@ -183,7 +171,6 @@ const Bookings = {
   setStatusPending: (id: string) =>
     requests.put<string>(`booking/${id}/status/pending`, {}),
 };
-
 
 const Account = {
   current: () => requests.get<User>("account"),
@@ -227,15 +214,41 @@ const Authority = {
   delete: (id: string) => requests.del<string>(`authority/${id}`),
 };
 
-
 const Notifications = {
-  getAll: (params: URLSearchParams) => axios.get<PagedResponse<NotificationData[]>>("notification", {params }).then(responseBody),
+  getAll: (params: URLSearchParams) =>
+    axios
+      .get<PagedResponse<NotificationData[]>>("notification", { params })
+      .then(responseBody),
   ReadToggle: (id: string) => requests.put<string>(`notification/${id}`, {}),
   create: (notification: NotificationSchema) =>
     requests.post<NotificationData>("notification", notification),
   delete: (id: string) => requests.del<string>(`notification/${id}`),
 };
 
+// const Files = {
+//   uploadFile: (formData: FormData) =>
+//     axios
+//       .post<FileResponseData>("files/uploadFile", formData, {})
+//       .then(responseBody),
+
+
+
+//   updateFile: (id: string, formData: FormData) =>
+//     axios
+//       .put<FileResponseData>(`files/updateFile/${id}`, formData)
+//       .then(responseBody),
+
+//   updateImage: (id: string, formData: FormData) =>
+//     axios
+//       .put<FileResponseData>(`files/updateImage/${id}`, formData)
+//       .then(responseBody),
+
+//   deleteFile: (id: string) =>
+//     axios.delete<string>(`files/deleteFile/${id}`).then(responseBody),
+
+//   deleteImage: (id: string) =>
+//     axios.delete<string>(`files/deleteImage/${id}`).then(responseBody),
+// };
 
 const agent = {
   Account,

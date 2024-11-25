@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Interfaces;
 using API.RequestParams;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
@@ -20,19 +20,35 @@ namespace API.Controllers
 
         // GET: api/categories
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<CategoryDto>>> GetAllCategories([FromQuery] CategoryParams CategorytParams)
         {
             var categories = await _categoryService.GetAllCategoriesAsync(CategorytParams);
             return Ok(categories);
         }
-        [HttpGet("getAllForDropdown")]
+        [HttpGet("authorities-dropdown")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllAuthoritiesForDropdown()
         {
             return Ok(await _categoryService.GetAllCategoriesForDropdownAsync());
         }
 
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadNewDto model)
+        {
+            try
+            {
+                return Ok(await _categoryService.UploadImage(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading service image: {ex.Message}");
+            }
+        }
+
         // GET: api/categories/{id}
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<CategoryDto>> GetCategoryById(Guid id)
         {
             try
@@ -50,7 +66,7 @@ namespace API.Controllers
 
         // POST: api/categories
         [HttpPost]
-        public async Task<ActionResult<CategoryDto>> AddCategory([FromBody]CategorySaveDto categorySaveDto)
+        public async Task<ActionResult<CategoryDto>> AddCategory([FromBody] CategorySaveDto categorySaveDto)
         {
             try
             {

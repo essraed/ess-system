@@ -68,6 +68,16 @@ export default class ServiceStore {
     }
   };
 
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+    try {
+      await agent.Services.uploadImage(formData);
+      return { status: "success", data: "Service image uploaded successfully" };
+    } catch (error) {
+      console.error("Error uploading service: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
   // Delete Service
   deleteService = async (id: string): Promise<ActionResult<string>> => {
     try {

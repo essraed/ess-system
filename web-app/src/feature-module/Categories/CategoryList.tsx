@@ -5,7 +5,7 @@ import CategoryCard from "./CategoryCard";
 
 const CategoryList = () => {
   const {
-    categoryStore: { categories, loadCategories },
+    categoryStore: { categories, loadCategories, uploadImage },
     serviceStore: { setCategoryIdParam, loadServices },
     userStore,
   } = useStore();
@@ -32,6 +32,7 @@ const CategoryList = () => {
         <div className="listing-tabs-group">
           <ul className="nav listing-buttons gap-3" data-bs-tabs="tabs">
             <CategoryCard
+          
               className="active"
               key={null}
               category={categoryInitial}
@@ -39,6 +40,7 @@ const CategoryList = () => {
             />
             {categories.map((category) => (
               <CategoryCard
+                uploadImage={uploadImage}
                 key={category.id}
                 category={category}
                 handleSerice={handleSerice}

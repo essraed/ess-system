@@ -267,9 +267,6 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
@@ -326,6 +323,9 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -344,6 +344,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long?>("Size")
                         .HasColumnType("bigint");
 
@@ -355,11 +358,19 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId")
+                        .IsUnique()
+                        .HasFilter("[CategoryId] IS NOT NULL");
+
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("ServiceId")
+                        .IsUnique()
+                        .HasFilter("[ServiceId] IS NOT NULL");
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Files");
+                    b.ToTable("FileEntities");
                 });
 
             modelBuilder.Entity("API.Entities.Notification", b =>
@@ -433,9 +444,6 @@ namespace API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -757,15 +765,27 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.FileEntity", b =>
                 {
+                    b.HasOne("API.Entities.Category", "Category")
+                        .WithOne("FileEntity")
+                        .HasForeignKey("API.Entities.FileEntity", "CategoryId");
+
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.Service", "Service")
+                        .WithOne("FileEntity")
+                        .HasForeignKey("API.Entities.FileEntity", "ServiceId");
 
                     b.HasOne("API.Entities.AppUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
 
+                    b.Navigation("Category");
+
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Service");
 
                     b.Navigation("UpdatedBy");
                 });
@@ -892,11 +912,15 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Category", b =>
                 {
+                    b.Navigation("FileEntity");
+
                     b.Navigation("Services");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
                 {
+                    b.Navigation("FileEntity");
+
                     b.Navigation("ServiceOptions");
                 });
 

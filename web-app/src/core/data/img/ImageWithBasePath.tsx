@@ -1,5 +1,5 @@
 import React from 'react';
-import { img_path } from '../../../environment';
+import { IMAGE_SERVER_PATH, img_path } from '../../../environment';
 
 interface Image {
   className?: string;
@@ -12,7 +12,7 @@ interface Image {
 
 const ImageWithBasePath = (props: Image) => {
   // Combine the base path and the provided src to create the full image source URL
-  const fullSrc = `${img_path}${props.src}`;
+  const fullSrc = (props.src.startsWith('/') || props.src.startsWith('assets')) ? `${img_path}/${props.src}` : `${IMAGE_SERVER_PATH}/${props.src}`;
   return (
     <img
       className={props.className}

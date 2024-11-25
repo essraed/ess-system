@@ -11,7 +11,7 @@ import { PagingParams } from "../../types/pagination";
 import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 import NotificationForm from "./NotificationForm";
 import ConfirmDialog from "../common/ConfirmDialog";
 

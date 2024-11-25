@@ -4,6 +4,7 @@ namespace API.DTOs
     {
         public required IList<IFormFile> Files { get; set; }
         public required string directory { get; set; }
+        public Guid? EntityId { get; set; }
     }
 
     public class FileUpdateDto
@@ -20,13 +21,15 @@ namespace API.DTOs
         public string? ContentType { get; set; }
         public long Size { get; set; }
 
+
+
         // related tables
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-
         public string? CreatedBy { get; set; }
-
         public string? UpdatedBy { get; set; }
+        public Guid? ServiceId { get; set; }
+        public Guid? CategoryId { get; set; }
     }
 
 }

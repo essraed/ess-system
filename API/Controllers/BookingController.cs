@@ -3,12 +3,10 @@ using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.RequestParams;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class BookingController : ControllerBase

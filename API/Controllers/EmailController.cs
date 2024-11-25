@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
+        [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class EmailController : ControllerBase

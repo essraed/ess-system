@@ -2,8 +2,6 @@ export const dialogFlags = {
   deleteDialog: "delete_dialog",
   completeDialog: "complete_dialog",
   cancelDialog: "cancel_dialog",
-  serviceDialog: "serviceDialog",
-  categoryDialog: "categoryDialog",
 };
 
 export const dayOfWeekMap: { [key: string]: number } = {
@@ -15,3 +13,13 @@ export const dayOfWeekMap: { [key: string]: number } = {
   Friday: 5,
   Saturday: 6,
 };
+
+export const allowedImageExtension = [
+  "image/",
+];
+export const allowedTextsExtension = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+];
