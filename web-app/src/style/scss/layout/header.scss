@@ -2,6 +2,11 @@
     6. Header
 -----------------------*/
 
+
+.rightLogo{
+    margin: 20px 0;
+}
+
 .header {
     background: $__white;
     position: sticky;
@@ -25,6 +30,11 @@
             }
         }
     }
+
+
+
+
+    
     .header-nav {
         -webkit-box-align: center;
         -ms-flex-align: center;
@@ -33,24 +43,25 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        background-color:#0f8992;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         justify-content: space-between;
         -webkit-justify-content: space-between;
         -ms-flex-pack: space-between;
         position: $__relative;
-        height: 85px;
+        height: 50px;
         @include margin-padding(null, 0 15px 0 15px);
         margin-bottom: 0;
         @include respond-below(custom991) {
-            height: 65px;
+            height: 3px;
             @include margin-padding(null, 0);
         }
         .main-nav {
             >li {
                 >a {
-                    color: $__gray;
-                    line-height: 85px;
+                    color: #CECDCD;
+                    line-height: 50px;
                     font-weight: $__medium;
                     @include respond-below(custom991) {
                         font-size: $__font__size__14;
@@ -126,15 +137,23 @@
             display: none;
             margin-right: 30px;            
             @include respond-below(custom991) {
-                display: inline-block;
-                line-height: 0;
-            }
-            @include respond-below(custom575) {
-                left: 0;
+                right: 0;
                 margin-right: 0;
                 padding: 0 0px;
                 position: absolute;
                 z-index: 99;
+                top:-70px;
+                display: inline-block;
+
+
+            }
+            @include respond-below(custom575) {
+                right: 0;
+                margin-right: 0;
+                padding: 0 0px;
+                position: absolute;
+                z-index: 99;
+                top:-70px;
             }
             .bar-icon {
                 display: inline-block;
@@ -171,6 +190,7 @@
     }
     .main-menu-wrapper {
         margin: 0 15px 0;
+        width: 100%;
         @include respond-below(custom991) {
             order: 3;
             width: 260px;

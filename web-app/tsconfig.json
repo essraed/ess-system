@@ -20,6 +20,7 @@
     "jsx": "react",
     "types": ["react", "react-dom","node"],
     "allowImportingTsExtensions":false,
+    
   },
   "include": [
     "src"
