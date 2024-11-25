@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using API.Data;
+using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Entities;
 using API.Helpers;
@@ -14,11 +15,14 @@ public class CategoryService : ICategoryService
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IFileService _fileService;
+
 
 
     public CategoryService(DataContext context, IMapper mapper,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, IFileService fileService)
     {
+        _fileService = fileService;
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
@@ -29,6 +33,7 @@ public class CategoryService : ICategoryService
 
         var query = _context.Categories
         .Include(x => x.CreatedBy)
+        .Include(x => x.FileEntity)
         .Where(x => !x.IsDeleted)
         .AsNoTracking()
                 .AsQueryable();
@@ -69,7 +74,8 @@ public class CategoryService : ICategoryService
     {
         var category = await _context.Categories
         .Include(x => x.Services)
-        .Include(x=>x.CreatedBy)
+        .Include(x => x.FileEntity)
+        .Include(x => x.CreatedBy)
         .FirstOrDefaultAsync(x => x.Id == id);
 
         if (category == null)
@@ -78,6 +84,28 @@ public class CategoryService : ICategoryService
         }
 
         return _mapper.Map<CategoryDto>(category);
+    }
+
+    public async Task<string> UploadImage(FileUploadNewDto model)
+    {
+        var category = await _context.Categories.FindAsync(model.EntityId);
+
+        if (category is not null)
+        {
+            var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
+            createdFiles.ForEach(async item =>
+            {
+                var file = await _fileService.GetFileByIdAsync(item.Id);
+                file.CategoryId = model.EntityId;
+
+            });
+
+
+            await _context.SaveChangesAsync();
+
+            return createdFiles[0].FilePath!;
+        }
+        return null!;
     }
 
     public async Task<CategoryDto> AddCategoryAsync(CategorySaveDto model)
@@ -98,7 +126,7 @@ public class CategoryService : ICategoryService
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<CategoryDto>(category);  
+        return _mapper.Map<CategoryDto>(category);
     }
 
 
@@ -128,7 +156,7 @@ public class CategoryService : ICategoryService
             .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? null!;
     }
-   
+
 
 
 }

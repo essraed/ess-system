@@ -11,22 +11,26 @@ namespace API.Mappings
             // for category
             CreateMap<Category, CategoryDto>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
-                    src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty));
+                    src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
+                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src =>
+                    src.FileEntity != null ? src.FileEntity.FilePath : string.Empty));
 
             CreateMap<CategorySaveDto, Category>();
             ;
 
             // for service
             CreateMap<Service, ServiceDto>()
-    .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
-        src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
-    .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src =>
-        src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty))
-    .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions))
-    .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>
-        src.Category != null ? src.Category.Id.ToString() : string.Empty)) // Correct mapping for CategoryId
-    .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src =>
-        src.Category != null ? src.Category.Name : string.Empty));
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
+                    src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src =>
+                    src.UpdatedBy != null ? src.UpdatedBy.DisplayName : string.Empty))
+                .ForMember(dest => dest.ServiceOptions, opt => opt.MapFrom(src => src.ServiceOptions))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src =>
+                    src.Category != null ? src.Category.Id.ToString() : string.Empty)) // Correct mapping for CategoryId
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src =>
+                    src.Category != null ? src.Category.Name : string.Empty))
+                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src =>
+                    src.FileEntity != null ? src.FileEntity.FilePath : string.Empty));
 
 
             CreateMap<ServiceSaveDto, Service>()

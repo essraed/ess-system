@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using API.Data;
+using API.DTOs;
 using API.DTOs.ServiceDto;
 using API.Entities;
 using API.Helpers;
@@ -13,14 +14,15 @@ public class ServiceService : IServiceService
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
-
+    private readonly IFileService _fileService;
 
 
     public ServiceService(DataContext context, IMapper mapper,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, IFileService fileService)
     {
         _context = context;
         _mapper = mapper;
+        _fileService = fileService;
         _httpContextAccessor = httpContextAccessor;
     }
 
@@ -32,6 +34,7 @@ public class ServiceService : IServiceService
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
             .Include(x => x.Category)
+            .Include(x => x.FileEntity)
             .AsNoTracking()
             .AsQueryable();
 
@@ -74,6 +77,7 @@ public class ServiceService : IServiceService
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
             .Include(x => x.Category)
+            .Include(x => x.FileEntity)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (service == null)
@@ -82,6 +86,28 @@ public class ServiceService : IServiceService
         }
 
         return _mapper.Map<ServiceDto>(service);
+    }
+
+    public async Task<string> UploadImage(FileUploadNewDto model)
+    {
+        var service = await _context.Services.FindAsync(model.EntityId);
+
+        if (service is not null)
+        {
+            var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
+            createdFiles.ForEach(async item =>
+            {
+                var file = await _fileService.GetFileByIdAsync(item.Id);
+                file.ServiceId = model.EntityId;
+                
+            });
+
+
+            await _context.SaveChangesAsync();
+
+            return createdFiles[0].FilePath!;
+        }
+        return null!;
     }
 
     public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)

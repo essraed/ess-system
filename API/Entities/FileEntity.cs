@@ -24,6 +24,12 @@ namespace API.Entities
 
         public string? UpdatedById { get; set; }
         public AppUser? UpdatedBy { get; set; }
+
+        public Guid? CategoryId { get; set; }
+        public Category? Category { get; set; }
+
+        public Guid? ServiceId { get; set; }
+        public Service? Service { get; set; }
     }
 
 }

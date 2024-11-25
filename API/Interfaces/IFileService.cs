@@ -1,5 +1,6 @@
 
 using API.DTOs;
+using API.Entities;
 
 namespace API.Interfaces
 {
@@ -17,5 +18,7 @@ namespace API.Interfaces
         Task DeleteFileAsync(Guid fileId);
 
         Task DeleteImageAsync(Guid imageId);
+
+        Task<FileEntity> GetFileByIdAsync (Guid id);
     }
 }

@@ -9,12 +9,17 @@ import "aos/dist/aos.css";
 import { ServiceData } from "../../types/service";
 import { TbVip } from "react-icons/tb";
 import { CompanyLocation } from "../../environment";
-
+import FileForm from '../common/FileForm'
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../app/stores/store";
 type Props = {
   service: ServiceData;
 };
 
 const ServiceCard = ({ service }: Props) => {
+
+  const {serviceStore: {uploadImage}, userStore} = useStore();
+
   const routes = all_routes;
   const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
 
@@ -35,10 +40,10 @@ const ServiceCard = ({ service }: Props) => {
     <div className="col-lg-4 col-md-6 col-12" data-aos="fade-down">
       <div className="listing-item">
         <div className="listing-img">
-          <Link to={routes.listingDetails}>
+          <Link to={`/listings/service-details/${service.id}`}>
             <ImageWithBasePath
-              src={service.pictureUrl || "assets/img/cars/car-03.jpg"} // Using service picture URL
-              className="img-fluid"
+              src={service.filePath || "assets/img/cars/car-03.jpg"}
+              className="img-fluid h-[401px] w-[550px]"
               alt={service.name}
             />
           </Link>
@@ -47,27 +52,16 @@ const ServiceCard = ({ service }: Props) => {
             key={service.id} // Using service ID as the key
             onClick={() => handleItemClick(7)}
           >
-            <Link
-              to="#"
-              className={`fav-icon ${selectedItems[7] ? "selected" : ""}`}
-            >
-              <i className="feather  icon-heart" />
-            </Link>
+           {userStore.isAdmin() && <FileForm entityId={service.id} uploadImage={uploadImage} />}
           </div>
           <span className="featured-text">{service.name}</span>
         </div>
         <div className="listing-content">
           <div className="listing-features d-flex align-items-end justify-content-between">
             <div className="list-rating">
-              <Link to="#" className="author-img">
-
-                <ImageWithBasePath
-                  src="assets/img/profiles/avatar-03.jpg"
-                  alt="author"
-                />
-              </Link>
+             
               <h3 className="listing-title">
-                <Link to={routes.listingDetails}>{service.name}</Link>
+                <Link to={`/listings/service-details/${service.id}`}>{service.name}</Link>
               </h3>
               <div className="list-rating">
                 {/* Assuming `service.rate` is a numeric value representing the rating out of 5 */}
@@ -156,4 +150,4 @@ const ServiceCard = ({ service }: Props) => {
   );
 };
 
-export default ServiceCard;
+export default observer (ServiceCard);

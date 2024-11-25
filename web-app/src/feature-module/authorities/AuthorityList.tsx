@@ -16,7 +16,7 @@ import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import handleErrors from "../../lib/utils";
 import AuthorityForm from "./AuthorityForm";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 
 const AuthorityList = () => {
   const { t } = useTranslation();

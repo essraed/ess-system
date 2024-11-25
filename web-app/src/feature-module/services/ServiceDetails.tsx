@@ -3,13 +3,11 @@ import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Aos from "aos";
-import { all_routes } from "../router/all_routes";
 import "yet-another-react-lightbox/styles.css";
 import BookingIndex from "../booking/BookingIndex";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import ServiceDetailSidebar from "./ServiceDetailSidebar";
+import ServiceDetailSidebar from "../services/ServiceDetailSidebar";
 
 
 const listingDetails = () => {
@@ -24,12 +22,6 @@ const listingDetails = () => {
       getService(id);
     }
   }, [getService, navigate]);
-
-  const routes = all_routes;
-
-  useEffect(() => {
-    Aos.init({ duration: 1200, once: true });
-  }, []);
 
   if (!currentService) return <p>Loading...</p>;
 

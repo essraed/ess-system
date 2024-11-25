@@ -1,5 +1,3 @@
-using MimeKit;
-
 namespace API.Interfaces
 {
     public interface IEmailService

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import ServiceCard from "./ServiceCard";
+import ServiceCard from "../services/ServiceCard";
+
 
 const ServiceList = () => {
   const {

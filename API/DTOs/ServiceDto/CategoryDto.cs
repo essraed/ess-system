@@ -8,7 +8,7 @@ namespace API.DTOs.ServiceDto
 
         public string? Description { get; set; } 
 
-        public string? PictureUrl { get; set; }
+        public string? FilePath { get; set; }
         
         public DateTime? CreateDate { get; set; }
         public string? CreatedBy {get; set; }

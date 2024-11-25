@@ -13,7 +13,7 @@ import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 
 const LetterList = () => {
   const { t } = useTranslation();

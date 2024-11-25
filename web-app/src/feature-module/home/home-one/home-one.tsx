@@ -16,7 +16,7 @@ import Footer from "../../common/footer";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 import { observer } from "mobx-react-lite";
-import ServiceList from "../../Services/ServiceList";
+import ServiceList from "../../services/ServiceList";
 
 
 

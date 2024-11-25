@@ -12,9 +12,8 @@ import ConfirmDialog from "../common/ConfirmDialog";
 import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 import ServiceDetailsDialog from "./ServiceDetailsDialog";
-
 
 const ServiceDashboardList = () => {
   const { t } = useTranslation();
@@ -99,6 +98,10 @@ const ServiceDashboardList = () => {
     { name: "25" },
     { name: "30" },
   ];
+
+  const getViewId = (id: string) => {
+    getService(id);
+  };
 
   return (
     <div className="col-lg-12">
@@ -193,7 +196,8 @@ const ServiceDashboardList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table getViewId={getService}
+                <Table
+                  getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={[
@@ -230,7 +234,7 @@ const ServiceDashboardList = () => {
         )}${t("?")}`}
       />
 
-      <ServiceDetailsDialog modalId={dialogFlags.serviceDialog} />
+      <ServiceDetailsDialog modalId={all_routes.serviceDashboard} />
     </div>
   );
 };

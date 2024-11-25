@@ -1,12 +1,10 @@
 using API.DTOs;
 using API.Interfaces;
 using API.RequestParams;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthorityController : ControllerBase

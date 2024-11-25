@@ -60,81 +60,88 @@ const NotificationsDropdown = () => {
     updateNotifications();
   }, [loadNotifications]);
 
-  if (!notifications) return <p>Loading.......</p>
+  if (!notifications) return <p>Loading.......</p>;
 
   return (
-    <Dropdown placement="bottom-end">
-      <DropdownTrigger>
-        <NavbarItem>
-          <Badge content={notifications?.length} shape="circle" color="danger">
-            <NotificationIcon size={24} />
-          </Badge>
-        </NavbarItem>
-      </DropdownTrigger>
-      <DropdownMenu
-        className="w-80"
-        aria-label="Notifications"
-        closeOnSelect={false}
-      >
-        <DropdownSection title={`${unreadCount} Unread`}>
-          {notifications &&
-            notifications?.map((item, index) => (
-              <DropdownItem
-                onClick={(e) => {
-                  handleReadedToggle(e, item.id);
-                  if (item.moreDetailsUrl) {
-                    navigate(`/listings/${item.moreDetailsUrl}`);
-                  }
-                }}
-                classNames={{
-                  base: "py-2",
-                  title: "text-base font-semibold",
-                }}
-                key={index}
-                description={item.message}
+    <>
+      {notifications.length > 0 && (
+        <Dropdown placement="bottom-end">
+          <DropdownTrigger>
+            <NavbarItem>
+              <Badge
+                content={notifications?.length}
+                shape="circle"
+                color="danger"
               >
-                <Link to="#" className="flex items-center justify-between">
-                  {item.isRead ? (
-                    <Link
-                      className="p-2 hover:bg-gray-800 rounded-full"
-                      to="#"
-                      onClick={(e) => handleReadedToggle(e, item.id)}
-                    >
-                      <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-                    </Link>
-                  ) : (
-                    <Link
-                      className="p-2 hover:bg-green-800 rounded-full"
-                      to="#"
-                      onClick={(e) => handleReadedToggle(e, item.id)}
-                    >
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    </Link>
-                  )}
+                <NotificationIcon size={24} />
+              </Badge>
+            </NavbarItem>
+          </DropdownTrigger>
+          <DropdownMenu
+            className="w-80"
+            aria-label="Notifications"
+            closeOnSelect={false}
+          >
+            <DropdownSection title={`${unreadCount} Unread`}>
+              {notifications?.map((item, index) => (
+                <DropdownItem
+                  onClick={(e) => {
+                    handleReadedToggle(e, item.id);
+                    if (item.moreDetailsUrl) {
+                      navigate(`/listings/${item.moreDetailsUrl}`);
+                    }
+                  }}
+                  classNames={{
+                    base: "py-2",
+                    title: "text-base font-semibold",
+                  }}
+                  key={index}
+                  description={item.message}
+                >
+                  <Link to="#" className="flex items-center justify-between">
+                    {item.isRead ? (
+                      <Link
+                        className="p-2 hover:bg-gray-800 rounded-full"
+                        to="#"
+                        onClick={(e) => handleReadedToggle(e, item.id)}
+                      >
+                        <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+                      </Link>
+                    ) : (
+                      <Link
+                        className="p-2 hover:bg-green-800 rounded-full"
+                        to="#"
+                        onClick={(e) => handleReadedToggle(e, item.id)}
+                      >
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      </Link>
+                    )}
 
-                  {item.title}
-                </Link>
+                    {item.title}
+                  </Link>
+                </DropdownItem>
+              ))}
+            </DropdownSection>
+            <DropdownSection>
+              <DropdownItem>
+                <Divider />
               </DropdownItem>
-            ))}
-        </DropdownSection>
-        <DropdownSection>
-          <DropdownItem>
-            <Divider />
-          </DropdownItem>
-          <DropdownItem>
-            {notifications.length > 7 && (
-              <Link
-                to="#"
-                className="flex items-center align-middle"
-                onClick={() => navigate("/notifications")}
-              >
-                View All
-              </Link>
-            )}
-          </DropdownItem>
-        </DropdownSection>
-      </DropdownMenu>
-    </Dropdown>
+              <DropdownItem>
+                {notifications.length > 7 && (
+                  <Link
+                    to="#"
+                    className="flex items-center align-middle"
+                    onClick={() => navigate("/notifications")}
+                  >
+                    View All
+                  </Link>
+                )}
+              </DropdownItem>
+            </DropdownSection>
+          </DropdownMenu>
+        </Dropdown>
+      )}
+    </>
   );
 };
 

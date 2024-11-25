@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241102081406_AddIsDeletedToServiceModel")]
-    partial class AddIsDeletedToServiceModel
+    [Migration("20241124061108_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,9 +135,6 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BookingById")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
 
@@ -164,6 +161,9 @@ namespace API.Migrations
                     b.Property<DateTime?>("EndBookingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
@@ -173,12 +173,21 @@ namespace API.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("NotificationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ServiceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceOptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -188,13 +197,15 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingById");
-
                     b.HasIndex("CarId");
 
                     b.HasIndex("CreatedById");
 
+                    b.HasIndex("NotificationId");
+
                     b.HasIndex("ServiceId");
+
+                    b.HasIndex("ServiceOptionId");
 
                     b.HasIndex("UpdatedById");
 
@@ -227,6 +238,9 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
@@ -245,6 +259,9 @@ namespace API.Migrations
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -303,13 +320,16 @@ namespace API.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("API.Entities.Mail", b =>
+            modelBuilder.Entity("API.Entities.FileEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Body")
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -319,16 +339,74 @@ namespace API.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FilePaths")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
+                    b.Property<string>("FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ToEmail")
+                    b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique()
+                        .HasFilter("[CategoryId] IS NOT NULL");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ServiceId")
+                        .IsUnique()
+                        .HasFilter("[ServiceId] IS NOT NULL");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("FileEntities");
+                });
+
+            modelBuilder.Entity("API.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("EndNotificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MoreDetailsUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -342,7 +420,7 @@ namespace API.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("Mails");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
@@ -360,6 +438,10 @@ namespace API.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -367,11 +449,17 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("PriceVIP")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<float?>("Rate")
+                        .HasColumnType("real");
+
+                    b.Property<string>("ServiceVipName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18, 2)");
@@ -402,6 +490,9 @@ namespace API.Migrations
                     b.Property<decimal>("AdditionalFee")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -414,6 +505,37 @@ namespace API.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("ServiceOptions");
+                });
+
+            modelBuilder.Entity("API.Entities.WorkingTime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("FromTime")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeOnly>("ToTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("WorkingTimes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -566,10 +688,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Booking", b =>
                 {
-                    b.HasOne("API.Entities.AppUser", "BookingBy")
-                        .WithMany()
-                        .HasForeignKey("BookingById");
-
                     b.HasOne("API.Entities.Car", "Car")
                         .WithMany("Bookings")
                         .HasForeignKey("CarId");
@@ -578,21 +696,31 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
+                    b.HasOne("API.Entities.Notification", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId");
+
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
+
+                    b.HasOne("API.Entities.ServiceOption", "ServiceOption")
+                        .WithMany("bookings")
+                        .HasForeignKey("ServiceOptionId");
 
                     b.HasOne("API.Entities.AppUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
 
-                    b.Navigation("BookingBy");
-
                     b.Navigation("Car");
 
                     b.Navigation("CreatedBy");
 
+                    b.Navigation("Notification");
+
                     b.Navigation("Service");
+
+                    b.Navigation("ServiceOption");
 
                     b.Navigation("UpdatedBy");
                 });
@@ -638,7 +766,34 @@ namespace API.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
-            modelBuilder.Entity("API.Entities.Mail", b =>
+            modelBuilder.Entity("API.Entities.FileEntity", b =>
+                {
+                    b.HasOne("API.Entities.Category", "Category")
+                        .WithOne("FileEntity")
+                        .HasForeignKey("API.Entities.FileEntity", "CategoryId");
+
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.Service", "Service")
+                        .WithOne("FileEntity")
+                        .HasForeignKey("API.Entities.FileEntity", "ServiceId");
+
+                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.Notification", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
                         .WithMany()
@@ -681,6 +836,15 @@ namespace API.Migrations
                         .HasForeignKey("ServiceId");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("API.Entities.WorkingTime", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -751,12 +915,21 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Category", b =>
                 {
+                    b.Navigation("FileEntity");
+
                     b.Navigation("Services");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
                 {
+                    b.Navigation("FileEntity");
+
                     b.Navigation("ServiceOptions");
+                });
+
+            modelBuilder.Entity("API.Entities.ServiceOption", b =>
+                {
+                    b.Navigation("bookings");
                 });
 #pragma warning restore 612, 618
         }

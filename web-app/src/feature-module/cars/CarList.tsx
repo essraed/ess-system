@@ -14,7 +14,7 @@ import Paginator from "../common/Paginator";
 import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import handleErrors from "../../lib/utils";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 import CarForm from "./CarForm";
 
 const CarList = () => {

@@ -14,7 +14,7 @@ import { Dropdown } from "primereact/dropdown";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
 import CategoryForm from "./CategoryForm";
-import { dialogFlags } from "../../constants/contants";
+import { dialogFlags } from "../../constants/constants";
 import CategoryDetails from "./CategoryDetails";
 
 const CategoryDashboardList = () => {
@@ -99,7 +99,6 @@ const CategoryDashboardList = () => {
   ];
 
   const getViewId = (id: string) => {
-    console.log("view id: ", id);
     getCategory(id);
   };
 
@@ -215,7 +214,7 @@ const CategoryDashboardList = () => {
         )}${t("?")}`}
       />
 
-      <CategoryDetails modalId={dialogFlags.categoryDialog} />
+      <CategoryDetails modalId={all_routes.categoryDashboard} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 export interface CategoryData {
   id: string;
   name: string;
-  pictureUrl?: string;
+  filePath?: string;
   Description?: string;
   createDate?: string;
   createdBy?: string;
