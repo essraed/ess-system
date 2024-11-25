@@ -7,7 +7,8 @@ import "yet-another-react-lightbox/styles.css";
 import BookingIndex from "../booking/BookingIndex";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import ServiceDetailSidebar from "../services/ServiceDetailSidebar";
+import ServiceDetailSidebar from "./ServiceDetailSidebar";
+
 
 
 const listingDetails = () => {

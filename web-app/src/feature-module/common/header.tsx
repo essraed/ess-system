@@ -5,15 +5,15 @@ import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useDispatch, useSelector } from "react-redux";
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useStore } from "../../app/stores/store";
-
-
+import { observer } from "mobx-react-lite";
 
 const Header = () => {
   const routes = all_routes;
   const location = useLocation();
 
   const {
-    userStore: { logout, isLoggedIn },
+    userStore: { isAdmin,logout, isLoggedIn },
+    categoryStore: { categories },
   } = useStore();
 
   const dispatch = useDispatch();
@@ -32,9 +32,6 @@ const Header = () => {
 
   return (
     <>
-
-
-
       <header className="header">
         <div className="custom-container">
           <div className="row">
@@ -52,7 +49,11 @@ const Header = () => {
                 {isLoggedIn ? (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link header-login" to="#" onClick={logout}>
+                      <Link
+                        className="nav-link header-login"
+                        to="#"
+                        onClick={logout}
+                      >
                         <span>
                           <i className="fa-regular fa-user" />
                         </span>
@@ -70,20 +71,14 @@ const Header = () => {
                         Sign In
                       </Link>
                     </li>
-
                   </>
                 )}
               </ul>
-
-
             </div>
-
           </div>
-
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
-
             <div className="navbar-header">
               <Link id="mobile_btn" to="#" onClick={handleClick}>
                 <span className="bar-icon">
@@ -92,8 +87,6 @@ const Header = () => {
                   <span />
                 </span>
               </Link>
-
-
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
@@ -115,7 +108,6 @@ const Header = () => {
                 </Link>
               </div>
               <ul className="main-nav">
-
                 <li
                   className={
                     location.pathname.includes(routes.homeOne) ? "active" : ""
@@ -132,24 +124,36 @@ const Header = () => {
                   <Link to={routes.aboutUs}>Aboutus</Link>
                 </li>
 
-
-
                 <li
-                  className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
+                // we need update the condition here for active
+                  className={`has-submenu ${location.pathname.includes("services") ? "active" : ""}`}
                 >
                   <Link to="#">
                     Booking Services <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
-                    <li
-                      className={
-                        location.pathname.includes(routes.listingGrid)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.listingGrid}>Amer Services</Link>
-                    </li>
+                    {categories?.map((item, index) => (
+                      <li
+                        key={index}
+                        className={
+                          location.pathname.includes(routes.letterDashboard)
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={routes.letterDashboard}>{item.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+
+               {isAdmin() && <li
+                  className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
+                >
+                  <Link to="#">
+                    Dashboards <i className="fas fa-chevron-down" />
+                  </Link>
+                  <ul className="submenu">
                     <li
                       className={
                         location.pathname.includes(routes.letterDashboard)
@@ -159,7 +163,6 @@ const Header = () => {
                     >
                       <Link to={routes.letterDashboard}>Letter List</Link>
                     </li>
-
 
                     <li
                       className={
@@ -192,320 +195,55 @@ const Header = () => {
 
                     <li
                       className={
-                        location.pathname.includes(routes.listingList)
+                        location.pathname.includes(routes.carDashboard)
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.listingList}>Listing List</Link>
+                      <Link to={routes.carDashboard}>Car List</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.listingMap)
+                        location.pathname.includes(routes.notificationDashboard)
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.listingMap}>Listing With Map</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.listingDetails)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.listingDetails}>Listing Details</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li
-                  className={`has-submenu ${location.pathname.includes("user") ? "active" : ""}`}
-                >
-                  <Link to="#">
-                    User <i className="fas fa-chevron-down" />
-                  </Link>
-                  <ul className="submenu">
-                    <li
-                      className={
-                        location.pathname.includes(routes.userDashboard)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userDashboard}>Dashboard</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userBookings)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userBookings}>My Bookings</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userReviews)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userReviews}>Reviews</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userWishlist)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userWishlist}>Wishlist</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userMessages)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userMessages}>Messages</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userWallet)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userWallet}>My Wallet</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userPayment)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userPayment}>Payments</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.userSettings)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.userSettings}>Settings</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li
-                  className={`has-submenu ${location.pathname.includes("pages") ? "active" : ""}`}
-                >
-                  <Link to="#">
-                    Pages <i className="fas fa-chevron-down" />
-                  </Link>
-                  <ul className="submenu">
-                    <li
-                      className={
-                        location.pathname.includes(routes.aboutUs)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.aboutUs}>About Us</Link>
-                    </li>
-                    <li className="has-submenu">
-                      <Link to="#">Authentication</Link>
-                      <ul className="submenu">
-                        <li
-                          className={
-                            location.pathname.includes(routes.register)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.register}>Signup</Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname.includes(routes.login)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.login}>Signin</Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname.includes(routes.forgotPassword)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.forgotPassword}>
-                            Forgot Password
-                          </Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname.includes(routes.resetPassword)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.resetPassword}>Reset Password</Link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li
-                      className={`has-submenu ${location.pathname.includes("booking") ||
-                        location.pathname.includes("invoice")
-                        ? "active"
-                        : ""
-                        }`}
-                    >
-                      <Link to="#">Booking</Link>
-                      <ul className="submenu">
-                        <li
-                          className={
-                            location.pathname === routes.bookingCheckout
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.bookingCheckout}>
-                            Booking Checkout
-                          </Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname === routes.booking ? "active" : ""
-                          }
-                        >
-                          <Link to={routes.booking}>Booking</Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname.includes(routes.invoiceDetails)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.invoiceDetails}>
-                            Invoice Details
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li className="has-submenu">
-                      <Link to="#">Error Page</Link>
-                      <ul className="submenu">
-                        <li
-                          className={
-                            location.pathname.includes(routes.error404)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.error404}>404 Error</Link>
-                        </li>
-                        <li
-                          className={
-                            location.pathname.includes(routes.error500)
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link to={routes.error500}>500 Error</Link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.pricing)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.pricing}>Pricing</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.faq) ? "active" : ""
-                      }
-                    >
-                      <Link to={routes.faq}>FAQ</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.gallery)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.gallery}>Gallery</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.ourTeam)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.ourTeam}>Our Team</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.testimonial)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.testimonial}>Testimonials</Link>
-                    </li>
-                    <li
-                      className={
-                        location.pathname.includes(routes.termsConditions)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.termsConditions}>
-                        Terms &amp; Conditions
+                      <Link to={routes.notificationDashboard}>
+                        Notification List
                       </Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.privacyPolicy)
+                        location.pathname.includes(routes.bookingDashboard)
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.privacyPolicy}>Privacy Policy</Link>
+                      <Link to={routes.bookingDashboard}>Booking List</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.maintenance)
+                        location.pathname.includes(routes.serviceDashboard)
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.maintenance}>Maintenance</Link>
+                      <Link to={routes.serviceDashboard}>Service List</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.comingSoon)
+                        location.pathname.includes(routes.WorkingTimeDashboard)
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.comingSoon}>Coming Soon</Link>
+                      <Link to={routes.WorkingTimeDashboard}>
+                        WorkingTime List
+                      </Link>
                     </li>
                   </ul>
-                </li>
-
+                </li>}
                 <li
                   className={
                     location.pathname.includes(routes.contactUs) ? "active" : ""
@@ -523,10 +261,9 @@ const Header = () => {
             </div>
           </div>
         </nav>
-
       </header>
     </>
   );
 };
 
-export default Header;
+export default observer (Header);

@@ -2,7 +2,8 @@ import React from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
-import ServiceForm from "../services/ServiceForm";
+import ServiceForm from "./ServiceForm";
+
 
 const ServiceCreate = () => {
 

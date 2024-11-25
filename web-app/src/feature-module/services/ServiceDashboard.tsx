@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import Breadcrumbs from '../common/breadcrumbs'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '../../app/stores/store'
-import ServiceFilter from '../services/ServiceFilter'
-import ServiceDashboardList from '../services/ServiceDashboardList'
+import ServiceFilter from './ServiceFilter'
+import ServiceDashboardList from './ServiceDashboardList'
+
 
 
 const ServiceDashboard = () => {

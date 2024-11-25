@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import ServiceForm from "../services/ServiceForm";
 import { useStore } from "../../app/stores/store";
+import ServiceForm from "./ServiceForm";
 
 const ServiceUpdate = () => {
   const { id } = useParams();
