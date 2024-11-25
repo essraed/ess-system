@@ -28,7 +28,6 @@ export default class UserStore {
   }
 
   get isLoggedIn() {
-    console.log("userHiiii",this.user);
     return !!this.user;
   }
 

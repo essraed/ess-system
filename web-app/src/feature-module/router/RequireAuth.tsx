@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { all_routes } from "./all_routes";
 import { observer } from "mobx-react-lite";
 import { initializeUserAndLanguageSettings } from "../../lib/userLanguageSettings";
-import { render } from "@fullcalendar/core/preact";
 
 export default observer( function RequireAuth() {
     const {userStore} = useStore();

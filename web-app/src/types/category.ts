@@ -3,7 +3,7 @@ export interface CategoryData {
   name: string;
   filePath?: string;
   description?: string;
-  createDate?: string;
+  createDate?:string;
   createdBy?: string;
 }
 
