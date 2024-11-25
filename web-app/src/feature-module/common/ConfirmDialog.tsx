@@ -25,7 +25,7 @@ const ConfirmDialog = ({
   data-keyboard="false"
   data-backdrop="static"
 >
-  <div className="modal-dialog modal-dialog-centered">
+  <div className="modal-dialog modal-dialog-centered z-50">
     <div className="modal-content">
       <div className="modal-body">
         <div className="delete-action">

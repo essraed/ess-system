@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using AutoMapper.Configuration.Annotations;
 
 namespace API.Entities
 {
@@ -11,6 +12,9 @@ namespace API.Entities
         public string Name { get; set; } = default!;
 
         public string? Description { get; set; }
+
+        [Ignore]
+        public string? PictureUrl { get; set; }
         
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? CreateDate { get; set; }

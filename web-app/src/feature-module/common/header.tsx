@@ -38,50 +38,50 @@ const Header = () => {
       <header className="header">
         <div className="custom-container">
           <div className="row">
-          <div className="col-md-6 col-6">
-            <Link to={routes.homeOne} className="navbar-brand logo">
-              <ImageWithBasePath
-                src="assets/img/ESSLogo.png"
-                className="img-fluid"
-                alt="Logo"
-              />
-            </Link>
+            <div className="col-md-6 col-6">
+              <Link to={routes.homeOne} className="navbar-brand logo">
+                <ImageWithBasePath
+                  src="assets/img/ESSLogo.png"
+                  className="img-fluid"
+                  alt="Logo"
+                />
+              </Link>
+            </div>
+            <div className="col-md-6 col-6 text-right rightLogo">
+              <ul className="nav header-navbar-rht">
+                {isLoggedIn ? (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link header-login" to="#" onClick={logout}>
+                        <span>
+                          <i className="fa-regular fa-user" />
+                        </span>
+                        Logout
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link header-login" to={routes.login}>
+                        <span>
+                          <i className="fa-regular fa-user" />
+                        </span>
+                        Sign In
+                      </Link>
+                    </li>
+
+                  </>
+                )}
+              </ul>
+
+
+            </div>
+
           </div>
-          <div className="col-md-6 col-6 text-right rightLogo"> 
-                        <ul className="nav header-navbar-rht">
-            {isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link header-login" to="#" onClick={logout}>
-                    <span>
-                      <i className="fa-regular fa-user" />
-                    </span>
-                    Logout
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link header-login" to={routes.login}>
-                    <span>
-                      <i className="fa-regular fa-user" />
-                    </span>
-                    Sign In
-                  </Link>
-                </li>
-        
-              </>
-            )}
-          </ul>
 
-
-          </div>
-  
-             </div>
-
-             </div>
-          <nav className="navbar navbar-expand-lg header-nav">
+        </div>
+        <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
 
             <div className="navbar-header">
@@ -93,7 +93,7 @@ const Header = () => {
                 </span>
               </Link>
 
-    
+
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
@@ -138,7 +138,7 @@ const Header = () => {
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
                   <Link to="#">
-                  Booking Services <i className="fas fa-chevron-down" />
+                    Booking Services <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
                     <li
@@ -158,6 +158,26 @@ const Header = () => {
                       }
                     >
                       <Link to={routes.letterDashboard}>Letter List</Link>
+                    </li>
+
+
+                    <li
+                      className={
+                        location.pathname.includes(routes.serviceDashboard)
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.serviceDashboard}>Service List</Link>
+                    </li>
+                    <li
+                      className={
+                        location.pathname.includes(routes.categoryDashboard)
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.categoryDashboard}>Category List</Link>
                     </li>
 
                     <li
@@ -501,9 +521,9 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-</div>
-          </nav>
-      
+          </div>
+        </nav>
+
       </header>
     </>
   );
