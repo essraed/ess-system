@@ -2,7 +2,7 @@ export interface CategoryData {
   id: string;
   name: string;
   filePath?: string;
-  Description?: string;
+  description?: string;
   createDate?: string;
   createdBy?: string;
 }

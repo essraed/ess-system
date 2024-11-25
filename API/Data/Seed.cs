@@ -73,9 +73,18 @@ namespace API.Data
                             foreach (var category in categories)
                             {
                                 category.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
-                            }
+                                await context.Categories.AddAsync(category);
 
-                            context.Categories.AddRange(categories);
+                                context.FileEntities.Add(new FileEntity
+                                {
+                                    CategoryId = category.Id,
+                                    FilePath = category.PictureUrl!,
+                                    CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                                    ContentType = category.PictureUrl!.Split('/').Last().Split(".")[1],
+                                    FileName = category.PictureUrl!.Split('/').Last()
+                                });
+                            }
+                            
                             await context.SaveChangesAsync();
                         }
                     }

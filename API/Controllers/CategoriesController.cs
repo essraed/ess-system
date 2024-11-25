@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.DTOs.ServiceDto;
+using API.Helpers;
 using API.Interfaces;
 using API.RequestParams;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace API.Controllers
         // GET: api/categories
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<CategoryDto>>> GetAllCategories([FromQuery] CategoryParams CategorytParams)
+        public async Task<ActionResult<PagedList<CategoryDto>>> GetAllCategories([FromQuery] CategoryParams CategorytParams)
         {
             var categories = await _categoryService.GetAllCategoriesAsync(CategorytParams);
             return Ok(categories);
