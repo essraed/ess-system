@@ -5,10 +5,6 @@ import { useTranslation } from "react-i18next";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-type Props = {
-  aiGeneratedResult?: string
-}
-
 const AIAssistedLetterEditor = () => {
   const { documentStore, userStore } = useStore();
   const { aiGeneratedResult, updateGeneratedResult, currentDocument} = documentStore;

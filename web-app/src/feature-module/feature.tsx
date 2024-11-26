@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../app/stores/store";
 import { initializeUserAndLanguageSettings } from "../lib/userLanguageSettings";
-// import { useLocation } from "react-router-dom";
 
 const Feature = () => {
   const mobileSidebar = useSelector((state: any) => state.mobileSidebar);
