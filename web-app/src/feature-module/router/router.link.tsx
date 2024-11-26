@@ -21,14 +21,10 @@ import BookingDashboard from "../booking/BookingDashboard";
 import CarDashboard from "../cars/CarDashboard";
 import NotificationDashboard from "../notifications/NotificationDashboard";
 import WorkingTimeDashboard from "../workingTimes/WorkingTimeDashboard";
-import ServiceDetails from "../Services/ServiceDetails";
-import ServiceDashboard from "../Services/ServiceDashboard";
-import ServiceCreate from "../Services/ServiceCreate";
-import ServiceUpdate from "../Services/ServiceUpdate";
-
-
-
-// import BookingCalendar from "../user/bookings-calendar";
+import ServiceDetails from "../services/ServiceDetails";
+import ServiceDashboard from "../services/ServiceDashboard";
+import ServiceCreate from "../services/ServiceCreate";
+import ServiceUpdate from "../services/ServiceUpdate";
 
 const routes = all_routes;
 

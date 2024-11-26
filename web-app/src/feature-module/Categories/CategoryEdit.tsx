@@ -8,10 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import handleErrors from "../../lib/utils";
-import AIAssistedLetterEditor from "./create/AIAssistedLetterEditor";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
 import Breadcrumbs from "../common/breadcrumbs";
+import AIAssistedLetterEditor from "../letters/create/AIAssistedLetterEditor";
 
 const LetterEdit = () => {
   const { t } = useTranslation();
