@@ -4,7 +4,6 @@ import { Button } from "@nextui-org/react";
 import { GrPowerReset } from "react-icons/gr";
 import { observer } from "mobx-react-lite";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
@@ -15,7 +14,7 @@ import { dialogFlags } from "../../constants/constants";
 import ConfirmDialog from "../common/ConfirmDialog";
 
 const NotificationList = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,7 +30,6 @@ const NotificationList = () => {
     userStore,
   } = useStore();
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [pageSize, setPageSize] = useState(10);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -41,7 +39,6 @@ const NotificationList = () => {
   };
 
   const handleReset = () => {
-    setSearchQuery("");
     setDateFilter("", "");
     setPagingParams(new PagingParams(1, pageSize));
     loadNotifications(); // Reload categories after resetting filters
@@ -149,7 +146,7 @@ const NotificationList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table getViewId={() => {}}
+                <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={["id", "pictureUrl"]}

@@ -7,14 +7,12 @@ import toast from 'react-hot-toast';
 
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next'; // Import useTranslation hook
-import { all_routes } from '../../router/all_routes';
 import { UserPromptSchema, userPromptSchema } from '../../../lib/schemas/UserPromptSchema';
 import handleErrors from '../../../lib/utils';
 import { useStore } from '../../../app/stores/store';
 
 const UserPromptForm = () => {
-  const routes = all_routes;
-  const { t } = useTranslation(); // Initialize translation hook
+  const { t } = useTranslation();
   const { documentStore, authorityStore: { authoritiesForDropdown, loadAuthoritiesForDropdown } } = useStore();
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
   const [selectedAuthority, setSelectedAuthority] = useState<string | null>(null);
