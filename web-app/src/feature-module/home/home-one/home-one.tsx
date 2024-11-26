@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -19,135 +18,7 @@ import CategoryList from "../../Categories/CategoryList";
 
 
 const HomeOne = () => {
-  const routes = all_routes;
-  const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
-  const [date1, setDate1] = useState(null);
-  const [date2, setDate2] = useState(null);
-  // const onChange = (time: Dayjs, timeString: string) => {
-  //   console.log(time, timeString);
-  // };
-
-
-  const handleItemClick = (index: number) => {
-    setSelectedItems((prevSelectedItems) => {
-      const updatedSelectedItems = [...prevSelectedItems];
-      updatedSelectedItems[index] = !updatedSelectedItems[index];
-      return updatedSelectedItems;
-    });
-  };
-
-  const settings = {
-    dots: false,
-    nav: true,
-
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 5,
-        },
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 567,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-  const imgslideroption = {
-    dots: true,
-    nav: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1000,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 550,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: 0,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-  const rentalslideroption = {
-    dots: false,
-    nav: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1000,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 550,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: 0,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-
-  const setting = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    nav: false,
-  };
-
+  
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
