@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, CardBody, CardHeader, Link } from "@nextui-org/react";
+import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { GiBriefcase } from "react-icons/gi";
 import toast from "react-hot-toast";
 
@@ -9,18 +9,13 @@ import UserPromptForm from "./UserPromptForm";
 import { all_routes } from "../../router/all_routes";
 import { useNavigate } from "react-router-dom";
 import handleErrors from "../../../lib/utils";
-import { CornerDownLeft } from "react-feather";
 import { useStore } from "../../../app/stores/store";
-import { IoIosArrowRoundBack } from "react-icons/io";
 import BackToButton from "../../common/BackToButton";
 import { observer } from "mobx-react-lite";
-import Header from "../../common/header";
 import AIAssistedLetterEditor from "./AIAssistedLetterEditor";
 import { TfiSave } from "react-icons/tfi";
 
 const LetterFormIndex = () => {
-  const routes = all_routes;
-  const [isToggle, setIsToggle] = useState(false);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -28,7 +23,6 @@ const LetterFormIndex = () => {
   const {
     documentStore,
     documentStore: { brief, aiGeneratedResult, authorityId },
-    userStore,
   } = useStore();
 
   const handleSaveDocument = async () => {
@@ -46,8 +40,6 @@ const LetterFormIndex = () => {
       setSummaryErrors(handleErrors(result.error));
     }
   };
-
-  const isRTL = userStore.language === "ar";
 
   return (
     <>

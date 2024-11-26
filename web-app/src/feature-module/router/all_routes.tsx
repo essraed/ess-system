@@ -1,5 +1,3 @@
-import LetterDashboard from "../letters/LetterDashboard";
-
 
 export const all_routes = {
   // home routes
@@ -102,9 +100,4 @@ export const all_routes = {
   // pages routes
   aboutUs: "/pages/aboutUs",
   contactUs: "/contact-us",
-
-
-
-
-
 };

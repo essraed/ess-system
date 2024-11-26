@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
@@ -22,12 +22,6 @@ const Header = () => {
 
   const handleClick = () => {
     dispatch(set_is_mobile_sidebar(!mobileSidebar));
-  };
-
-  const [mobileSubmenu, setMobileSubmenu] = useState(false);
-
-  const mobileSubmenus = () => {
-    setMobileSubmenu(!mobileSubmenu);
   };
 
   return (

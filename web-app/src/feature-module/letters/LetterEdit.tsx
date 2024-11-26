@@ -30,7 +30,7 @@ const LetterEdit = () => {
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
 
   useEffect(() => {
-    getDocument(id!);
+    if (id) getDocument(id);
 
     const theme = localStorage.getItem("theme");
     setTimeout(() => {
@@ -46,13 +46,15 @@ const LetterEdit = () => {
   }, [getDocument, id]);
 
   const handleSaveDocument = async () => {
-    const result = await updateDocument(id!, aiGeneratedResult as string);
-
-    if (result.status === "success") {
-      toast.success(result.data);
-      navigate(`listings/letters/view/${id}`);
-    } else {
-      setSummaryErrors(handleErrors(result.error));
+    if (id) {
+      const result = await updateDocument(id, aiGeneratedResult as string);
+     
+      if (result.status === "success") {
+        toast.success(result.data);
+        navigate(`listings/letters/view/${id}`);
+      } else {
+        setSummaryErrors(handleErrors(result.error));
+      }
     }
   };
 
@@ -83,7 +85,7 @@ const LetterEdit = () => {
             </div>
           )}
           <p>{brief}</p>
-          <AIAssistedLetterEditor  />
+          <AIAssistedLetterEditor />
 
           <div className="flex items-center gap-5 justify-between">
             <BackToButton

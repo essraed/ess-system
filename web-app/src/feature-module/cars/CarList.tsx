@@ -180,7 +180,7 @@ const CarList = () => {
             </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
-                <Table getViewId={() => {}}
+                <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={["id"]}
