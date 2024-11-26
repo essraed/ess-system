@@ -10,7 +10,6 @@ import { useStore } from "../../app/stores/store";
 import ServiceDetailSidebar from "./ServiceDetailSidebar";
 
 
-
 const listingDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();

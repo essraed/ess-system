@@ -16,6 +16,7 @@ type Props = {
   routeUrl: string;
   dialogFlags: any;
   getViewId?: (id: string) => void
+
 };
 
 const Table = ({
@@ -76,6 +77,7 @@ const Table = ({
             routeUrl !== all_routes.categoryDashboard &&
             routeUrl !== all_routes.carDashboard &&
             routeUrl !== all_routes.notificationDashboard &&
+
             routeUrl !== all_routes.bookingDashboard && (
 
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>

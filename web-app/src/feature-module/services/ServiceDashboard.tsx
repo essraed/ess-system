@@ -5,8 +5,6 @@ import { useStore } from '../../app/stores/store'
 import ServiceFilter from './ServiceFilter'
 import ServiceDashboardList from './ServiceDashboardList'
 
-
-
 const ServiceDashboard = () => {
   
   const {serviceStore: {pagination}} = useStore();

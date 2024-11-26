@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
@@ -18,12 +19,12 @@ const ServiceUpdate = () => {
 
   useEffect(() => {
     if (id) {
+
       getService(id); // Fetch the existing service if we have an id
     }
   }, [getService, id]);
 
   if (!currentService) return <p>Loading...</p>;
-
   return (
     <>
       <Card className="my-10 container">
@@ -31,6 +32,7 @@ const ServiceUpdate = () => {
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center gap-3">
               <h1 className="text-3xl font-semibold">{t("Update Service")}</h1>
+
             </div>
           </div>
           <div></div>

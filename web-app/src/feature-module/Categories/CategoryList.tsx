@@ -25,6 +25,7 @@ const CategoryList = () => {
               <div className="col-lg-12" data-aos="fade-down">
                 <div className="listing-tabs-group">
                   <ul className="nav listing-buttons gap-3" data-bs-tabs="tabs">
+
               
                     {categories.map((category) => (
                       <CategoryCard
@@ -40,6 +41,7 @@ const CategoryList = () => {
           </div>
         </div>
       </div>
+
     </section>
   );
 };

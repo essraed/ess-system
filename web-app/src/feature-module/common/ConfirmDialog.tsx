@@ -15,7 +15,6 @@ const ConfirmDialog = ({
   description,
   modalId
 }: Props) => {
-  // const { t } = useTranslation();
   return (
 
 <div

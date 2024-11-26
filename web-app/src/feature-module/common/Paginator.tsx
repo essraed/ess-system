@@ -8,7 +8,6 @@ type Props = {
 };
 
 const Paginator = ({ pagination, handleGetNext }: Props) => {
-  // const { t } = useTranslation();
   return (
     <div className="flex items-center justify-between">
       <div>

@@ -12,6 +12,7 @@ interface Props {
 
 const CategoryDetails = ({ modalId }: Props) => {
   // const { t } = useTranslation();
+
   const {
     categoryStore: { currentCategory },
   } = useStore();

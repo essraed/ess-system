@@ -20,6 +20,7 @@ const NotificationFilter = () => {
       fromDate: startDate,
       toDate: endDate,
     },
+
     userStore: { loadUsers },
   } = useStore();
 

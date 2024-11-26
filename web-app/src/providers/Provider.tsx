@@ -11,6 +11,7 @@ export interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
 
+
   return (
     <NextUIProvider>
       <StoreContext.Provider value={store}>

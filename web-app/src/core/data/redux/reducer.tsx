@@ -39,6 +39,7 @@ const rootReducer = (
   state: State = initialState,
   action: Action
 ): State => {
+
   switch (action.type) {
     case "HEADER_DATA":
       return { ...state, header_data: action.payload };

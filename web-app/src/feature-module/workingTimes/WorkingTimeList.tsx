@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Table from "../common/Table";
 import { observer } from "mobx-react-lite";
@@ -6,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
 import Paginator from "../common/Paginator";
+
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import WorkingeForm from "./WorkingTimeForm";
 
 const WorkingTimeList = () => {
   const navigate = useNavigate();
+
 
   const {
     workingTimeStore: {
@@ -58,10 +61,12 @@ const WorkingTimeList = () => {
                           {pagination.pageNumber && pagination?.pageSize
                             ? pagination.pageNumber * pagination?.pageSize -
                               (pagination?.pageSize - 1)
+
                             : 0}
                           -{" "}
                           {pagination.pageNumber && pagination.totalCount
                             ? Math.min(
+
                                 pagination.pageNumber * pagination?.pageSize,
                                 pagination.totalCount
                               )
@@ -100,6 +105,7 @@ const WorkingTimeList = () => {
                   ]}
                   data={workingTimes}
                   pageSize={pagination?.pageSize} // Use pageSize state variable here
+
                   rowsPerPageOptions={[10, 25, 50]}
                   routeUrl={all_routes.WorkingTimeDashboard}
                 />

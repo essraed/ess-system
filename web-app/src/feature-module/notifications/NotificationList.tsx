@@ -29,7 +29,6 @@ const NotificationList = () => {
     },
     userStore,
   } = useStore();
-
   const [pageSize, setPageSize] = useState(10);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 

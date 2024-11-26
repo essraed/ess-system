@@ -30,7 +30,9 @@ const LetterEdit = () => {
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
 
   useEffect(() => {
+
     if (id) getDocument(id);
+
 
     const theme = localStorage.getItem("theme");
     setTimeout(() => {
@@ -55,6 +57,7 @@ const LetterEdit = () => {
       } else {
         setSummaryErrors(handleErrors(result.error));
       }
+
     }
   };
 
@@ -85,7 +88,7 @@ const LetterEdit = () => {
             </div>
           )}
           <p>{brief}</p>
-          <AIAssistedLetterEditor />
+          <AIAssistedLetterEditor  />
 
           <div className="flex items-center gap-5 justify-between">
             <BackToButton

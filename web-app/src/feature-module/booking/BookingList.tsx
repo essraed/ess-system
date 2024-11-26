@@ -187,6 +187,7 @@ const BookingList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
+
                   dialogFlags={dialogFlags}
                   setSelectedId={setSelectedId}
                   exceptColumns={["id", "aiResult", "createDate", "address", "email", "createdBy", "updatedBy"]}
