@@ -14,7 +14,7 @@ type Props = {
   pageSize?: number;
   status?: ReactNode;
   exceptColumns: string[];
-  setSelectedId: (id: string) => void;
+  setSelectedId?: (id: string) => void;
   routeUrl: string;
   dialogFlags: any;
   getViewId: (id: string) => void
@@ -110,7 +110,7 @@ const Table = ({
   };
 
   const confirmDialog = (id: string) => {
-    setSelectedId(id);
+    if(setSelectedId) setSelectedId(id);
   };
 
   const statusColors = {

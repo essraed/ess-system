@@ -1,14 +1,9 @@
 import React, { useEffect } from "react";
 import Breadcrumbs from "../common/breadcrumbs";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../app/stores/store";
 import WorkingTimeList from "./WorkingTimeList";
 
 const WorkingTimeDashboard = () => {
-  const {
-    serviceStore: { pagination },
-  } = useStore();
-
   useEffect(() => {
     console.log("services");
   });
@@ -18,9 +13,6 @@ const WorkingTimeDashboard = () => {
       {/* // table filters */}
       <div className="listing-page">
         <Breadcrumbs title="WorkingTime" subtitle="Listings" />
-        {/* Search */}
-        {/* <ServiceFilter pageSize={pagination?.pageSize} /> */}
-        {/* /Search */}
       </div>
 
       {/* Car Grid View */}

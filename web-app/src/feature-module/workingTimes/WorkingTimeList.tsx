@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "../common/Table";
-import { Button } from "@nextui-org/react";
-import { GrPowerReset } from "react-icons/gr";
 import { observer } from "mobx-react-lite";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
 import Paginator from "../common/Paginator";
-import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import WorkingeForm from "./WorkingTimeForm";
 
 const WorkingTimeList = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const {
     workingTimeStore: {
@@ -26,31 +20,13 @@ const WorkingTimeList = () => {
       setPagingParams,
       pagination,
       clearNotification,
-      setSelectedUser,
     },
     userStore,
   } = useStore();
 
-  const [pageSize, setPageSize] = useState(10);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-
   const handleGetNext = (page: number) => {
-    setPagingParams(new PagingParams(page, pageSize));
+    setPagingParams(new PagingParams(page, pagination?.pageSize));
     loadWorkingTimes();
-  };
-
-  const handleReset = () => {
-    setSelectedUser("");
-    setPagingParams(new PagingParams(1, pageSize));
-    loadWorkingTimes(); // Reload services after resetting filters
-  };
-
-  const handlePageSizeChange = (newPageSize: number) => {
-    console.log("newPageSize: ", newPageSize);
-
-    setPageSize(newPageSize);
-    setPagingParams(new PagingParams(1, newPageSize));
-    loadWorkingTimes(); // Reload services with new page size
   };
 
   useEffect(() => {
@@ -66,14 +42,6 @@ const WorkingTimeList = () => {
 
   if (!Array.isArray(workingTimes)) return <p>Loading...</p>;
 
-  const number = [
-    { name: "10" },
-    { name: "15" },
-    { name: "20" },
-    { name: "25" },
-    { name: "30" },
-  ];
-
   return (
     <div className="col-lg-12">
       <div className="row">
@@ -87,13 +55,14 @@ const WorkingTimeList = () => {
                       {pagination && (
                         <p>
                           Showing{" "}
-                          {pagination.pageNumber && pageSize
-                            ? pagination.pageNumber * pageSize - (pageSize - 1)
+                          {pagination.pageNumber && pagination?.pageSize
+                            ? pagination.pageNumber * pagination?.pageSize -
+                              (pagination?.pageSize - 1)
                             : 0}
                           -{" "}
                           {pagination.pageNumber && pagination.totalCount
                             ? Math.min(
-                                pagination.pageNumber * pageSize,
+                                pagination.pageNumber * pagination?.pageSize,
                                 pagination.totalCount
                               )
                             : 0}{" "}
@@ -106,7 +75,6 @@ const WorkingTimeList = () => {
                     <div className="product-filter-group">
                       <div className="sortbyset">
                         <ul className="d-flex">
-                        
                           <li>
                             <WorkingeForm />
                           </li>
@@ -120,9 +88,7 @@ const WorkingTimeList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-                  getViewId={() => {}}
                   dialogFlags={dialogFlags}
-                  setSelectedId={setDeleteId}
                   exceptColumns={[
                     "id",
                     "pictureUrl",
@@ -133,7 +99,7 @@ const WorkingTimeList = () => {
                     "serviceOptions",
                   ]}
                   data={workingTimes}
-                  pageSize={pageSize} // Use pageSize state variable here
+                  pageSize={pagination?.pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
                   routeUrl={all_routes.WorkingTimeDashboard}
                 />
@@ -148,8 +114,6 @@ const WorkingTimeList = () => {
           </div>
         </div>
       </div>
-      {/* 
-      <ServiceDetailsDialog modalId={dialogFlags.serviceDialog} /> */}
     </div>
   );
 };
