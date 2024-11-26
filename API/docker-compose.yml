@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Map port 5000 on host to port 80 in container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__app-conn=Server=db;Database=essai_DB;User=sa;Password=Str0ngP@ssw0rd;TrustServerCertificate=True;
+    depends_on:
+      - db
+    command: >
+      /bin/sh -c "until dotnet ef database update; do sleep 5; done && dotnet API.dll"
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Str0ngP@ssw0rd
+    ports:
+      - "1400:1433"

@@ -1,0 +1,38 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore user-specific files and configuration
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore environment and secrets files
+.env
+appsettings.*.json  # e.g., appsettings.Development.json, appsettings.Production.json
+appsettings.local.json  # Optional local override
+
+# Ignore Docker-related files
+docker-compose.override.yml  # If you use an override file for local dev settings
+Dockerfile.*
+
+# Ignore IDE-specific settings (e.g., VS Code and Visual Studio)
+.vscode/
+.vs/
+.idea/
+
+# Ignore dependency and package files created by .NET
+*.lock.json
+*.nupkg
+*.snupkg
+
+# Ignore crash and error logs
+*.log
+
+# Ignore OS-specific files
+Thumbs.db
+.DS_Store
+
+appsettings.json
+appsettings.Development.json
