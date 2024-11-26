@@ -1,12 +1,11 @@
-import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { observer } from "mobx-react-lite";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Dropdown } from "primereact/dropdown";
 import { ServiceData } from "../../types/service";
@@ -25,14 +24,12 @@ const ServiceForm = ({ service, id }: Props) => {
 
   const {
     serviceStore: { addService, updateService },
-    userStore,
     categoryStore: { categoriesForDropdown, loadCategoriesForDropdown },
   } = useStore();
   const { t } = useTranslation();
   const {
     register,
     handleSubmit,
-    reset,
     control,
     formState: { errors },
   } = useForm<ServiceSchema>({

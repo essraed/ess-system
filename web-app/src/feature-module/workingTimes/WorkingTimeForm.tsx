@@ -1,5 +1,4 @@
 import { useStore } from "../../app/stores/store";
-import { carSchema, CarSchema } from "../../lib/schemas/CarSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@nextui-org/react";
@@ -25,9 +24,8 @@ const WorkingTimeForm = () => {
     resolver: zodResolver(workingTimeSchema),
     mode: "onTouched",
   });
-  
+
   const onSubmit = async (data: WorkingTimeSchema) => {
-    console.log("workin time data",data);
     const result = await workingTimeStore.addWorkingTime(data);
     if (result.status === "success") {
       toast.success("WorkingTime created successfully");
