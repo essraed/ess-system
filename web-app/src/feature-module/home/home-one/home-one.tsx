@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import CountUp from "react-countup";
@@ -8,7 +8,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import ImageWithBasePath from "../../../core/data/img/ImageWithBasePath";
-import { all_routes } from "../../router/all_routes";
 import Footer from "../../common/footer";
 import { observer } from "mobx-react-lite";
 import '../../../../node_modules/font-awesome/css/font-awesome.min.css';

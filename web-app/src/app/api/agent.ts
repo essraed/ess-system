@@ -16,7 +16,6 @@ import { CarData } from "../../types/car";
 import { CategoryData } from "../../types/category";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
 import { DropdownType } from "../../types/Dropdown";
-import { FileResponseData } from "../../types/filesTypes";
 import { NotificationData } from "../../types/notification";
 import { PagedResponse } from "../../types/pagination";
 import { ServiceData } from "../../types/service";
@@ -83,9 +82,9 @@ axios.interceptors.response.use(
 
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-  post: <T>(url: string, body: {}) =>
+  post: <T>(url: string, body: object) =>
     axios.post<T>(url, body).then(responseBody),
-  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+  put: <T>(url: string, body: object) => axios.put<T>(url, body).then(responseBody),
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
