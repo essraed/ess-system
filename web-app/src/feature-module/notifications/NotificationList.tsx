@@ -133,9 +133,6 @@ const NotificationList = () => {
                               Reset <GrPowerReset size={20} />
                             </Button>
                           </li>
-                          {/* <li>
-                            <NotificationForm />
-                          </li> */}
                         </ul>
                       </div>
                     </div>
