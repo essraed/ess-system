@@ -12,7 +12,7 @@ type Props = {
 
 const CategoryCard = ({ category, className }: Props) => {
   return (
-    <div className={`col-lg-3 col-md-3 col-6 aos-init aos-animate ${className}`} data-aos="fade-down">
+    <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
       <div className="listing-item">
         <div className="listing-img">
           <div className="img-slider owl-carousel owl-loaded owl-drag">

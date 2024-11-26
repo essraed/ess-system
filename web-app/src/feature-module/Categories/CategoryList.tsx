@@ -21,10 +21,7 @@ const CategoryList = () => {
         <div className="custom-container">
           <div className="row">
             <h2 className="section-title">Our Services</h2>
-            <div className="row justify-content-center">
-              <div className="col-lg-12" data-aos="fade-down">
-                <div className="listing-tabs-group">
-                  <ul className="nav listing-buttons gap-3" data-bs-tabs="tabs">
+    
 
               
                     {categories.map((category) => (
@@ -34,13 +31,11 @@ const CategoryList = () => {
                         category={category}
                       />
                     ))}
-                  </ul>
-                </div>
+               
               </div>
             </div>
           </div>
-        </div>
-      </div>
+   
 
     </section>
   );
