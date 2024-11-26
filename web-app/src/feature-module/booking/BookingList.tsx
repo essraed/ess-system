@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { PagingParams } from "../../types/pagination";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Paginator from "../common/Paginator";
 import ConfirmDialog from "../common/ConfirmDialog";
 import Table from "../common/Table";
@@ -177,24 +177,6 @@ const BookingList = () => {
                               />
                             </label>
                           </li>
-                          {/* <li>
-                            <div
-                              className="view-all text-center aos-init aos-animate"
-                              data-aos="fade-down"
-                            >
-                              <Link
-                                to={all_routes.bookingCreate}
-                                className="btn btn-view-custom d-inline-flex align-items-center"
-                              >
-                                <span>
-                                  <IoMdAddCircleOutline
-                                    size={24}
-                                    className=""
-                                  />
-                                </span>
-                              </Link>
-                            </div>
-                          </li> */}
                         </ul>
                       </div>
                     </div>

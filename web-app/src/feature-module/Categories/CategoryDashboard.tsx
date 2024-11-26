@@ -1,7 +1,5 @@
 import React from 'react'
 import Breadcrumbs from '../common/breadcrumbs'
-import { observer } from 'mobx-react-lite'
-import { useStore } from '../../app/stores/store'
 import CategoryFilter from './CategoryFilter'
 import CategoryDashboardList from './CategoryDashboardList'
 

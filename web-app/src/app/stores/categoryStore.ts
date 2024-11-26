@@ -2,7 +2,7 @@ import { runInAction, makeAutoObservable } from "mobx";
 import agent from "../api/agent";
 import { ActionResult } from "../../types";
 import { PaginationData, PagingParams } from "../../types/pagination";
-import { CategoryData, CategoryInput } from "../../types/category";
+import { CategoryData } from "../../types/category";
 import { formatDateTime } from "../../lib/utils";
 import { CategorySchema } from "../../lib/schemas/categorySchema";
 

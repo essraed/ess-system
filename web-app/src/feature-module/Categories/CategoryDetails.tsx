@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
-import { formatDateTime } from "../../lib/utils";
 import { observer } from "mobx-react-lite";
 
 interface Props {

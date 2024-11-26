@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { PaginationData } from "../../types/pagination";
 import { Pagination } from "@nextui-org/react";
 
@@ -9,7 +8,7 @@ type Props = {
 };
 
 const Paginator = ({ pagination, handleGetNext }: Props) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <div className="flex items-center justify-between">
       <div>
