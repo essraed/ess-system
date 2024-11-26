@@ -1,9 +1,44 @@
 import initialState from "./initial.values";
 
-const rootReducer: number | string | boolean = (
-  state = initialState,
-  action: number | string | boolean
-) => {
+interface State {
+  listing_grid: {
+    make: string;
+    model: string;
+    image: string;
+    rating: number;
+    features: {
+      type: string;
+      mileage: string;
+      fuel: string;
+      power: string;
+      year: number;
+      capacity: number;
+    };
+    location: string;
+    price: string;
+  }[];
+  header_data?: any; // Adjust types based on your actual data
+  listing_list?: any;
+  pricingdata?: any;
+  ourTeamData?: any;
+  testimonialdata?: any;
+  contactdata?: any;
+  userwallet_data?: any;
+  userpayment_data?: any;
+  mobileSidebar?: any;
+  current_route?: any;
+  current_route_array: any[];
+}
+
+interface Action {
+  type: string;
+  payload?: any; // Adjust based on actual payloads
+}
+
+const rootReducer = (
+  state: State = initialState,
+  action: Action
+): State => {
   switch (action.type) {
     case "HEADER_DATA":
       return { ...state, header_data: action.payload };
