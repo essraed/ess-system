@@ -15,7 +15,7 @@ import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
 
-import { FloatingWhatsApp } from 'react-floating-whatsapp'
+import { FloatingWhatsApp } from 'react-floating-whatsapp';
 
 
 
@@ -69,7 +69,8 @@ const HomeOne = () => {
       {/* Why Choose Us */}
       <FloatingWhatsApp
         phoneNumber="97143426666"
-        accountName="Foo"
+        accountName="Karama Business Center"
+        avatar="assets/img/logo-small.png"
         allowEsc
         allowClickAway
         notification
@@ -225,15 +226,18 @@ const HomeOne = () => {
                     to="#faqOne"
                     aria-expanded="true"
                   >
-                    How old do I need to be to rent a car?
-                  </Link>
+                  Karama Medical Fitness Center Medical Timing                  </Link>
                 </h4>
                 <div id="faqOne" className="card-collapse collapse show">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
+                  Monday - Thursday
+                 7:00 AM -10:00 PM
+<br></br>
+                  Friday
+                  7:00 AM  -  08:00 PM
+                  <br></br>
+                Saturday - Sunday
+                8:00 AM - 08:00 PM
                   </p>
                 </div>
               </div>
@@ -380,6 +384,8 @@ const HomeOne = () => {
               {/* /Heading title */}
 
               <div className="row">
+
+                
                 <div className="col-lg-4 col-md-6 d-lg-flex">
                   <div className="blog grid-blog">
                     <div className="blog-image">
