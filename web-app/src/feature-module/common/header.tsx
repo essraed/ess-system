@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
-import { useDispatch } from "react-redux";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 const Header = () => {
@@ -36,7 +35,7 @@ const Header = () => {
               <ul className="nav header-navbar-rht">
 
               <li className="contact-number nav-item pe-4 ">
-                <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
+                <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
               </li>
 
                 {isLoggedIn ? (
