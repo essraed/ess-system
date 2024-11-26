@@ -1,7 +1,6 @@
 
 
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const CategoryDetails = ({ modalId }: Props) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const {
     categoryStore: { currentCategory },
   } = useStore();

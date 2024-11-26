@@ -33,7 +33,7 @@ module.exports = {
     "rules": {
         '@typescript-eslint/no-unused-vars': 2,
         '@typescript-eslint/no-explicit-any': 0,
-        '@typescript-eslint/ban-types': 'warn',       
+        '@typescript-eslint/ban-types': 'off',       
         '@typescript-eslint/no-inferrable-types': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/no-empty-function': 'warn'

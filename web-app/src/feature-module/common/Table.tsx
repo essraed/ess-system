@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
-import { BookingStatus } from "../../types/booking";
 import StatusBadge from "./StatusBadge";
 
 type Props = {
@@ -113,31 +112,6 @@ const Table = ({
   const confirmDialog = (id: string) => {
     if(setSelectedId) setSelectedId(id);
   };
-
-  const statusColors = {
-    [BookingStatus.Pending]: {
-      text: "text-orange-500",
-      bg: "bg-orange-500",
-      border: "border-orange-500",
-    },
-    [BookingStatus.InProcess]: {
-      text: "text-sky-500",
-      bg: "bg-sky-500",
-      border: "border-sky-500",
-    },
-    [BookingStatus.Canceled]: {
-      text: "text-slate-500",
-      bg: "bg-slate-500",
-      border: "border-slate-500",
-    },
-    [BookingStatus.Completed]: {
-      text: "text-green-500",
-      bg: "bg-green-500",
-      border: "border-green-500",
-    },
-  };
-
-  // if (!data) return <p>Loading...</p>;
 
   return (
     <DataTable
