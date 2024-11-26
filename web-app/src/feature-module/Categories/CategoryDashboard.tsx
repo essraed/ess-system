@@ -9,7 +9,8 @@ const CategoryDashboard = () => {
     <>
     {/* // table filters */}
     <div className="listing-page">
-      <Breadcrumbs title="Categories" subtitle="Listings" />
+      <Breadcrumbs title="Categorys" subtitle="Listings" />
+
       {/* Search */}
       <CategoryFilter/>
       {/* /Search */}

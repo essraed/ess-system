@@ -161,7 +161,8 @@ const Login = () => {
           {/* Copyright */}
           <div className="copyright">
             <div className="copyright-text">
-              <p>© 2023 Dreams Rent. All Rights Reserved.</p>
+              <p>© 2024 Karama Business Center. All Rights Reserved.</p>
+
             </div>
           </div>
           {/* /Copyright */}

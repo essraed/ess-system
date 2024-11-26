@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 import ServiceForm from "./ServiceForm";
 
-
 const ServiceCreate = () => {
 
   const { t } = useTranslation();

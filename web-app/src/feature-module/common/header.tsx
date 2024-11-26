@@ -1,28 +1,20 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
-import { useDispatch, useSelector } from "react-redux";
-import { set_is_mobile_sidebar } from "../../core/data/redux/action";
+import { useDispatch } from "react-redux";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-
 const Header = () => {
   const routes = all_routes;
-  const location = useLocation();
 
   const {
-    userStore: { isAdmin,logout, isLoggedIn },
-    categoryStore: { categories },
+    userStore: {isAdmin,logout, isLoggedIn },
+    categoryStore: {categories, loadCategories}
   } = useStore();
 
-  const dispatch = useDispatch();
-
-  const mobileSidebar = useSelector((state: any) => state.mobileSidebar);
-
-  const handleClick = () => {
-    dispatch(set_is_mobile_sidebar(!mobileSidebar));
-  };
+  useEffect(() => {loadCategories()}, [loadCategories])
 
   return (
     <>
@@ -38,16 +30,20 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className="col-md-6 col-6 text-right rightLogo">
+            <div className="col-md-6 col-6 rightLogo">
+
+              
               <ul className="nav header-navbar-rht">
+
+              <li className="contact-number nav-item pe-4 ">
+                <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
+              </li>
+
                 {isLoggedIn ? (
                   <>
                     <li className="nav-item">
-                      <Link
-                        className="nav-link header-login"
-                        to="#"
-                        onClick={logout}
-                      >
+                      <Link className="nav-link header-login" to="#" onClick={logout}>
+
                         <span>
                           <i className="fa-regular fa-user" />
                         </span>
@@ -56,7 +52,6 @@ const Header = () => {
                     </li>
                   </>
                 ) : (
-                  <>
                     <li className="nav-item">
                       <Link className="nav-link header-login" to={routes.login}>
                         <span>
@@ -65,16 +60,21 @@ const Header = () => {
                         Sign In
                       </Link>
                     </li>
-                  </>
                 )}
               </ul>
+
+
             </div>
+
           </div>
+
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
+
             <div className="navbar-header">
-              <Link id="mobile_btn" to="#" onClick={handleClick}>
+            {/* handleClick */}
+              <Link id="mobile_btn" to="#" onClick={() => {}}> 
                 <span className="bar-icon">
                   <span />
                   <span />
@@ -95,8 +95,9 @@ const Header = () => {
                   id="menu_close"
                   className="menu-close"
                   to="#"
-                  onClick={handleClick}
-                >
+                  onClick={() => {}}
+                  >
+                  {/* handleClick */}
                   {" "}
                   <i className="fas fa-times" />
                 </Link>
@@ -148,6 +149,7 @@ const Header = () => {
                     Dashboards <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
+
                     <li
                       className={
                         location.pathname.includes(routes.letterDashboard)
@@ -157,7 +159,6 @@ const Header = () => {
                     >
                       <Link to={routes.letterDashboard}>Letter List</Link>
                     </li>
-
                     <li
                       className={
                         location.pathname.includes(routes.serviceDashboard)
@@ -199,6 +200,7 @@ const Header = () => {
                     <li
                       className={
                         location.pathname.includes(routes.notificationDashboard)
+
                           ? "active"
                           : ""
                       }
@@ -210,6 +212,7 @@ const Header = () => {
                     <li
                       className={
                         location.pathname.includes(routes.bookingDashboard)
+
                           ? "active"
                           : ""
                       }
@@ -238,6 +241,7 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>}
+
                 <li
                   className={
                     location.pathname.includes(routes.contactUs) ? "active" : ""

@@ -50,6 +50,7 @@ const CategoryCard = ({ category, className }: Props) => {
         </div>
       </div>
     </div>
+
   );
 };
 

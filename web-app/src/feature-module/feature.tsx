@@ -7,6 +7,7 @@ import { initializeUserAndLanguageSettings } from "../lib/userLanguageSettings";
 
 const Feature = () => {
   const mobileSidebar = useSelector((state: any) => state.mobileSidebar);
+
   const { userStore } = useStore();
 
   useEffect(() => {

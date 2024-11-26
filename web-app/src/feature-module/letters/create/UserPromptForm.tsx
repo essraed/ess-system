@@ -6,13 +6,14 @@ import toast from 'react-hot-toast';
 
 
 import { observer } from 'mobx-react-lite';
-import { useTranslation } from 'react-i18next'; // Import useTranslation hook
+import { useTranslation } from 'react-i18next'; 
 import { UserPromptSchema, userPromptSchema } from '../../../lib/schemas/UserPromptSchema';
 import handleErrors from '../../../lib/utils';
 import { useStore } from '../../../app/stores/store';
 
 const UserPromptForm = () => {
   const { t } = useTranslation();
+
   const { documentStore, authorityStore: { authoritiesForDropdown, loadAuthoritiesForDropdown } } = useStore();
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
   const [selectedAuthority, setSelectedAuthority] = useState<string | null>(null);
