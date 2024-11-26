@@ -2,9 +2,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { formatDateTime, separateCamelCase } from "../../lib/utils";
+import { separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
-import { useStore } from "../../app/stores/store";
 import { BookingStatus } from "../../types/booking";
 import StatusBadge from "./StatusBadge";
 
@@ -17,7 +16,7 @@ type Props = {
   setSelectedId: (id: string) => void;
   routeUrl: string;
   dialogFlags: any;
-  getViewId: (id: string) => void
+  getViewId?: (id: string) => void
 };
 
 const Table = ({
@@ -49,7 +48,9 @@ const Table = ({
             <Link
               className="dropdown-item"
               to="#"
-              onClick={() => getViewId(id)}
+              onClick={() => {
+                if (getViewId) getViewId(id)
+              }}
               data-bs-toggle="modal"
               data-bs-target={`#${routeUrl}`}
             >
@@ -74,8 +75,8 @@ const Table = ({
           </Link>
           {routeUrl !== all_routes.authorityDashboard &&
             routeUrl !== all_routes.categoryDashboard &&
-            routeUrl !== all_routes.carDashboard && 
-            routeUrl !== all_routes.notificationDashboard && 
+            routeUrl !== all_routes.carDashboard &&
+            routeUrl !== all_routes.notificationDashboard &&
             routeUrl !== all_routes.bookingDashboard && (
 
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>

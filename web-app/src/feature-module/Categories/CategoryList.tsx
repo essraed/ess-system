@@ -6,25 +6,14 @@ import CategoryCard from "./CategoryCard";
 const CategoryList = () => {
   const {
     categoryStore: { categories, loadCategories, uploadImage },
-    serviceStore: { setCategoryIdParam, loadServices },
     userStore,
   } = useStore();
-
-  function handleSerice(id: string) {
-    setCategoryIdParam(id);
-    loadServices();
-  }
 
   useEffect(() => {
     loadCategories();
   }, [loadCategories, userStore.token]);
 
   if (!categories) return <p>Loading...</p>;
-
-  const categoryInitial = {
-    id: "",
-    name: "All",
-  };
 
   return (
     <section className="section-top">
