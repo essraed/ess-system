@@ -3,6 +3,8 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 import ServiceForm from "./ServiceForm";
+import BackToButton from "../common/BackToButton";
+import { all_routes } from "../router/all_routes";
 
 const ServiceCreate = () => {
 
@@ -10,16 +12,21 @@ const ServiceCreate = () => {
 
   return (
     <>
-      <Card className="my-10 container">
-        <CardHeader className="flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center gap-3">
+      <Card className="mt-0 mb-20 container">
+        <CardHeader className="flex justify-between gap-3 flex-wrap">
+       
+            <div>
+              <BackToButton
+                href={all_routes.serviceDashboard}
+                label="Back To Services"
+              />
+            </div>
+            <div>
               <h1 className="text-3xl font-semibold">
                 {t("Create Service")}
               </h1>
             </div>
-          </div>
-          <div></div>
+      <div className="w-2/12"></div>
         </CardHeader>
         <CardBody className="flex flex-col gap-10">
           <ServiceForm />
@@ -29,4 +36,4 @@ const ServiceCreate = () => {
   );
 };
 
-export default observer (ServiceCreate);
+export default observer(ServiceCreate);

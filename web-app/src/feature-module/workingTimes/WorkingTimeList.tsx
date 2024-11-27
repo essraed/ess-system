@@ -10,7 +10,8 @@ import Paginator from "../common/Paginator";
 
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
-import WorkingeForm from "./WorkingTimeForm";
+import WorkingTimeForm from "./WorkingTimeForm";
+import TableFilterBar from "../common/TableFilterBar";
 
 const WorkingTimeList = () => {
   const navigate = useNavigate();
@@ -31,6 +32,10 @@ const WorkingTimeList = () => {
     setPagingParams(new PagingParams(page, pagination?.pageSize));
     loadWorkingTimes();
   };
+  const handleReset = () => {
+    setPagingParams(new PagingParams(1, pagination?.pageSize));
+    loadWorkingTimes(); // Reload documents after resetting filters
+  };
 
   useEffect(() => {
     if (!userStore.token) {
@@ -50,46 +55,13 @@ const WorkingTimeList = () => {
       <div className="row">
         <div className="col-lg-12 d-flex">
           <div className="card book-card flex-fill mb-0">
-            <div className="card-header">
-              <div className="sorting-div">
-                <div className="row d-flex align-items-center">
-                  <div className="col-xl-4 col-lg-3 col-sm-12 col-12">
-                    <div className="count-search">
-                      {pagination && (
-                        <p>
-                          Showing{" "}
-                          {pagination.pageNumber && pagination?.pageSize
-                            ? pagination.pageNumber * pagination?.pageSize -
-                              (pagination?.pageSize - 1)
+          <TableFilterBar
+              pagination={pagination}
+              handleReset={handleReset}
+            >
+              <WorkingTimeForm />
+            </TableFilterBar>
 
-                            : 0}
-                          -{" "}
-                          {pagination.pageNumber && pagination.totalCount
-                            ? Math.min(
-
-                                pagination.pageNumber * pagination?.pageSize,
-                                pagination.totalCount
-                              )
-                            : 0}{" "}
-                          of {pagination.totalCount || 0}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-xl-8 col-lg-9 col-sm-12 col-12">
-                    <div className="product-filter-group">
-                      <div className="sortbyset">
-                        <ul className="d-flex">
-                          <li>
-                            <WorkingeForm />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table

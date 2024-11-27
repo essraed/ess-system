@@ -52,7 +52,7 @@ const CategoryForm = () => {
           to="#"
           data-bs-toggle="modal"
           data-bs-target="#add_card"
-          className="flex items-center gap-2 btn btn-primary"
+          className="flex items-center gap-2 btn btn-primary w-full sm:w-auto text-center"
         >
           <IoMdAddCircleOutline size={20} />
           {t("Add New Category")}

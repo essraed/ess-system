@@ -114,7 +114,7 @@ public class ServiceService : IServiceService
     {
 
 
-        if (await _context.Services.AnyAsync(x => x.Name == model.Name))
+        if (await _context.Services.AnyAsync(x => x.Name == model.Name && x.IsDeleted == false))
         {
             throw new Exception("Service already exists.");
         }

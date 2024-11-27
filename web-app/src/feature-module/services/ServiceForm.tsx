@@ -15,7 +15,6 @@ import { ServiceData } from "../../types/service";
 import { useStore } from "../../app/stores/store";
 import { serviceSchema, ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { all_routes } from "../router/all_routes";
-import BackToButton from "../common/BackToButton";
 
 type Props = {
   service?: ServiceData | null;
@@ -96,11 +95,7 @@ const ServiceForm = ({ service, id }: Props) => {
 
   return (
     <>
-      <BackToButton
-        href={all_routes.serviceDashboard}
-        label="Back To Services"
-      />
-      <div className="modal-body">
+      <div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <Input
             className="my-3"
@@ -136,14 +131,14 @@ const ServiceForm = ({ service, id }: Props) => {
             variant="bordered"
             type="number"
             {...register("priceVIP", { valueAsNumber: true })}
-            defaultValue={service?.priceVIP?.toString() || ""}
+            defaultValue={service?.priceVIP?.toString() || "0"}
             isInvalid={!!errors.priceVIP}
             errorMessage={errors.priceVIP?.message as string}
           />
 
           <Dropdown
-            className="w-full mb-2" 
-            value={categoryId ?? service?.categoryId} 
+            className="w-full mb-2"
+            value={categoryId ?? service?.categoryId}
             options={categoriesForDropdown?.map((category) => ({
               label: category.name,
               value: category.id,
@@ -201,7 +196,8 @@ const ServiceForm = ({ service, id }: Props) => {
             </button>
           </div>
 
-          <button type="submit" className="btn btn-primary mt-3">
+          <button 
+          type="submit" className="btn btn-primary mt-3">
             {id ? t("Update Service") : t("Submit")}
           </button>
         </form>

@@ -17,9 +17,18 @@ export const dayOfWeekMap: { [key: string]: number } = {
 export const allowedImageExtension = [
   "image/",
 ];
+
 export const allowedTextsExtension = [
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "text/plain",
+];
+
+export const pageSizeOptions = [
+  { name: "10" },
+  { name: "15" },
+  { name: "20" },
+  { name: "25" },
+  { name: "30" },
 ];
