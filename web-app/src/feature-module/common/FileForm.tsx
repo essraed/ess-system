@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import { FileFormInputs } from "../../types/filesTypes";
 import { useForm } from "react-hook-form";
 import { allowedImageExtension } from "../../constants/constants";
-import agent from "../../app/api/agent";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { CiImageOn } from "react-icons/ci";
@@ -52,7 +51,7 @@ const FileForm = ({ label, entityId, uploadImage }: Props) => {
   };
 
   const onSubmit = async (data: FileFormInputs) => {
-    
+
     if (!uploadImage) return;
 
     const formData = new FormData();
@@ -61,26 +60,27 @@ const FileForm = ({ label, entityId, uploadImage }: Props) => {
       formData.append("Files", file);
     });
 
-    formData.append("directory", "uploaded_images");
+    formData.append("directory", "seed/image/");
     formData.append("entityId", entityId);
 
-      setIsLoading(true);
-      const result = await uploadImage(formData);
+    setIsLoading(true);
+    const result = await uploadImage(formData);
 
-      if (result.status === 'success') {
-        toast.success(result.data);
-        setIsLoading(false);
-      } else {
-        toast.error(result.error as string);
-        setIsLoading(false);
-      }
+    if (result.status === 'success') {
+      toast.success(result.data);
+      setIsLoading(false);
+    } else {
+      toast.error(result.error as string);
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
-     {uploadImage && <Button onPress={onOpen}>
-        <CiImageOn /> {label}
-      </Button>}
+      {uploadImage &&
+        <Button onPress={onOpen} className="opacity-60 hover:opacity-85">
+          <CiImageOn /> {label}
+        </Button>}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

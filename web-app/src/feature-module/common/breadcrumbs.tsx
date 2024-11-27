@@ -18,6 +18,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname === routes.serviceDashboard ||
     location.pathname.startsWith(routes.ServiceDetails.slice(0, -3)) ||
     location.pathname.startsWith(routes.bookingDetails.slice(0, -3)) ||
+    location.pathname.startsWith(routes.serviceList.slice(0, -3)) ||
     location.pathname === routes.bookingDashboard ||
     location.pathname === routes.notificationDashboard ||
     location.pathname === routes.WorkingTimeDashboard ||

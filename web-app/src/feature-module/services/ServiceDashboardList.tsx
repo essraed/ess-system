@@ -83,7 +83,6 @@ const ServiceDashboardList = () => {
       toast.error("Unauthorized");
     } else {
       loadServices();
-      console.log("services", services);
     }
   }, [userStore.token, loadServices]);
 

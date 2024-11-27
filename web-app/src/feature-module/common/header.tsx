@@ -135,12 +135,12 @@ const Header = () => {
                       <li
                         key={index}
                         className={
-                          location.pathname.includes("sdsadasd")
+                          location.pathname.includes(all_routes.serviceList)
                             ? "active"
                             : ""
                         }
                       >
-                        <Link to={routes.letterDashboard}>{item.name}</Link>
+                        <Link to={`/services/${item.id}`}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
