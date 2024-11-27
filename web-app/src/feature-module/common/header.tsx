@@ -13,7 +13,9 @@ const Header = () => {
     categoryStore: {categories, loadCategories}
   } = useStore();
 
-  useEffect(() => {loadCategories()}, [loadCategories])
+  useEffect(() => {
+    document.title = 'Karama Business Center';
+    loadCategories()}, [loadCategories])
 
   return (
     <>
@@ -70,7 +72,6 @@ const Header = () => {
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
-
             <div className="navbar-header">
             {/* handleClick */}
               <Link id="mobile_btn" to="#" onClick={() => {}}> 

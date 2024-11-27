@@ -14,11 +14,16 @@ import { observer } from "mobx-react-lite";
 import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
-
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
+import 'react-accessible-accordion/dist/fancy-example.css';
 
-
-
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel,
+} from 'react-accessible-accordion';
 
 const HomeOne = () => {
   useEffect(() => {
@@ -56,11 +61,6 @@ const HomeOne = () => {
         <div className="container-fluid">
           <div className="home-banner">
             <div className="row align-items-center">
-
-
-
-
-
             </div>
           </div>
         </div>
@@ -76,9 +76,92 @@ const HomeOne = () => {
         notification
         notificationSound
       />
-
       <CategoryList />
+      <section className="section choose-us-section">
+        <div id="Services" className="homesection servicessection saa viewon">
+          <div className="custom-container">
+            <div className="section-heading" data-aos="fade-down">
+              <h2 className="section-title"> Why Karama Business Center?</h2>
+            </div>
+            <div className="row">
+              <div className="col-lg-7">
+                {/* Heading title*/}
+                <div className="section-heading heading-one" data-aos="fade-down">
+                  <p>
+                    We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai
+                  </p>
+                </div>
+                {/* /Heading title */}
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="quality-wrap" data-aos="fade-down">
+                      <span>
+                        <i className="bx bxs-bookmarks" />
+                      </span>
+                      <h6>One Stop Transactions</h6>
+                      <p>
+                      The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="quality-wrap" data-aos="fade-down">
+                      <span>
+                        <i className="bx bxs-bolt-circle" />
+                      </span>
+                      <h6>Premium Fast Track Service</h6>
+                      <p>
+                      The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.
+              
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="quality-wrap" data-aos="fade-down">
+                      <span>
+                        <i className="bx bxs-calendar-heart" />
+                      </span>
+                      <h6>Flexible Rental Periods</h6>
+                      <p>
+                        Customers appreciate the flexibility of choosing rental
+                        durations that suit their schedules.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="quality-wrap" data-aos="fade-down">
+                      <span>
+                        <i className="bx bxs-badge-dollar" />
+                      </span>
+                      <h6>Affordable Pricing</h6>
+                      <p>
+                        Dreams Rent offers competitive pricing for bike rentals,
+                        making cycling accessible to a wide range of people.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div className="quality-img">
+              <ImageWithBasePath
+                src="assets/img/_63A3883.jpg"
+                data-aos="fade-left"
+                className="img-fluid"
+                alt="img"
+              />
+            </div>
+            <div className="quality-bg">
+              <ImageWithBasePath
+                src="assets/img/bg/quality-bg.png"
+                className="img-fluid"
+                alt="img"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="section facts-number">
         <div id="Services" className="homesection servicessection saa viewon">
           <div className="custom-container">
@@ -207,7 +290,7 @@ const HomeOne = () => {
 
       {/* About us Testimonials */}
       {/* FAQ  */}
-      <section className="section-top">
+      <section className="section faq-section bg-light-primary">
         <div id="Services" className="homesection servicessection saa viewon">
 
           <div className="custom-container">
@@ -215,153 +298,41 @@ const HomeOne = () => {
             <div className="section-heading" data-aos="fade-down">
               <h2 className="section-title">Frequently Asked Questions </h2>
             </div>          {/* Heading title*/}
-
+            <Accordion>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    Karama Medical Fitness Center Medical Timing
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>
+                    Monday - Thursday
+                    7:00 AM -10:00 PM
+                    <br></br>
+                    Friday
+                    7:00 AM  -  08:00 PM
+                    <br></br>
+                    Saturday - Sunday
+                    8:00 AM - 08:00 PM
+                  </p>
+                </AccordionItemPanel>
+              </AccordionItem>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    How to check visa medical report online?
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>
+                    Dubai visa medical report can be tracked and downloaded from DHA mobile application.
+                  </p>
+                </AccordionItemPanel>
+              </AccordionItem>
+            </Accordion>
             {/* /Heading title */}
-            <div className="faq-info">
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapseds"
-                    data-bs-toggle="collapse"
-                    to="#faqOne"
-                    aria-expanded="true"
-                  >
-                  Karama Medical Fitness Center Medical Timing                  </Link>
-                </h4>
-                <div id="faqOne" className="card-collapse collapse show">
-                  <p>
-                  Monday - Thursday
-                 7:00 AM -10:00 PM
-<br></br>
-                  Friday
-                  7:00 AM  -  08:00 PM
-                  <br></br>
-                Saturday - Sunday
-                8:00 AM - 08:00 PM
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqTwo"
-                    aria-expanded="false"
-                  >
-                    What documents do I need to rent a car?
-                  </Link>
-                </h4>
-                <div id="faqTwo" className="card-collapse collapse">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqThree"
-                    aria-expanded="false"
-                  >
-                    What types of vehicles are available for rent?
-                  </Link>
-                </h4>
-                <div id="faqThree" className="card-collapse collapse">
-                  <p>
-                    We offer a diverse fleet of vehicles to suit every need,
-                    including compact cars, sedans, SUVs and luxury vehicles. You
-                    can browse our selection online or contact us for assistance
-                    in choosing the right vehicle for you
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqFour"
-                    aria-expanded="false"
-                  >
-                    Can I rent a car with a debit card?
-                  </Link>
-                </h4>
-                <div id="faqFour" className="card-collapse collapse">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqFive"
-                    aria-expanded="false"
-                  >
-                    What is your fuel policy?
-                  </Link>
-                </h4>
-                <div id="faqFive" className="card-collapse collapse">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqSix"
-                    aria-expanded="false"
-                  >
-                    Can I add additional drivers to my rental agreement?
-                  </Link>
-                </h4>
-                <div id="faqSix" className="card-collapse collapse">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
-              <div className="faq-card bg-white" data-aos="fade-down">
-                <h4 className="faq-title">
-                  <Link
-                    className="collapsed"
-                    data-bs-toggle="collapse"
-                    to="#faqSeven"
-                    aria-expanded="false"
-                  >
-                    What happens if I return the car late?
-                  </Link>
-                </h4>
-                <div id="faqSeven" className="card-collapse collapse">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
-            </div>
+
           </div>
 
         </div>
@@ -385,7 +356,7 @@ const HomeOne = () => {
 
               <div className="row">
 
-                
+
                 <div className="col-lg-4 col-md-6 d-lg-flex">
                   <div className="blog grid-blog">
                     <div className="blog-image">
@@ -463,9 +434,9 @@ const HomeOne = () => {
             </div>
           </div>
         </section >
-  {/* /Blog Section */ }
+        {/* /Blog Section */}
       </>
-  <Footer />
+      <Footer />
     </>
   );
 };
