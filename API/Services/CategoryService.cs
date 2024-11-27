@@ -88,22 +88,37 @@ public class CategoryService : ICategoryService
 
     public async Task<string> UploadImage(FileUploadNewDto model)
     {
-        var category = await _context.Categories.FindAsync(model.EntityId);
+        var category = await _context.Categories
+            .Include(x => x.FileEntity)
+            .FirstOrDefaultAsync(x => x.Id == model.EntityId);
 
         if (category is not null)
         {
-            var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
-            createdFiles.ForEach(async item =>
+
+            if (category.FileEntity is not null)
             {
-                var file = await _fileService.GetFileByIdAsync(item.Id);
+                var fileToUpdate = await _fileService.UpdateImageAsync(category.FileEntity.Id, model.Files[0], model.directory);
+
+                var file = await _fileService.GetFileByIdAsync(fileToUpdate.Id);
                 file.CategoryId = model.EntityId;
 
-            });
+                await _context.SaveChangesAsync();
 
+                return fileToUpdate.FilePath!;
+            }
+            else
+            {
+                var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
+                createdFiles.ForEach(async item =>
+                {
+                    var file = await _fileService.GetFileByIdAsync(item.Id);
+                    file.CategoryId = model.EntityId;
+                });
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return createdFiles[0].FilePath!;
+                return createdFiles[0].FilePath!;
+            }
         }
         return null!;
     }

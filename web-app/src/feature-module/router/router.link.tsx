@@ -25,6 +25,7 @@ import ServiceDetails from "../services/ServiceDetails";
 import ServiceDashboard from "../services/ServiceDashboard";
 import ServiceCreate from "../services/ServiceCreate";
 import ServiceUpdate from "../services/ServiceUpdate";
+import ServiceList from "../services/ServiceList";
 
 const routes = all_routes;
 
@@ -41,7 +42,10 @@ export const publicRoutes = [
     path: "*",
     element: <Navigate to="/index" />,
   },
-
+  {
+    path: routes.serviceList,
+    element: <ServiceList />,
+  },
   // {
   //   path: routes.contactUs,
   //   element: <Contact />,

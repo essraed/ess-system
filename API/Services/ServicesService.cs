@@ -90,22 +90,37 @@ public class ServiceService : IServiceService
 
     public async Task<string> UploadImage(FileUploadNewDto model)
     {
-        var service = await _context.Services.FindAsync(model.EntityId);
+        var service = await _context.Services
+            .Include(x => x.FileEntity)
+            .FirstOrDefaultAsync(x => x.Id == model.EntityId);
 
         if (service is not null)
         {
-            var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
-            createdFiles.ForEach(async item =>
+            if (service.FileEntity is not null)
             {
-                var file = await _fileService.GetFileByIdAsync(item.Id);
+                var fileToUpdate = await _fileService.UpdateImageAsync(service.FileEntity.Id, model.Files[0], model.directory);
+
+                var file = await _fileService.GetFileByIdAsync(fileToUpdate.Id);
                 file.ServiceId = model.EntityId;
+
+                await _context.SaveChangesAsync();
+
+                return fileToUpdate.FilePath!;
+            }
+            else
+            {
+                var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
+                createdFiles.ForEach(async item =>
+                {
+                    var file = await _fileService.GetFileByIdAsync(item.Id);
+                    file.ServiceId = model.EntityId;
+
+                });
                 
-            });
+                await _context.SaveChangesAsync();
 
-
-            await _context.SaveChangesAsync();
-
-            return createdFiles[0].FilePath!;
+                return createdFiles[0].FilePath!;
+            }
         }
         return null!;
     }

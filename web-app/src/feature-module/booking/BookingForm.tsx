@@ -91,19 +91,9 @@ const BookingForm = ({
   };
 
   const fetchAvailableSlots = async () => {
-    try {
-      const result = await getAvailableSlots(
-        date?.toDateString() ?? new Date().toDateString()
-      );
-      if (result.status === "success") {
-        toast.success(result.data);
-      } else {
-        toast.error(result.error as string);
-      }
-    } catch (error) {
-      toast.error("An unexpected error occurred");
-      console.error(error);
-    }
+    await getAvailableSlots(
+      date?.toDateString() ?? new Date().toDateString()
+    );
   };
 
   useEffect(() => {

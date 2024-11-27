@@ -8,6 +8,7 @@ import BookingIndex from "../booking/BookingIndex";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import ServiceDetailSidebar from "./ServiceDetailSidebar";
+import BackToButton from "../common/BackToButton";
 
 
 const listingDetails = () => {
@@ -31,6 +32,7 @@ const listingDetails = () => {
         {/* Detail Page Head*/}
         <section className="product-detail-head">
           <div className="container">
+            <BackToButton href={`/services/${currentService.categoryId}`} label="Back" />
             <div className="detail-page-head">
               <div className="detail-headings">
                 <div className="star-rated">
