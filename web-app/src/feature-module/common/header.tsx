@@ -15,7 +15,11 @@ const Header = () => {
     categoryStore: { categories, loadCategories }
   } = useStore();
 
-  useEffect(() => { loadCategories() }, [loadCategories])
+  useEffect(() => {
+    document.title = 'Karama Business Center';
+    loadCategories()
+  }, [loadCategories])
+
 
   return (
     <>
@@ -44,14 +48,14 @@ const Header = () => {
                   <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
                 </li>
                 {isLoggedIn ? (
-                    <li className="nav-item">
-                      <Link className="nav-link header-login" to="#" onClick={logout}>
-                        <span>
-                          <i className="fa-regular fa-user" />
-                        </span>
-                        Logout
-                      </Link>
-                    </li>
+                  <li className="nav-item">
+                    <Link className="nav-link header-login" to="#" onClick={logout}>
+                      <span>
+                        <i className="fa-regular fa-user" />
+                      </span>
+                      Logout
+                    </Link>
+                  </li>
                 ) : (
                   <li className="nav-item">
                     <Link className="nav-link header-login" to={routes.login}>
@@ -72,7 +76,6 @@ const Header = () => {
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
-
             <div className="navbar-header">
               {/* handleClick */}
               <Link id="mobile_btn" to="#" onClick={() => { }}>

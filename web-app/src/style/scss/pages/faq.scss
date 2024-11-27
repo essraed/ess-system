@@ -55,6 +55,11 @@
         }
     }
 }
+
+.collapse {
+    visibility: unset;
+}
+
 .faq-card {
         @include margin-padding(0 0 20px, 20px 40px 20px 20px);
         border: 1px solid $__blue__light;
@@ -88,7 +93,7 @@
                 right: -15px;
                 font-size: $__font__size__16;
                 color: $__note__lights;
-                @extend %animation-effect;
+                //@extend %animation-effect;
                 transform: translateY(-50%);
                 @include respond-below(custom767) { 
                     right: -20px;
@@ -98,7 +103,7 @@
                 &:after {
                     content: "\f139";
                     color: $__primarycolor;
-                    @extend %animation-effect;
+                    //@extend %animation-effect;
                 }
             }
         }
