@@ -66,7 +66,7 @@ const BookingIndex = ({ service }: Props) => {
             <div className="location-content">
               <div className="delivery-tab">
                 <ul className="nav">
-                  {service?.priceVIP && (
+                  {Number(service?.priceVIP) > 0 && (
                     <li
                       onClick={() => {
                         handleSelectedPrice(Number(service?.priceVIP) ?? Number(service.price));

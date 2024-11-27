@@ -68,12 +68,10 @@ const ServiceForm = ({ service, id }: Props) => {
     };
 
     // Handle adding or updating service
-    if (id) {
-      // Updating an existing service
+    if (id) { // update
       const result = await updateService(id, submissionData);
       if (result.status === "success") {
         toast.success("Service updated successfully");
-        navigate(all_routes.serviceDashboard);
       } else {
         toast.error("Error: " + result.error);
       }
@@ -86,6 +84,7 @@ const ServiceForm = ({ service, id }: Props) => {
         toast.error("Error: " + result.error);
       }
     }
+    navigate(all_routes.serviceDashboard)
   };
 
   // Handle removing an option from the list
@@ -196,8 +195,8 @@ const ServiceForm = ({ service, id }: Props) => {
             </button>
           </div>
 
-          <button 
-          type="submit" className="btn btn-primary mt-3">
+          <button
+            type="submit" className="btn btn-primary mt-3">
             {id ? t("Update Service") : t("Submit")}
           </button>
         </form>

@@ -68,9 +68,10 @@ export default class ServiceStore {
     }
   };
 
-  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {
     try {
       await agent.Services.uploadImage(formData);
+      await this.loadServices()
       return { status: "success", data: "Service image uploaded successfully" };
     } catch (error) {
       console.error("Error uploading service: ", error);
@@ -93,9 +94,11 @@ export default class ServiceStore {
   };
 
   // Load All Services
-  loadServices = async () => {
+  loadServices = async (id?: string) => {
     const serviceList: ServiceData[] = [];
     try {
+      if (id) await this.setCategoryIdParam(id)
+
       const result = await agent.Services.getAll(this.axiosParams);
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
@@ -180,6 +183,7 @@ export default class ServiceStore {
   setCategoryIdParam = (categoryId: string) => {
     this.categoryId = categoryId;
   };
+
   setDateFilter = (from: string, to: string) => {
     this.fromDate = from;
     this.toDate = to;

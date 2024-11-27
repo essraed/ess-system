@@ -2,18 +2,38 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { CategoryData } from "../../types/category";
-import { ActionResult } from "../../types";
+import FileForm from "../common/FileForm";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../app/stores/store";
 
 type Props = {
   className?: string;
   category: CategoryData;
-  uploadImage?: (formData: FormData) => Promise<ActionResult<string>>;
 };
 
 const CategoryCard = ({ category }: Props) => {
+
+  const { userStore: { isAdmin }, categoryStore: {uploadImage } } = useStore();
   return (
-    <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
-      <div className="listing-item">
+    <div
+      className="col-lg-3 col-md-3 col-6 aos-init aos-animate"
+      data-aos="fade-down"
+    >
+      <div className="listing-item position-relative">
+        {/* Top-right FileForm */}
+        {uploadImage && isAdmin() && (
+          <div
+            className="position-absolute top-0 end-0 m-2"
+            style={{ zIndex: 10 }}
+          >
+            <FileForm
+              label="Upload Image"
+              entityId={category.id}
+              uploadImage={uploadImage}
+            />
+          </div>
+        )}
+
         <div className="listing-img">
           <div className="img-slider owl-carousel owl-loaded owl-drag">
             <div className="owl-stage-outer">
@@ -22,7 +42,7 @@ const CategoryCard = ({ category }: Props) => {
                   <div className="slide-images">
                     <Link to="/listing-details">
                       <ImageWithBasePath
-                        src={category.filePath ?? "assets/img/placeholder.png"}
+                        src={(category.filePath === undefined || category.filePath === '') ? 'assets/img/Amer Services.png' : category.filePath}
                         alt={category.name ?? "Category"}
                         className="img-fluid"
                       />
@@ -36,7 +56,9 @@ const CategoryCard = ({ category }: Props) => {
             <div className="listing-features d-flex align-items-end justify-content-between">
               <div className="list-rating">
                 <h3 className="listing-title">
-                  <Link to="/listing-details">{category.name ?? "Category Name"}</Link>
+                  <Link to="/listing-details">
+                    {category.name ?? "Category Name"}
+                  </Link>
                 </h3>
                 <p>{category.description ?? "No description available."}</p>
               </div>
@@ -50,8 +72,7 @@ const CategoryCard = ({ category }: Props) => {
         </div>
       </div>
     </div>
-
   );
 };
 
-export default CategoryCard;
+export default observer(CategoryCard);

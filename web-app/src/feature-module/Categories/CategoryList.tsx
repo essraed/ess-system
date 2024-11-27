@@ -5,7 +5,7 @@ import CategoryCard from "./CategoryCard";
 
 const CategoryList = () => {
   const {
-    categoryStore: { categories, loadCategories, uploadImage },
+    categoryStore: { categories, loadCategories },
     userStore,
   } = useStore();
 
@@ -23,7 +23,6 @@ const CategoryList = () => {
             <h2 className="section-title">Our Services</h2>
                     {categories.map((category) => (
                       <CategoryCard
-                        uploadImage={uploadImage}
                         key={category.id}
                         category={category}
                       />
