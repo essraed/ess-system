@@ -120,6 +120,7 @@ export default class CategoryStore {
   uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
     try {
       await agent.Categories.uploadImage(formData);
+      await this.loadCategories()
       return { status: "success", data: "Category image uploaded successfully" };
     } catch (error) {
       console.error("Error uploading Category: ", error);

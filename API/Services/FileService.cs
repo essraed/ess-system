@@ -148,9 +148,10 @@ namespace API.Services
         // Delete from server
         private void DeleteFileOrImage(string filePath)
         {
-            if (File.Exists(filePath))
+            var path = Path.Combine(_environment.WebRootPath, filePath);
+            if (File.Exists(path))
             {
-                File.Delete(filePath);
+                File.Delete(path);
             }
         }
 
