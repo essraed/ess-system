@@ -2318,7 +2318,7 @@ h2.section-title {
 
 
 .choose-us-section {
-	//background: $__black-gray;
+	background: #b5b5b5;
 	position: relative;
 	@include margin-padding(null, 80px 0 56px);
 	@include respond-below(custom991) {
@@ -2331,7 +2331,9 @@ h2.section-title {
 	}
 }
 
-
+.quality-bg-01 {
+	@include position(absolute, null, 0, 0, null);
+}
 
 .quality-bg {
 	@include position(absolute, 0, null, null, 0);
@@ -2376,7 +2378,7 @@ h2.section-title {
 	}
 	h6 {
 		font-weight: $__normal;
-		color: $__white;
+		color: #815306;
 		margin-bottom: 5px;
 	}
 	p {
@@ -3046,10 +3048,10 @@ h2.section-title {
     background: $__white;
     border-radius: 10px;
     border: 2px solid #d4e1f4;
-    @include margin-padding(0 0 24px 0, 15px);
+    @include margin-padding(0 0 24px 0, 5px);
 
     @include respond-below(custom991) {
-        @include margin-padding(null, 15px);
+        @include margin-padding(null, 5px);
     }
 
     .feature-text {
@@ -3220,7 +3222,7 @@ h2.section-title {
         .listing-features {
             position: $__relative;
             border-bottom: 1px solid $__light__gooses;
-            @include margin-padding(0 0 15px, 0 0 15px);
+            @include margin-padding(0 0 5px, 0 0 5px);
 
             .author-img {
                 position: $__absolute;
@@ -3590,11 +3592,17 @@ h2.section-title {
 
 }
 
+
+
+
+
 .facts-number {
 
     background-image: url(../../../../public/assets/img/shini-01-03.png);
     background-position: center;
     background-repeat: no-repeat;
+    background-size:cover;
+
 
     //background: $__goose-gray;
     @include respond-below(custom991) {

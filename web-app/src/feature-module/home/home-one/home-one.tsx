@@ -121,10 +121,9 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-calendar-heart" />
                       </span>
-                      <h6>Flexible Rental Periods</h6>
+                      <h6>Dedicated Assistance</h6>
                       <p>
-                        Customers appreciate the flexibility of choosing rental
-                        durations that suit their schedules.
+                      Personalized support throughout the application process.
                       </p>
                     </div>
                   </div>
@@ -133,10 +132,9 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-badge-dollar" />
                       </span>
-                      <h6>Affordable Pricing</h6>
+                      <h6>Experienced Staff:</h6>
                       <p>
-                        Dreams Rent offers competitive pricing for bike rentals,
-                        making cycling accessible to a wide range of people.
+                      A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes
                       </p>
                     </div>
                   </div>
@@ -155,6 +153,13 @@ const HomeOne = () => {
             <div className="quality-bg">
               <ImageWithBasePath
                 src="assets/img/bg/quality-bg.png"
+                className="img-fluid"
+                alt="img"
+              />
+            </div>
+            <div className="quality-bg-01">
+              <ImageWithBasePath
+                src="assets/img/bg/quality-bg-01.png"
                 className="img-fluid"
                 alt="img"
               />
@@ -370,7 +375,7 @@ const HomeOne = () => {
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="">
+                        <a href="#">
                           2024 - DED Opening
                         </a>
                       </h3>
@@ -390,7 +395,7 @@ const HomeOne = () => {
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="">
+                        <a href="#">
                           2023 - National Day Celeberation
                         </a>
                       </h3>
@@ -408,7 +413,7 @@ const HomeOne = () => {
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="">
+                        <a href="#">
                           2024 - Best Employee of the Month
                         </a>
                       </h3>

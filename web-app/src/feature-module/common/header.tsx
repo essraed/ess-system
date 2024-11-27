@@ -16,7 +16,6 @@ const Header = () => {
   } = useStore();
 
   useEffect(() => {
-    document.title = 'Karama Business Center';
     loadCategories()
   }, [loadCategories])
 
