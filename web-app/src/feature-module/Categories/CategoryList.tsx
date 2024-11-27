@@ -21,9 +21,6 @@ const CategoryList = () => {
         <div className="custom-container">
           <div className="row">
             <h2 className="section-title">Our Services</h2>
-    
-
-              
                     {categories.map((category) => (
                       <CategoryCard
                         uploadImage={uploadImage}
@@ -35,8 +32,6 @@ const CategoryList = () => {
               </div>
             </div>
           </div>
-   
-
     </section>
   );
 };
