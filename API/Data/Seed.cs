@@ -84,7 +84,7 @@ namespace API.Data
                                     FileName = category.PictureUrl!.Split('/').Last()
                                 });
                             }
-                            
+
                             await context.SaveChangesAsync();
                         }
                     }
@@ -94,6 +94,29 @@ namespace API.Data
                     }
                 }
 
+                if (!context.WorkingTimes.Any())
+                {
+                    var workingTimes = new List<WorkingTime>();
+
+                    var startTime = new TimeOnly(7, 0);
+                    var endTime = new TimeOnly(22, 0); 
+
+                    foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        workingTimes.Add(new WorkingTime
+                        {
+                            Day = day,
+                            FromTime = startTime,
+                            ToTime = endTime,
+                            IsActive = true,
+                            CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                            CreatedById = null 
+                        });
+                    }
+
+                    await context.WorkingTimes.AddRangeAsync(workingTimes);
+                    await context.SaveChangesAsync();
+                }
 
             }
             catch (SystemException ex)

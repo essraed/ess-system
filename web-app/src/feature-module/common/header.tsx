@@ -5,15 +5,17 @@ import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import LanguageSelector from "./LanguageSelector";
+
 const Header = () => {
   const routes = all_routes;
 
   const {
-    userStore: {isAdmin,logout, isLoggedIn },
-    categoryStore: {categories, loadCategories}
+    userStore: { isAdmin, logout, isLoggedIn },
+    categoryStore: { categories, loadCategories }
   } = useStore();
 
-  useEffect(() => {loadCategories()}, [loadCategories])
+  useEffect(() => { loadCategories() }, [loadCategories])
 
   return (
     <>
@@ -31,34 +33,34 @@ const Header = () => {
             </div>
             <div className="col-md-6 col-6 rightLogo">
 
-              
+
               <ul className="nav header-navbar-rht">
 
-              <li className="contact-number nav-item pe-4 ">
-                <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
-              </li>
-
+                <li className="nav-item">
+                  <LanguageSelector />
+                </li>
+                <li>|</li>
+                <li className="contact-number nav-item pe-4 ">
+                  <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
+                </li>
                 {isLoggedIn ? (
-                  <>
                     <li className="nav-item">
                       <Link className="nav-link header-login" to="#" onClick={logout}>
-
                         <span>
                           <i className="fa-regular fa-user" />
                         </span>
                         Logout
                       </Link>
                     </li>
-                  </>
                 ) : (
-                    <li className="nav-item">
-                      <Link className="nav-link header-login" to={routes.login}>
-                        <span>
-                          <i className="fa-regular fa-user" />
-                        </span>
-                        Sign In
-                      </Link>
-                    </li>
+                  <li className="nav-item">
+                    <Link className="nav-link header-login" to={routes.login}>
+                      <span>
+                        <i className="fa-regular fa-user" />
+                      </span>
+                      Sign In
+                    </Link>
+                  </li>
                 )}
               </ul>
 
@@ -72,8 +74,8 @@ const Header = () => {
           <div className="custom-container">
 
             <div className="navbar-header">
-            {/* handleClick */}
-              <Link id="mobile_btn" to="#" onClick={() => {}}> 
+              {/* handleClick */}
+              <Link id="mobile_btn" to="#" onClick={() => { }}>
                 <span className="bar-icon">
                   <span />
                   <span />
@@ -94,8 +96,8 @@ const Header = () => {
                   id="menu_close"
                   className="menu-close"
                   to="#"
-                  onClick={() => {}}
-                  >
+                  onClick={() => { }}
+                >
                   {/* handleClick */}
                   {" "}
                   <i className="fas fa-times" />
@@ -119,7 +121,7 @@ const Header = () => {
                 </li>
 
                 <li
-                // we need update the condition here for active
+                  // we need update the condition here for active
                   className={`has-submenu ${location.pathname.includes("services") ? "active" : ""}`}
                 >
                   <Link to="#">
@@ -130,7 +132,7 @@ const Header = () => {
                       <li
                         key={index}
                         className={
-                          location.pathname.includes(routes.letterDashboard)
+                          location.pathname.includes("sdsadasd")
                             ? "active"
                             : ""
                         }
@@ -141,7 +143,7 @@ const Header = () => {
                   </ul>
                 </li>
 
-               {isAdmin() && <li
+                {isAdmin() && <li
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
                   <Link to="#">
@@ -220,15 +222,6 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.serviceDashboard)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.serviceDashboard}>Service List</Link>
-                    </li>
-                    <li
-                      className={
                         location.pathname.includes(routes.WorkingTimeDashboard)
                           ? "active"
                           : ""
@@ -263,4 +256,4 @@ const Header = () => {
   );
 };
 
-export default observer (Header);
+export default observer(Header);

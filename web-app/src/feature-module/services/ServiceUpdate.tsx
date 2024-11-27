@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import ServiceForm from "./ServiceForm";
+import BackToButton from "../common/BackToButton";
+import { all_routes } from "../router/all_routes";
 
 const ServiceUpdate = () => {
   const { id } = useParams();
@@ -27,15 +29,21 @@ const ServiceUpdate = () => {
   if (!currentService) return <p>Loading...</p>;
   return (
     <>
-      <Card className="my-10 container">
-        <CardHeader className="flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center gap-3">
-              <h1 className="text-3xl font-semibold">{t("Update Service")}</h1>
+      <Card className="mt-0 mb-20 container">
+        <CardHeader className="flex justify-between gap-3 flex-wrap">
 
-            </div>
+          <div>
+            <BackToButton
+              href={all_routes.serviceDashboard}
+              label="Back To Services"
+            />
           </div>
-          <div></div>
+          <div>
+            <h1 className="text-3xl font-semibold">
+              {t("Create Service")}
+            </h1>
+          </div>
+          <div className="w-2/12"></div>
         </CardHeader>
         <CardBody className="flex flex-col gap-10">
           <ServiceForm
@@ -46,6 +54,7 @@ const ServiceUpdate = () => {
         </CardBody>
       </Card>
     </>
+
   );
 };
 

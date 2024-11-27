@@ -10,7 +10,7 @@ type Props = {
   uploadImage?: (formData: FormData) => Promise<ActionResult<string>>;
 };
 
-const CategoryCard = ({ category, className }: Props) => {
+const CategoryCard = ({ category }: Props) => {
   return (
     <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
       <div className="listing-item">
