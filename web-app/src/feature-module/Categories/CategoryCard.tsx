@@ -9,10 +9,9 @@ type Props = {
   category: CategoryData;
   uploadImage?: (formData: FormData) => Promise<ActionResult<string>>;
 };
-
 const CategoryCard = ({ category }: Props) => {
   return (
-    <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate" data-aos="fade-down">
+    <div className="col-lg-3 col-md-3 col-6 aos-init aos-animate wow zoomIn" data-wow-delay="0.3s" data-aos="fade-down">
       <div className="listing-item">
         <div className="listing-img">
           <div className="img-slider owl-carousel owl-loaded owl-drag">
@@ -42,8 +41,8 @@ const CategoryCard = ({ category }: Props) => {
               </div>
             </div>
             <div className="view-more-btn text-center">
-              <Link to="/listing-grid" className="btn btn-secondary">
-                View More
+              <Link to="/listing-grid" className="btn btn-secondary-new">
+                View More <i className="fas fa-arrow-right ps-3"></i>
               </Link>
             </div>
           </div>
