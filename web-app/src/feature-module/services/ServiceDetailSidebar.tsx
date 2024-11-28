@@ -6,7 +6,7 @@ const ServiceDetailSidebar = () => {
   return (
     <div className="col-lg-4 theiaStickySidebar">
       <div className="stickybar">
-        
+
         <div className="review-sec extra-service mt-0">
           <div className="review-header">
             <h4>Listing Owner Details</h4>
@@ -14,10 +14,13 @@ const ServiceDetailSidebar = () => {
           <div className="owner-detail">
             <div className="owner-img">
               <Link to="#">
-                <ImageWithBasePath src="assets/img/logo.svg" alt="User" />
+                <ImageWithBasePath
+
+                  lazyLoad={true} src="assets/img/logo.svg" alt="User" />
               </Link>
               <span className="badge-check">
-                <ImageWithBasePath src="assets/img/logo.svg" alt="User" />
+                <ImageWithBasePath
+                  lazyLoad={true} src="assets/img/logo.svg" alt="User" />
               </span>
             </div>
             <div className="reviewbox-list-rating">

@@ -42,6 +42,7 @@ const listingDetails = () => {
                       <div className="car-brand">
                         <span>
                           <ImageWithBasePath
+                            lazyLoad={true}
                             src="assets/img/icons/car-icon.svg"
                             alt="img"
                           />

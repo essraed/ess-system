@@ -42,7 +42,8 @@ const InvoiceDetails = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="invoice-logo">
-                        <ImageWithBasePath src="assets/img/logo.svg" alt="logo" />
+                        <ImageWithBasePath
+                          lazyLoad={true} src="assets/img/logo.svg" alt="logo" />
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -202,7 +203,8 @@ const InvoiceDetails = () => {
                     </div>
                     <div className="col-lg-6 col-md-12">
                       <div className="invoice-sign">
-                        <ImageWithBasePath
+                        <ImageWithBasePath 
+                          lazyLoad={true}
                           className="img-fluid d-inline-block"
                           src="assets/img/signature.png"
                           alt="sign"

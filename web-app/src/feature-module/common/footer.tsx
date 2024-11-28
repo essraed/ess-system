@@ -8,9 +8,9 @@ import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const routes = all_routes;
-  
+
   const { t } = useTranslation();
-  
+
   AOS.init();
   useEffect(() => {
     AOS.init({
@@ -29,9 +29,9 @@ const Footer = () => {
 
   return (
     <>
-        {/* Footer */}
-        <footer className="footer">	
-        {/* Footer Top */}	
+      {/* Footer */}
+      <footer className="footer">
+        {/* Footer Top */}
         <div className="footer-top aos" data-aos="fade-down">
           <div className="container">
             <div className="row">
@@ -74,7 +74,7 @@ const Footer = () => {
                         </li>
                         <li>
                           <Link to="#">{t("Attestation Services")}</Link>
-                        </li>								
+                        </li>
                       </ul>
                     </div>
                     {/* /Footer Widget */}
@@ -99,8 +99,8 @@ const Footer = () => {
               <div className="col-lg-5">
                 <div className="footer-contact footer-widget">
                   <h5 className="footer-title">{t("Contact Info<")}</h5>
-                  <div className="footer-contact-info">									
-                    <div className="footer-address">											
+                  <div className="footer-contact-info">
+                    <div className="footer-address">
                       <span><i className="feather icon-phone-call" /></span>
                       <div className="addr-info">
                         <Link to="tel:+1(888)7601940">+ 971 (04) 342 6666</Link>
@@ -114,12 +114,12 @@ const Footer = () => {
                     </div>
                     <div className="update-form">
                       <form action="#">
-                        <span><i className="feather icon-mail" /></span> 
+                        <span><i className="feather icon-mail" /></span>
                         <input type="email" className="form-control" placeholder="Enter You Email Here" />
                         <button type="submit" className="btn btn-subscribe"><span><i className="feather icon-send" /></span></button>
                       </form>
                     </div>
-                  </div>								
+                  </div>
                   <div className="footer-social-widget">
                     <ul className="nav-social">
                       <li>
@@ -141,7 +141,7 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-            </div>					
+            </div>
           </div>
         </div>
         {/* /Footer Top */}
@@ -160,12 +160,20 @@ const Footer = () => {
                   {/* Copyright Menu */}
                   <div className="copyright-menu">
                     <div className="vistors-details">
-                      <ul className="d-flex">											
-                        <li><Link to="#"><ImageWithBasePath className="img-fluid" src="assets/img/icons/paypal.svg" alt="Paypal" /></Link></li>											
-                        <li><Link to="#"><ImageWithBasePath className="img-fluid" src="assets/img/icons/visa.svg" alt="Visa" /></Link></li>
-                        <li><Link to="#"><ImageWithBasePath className="img-fluid" src="assets/img/icons/master.svg" alt="Master" /></Link></li>
-                        <li><Link to="#"><ImageWithBasePath className="img-fluid" src="assets/img/icons/applegpay.svg" alt="applegpay" /></Link></li>
-                      </ul>										   								
+                      <ul className="d-flex">
+                        <li><Link to="#"><ImageWithBasePath
+
+                          lazyLoad={true} className="img-fluid" src="assets/img/icons/paypal.svg" alt="Paypal" /></Link></li>
+                        <li><Link to="#"><ImageWithBasePath
+
+                          lazyLoad={true} className="img-fluid" src="assets/img/icons/visa.svg" alt="Visa" /></Link></li>
+                        <li><Link to="#"><ImageWithBasePath
+
+                          lazyLoad={true} className="img-fluid" src="assets/img/icons/master.svg" alt="Master" /></Link></li>
+                        <li><Link to="#"><ImageWithBasePath
+
+                          lazyLoad={true} className="img-fluid" src="assets/img/icons/applegpay.svg" alt="applegpay" /></Link></li>
+                      </ul>
                     </div>
                   </div>
                   {/* /Copyright Menu */}
@@ -175,7 +183,7 @@ const Footer = () => {
             {/* /Copyright */}
           </div>
         </div>
-        {/* /Footer Bottom */}			
+        {/* /Footer Bottom */}
       </footer>
       {/* /Footer */}
     </>

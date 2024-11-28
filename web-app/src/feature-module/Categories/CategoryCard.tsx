@@ -12,7 +12,7 @@ type Props = {
 };
 const CategoryCard = ({ category }: Props) => {
 
-  const { userStore: { isAdmin }, categoryStore: {uploadImage } } = useStore();
+  const { userStore: { isAdmin }, categoryStore: { uploadImage } } = useStore();
   return (
 
     <div
@@ -41,6 +41,7 @@ const CategoryCard = ({ category }: Props) => {
                   <div className="slide-images">
                     <Link to="/listing-details">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         src={(category.filePath === undefined || category.filePath === '') ? 'assets/img/Amer Services.png' : category.filePath}
                         alt={category.name ?? "Category"}
                         className="img-fluid"
