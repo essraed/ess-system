@@ -11,8 +11,7 @@ import ServiceDetailSidebar from "./ServiceDetailSidebar";
 import BackToButton from "../common/BackToButton";
 import LoadingSpinner from "../common/LoadingSpinner";
 
-
-const listingDetails = () => {
+const ListingDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -25,81 +24,55 @@ const listingDetails = () => {
     }
   }, [getService, navigate]);
 
-  if (!currentService) return <LoadingSpinner />
+  if (!currentService) return <LoadingSpinner />;
 
   return (
     <div className="main-wrapper">
-      <>
-        {/* Detail Page Head*/}
-        <section className="product-detail-head">
-          <div className="container">
-            <BackToButton href={`/services/${currentService.categoryId}`} label="Back" />
-            <div className="detail-page-head">
-              <div className="detail-headings">
-                <div className="star-rated">
-                  <ul className="list-rating">
-                    <li>
-                      <div className="car-brand">
-                        <span>
-                          <ImageWithBasePath
-                            lazyLoad={true}
-                            src="assets/img/icons/car-icon.svg"
-                            alt="img"
-                          />
-                        </span>
-                        Sedan
-                      </div>
-                    </li>
-                    <li>
-                      <span className="year">2023</span>
-                    </li>
-                    <li className="ratings">
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <i className="fas fa-star filled" />
-                      <span className="d-inline-block average-list-rating">
-                        (5.0)
+      {/* Detail Page Head */}
+      <section className="product-detail-head">
+        <div className="container">
+          <div className="detail-page-head">
+            <div className="detail-headings">
+              <div className="star-rated">
+                <ul className="list-rating">
+                  <li>
+                    <div className="car-brand">
+                      <span>
+                        <ImageWithBasePath
+                          lazyLoad={true}
+                          src={currentService.filePath || "assets/img/icons/default-icon.svg"}
+                          alt="img"
+                        />
                       </span>
-                    </li>
-                  </ul>
-                  <div className="camaro-info">
-                    <h3>{currentService.name}</h3>
-                    <div className="camaro-location">
-                      <div className="camaro-location-inner">
-                        <i className="bx bx-map" />
-                        <span>Location : Miami St, Destin, FL 32550, USA </span>
-                      </div>
-                      <div className="camaro-location-inner">
-                        <i className="bx bx-show" />
-                        <span>Views : 250 </span>
-                      </div>
-                      <div className="camaro-location-inner">
-                        <i className="bx bx-car" />
-                        <span>Views : Listed on: 01 Jan, 2024 </span>
-                      </div>
+                      {currentService.categoryName || "Category"}
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="details-btn">
-                <span className="total-badge">
-                  <i className="bx bx-calendar-edit" />
-                  Total Booking : 300
-                </span>
-                <Link to="#">
-                  {" "}
-                  <i className="bx bx-git-compare" />
-                  Compare
-                </Link>
+                  </li>
+                  <li>
+                    2024
+                    {/* <span className="year">{new Date(currentService.createDate).getFullYear()}</span> */}
+                  </li>
+                
+                </ul>
               </div>
             </div>
+            <div className="details-btn">
+              <span className="total-badge">
+                <i className="bx bx-calendar-edit" />
+                Total Booking: 300
+              </span>
+              <Link to="#">
+                <i className="bx bx-git-compare" />
+                Compare
+              </Link>
+            </div>
           </div>
-        </section>
-        {/* /Detail Page Head*/}
-      </>
+          <div className="container bg-slate-100 p-2 mt-4 rounded">
+            <BackToButton href={`/services/${currentService.categoryId}`} label="Back" />
+          </div>
+        </div>
+      </section>
 
+      {/* Booking Section */}
       <section className="section product-details">
         <div className="container">
           <div className="row">
@@ -114,4 +87,4 @@ const listingDetails = () => {
   );
 };
 
-export default observer(listingDetails);
+export default observer(ListingDetails);
