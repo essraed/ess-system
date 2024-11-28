@@ -4,12 +4,14 @@ import { observer } from "mobx-react-lite";
 import BookingForm from "./BookingForm";
 import BookingAddon from "./BookingAddon";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   service: ServiceData;
 };
 
 const BookingIndex = ({ service }: Props) => {
+  const { t } = useTranslation();
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
 
   const [selectedOptionsPrice, setSelectedOptionsPrice] = useState<number>(0);
@@ -54,13 +56,13 @@ const BookingIndex = ({ service }: Props) => {
         <div className="stickybar">
           <div className="review-sec mt-0">
             <div className="review-header">
-              <h4>Book Service</h4>
+              <p className="font-bold text-2xl">{t('Book Service')}</p>
               <h6 className="flex items-center gap-3">
-                <p>Total Cost:</p>
+                <p>{t('Total Cost')}:</p>
                 <span className="text-red-700 border p-2 rounded-lg">
                   {selectedPrice
-                    ? `${(selectedPrice + selectedOptionsPrice).toFixed(2)} AED`
-                    : "Price Not Available"}{" "}
+                    ? `${(selectedPrice + selectedOptionsPrice).toFixed(2)} ${t('AED')}`
+                    : t("Price Not Available")}{" "}
                 </span>
               </h6>
             </div>
@@ -84,7 +86,7 @@ const BookingIndex = ({ service }: Props) => {
                           defaultChecked={true}
                         />
                         <span className="booking_checkmark">
-                          <span className="checked-title">{"Home"}</span>
+                          <span className="checked-title">{t("AtHome")}</span>
                         </span>
                       </label>
                     </li>
@@ -103,7 +105,7 @@ const BookingIndex = ({ service }: Props) => {
                         defaultChecked={true}
                       />
                       <span className="booking_checkmark">
-                        <span className="checked-title">{"Center"}</span>
+                        <span className="checked-title">{t("Center")}</span>
                       </span>
                     </label>
                   </li>
