@@ -19,107 +19,73 @@ type Props = {
 
 const ServiceCard = ({ service }: Props) => {
   const { t } = useTranslation();
-  const { serviceStore: { uploadImage }, userStore } = useStore();
-  const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
-
-  // Handling favorite item selection (for example)
-  const handleItemClick = (index: number) => {
-    setSelectedItems((prevSelectedItems) => {
-      const updatedSelectedItems = [...prevSelectedItems];
-      updatedSelectedItems[index] = !updatedSelectedItems[index];
-      return updatedSelectedItems;
-    });
-  };
+  const {
+    serviceStore: { uploadImage },
+    userStore,
+  } = useStore();
+  const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
 
+  const handleFavoriteToggle = () => {
+    setSelected((prev) => !prev);
+  };
+
   return (
-    <div className="col-lg-4 col-md-6 col-12 w-1/3 px-2" data-aos="fade-down">
-      <div className="listing-item">
-        <div className="listing-img">
+    <div
+      className="col-lg-3 col-md-6 col-12 px-3 mb-5" 
+      data-aos="fade-up"
+    >
+      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="relative overflow-hidden rounded-t-lg">
           <Link to={`/listings/service-details/${service.id}`}>
             <ImageWithBasePath
               lazyLoad={true}
               src={service.filePath || "assets/img/cars/car-03.jpg"}
-              className="img-fluid h-[401px] w-[550px]"
+              className="w-full h-48 object-cover" 
               alt={service.name}
             />
           </Link>
-          <div
-            className="fav-item justify-content-end"
-            key={service.id} // Using service ID as the key
-            onClick={() => handleItemClick(7)}
-          >
-            {userStore.isAdmin() && <FileForm entityId={service.id} uploadImage={uploadImage} />}
-          </div>
-          <span className="featured-text">{service.categoryName}</span>
+          {userStore.isAdmin() && (
+            <div className="absolute bottom-4 right-4">
+              <FileForm entityId={service.id} uploadImage={uploadImage} />
+            </div>
+          )}
         </div>
-        <div className="listing-content">
-          <div className="listing-features d-flex align-items-end justify-content-between">
-            <div className="list-rating">
-
-              <h3 className="listing-title">
-                <Link to={`/listings/service-details/${service.id}`}>{service.name}</Link>
-              </h3>
-
-            </div>
-            <div className="list-km">
-              <span className="km-count">
-                <ImageWithBasePath
-                  lazyLoad={true}
-                  src="assets/img/icons/map-pin.svg"
-                  alt="location"
-                />
-                {service.createDate && <p className="p-1">{service.createDate}</p>}
-              </span>
-            </div>
+        <div className="p-3"> 
+          <div className="flex justify-between items-center">
+            <h3 className="text-base font-bold text-gray-800 truncate">
+              <Link to={`/listings/service-details/${service.id}`}>
+                {service.name}
+              </Link>
+            </h3>
+            <p className="text-gray-500 text-xs">
+              {service.createDate || "Unknown Date"}
+            </p>
           </div>
-          <div className="listing-details-group">
-            <ul>
-              {/* Add the relevant details for the service */}
-              <li>
-                <span>
-                  <ImageWithBasePath
-                    lazyLoad={true}
-                    src="assets/img/icons/car-parts-05.svg"
-                    alt="Manual"
-                  />
-                </span>
-                <p>{service.price ? `${service.price} ${t('AED')}` : "Price N/A"}</p>{" "}
-                {/* Display the price */}
-              </li>
-              {service.priceVIP &&
-                <li>
-                  <span>
-                    <TbVip />
-                  </span> 
-                  <p>{service.priceVIP} {t('AED')}</p>
-                </li>
-              }
-            </ul>
-          </div>
-          <div className="listing-location-details">
-            <div className="listing-price">
-              <span>
-                <i className="feather icon-map-pin" />
-              </span>
+          <p className="text-gray-600 text-sm mt-1">
+            {service.price
+              ? `${service.price} ${t("AED")}`
+              : t("Price Not Available")}
+          </p>
+          {service.priceVIP && (
+            <p className="flex items-center text-xs text-gray-700 mt-1">
+              <TbVip className="mr-1 text-yellow-500" />
+              {service.priceVIP} {t("AED")}
+            </p>
+          )}
+          <div className="mt-3 flex justify-between items-center">
+            <span className="text-gray-600 text-xs flex items-center"> 
+              <i className="feather icon-map-pin mr-2"></i>
               {t(COMPANY_LOCATION) || "Unknown Location"}
-            </div>
-            <div className="listing-price">
-              <h6>
-                {service.price ? `$${service.price} ` : "Price Not Available"}{" "}
-                <span></span>
-              </h6>
-            </div>
-          </div>
-          <div className="listing-button">
-            <Link to={`/listings/service-details/${service.id}`} className="btn btn-order">
-              <span>
-                <i className="feather icon-calendar me-2" />
-              </span>
-              {t('Book Now')}
+            </span>
+            <Link
+              to={`/listings/service-details/${service.id}`}
+              className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs hover:bg-blue-600 transition"
+            >
+              {t("Book Now")}
             </Link>
           </div>
         </div>

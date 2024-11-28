@@ -10,9 +10,7 @@ import { Card } from "@nextui-org/react";
 import EmptyListComponent from "../common/EmptyListComponent";
 import LoadingSpinner from "../common/LoadingSpinner";
 
-
 const ServiceList = () => {
-
   const { id } = useParams();
   const {
     serviceStore: { services, loadServices },
@@ -20,32 +18,29 @@ const ServiceList = () => {
   } = useStore();
 
   useEffect(() => {
-    if (id)
-      loadServices(id);
+    if (id) loadServices(id);
   }, [loadServices, userStore.token, id]);
 
   if (!services) return <LoadingSpinner />;
 
   return (
-
     <>
       <Header />
       <div className="listing-page">
         <Breadcrumbs title="Services List" subtitle="Services" />
         <section className="section car-listing pt-0">
           <div className="container">
-            <Card className="p-6 mt-4 shadow-lg rounded-lg border border-gray-200 bg-white">
-            <div className="flex items-center flex-wrap ">
-            {services.length > 0 ? (
-                services.map((service) => (
-                  <ServiceCard key={service.id} service={service} />
-                ))
-              ) : (
-                <EmptyListComponent label='services' />
-              )}
+            <div className="p-6 mt-4   border-gray-200 bg-white">
+              <div className="flex items-center flex-wrap ">
+                {services.length > 0 ? (
+                  services.map((service) => (
+                    <ServiceCard key={service.id} service={service} />
+                  ))
+                ) : (
+                  <EmptyListComponent label="services" />
+                )}
+              </div>
             </div>
-            </Card>
-
           </div>
         </section>
       </div>
