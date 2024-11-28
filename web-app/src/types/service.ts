@@ -8,8 +8,8 @@ export interface ServiceData {
   serviceVipName?: string;
   totalPrice?: string;
   filePath?: string; 
-  createDate?: Date | string;
-  updateDate?: Date | string;
+  createDate?: string;
+  updateDate?: string;
   createdBy?: string;
   updatedBy?: string;
   categoryId?: string;

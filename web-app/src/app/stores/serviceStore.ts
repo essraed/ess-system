@@ -113,9 +113,9 @@ export default class ServiceStore {
             updateDate: item.updateDate
               ? formatDateTime(item.updateDate?.toString())
               : "No Set",
-            price: item.price + " AED",
-            totalPrice: item.totalPrice + " AED",
-            priceVIP: item.priceVIP + " AED",
+            price: item.price,
+            totalPrice: item.totalPrice,
+            priceVIP: item.priceVIP ? item.priceVIP : '',
             updatedBy: item.updatedBy ? item.updatedBy : "No Set",
           });
         });
