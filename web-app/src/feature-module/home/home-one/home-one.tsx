@@ -1,6 +1,5 @@
 
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";
