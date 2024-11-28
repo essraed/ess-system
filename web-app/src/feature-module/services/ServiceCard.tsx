@@ -19,8 +19,6 @@ type Props = {
 const ServiceCard = ({ service }: Props) => {
 
   const {serviceStore: {uploadImage}, userStore} = useStore();
-
-  const routes = all_routes;
   const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
 
   // Handling favorite item selection (for example)
