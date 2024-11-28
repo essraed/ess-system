@@ -102,7 +102,7 @@ const HomeOne = () => {
                       </span>
                       <h6>One Stop Transactions</h6>
                       <p>
-                      {t("The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.")}
+                        {t("The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.")}
                       </p>
                     </div>
                   </div>
@@ -113,8 +113,8 @@ const HomeOne = () => {
                       </span>
                       <h6>{(t("Premium Fast Track Service"))}</h6>
                       <p>
-                      {t("The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.")}
-              
+                        {t("The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.")}
+
                       </p>
                     </div>
                   </div>
@@ -125,7 +125,7 @@ const HomeOne = () => {
                       </span>
                       <h6>{t("Dedicated Assistance")}</h6>
                       <p>
-                      {t("Personalized support throughout the application process.")}
+                        {t("Personalized support throughout the application process.")}
                       </p>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ const HomeOne = () => {
                       </span>
                       <h6>{t("Experienced Staff:")}</h6>
                       <p>
-                      {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
+                        {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
                       </p>
                     </div>
                   </div>
@@ -146,6 +146,7 @@ const HomeOne = () => {
 
             <div className="quality-img">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/_63A3883.jpg"
                 data-aos="fade-left"
                 className="img-fluid"
@@ -154,6 +155,7 @@ const HomeOne = () => {
             </div>
             <div className="quality-bg">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/bg/quality-bg.png"
                 className="img-fluid"
                 alt="img"
@@ -161,6 +163,7 @@ const HomeOne = () => {
             </div>
             <div className="quality-bg-01">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/bg/quality-bg-01.png"
                 className="img-fluid"
                 alt="img"
@@ -187,6 +190,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-heart.svg"
                           alt=""
                         />
@@ -214,6 +218,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-car.svg"
                           alt=""
                         />
@@ -241,6 +246,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-headphone.svg"
                           alt=""
                         />
@@ -269,6 +275,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-history.svg"
                           alt=""
                         />
@@ -365,6 +372,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/DET_Opening.jpg"
 
@@ -387,6 +395,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/2023_NationalDay.jpg"
                         alt="Post Image"
@@ -405,6 +414,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/BestEmployee_2024.jpg"
                         alt="Post Image"

@@ -18,7 +18,7 @@ type Props = {
 
 const ServiceCard = ({ service }: Props) => {
 
-  const {serviceStore: {uploadImage}, userStore} = useStore();
+  const { serviceStore: { uploadImage }, userStore } = useStore();
   const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
 
   // Handling favorite item selection (for example)
@@ -40,6 +40,7 @@ const ServiceCard = ({ service }: Props) => {
         <div className="listing-img">
           <Link to={`/listings/service-details/${service.id}`}>
             <ImageWithBasePath
+              lazyLoad={true}
               src={service.filePath || "assets/img/cars/car-03.jpg"}
               className="img-fluid h-[401px] w-[550px]"
               alt={service.name}
@@ -50,14 +51,14 @@ const ServiceCard = ({ service }: Props) => {
             key={service.id} // Using service ID as the key
             onClick={() => handleItemClick(7)}
           >
-           {userStore.isAdmin() && <FileForm entityId={service.id} uploadImage={uploadImage} />}
+            {userStore.isAdmin() && <FileForm entityId={service.id} uploadImage={uploadImage} />}
           </div>
           <span className="featured-text">{service.name}</span>
         </div>
         <div className="listing-content">
           <div className="listing-features d-flex align-items-end justify-content-between">
             <div className="list-rating">
-             
+
               <h3 className="listing-title">
                 <Link to={`/listings/service-details/${service.id}`}>{service.name}</Link>
               </h3>
@@ -87,6 +88,7 @@ const ServiceCard = ({ service }: Props) => {
             <div className="list-km">
               <span className="km-count">
                 <ImageWithBasePath
+                  lazyLoad={true}
                   src="assets/img/icons/map-pin.svg"
                   alt="location"
                 />
@@ -101,6 +103,7 @@ const ServiceCard = ({ service }: Props) => {
               <li>
                 <span>
                   <ImageWithBasePath
+                    lazyLoad={true}
                     src="assets/img/icons/car-parts-05.svg"
                     alt="Manual"
                   />
@@ -148,4 +151,4 @@ const ServiceCard = ({ service }: Props) => {
   );
 };
 
-export default observer (ServiceCard);
+export default observer(ServiceCard);

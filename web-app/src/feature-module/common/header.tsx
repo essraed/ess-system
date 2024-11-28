@@ -34,6 +34,7 @@ const Header = () => {
             <div className="col-md-6 col-6">
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
+                  lazyLoad={true}
                   src="assets/img/ESSLogo.png"
                   className="img-fluid"
                   alt="Logo"
@@ -95,6 +96,7 @@ const Header = () => {
               <div className="menu-header">
                 <Link to={routes.homeOne} className="menu-logo">
                   <ImageWithBasePath
+                    lazyLoad={true}
                     src="assets/img/ESS KBC LOGO transparent-01-01.png"
                     className="img-fluid"
                     alt="Logo"
