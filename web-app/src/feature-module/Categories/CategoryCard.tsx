@@ -12,7 +12,7 @@ type Props = {
 };
 const CategoryCard = ({ category }: Props) => {
 
-  const { userStore: { isAdmin }, categoryStore: {uploadImage } } = useStore();
+  const { userStore: { isAdmin }, categoryStore: { uploadImage } } = useStore();
   return (
 
     <div
@@ -25,7 +25,7 @@ const CategoryCard = ({ category }: Props) => {
             style={{ zIndex: 10 }}
           >
             <FileForm
-              label="Upload Image"
+              label=""
               entityId={category.id}
               uploadImage={uploadImage}
             />
@@ -41,6 +41,7 @@ const CategoryCard = ({ category }: Props) => {
                   <div className="slide-images">
                     <Link to="/listing-details">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         src={(category.filePath === undefined || category.filePath === '') ? 'assets/img/Amer Services.png' : category.filePath}
                         alt={category.name ?? "Category"}
                         className="img-fluid"
@@ -63,7 +64,7 @@ const CategoryCard = ({ category }: Props) => {
               </div>
             </div>
             <div className="view-more-btn text-center">
-              <Link to="/listing-grid" className="btn btn-secondary-new">
+              <Link to={`/services/${category.id}`} className="btn btn-secondary-new">
                 View More <i className="fas fa-arrow-right ps-3"></i>
               </Link>
             </div>

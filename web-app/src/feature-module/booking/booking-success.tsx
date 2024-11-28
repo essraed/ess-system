@@ -7,7 +7,7 @@ const BookingSuccess = () => {
   return (
     <div>
       <Breadcrumbs title="Checkout" subtitle="Checkout" />
-         {/* Booking Success */}
+      {/* Booking Success */}
       <div className="booking-new-module">
         <div className="container">
           <div className="booking-wizard-head">
@@ -22,23 +22,28 @@ const BookingSuccess = () => {
                 <div className="booking-wizard-lists">
                   <ul>
                     <li className="active activated">
-                      <span><ImageWithBasePath src="assets/img/icons/booking-head-icon-01.svg" alt="Booking Icon" /></span>
+                      <span><ImageWithBasePath
+                        lazyLoad={true} src="assets/img/icons/booking-head-icon-01.svg" alt="Booking Icon" /></span>
                       <h6>Location &amp; Time</h6>
                     </li>
                     <li className="active activated">
-                      <span><ImageWithBasePath src="assets/img/icons/booking-head-icon-02.svg" alt="Booking Icon" /></span>
+                      <span><ImageWithBasePath
+                        lazyLoad={true} src="assets/img/icons/booking-head-icon-02.svg" alt="Booking Icon" /></span>
                       <h6>Add-Ons</h6>
                     </li>
                     <li className="active activated">
-                      <span><ImageWithBasePath src="assets/img/icons/booking-head-icon-03.svg" alt="Booking Icon" /></span>
+                      <span><ImageWithBasePath
+                        lazyLoad={true} src="assets/img/icons/booking-head-icon-03.svg" alt="Booking Icon" /></span>
                       <h6>Detail</h6>
                     </li>
                     <li className="active activated">
-                      <span><ImageWithBasePath src="assets/img/icons/booking-head-icon-04.svg" alt="Booking Icon" /></span>
+                      <span><ImageWithBasePath
+                        lazyLoad={true} src="assets/img/icons/booking-head-icon-04.svg" alt="Booking Icon" /></span>
                       <h6>Checkout</h6>
                     </li>
                     <li className="active">
-                      <span><ImageWithBasePath src="assets/img/icons/booking-head-icon-05.svg" alt="Booking Icon" /></span>
+                      <span><ImageWithBasePath
+                        lazyLoad={true} src="assets/img/icons/booking-head-icon-05.svg" alt="Booking Icon" /></span>
                       <h6>Booking Confirmed</h6>
                     </li>
                   </ul>
@@ -57,7 +62,8 @@ const BookingSuccess = () => {
             <div className="booking-header">
               <div className="booking-img-wrap">
                 <div className="book-img">
-                  <ImageWithBasePath src="assets/img/cars/car-05.jpg" alt="img" />
+                  <ImageWithBasePath
+                    lazyLoad={true} src="assets/img/cars/car-05.jpg" alt="img" />
                 </div>
                 <div className="book-info">
                   <h6>Chevrolet Camaro</h6>
@@ -185,7 +191,8 @@ const BookingSuccess = () => {
                     </ul>
                     <div className="driver-info">
                       <span>
-                        <ImageWithBasePath src="assets/img/user.jpg" alt="img" />
+                        <ImageWithBasePath
+                          lazyLoad={true} src="assets/img/user.jpg" alt="img" />
                       </span>
                       <div className="driver-name">
                         <h6>Ruban</h6>

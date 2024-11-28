@@ -11,6 +11,7 @@ import { useStore } from "../../app/stores/store";
 import ServiceForm from "./ServiceForm";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const ServiceUpdate = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const ServiceUpdate = () => {
     }
   }, [getService, id]);
 
-  if (!currentService) return <p>Loading...</p>;
+  if (!currentService) return <LoadingSpinner />;
   return (
     <>
       <Card className="mt-0 mb-20 container">

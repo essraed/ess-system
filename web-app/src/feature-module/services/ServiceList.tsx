@@ -7,8 +7,8 @@ import Breadcrumbs from "../common/breadcrumbs";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import { Card } from "@nextui-org/react";
-import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import EmptyListComponent from "../common/EmptyListComponent";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 
 const ServiceList = () => {
@@ -24,7 +24,7 @@ const ServiceList = () => {
       loadServices(id);
   }, [loadServices, userStore.token, id]);
 
-  if (!services) return <p>Loading...</p>;
+  if (!services) return <LoadingSpinner />;
 
   return (
 

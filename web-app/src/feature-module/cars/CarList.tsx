@@ -14,6 +14,7 @@ import handleErrors from "../../lib/utils";
 import { dialogFlags } from "../../constants/constants";
 import CarForm from "./CarForm";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const CarList = () => {
   const { t } = useTranslation();
@@ -85,7 +86,7 @@ const CarList = () => {
     }
   }, [userStore.token, loadCars]);
 
-  if (!cars) return <p>Loading...</p>;
+  if (!cars) return <LoadingSpinner />;
 
   return (
     <div className="col-lg-12">

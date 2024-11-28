@@ -44,6 +44,7 @@ const Login = () => {
       <header className="log-header">
         <Link to={routes.homeOne}>
           <ImageWithBasePath
+            lazyLoad={true}
             className="img-fluid logo-dark"
             src="assets/img/logo.svg"
             alt="Logo"
@@ -122,7 +123,8 @@ const Login = () => {
                     className="d-flex align-items-center justify-content-center input-block btn google-login w-100"
                   >
                     <span>
-                      <ImageWithBasePath
+                      <ImageWithBasePath 
+        lazyLoad={true} 
                         src="assets/img/icons/google.svg"
                         className="img-fluid"
                         alt="Google"
@@ -137,7 +139,8 @@ const Login = () => {
                     className="d-flex align-items-center justify-content-center input-block btn google-login w-100"
                   >
                     <span>
-                      <ImageWithBasePath
+                      <ImageWithBasePath 
+        lazyLoad={true} 
                         src="assets/img/icons/facebook.svg"
                         className="img-fluid"
                         alt="Facebook"

@@ -13,6 +13,7 @@ const ForgotPassword = () => {
         <header className="log-header">
           <Link to={routes.homeOne}>
             <ImageWithBasePath
+              lazyLoad={true}
               className="img-fluid logo-dark"
               src="assets/img/logo.svg"
               alt="Logo"

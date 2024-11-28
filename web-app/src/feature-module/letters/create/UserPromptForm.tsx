@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { UserPromptSchema, userPromptSchema } from '../../../lib/schemas/UserPromptSchema';
 import handleErrors from '../../../lib/utils';
 import { useStore } from '../../../app/stores/store';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 const UserPromptForm = () => {
   const { t } = useTranslation();
@@ -43,7 +44,7 @@ const UserPromptForm = () => {
       setValue('authorityId', authorityId);
   };
 
-  if (!authoritiesForDropdown) return <p>Loading...</p>
+  if (!authoritiesForDropdown) return <LoadingSpinner />
 
   return (
       <form onSubmit={handleSubmit(onSubmit)}>

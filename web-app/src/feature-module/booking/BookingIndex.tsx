@@ -3,6 +3,7 @@ import { ServiceData } from "../../types/service";
 import { observer } from "mobx-react-lite";
 import BookingForm from "./BookingForm";
 import BookingAddon from "./BookingAddon";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {
   service: ServiceData;
@@ -45,7 +46,7 @@ const BookingIndex = ({ service }: Props) => {
     setSelectedPrice(Number(service.price));
   }, [service]);
 
-  if (!service) return <p>Loading...</p>;
+  if (!service) return <LoadingSpinner />;
 
   return (
     <>
