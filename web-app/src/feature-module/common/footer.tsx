@@ -4,9 +4,13 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const routes = all_routes;
+  
+  const { t } = useTranslation();
+  
   AOS.init();
   useEffect(() => {
     AOS.init({
@@ -36,16 +40,16 @@ const Footer = () => {
                   <div className="col-lg-4 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
-                      <h5 className="footer-title">About Company</h5>
+                      <h5 className="footer-title">{t("About Company")}</h5>
                       <ul>
                         <li>
-                          <Link to={routes.aboutUs}>Our Company</Link>
+                          <Link to={routes.aboutUs}>{t("Our Company")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Services</Link>
+                          <Link to="#">{t("Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Contact</Link>
+                          <Link to="#">{t("Contact")}</Link>
                         </li>
                       </ul>
                     </div>
@@ -54,22 +58,22 @@ const Footer = () => {
                   <div className="col-lg-4 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
-                      <h5 className="footer-title">Booking Services</h5>
+                      <h5 className="footer-title">{t("Booking Services")}</h5>
                       <ul>
                         <li>
-                          <Link to="#">All  Services</Link>
+                          <Link to="#">{t("All  Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Medical DHA</Link>
+                          <Link to="#">{t("Medical DHA<")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Typing Services</Link>
+                          <Link to="#">{t("Typing Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Golden Visa Services</Link>
+                          <Link to="#">{t("Golden Visa Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Attestation Services</Link>
+                          <Link to="#">{t("Attestation Services")}</Link>
                         </li>								
                       </ul>
                     </div>
@@ -78,13 +82,13 @@ const Footer = () => {
                   <div className="col-lg-4 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
-                      <h5 className="footer-title">Quick links</h5>
+                      <h5 className="footer-title">{t("Quick links")}</h5>
                       <ul>
                         <li>
-                          <Link to="#">Privacy Policy</Link>
+                          <Link to="#">{t("Privacy Policy")}</Link>
                         </li>
                         <li>
-                          <Link to="#">Faq</Link>
+                          <Link to="#">{t("Faq")}</Link>
                         </li>
                       </ul>
                     </div>
@@ -94,7 +98,7 @@ const Footer = () => {
               </div>
               <div className="col-lg-5">
                 <div className="footer-contact footer-widget">
-                  <h5 className="footer-title">Contact Info</h5>
+                  <h5 className="footer-title">{t("Contact Info<")}</h5>
                   <div className="footer-contact-info">									
                     <div className="footer-address">											
                       <span><i className="feather icon-phone-call" /></span>
@@ -149,7 +153,7 @@ const Footer = () => {
               <div className="row align-items-center">
                 <div className="col-md-6">
                   <div className="copyright-text">
-                    <p>© 2024 Karama Business Center. All Rights Reserved.</p>
+                    <p>{t("© 2024 Karama Business Center. All Rights Reserved.")}</p>
                   </div>
                 </div>
                 <div className="col-md-6">

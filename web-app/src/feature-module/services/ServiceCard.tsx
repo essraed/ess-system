@@ -37,7 +37,7 @@ const ServiceCard = ({ service }: Props) => {
   }, []);
 
   return (
-    <div className="col-lg-4 col-md-6 col-12 w-1/3 px-2" data-aos="fade-down">
+    <div className="col-lg-4 col-md-6 col-12 w-1/4 px-2" data-aos="fade-down">
       <div className="listing-item">
         <div className="listing-img">
           <Link to={`/listings/service-details/${service.id}`}>

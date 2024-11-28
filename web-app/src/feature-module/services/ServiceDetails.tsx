@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import ServiceDetailSidebar from "./ServiceDetailSidebar";
 import BackToButton from "../common/BackToButton";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 
 const listingDetails = () => {
@@ -24,7 +25,7 @@ const listingDetails = () => {
     }
   }, [getService, navigate]);
 
-  if (!currentService) return <p>Loading...</p>;
+  if (!currentService) return <LoadingSpinner />
 
   return (
     <div className="main-wrapper">

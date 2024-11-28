@@ -12,6 +12,7 @@ import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import WorkingTimeForm from "./WorkingTimeForm";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const WorkingTimeList = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const WorkingTimeList = () => {
     }
   }, [userStore.token, loadWorkingTimes]);
 
-  if (!Array.isArray(workingTimes)) return <p>Loading...</p>;
+  if (!Array.isArray(workingTimes)) return <LoadingSpinner />;
 
   return (
     <div className="col-lg-12">

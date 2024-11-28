@@ -25,7 +25,7 @@ const CategoryCard = ({ category }: Props) => {
             style={{ zIndex: 10 }}
           >
             <FileForm
-              label="Upload Image"
+              label=""
               entityId={category.id}
               uploadImage={uploadImage}
             />
@@ -63,7 +63,7 @@ const CategoryCard = ({ category }: Props) => {
               </div>
             </div>
             <div className="view-more-btn text-center">
-              <Link to="/listing-grid" className="btn btn-secondary-new">
+              <Link to={`/services/${category.id}`} className="btn btn-secondary-new">
                 View More <i className="fas fa-arrow-right ps-3"></i>
               </Link>
             </div>
