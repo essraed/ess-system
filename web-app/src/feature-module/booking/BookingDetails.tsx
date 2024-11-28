@@ -68,7 +68,7 @@ const BookingDetails = () => {
       <div className="listing-page">
         <Breadcrumbs title="Booking Details" subtitle="Bookings" />
 
-        <div className="container">
+        <div className="container my-3">
           <div className="sortby-sec">
             <div className="sorting-div">
               <div className="row d-flex align-items-center">
@@ -91,7 +91,7 @@ const BookingDetails = () => {
 
       {/* Car Grid View */}
 
-      <div className="container">
+      <div className="container mb-5 ">
         <Card className="p-6 shadow-md border border-gray-200">
           {/* Customer Information Section */}
           <div className="flex items-center gap-5 justify-between mb-6">

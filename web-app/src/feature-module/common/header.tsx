@@ -137,7 +137,7 @@ const Header = () => {
 
                 <li
                   // we need update the condition here for active
-                  className={`has-submenu ${location.pathname.includes("services") ? "active" : ""}`}
+                  className={`has-submenu ${location.pathname.includes("services/") ? "active" : ""}`}
                 >
                   <Link to="#">
                     {t("Booking Services")} <i className="fas fa-chevron-down" />
@@ -152,7 +152,7 @@ const Header = () => {
                             : ""
                         }
                       >
-                        <Link to={`/services/${item.id}`} onClick={() => setLocationPathname(`/services/${item.id}`)}>{t(`${item.name}`)}</Link>
+                        <Link to={`/services/${item.id}`} onClick={() => setLocationPathname(`/services/${item.id}`)}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
@@ -168,81 +168,81 @@ const Header = () => {
 
                     <li
                       className={
-                        location.pathname.includes(routes.letterDashboard)
+                        locationPathname===routes.letterDashboard
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.letterDashboard}>{t("Letter List")}</Link>
+                      <Link to={routes.letterDashboard} onClick={() => setLocationPathname(routes.letterDashboard)}>{t("Letter List")}</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.serviceDashboard)
+                        locationPathname===routes.serviceDashboard
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.serviceDashboard}>{t("Service List")}</Link>
+                      <Link to={routes.serviceDashboard} onClick={() => setLocationPathname(routes.serviceDashboard)}>{t("Service List")}</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.categoryDashboard)
+                        locationPathname===routes.categoryDashboard
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.categoryDashboard}>{t("Category List")}</Link>
-                    </li>
-
-                    <li
-                      className={
-                        location.pathname.includes(routes.authorityDashboard)
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.authorityDashboard}>{t("Authority List")}</Link>
+                      <Link to={routes.categoryDashboard} onClick={() => setLocationPathname(routes.categoryDashboard)}>{t("Category List")}</Link>
                     </li>
 
                     <li
                       className={
-                        location.pathname.includes(routes.carDashboard)
+                        locationPathname===routes.authorityDashboard
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.carDashboard}>{t("Car List")}</Link>
+                      <Link to={routes.authorityDashboard} onClick={() => setLocationPathname(routes.authorityDashboard)}>{t("Authority List")}</Link>
+                    </li>
+
+                    <li
+                      className={
+                        locationPathname===routes.carDashboard
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.carDashboard} onClick={() => setLocationPathname(routes.carDashboard)}>{t("Car List")}</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.notificationDashboard)
+                        locationPathname===routes.notificationDashboard
 
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.notificationDashboard}>
+                      <Link to={routes.notificationDashboard} onClick={() => setLocationPathname(routes.notificationDashboard)}>
                         {t("Notification List")}
                       </Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.bookingDashboard)
+                        locationPathname===routes.bookingDashboard
 
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.bookingDashboard}>{t("Booking List")}</Link>
+                      <Link to={routes.bookingDashboard} onClick={() => setLocationPathname(routes.bookingDashboard)}>{t("Booking List")}</Link>
                     </li>
                     <li
                       className={
-                        location.pathname.includes(routes.WorkingTimeDashboard)
+                        locationPathname===routes.WorkingTimeDashboard
                           ? "active"
                           : ""
                       }
                     >
-                      <Link to={routes.WorkingTimeDashboard}>
+                      <Link to={routes.WorkingTimeDashboard} onClick={() => setLocationPathname(routes.WorkingTimeDashboard)}>
                         {t("WorkingTime List")}
                       </Link>
                     </li>
