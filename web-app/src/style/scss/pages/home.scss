@@ -2324,11 +2324,6 @@ h2.section-title {
 	@include respond-below(custom991) {
 		@include margin-padding(null, 50px 0 26px);
 	}
-	.section-heading {
-		text-align: left;
-
-
-	}
 }
 
 .quality-bg-01 {
@@ -2338,14 +2333,17 @@ h2.section-title {
 .quality-bg {
 	@include position(absolute, 0, null, null, 0);
 }
+
 .quality-img {
-	width: 40%;
-	@include position(absolute, 50%, 30px, null, null);
-	@include transform(translateY(-50%));
-	@include respond-below(custom991) {
-		display: none;
-	}
+  width: 40%;
+  @include position2(absolute, 50%, null, null);
+  @include transform(translateY(-50%));
+  @include respond-below(custom991) {
+    display: none;
+  }
 }
+
+
 .quality-wrap {
 	margin-bottom: 24px;
 	span {

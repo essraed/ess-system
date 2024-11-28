@@ -117,6 +117,13 @@ $breakpoints: (
   left:$__left_value;
 }
 
+@mixin position2($__position_value,$__top_value,$__bottom_value,$__left_value){
+  position:$__position_value;
+  top:$__top_value;
+  bottom:$__bottom_value;
+  left:$__left_value;
+}
+
 @mixin margin-padding($__margin, $__padding) {
    margin: $__margin;
    padding:$__padding;

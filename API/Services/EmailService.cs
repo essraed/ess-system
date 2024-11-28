@@ -7,10 +7,10 @@ namespace API.Services
     public class EmailService : IEmailService
     {
         // SMTP
-        private readonly string _smtpServer = "smtp.gmail.com";
+        private readonly string _smtpServer = "mail.kbc.center";
         private readonly int _smtpPort = 465;
-        private readonly string _smtpUsername = "raed.ali.alfarhan@gmail.com";
-        private readonly string _smtpPassword = "bfxvsucywkfrzoqw";
+        private readonly string _smtpUsername = "booking@kbc.center";
+        private readonly string _smtpPassword = "booking@224";
 
         public async Task<bool> SendEmailAsync(string toEmail, string subject,  string body)
         {

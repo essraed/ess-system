@@ -5,14 +5,18 @@ import { CategoryData } from "../../types/category";
 import FileForm from "../common/FileForm";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   className?: string;
   category: CategoryData;
 };
 const CategoryCard = ({ category }: Props) => {
+  const { t } = useTranslation();
+  const { userStore: { isAdmin, language }, categoryStore: { uploadImage } } = useStore();
 
-  const { userStore: { isAdmin }, categoryStore: { uploadImage } } = useStore();
+  const isRTL = language === "ar";
+
   return (
 
     <div
@@ -65,7 +69,7 @@ const CategoryCard = ({ category }: Props) => {
             </div>
             <div className="view-more-btn text-center">
               <Link to={`/services/${category.id}`} className="btn btn-secondary-new">
-                View More <i className="fas fa-arrow-right ps-3"></i>
+                {t('View More')} <i className="fas fa-arrow-right ps-3" style={{ transform: isRTL ? "rotate(180deg)" : "none" }}></i>
               </Link>
             </div>
           </div>
