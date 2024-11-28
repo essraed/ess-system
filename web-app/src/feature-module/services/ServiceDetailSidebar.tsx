@@ -1,15 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
+import { useTranslation } from "react-i18next";
+import { COMPANY_LOCATION, COMPANY_MAIL, COMPANY_NAME, COMPANY_PHONE_NUMBER } from "../../environment";
 
 const ServiceDetailSidebar = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="col-lg-4 theiaStickySidebar">
       <div className="stickybar">
 
         <div className="review-sec extra-service mt-0">
           <div className="review-header">
-            <h4>Listing Owner Details</h4>
+            <h4>{t('Owner Details')}</h4>
           </div>
           <div className="owner-detail">
             <div className="owner-img">
@@ -25,7 +29,7 @@ const ServiceDetailSidebar = () => {
             </div>
             <div className="reviewbox-list-rating">
               <h5>
-                <Link to={""}>Emirates Secretarial Services</Link>
+                <Link to={""}>{t(COMPANY_NAME)}</Link>
               </h5>
               <p>
                 <i className="fas fa-star filled" />
@@ -33,50 +37,39 @@ const ServiceDetailSidebar = () => {
                 <i className="fas fa-star filled" />
                 <i className="fas fa-star filled" />
                 <i className="fas fa-star filled" />
-                <span> (5.0)</span>
+                <span> (4.3)</span>
               </p>
             </div>
           </div>
           <ul className="booking-list">
             <li>
-              Email
-              <span>info@example.com</span>
-            </li>
-            <li>
-              Phone Number
-              <span>
-                <a href="tel:0523412595">05 234 12 595</a>
+              {t('Email')}
+              <span className="addr-info">
+                <a className="text-blue-500 underline" href={`mailto:${COMPANY_MAIL}`}>{COMPANY_MAIL}</a>
               </span>
             </li>
             <li>
-              Location
-              <span>Next to Karama Post Office, Dubai, UAE</span>
+              {t('Phone Number')}
+              <span className="addr-info">
+                <a className="text-blue-500 underline" href="tel:0523412595">{COMPANY_PHONE_NUMBER}</a>
+              </span>
+            </li>
+            <li>
+              {t('Location')}
+              <span className="addr-info">{t(COMPANY_LOCATION)}</span>
             </li>
           </ul>
-          <div className="message-btn">
-            <Link to="#" className="btn btn-order">
-              Message to owner
-            </Link>
-            <Link to="#" className="chat-link">
+          <div className="message-btn font-bold">
+            <a className="flex items-center gap-2 chat-link font-semibold btn btn-order" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer">
               <i className="fa-brands fa-whatsapp" />
-              Chat Via Whatsapp
-            </Link>
+              <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
+            </a>
           </div>
         </div>
-
-        <div className="review-sec share-car mt-0">
-          <div className="review-header">
-            <h4>Area</h4>
-          </div>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28901.292484086762!2d55.27690550729217!3d25.276987292230905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5c5c34cb655b%3A0x4b3091a8eaad071b!2sDubai%2C%20UAE!5e0!3m2!1sen!2sin!4v1669181581381!5m2!1sen!2sin"
-            className="iframe-video"
-          />
-        </div>
-
+{/* 
         <div className="review-sec share-car mt-0 mb-0">
           <div className="review-header">
-            <h4>Share</h4>
+            <h4>{ t ('Share')}</h4>
           </div>
           <ul className="nav-social">
             <li>
@@ -110,7 +103,7 @@ const ServiceDetailSidebar = () => {
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
 
       </div>
     </div>

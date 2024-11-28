@@ -4,6 +4,8 @@ export const img_path = "/";
 
 export const COMPANY_LOCATION = "Next to Karama Post Office,Dubai";
 export const COMPANY_PHONE_NUMBER = "+(971) 342-6666";
+export const COMPANY_MAIL = "info@example.com";
+export const COMPANY_NAME = "Emirates Secretarial Services";
 
 
 
