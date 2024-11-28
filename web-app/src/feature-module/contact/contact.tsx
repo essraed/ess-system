@@ -58,6 +58,7 @@ const Contact = () => {
             <div className="row">
               <div className="col-lg-6 d-flex">
                 <ImageWithBasePath
+                  lazyLoad={true}
                   src="assets/img/contact-info.jpg"
                   className="img-fluid"
                   alt="Contact"

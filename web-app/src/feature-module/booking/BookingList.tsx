@@ -14,6 +14,7 @@ import { all_routes } from "../router/all_routes";
 import { Dropdown } from "primereact/dropdown";
 import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const BookingList = () => {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const BookingList = () => {
     }
   }, [userStore.token, loadBookings]);
 
-  if (!bookings) return <p>Loading...</p>;
+  if (!bookings) return <LoadingSpinner />;
   
   return (
     <div className="col-lg-12">

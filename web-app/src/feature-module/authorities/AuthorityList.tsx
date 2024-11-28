@@ -15,6 +15,7 @@ import handleErrors from "../../lib/utils";
 import AuthorityForm from "./AuthorityForm";
 import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const AuthorityList = () => {
   const { t } = useTranslation();
@@ -86,7 +87,7 @@ const AuthorityList = () => {
     }
   }, [userStore.token, loadAuthorities]);
 
-  if (!authorities) return <p>Loading...</p>;
+  if (!authorities) return <LoadingSpinner />;
   
   return (
     <div className="col-lg-12">

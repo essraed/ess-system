@@ -12,6 +12,7 @@ import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import ServiceDetailsDialog from "./ServiceDetailsDialog";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const ServiceDashboardList = () => {
   const { t } = useTranslation();
@@ -86,7 +87,7 @@ const ServiceDashboardList = () => {
     }
   }, [userStore.token, loadServices]);
 
-  if (!Array.isArray(services)) return <p>Loading...</p>;
+  if (!Array.isArray(services)) return <LoadingSpinner />;
 
   const getViewId = (id: string) => {
     getService(id);

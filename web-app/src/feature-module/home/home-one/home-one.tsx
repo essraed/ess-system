@@ -1,6 +1,5 @@
 
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";
@@ -24,8 +23,11 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
+import { useTranslation } from "react-i18next";
 
 const HomeOne = () => {
+
+  const { t } = useTranslation();
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
@@ -81,14 +83,14 @@ const HomeOne = () => {
         <div id="Services" className="homesection servicessection saa viewon">
           <div className="custom-container">
             <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title"> Why Karama Business Center?</h2>
+              <h2 className="section-title"> {t("Why Karama Business Center?")}</h2>
             </div>
             <div className="row">
               <div className="col-lg-7">
                 {/* Heading title*/}
                 <div className="section-heading heading-one" data-aos="fade-down">
                   <p>
-                    We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai
+                    {t("We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai")}
                   </p>
                 </div>
                 {/* /Heading title */}
@@ -100,7 +102,7 @@ const HomeOne = () => {
                       </span>
                       <h6>One Stop Transactions</h6>
                       <p>
-                      The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.
+                        {t("The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.")}
                       </p>
                     </div>
                   </div>
@@ -109,10 +111,10 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-bolt-circle" />
                       </span>
-                      <h6>Premium Fast Track Service</h6>
+                      <h6>{(t("Premium Fast Track Service"))}</h6>
                       <p>
-                      The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.
-              
+                        {t("The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.")}
+
                       </p>
                     </div>
                   </div>
@@ -121,9 +123,9 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-calendar-heart" />
                       </span>
-                      <h6>Dedicated Assistance</h6>
+                      <h6>{t("Dedicated Assistance")}</h6>
                       <p>
-                      Personalized support throughout the application process.
+                        {t("Personalized support throughout the application process.")}
                       </p>
                     </div>
                   </div>
@@ -132,9 +134,9 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-badge-dollar" />
                       </span>
-                      <h6>Experienced Staff:</h6>
+                      <h6>{t("Experienced Staff:")}</h6>
                       <p>
-                      A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes
+                        {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
                       </p>
                     </div>
                   </div>
@@ -144,6 +146,7 @@ const HomeOne = () => {
 
             <div className="quality-img">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/_63A3883.jpg"
                 data-aos="fade-left"
                 className="img-fluid"
@@ -152,6 +155,7 @@ const HomeOne = () => {
             </div>
             <div className="quality-bg">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/bg/quality-bg.png"
                 className="img-fluid"
                 alt="img"
@@ -159,6 +163,7 @@ const HomeOne = () => {
             </div>
             <div className="quality-bg-01">
               <ImageWithBasePath
+                lazyLoad={true}
                 src="assets/img/bg/quality-bg-01.png"
                 className="img-fluid"
                 alt="img"
@@ -172,7 +177,7 @@ const HomeOne = () => {
           <div className="custom-container">
             {/* Heading title*/}
             <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title">Facts By The Numbers</h2>
+              <h2 className="section-title">{t("Facts By The Numbers")}</h2>
             </div>
             {/* /Heading title */}
             <div className="counter-group">
@@ -185,6 +190,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-heart.svg"
                           alt=""
                         />
@@ -199,7 +205,7 @@ const HomeOne = () => {
                           />
                           K<br />
                         </h4>
-                        <p> Happy Customers </p>
+                        <p> {t("Happy Customers")} </p>
                       </div>
                     </div>
                   </div>
@@ -212,6 +218,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-car.svg"
                           alt=""
                         />
@@ -226,7 +233,7 @@ const HomeOne = () => {
                           />
                           +<br />
                         </h4>
-                        <p>Count of Centers</p>
+                        <p>{t("Count of Centers")}</p>
                       </div>
                     </div>
                   </div>
@@ -239,6 +246,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-headphone.svg"
                           alt=""
                         />
@@ -254,7 +262,7 @@ const HomeOne = () => {
                           K+
                           <br />
                         </h4>
-                        <p>Strategic Partners</p>
+                        <p>{t("Strategic Partners")}</p>
                       </div>
                     </div>
                   </div>
@@ -267,6 +275,7 @@ const HomeOne = () => {
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
                         <ImageWithBasePath
+                          lazyLoad={true}
                           src="assets/img/icons/bx-history.svg"
                           alt=""
                         />
@@ -282,7 +291,7 @@ const HomeOne = () => {
                           K+
                           <br />
                         </h4>
-                        <p>Trusting Companies</p>
+                        <p>{t("Trusting Companies")}</p>
                       </div>
                     </div>
                   </div>
@@ -301,37 +310,34 @@ const HomeOne = () => {
           <div className="custom-container">
             {/* Heading title*/}
             <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title">Frequently Asked Questions </h2>
+              <h2 className="section-title">{t("Frequently Asked Questions")} </h2>
             </div>          {/* Heading title*/}
             <Accordion>
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    Karama Medical Fitness Center Medical Timing
+                    {t("Karama Medical Fitness Center Medical Timing")}
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    Monday - Thursday
-                    7:00 AM -10:00 PM
+                    {t("Monday - Thursday 7:00 AM -10:00 PM")}
                     <br></br>
-                    Friday
-                    7:00 AM  -  08:00 PM
+                    {t("Friday 7:00 AM  -  08:00 PM")}
                     <br></br>
-                    Saturday - Sunday
-                    8:00 AM - 08:00 PM
+                    {t("Saturday - Sunday 8:00 AM - 08:00 PM")}
                   </p>
                 </AccordionItemPanel>
               </AccordionItem>
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    How to check visa medical report online?
+                    {t("How to check visa medical report online?")}
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    Dubai visa medical report can be tracked and downloaded from DHA mobile application.
+                    {t("Dubai visa medical report can be tracked and downloaded from DHA mobile application.")}
                   </p>
                 </AccordionItemPanel>
               </AccordionItem>
@@ -355,7 +361,7 @@ const HomeOne = () => {
             <div className="custom-container">
               {/* Heading title*/}
               <div className="section-heading" data-aos="fade-down">
-                <h2 className="section-title">Latest News </h2>
+                <h2 className="section-title">{t("Latest News")} </h2>
               </div>
               {/* /Heading title */}
 
@@ -366,6 +372,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/DET_Opening.jpg"
 
@@ -376,7 +383,7 @@ const HomeOne = () => {
                     <div className="blog-content">
                       <h3 className="blog-title">
                         <a href="#">
-                          2024 - DED Opening
+                          {t("2024 - DED Opening")}
                         </a>
                       </h3>
 
@@ -388,6 +395,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/2023_NationalDay.jpg"
                         alt="Post Image"
@@ -396,7 +404,7 @@ const HomeOne = () => {
                     <div className="blog-content">
                       <h3 className="blog-title">
                         <a href="#">
-                          2023 - National Day Celeberation
+                          {t("2023 - National Day Celeberation")}
                         </a>
                       </h3>
                     </div>
@@ -406,6 +414,7 @@ const HomeOne = () => {
                   <div className="blog grid-blog">
                     <div className="blog-image">
                       <ImageWithBasePath
+                        lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/BestEmployee_2024.jpg"
                         alt="Post Image"
@@ -414,7 +423,7 @@ const HomeOne = () => {
                     <div className="blog-content">
                       <h3 className="blog-title">
                         <a href="#">
-                          2024 - Best Employee of the Month
+                          {t("2024 - Best Employee of the Month")}
                         </a>
                       </h3>
                     </div>
@@ -429,7 +438,7 @@ const HomeOne = () => {
                   href="#"
                   className="btn btn-view-custom d-inline-flex align-items-center"
                 >
-                  View all News{" "}
+                  {t("View all News")}{" "}
                   <span>
                     <i className="feather icon-arrow-right ms-2" />
                   </span>

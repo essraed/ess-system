@@ -1,14 +1,17 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LanguageSelector from "./LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const routes = all_routes;
+
+  const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
     userStore: { isAdmin, logout, isLoggedIn },
@@ -19,6 +22,9 @@ const Header = () => {
     loadCategories()
   }, [loadCategories])
 
+  const { t } = useTranslation();
+
+
 
   return (
     <>
@@ -28,6 +34,7 @@ const Header = () => {
             <div className="col-md-6 col-6">
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
+                  lazyLoad={true}
                   src="assets/img/ESSLogo.png"
                   className="img-fluid"
                   alt="Logo"
@@ -52,7 +59,7 @@ const Header = () => {
                       <span>
                         <i className="fa-regular fa-user" />
                       </span>
-                      Logout
+                      {t("Logout")}
                     </Link>
                   </li>
                 ) : (
@@ -61,7 +68,7 @@ const Header = () => {
                       <span>
                         <i className="fa-regular fa-user" />
                       </span>
-                      Sign In
+                      {t("Sign In")}
                     </Link>
                   </li>
                 )}
@@ -89,6 +96,7 @@ const Header = () => {
               <div className="menu-header">
                 <Link to={routes.homeOne} className="menu-logo">
                   <ImageWithBasePath
+                    lazyLoad={true}
                     src="assets/img/ESS KBC LOGO transparent-01-01.png"
                     className="img-fluid"
                     alt="Logo"
@@ -108,10 +116,10 @@ const Header = () => {
               <ul className="main-nav">
                 <li
                   className={
-                    location.pathname.includes(routes.homeOne) ? "active" : ""
+                    location.pathname === routes.homeOne ? "active" : ""
                   }
                 >
-                  <Link to={routes.homeOne}>Home</Link>
+                  <Link to={routes.homeOne}>{t("Home")}</Link>
                 </li>
 
                 <li
@@ -119,7 +127,7 @@ const Header = () => {
                     location.pathname.includes(routes.aboutUs) ? "active" : ""
                   }
                 >
-                  <Link to={routes.aboutUs}>Aboutus</Link>
+                  <Link to={routes.aboutUs}>{t("Aboutus")}</Link>
                 </li>
 
                 <li
@@ -127,19 +135,19 @@ const Header = () => {
                   className={`has-submenu ${location.pathname.includes("services") ? "active" : ""}`}
                 >
                   <Link to="#">
-                    Booking Services <i className="fas fa-chevron-down" />
+                    {t("Booking Services")} <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
                     {categories?.map((item, index) => (
                       <li
                         key={index}
                         className={
-                          location.pathname.includes(all_routes.serviceList)
+                          locationPathname === `/services/${item.id}`
                             ? "active"
                             : ""
                         }
                       >
-                        <Link to={`/services/${item.id}`}>{item.name}</Link>
+                        <Link to={`/services/${item.id}`} onClick={() => setLocationPathname(`/services/${item.id}`)}>{t(`${item.name}`)}</Link>
                       </li>
                     ))}
                   </ul>
@@ -149,7 +157,7 @@ const Header = () => {
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
                   <Link to="#">
-                    Dashboards <i className="fas fa-chevron-down" />
+                    {t("Dashboards")} <i className="fas fa-chevron-down" />
                   </Link>
                   <ul className="submenu">
 
@@ -160,7 +168,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.letterDashboard}>Letter List</Link>
+                      <Link to={routes.letterDashboard}>{t("Letter List")}</Link>
                     </li>
                     <li
                       className={
@@ -169,7 +177,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.serviceDashboard}>Service List</Link>
+                      <Link to={routes.serviceDashboard}>{t("Service List")}</Link>
                     </li>
                     <li
                       className={
@@ -178,7 +186,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.categoryDashboard}>Category List</Link>
+                      <Link to={routes.categoryDashboard}>{t("Category List")}</Link>
                     </li>
 
                     <li
@@ -188,7 +196,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.authorityDashboard}>Authority List</Link>
+                      <Link to={routes.authorityDashboard}>{t("Authority List")}</Link>
                     </li>
 
                     <li
@@ -198,7 +206,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.carDashboard}>Car List</Link>
+                      <Link to={routes.carDashboard}>{t("Car List")}</Link>
                     </li>
                     <li
                       className={
@@ -209,7 +217,7 @@ const Header = () => {
                       }
                     >
                       <Link to={routes.notificationDashboard}>
-                        Notification List
+                        {t("Notification List")}
                       </Link>
                     </li>
                     <li
@@ -220,7 +228,7 @@ const Header = () => {
                           : ""
                       }
                     >
-                      <Link to={routes.bookingDashboard}>Booking List</Link>
+                      <Link to={routes.bookingDashboard}>{t("Booking List")}</Link>
                     </li>
                     <li
                       className={
@@ -230,7 +238,7 @@ const Header = () => {
                       }
                     >
                       <Link to={routes.WorkingTimeDashboard}>
-                        WorkingTime List
+                        {t("WorkingTime List")}
                       </Link>
                     </li>
                   </ul>
@@ -241,13 +249,13 @@ const Header = () => {
                     location.pathname.includes(routes.contactUs) ? "active" : ""
                   }
                 >
-                  <Link to={routes.contactUs}>Contact</Link>
+                  <Link to={routes.contactUs}>{t("Contact")}</Link>
                 </li>
                 <li className="login-link">
-                  <Link to={routes.register}>Sign Up</Link>
+                  <Link to={routes.register}>{t("Sign Up")}</Link>
                 </li>
                 <li className="login-link">
-                  <Link to={routes.login}>Sign In</Link>
+                  <Link to={routes.login}>{t("Sign In")}</Link>
                 </li>
               </ul>
             </div>

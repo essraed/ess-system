@@ -47,7 +47,8 @@ const SignUp = () => {
         {/* Header */}
         <header className="log-header">
           <Link to={routes.homeOne}>
-            <ImageWithBasePath
+            <ImageWithBasePath 
+        lazyLoad={true} 
               className="img-fluid logo-dark"
               src="assets/img/logo.svg"
               alt="Logo"

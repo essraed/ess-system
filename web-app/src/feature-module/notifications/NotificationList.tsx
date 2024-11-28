@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Table from "../common/Table";
-import { Button } from "@nextui-org/react";
-import { GrPowerReset } from "react-icons/gr";
 import { observer } from "mobx-react-lite";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
 import Paginator from "../common/Paginator";
-import { Dropdown } from "primereact/dropdown";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import ConfirmDialog from "../common/ConfirmDialog";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const NotificationList = () => {
   // const { t } = useTranslation();
@@ -70,7 +68,7 @@ const NotificationList = () => {
     }
   }, [userStore.token, loadNotifications]);
 
-  if (!Array.isArray(notifications)) return <p>Loading...</p>;
+  if (!Array.isArray(notifications)) return <LoadingSpinner />;
 
   return (
     <div className="col-lg-12">

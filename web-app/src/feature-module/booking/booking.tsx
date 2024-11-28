@@ -27,6 +27,7 @@ const Booking = () => {
                   <div className="order-car">
                     <span>
                       <ImageWithBasePath
+                        lazyLoad={true}
                         src="assets/img/detail-smallcar-img-2.jpg"
                         alt="img"
                       />
@@ -52,7 +53,8 @@ const Booking = () => {
                   </div>
                   <div className="visa-card">
                     <Link to="#">
-                      <ImageWithBasePath src="assets/img/visa.svg" alt="#" />
+                      <ImageWithBasePath
+                        lazyLoad={true} src="assets/img/visa.svg" alt="#" />
                     </Link>
                     <h6>Visa card ending in 1245</h6>
                   </div>
@@ -99,8 +101,8 @@ const Booking = () => {
                 data-bs-target="#pages_edit"
               >
                 <i className="feather icon-bar-chart me-2" />
-               
-              
+
+
                 Place Order
               </Link>
             </div>
