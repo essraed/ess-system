@@ -58,13 +58,7 @@ const ServiceCard = ({ service }: Props) => {
         </div>
         <div className="listing-content">
           <div className="listing-features d-flex align-items-end justify-content-between">
-            <div className="list-rating">
-
-              <h3 className="listing-title">
-                <Link to={`/listings/service-details/${service.id}`}>{service.name}</Link>
-              </h3>
-
-            </div>
+           
             <div className="list-km">
               <span className="km-count">
                 <ImageWithBasePath
@@ -72,7 +66,7 @@ const ServiceCard = ({ service }: Props) => {
                   src="assets/img/icons/map-pin.svg"
                   alt="location"
                 />
-                {service.createDate && <p className="p-1">{service.createDate}</p>}
+                {service.createDate && <p className="p-1">{service.name}</p>}
               </span>
             </div>
           </div>
@@ -109,7 +103,7 @@ const ServiceCard = ({ service }: Props) => {
             </div>
             <div className="listing-price">
               <h6>
-                {service.price ? `$${service.price} ` : "Price Not Available"}{" "}
+                {service.price ? `${service.price} ${t('AED')}` : "Price Not Available"}{" "}
                 <span></span>
               </h6>
             </div>
