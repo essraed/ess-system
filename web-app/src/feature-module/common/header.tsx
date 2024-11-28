@@ -7,6 +7,7 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
+import { COMPANY_PHONE_NUMBER } from "../../environment";
 
 const Header = () => {
   const routes = all_routes;
@@ -50,13 +51,17 @@ const Header = () => {
                   <LanguageSelector />
                 </li>
                 <li>|</li>
-                <li className="contact-number nav-item pe-4 ">
-                  <a className="fw-bold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer"><i className="fab fa-whatsapp pe-2"></i>+(971) 342-6666</a>
+                <li className="contact-number nav-item pe-4">
+                  <a className="flex items-center font-semibold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer">
+                    <i className="fab fa-whatsapp pe-2"></i>
+                    <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
+                  </a>
                 </li>
+                <li>|</li>
                 {isLoggedIn ? (
                   <li className="nav-item">
                     <Link className="nav-link header-login" to="#" onClick={logout}>
-                      <span>
+                      <span className="mx-1">
                         <i className="fa-regular fa-user" />
                       </span>
                       {t("Logout")}

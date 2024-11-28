@@ -1,26 +1,31 @@
 [
   {
     "name": "MEDICAL DHA",
+    "nameAr": "خدمات طبية",
     "description": "Medical Fitness Services and Occupational Health Screening Services for Visa",
     "pictureUrl": "seed/image/MEDICAL DHA.png"
   },
   {
     "name": "Typing Services",
+    "nameAr": "خدمات الطباعة",
     "description": "Our Typing services are designed to simplify the documentation process",
     "pictureUrl": "seed/image/Typing Services.png"
   },
   {
     "name": "Amer Services",
+    "nameAr": "خدمات آمر",
     "description": "Simplify Your Entry Process with Our Amer Services",
     "pictureUrl": "seed/image/Amer Services.png"
   },
   {
     "name": "DET Services",
+    "nameAr": "خدمات دائرة الاقتصاد والسياحة",
     "description": "Center ensures a smooth conduit for individuals and businesses to engage with DET",
     "pictureUrl": "seed/image/DET Services.png"
   },
   {
     "name": "Golden Visa Services",
+    "nameAr": "خدمات الاقامة الذهبية",
     "description": "Golden visa is one of the services provided by the Federal Authority for Identity",
     "pictureUrl": "seed/image/Golden Visa Services.png"
   }
