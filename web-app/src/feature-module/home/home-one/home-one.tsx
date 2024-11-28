@@ -100,7 +100,7 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-bookmarks" />
                       </span>
-                      <h6>One Stop Transactions</h6>
+                      <h6>{t('One Stop Transactions')}</h6>
                       <p>
                         {t("The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.")}
                       </p>
@@ -323,7 +323,7 @@ const HomeOne = () => {
                   <p>
                     {t("Monday - Thursday 7:00 AM -10:00 PM")}
                     <br></br>
-                    {t("Friday 7:00 AM  -  08:00 PM")}
+                    {t("Friday 7:00 AM - 08:00 PM")}
                     <br></br>
                     {t("Saturday - Sunday 8:00 AM - 08:00 PM")}
                   </p>
@@ -355,7 +355,7 @@ const HomeOne = () => {
       {/* /Pricing Plan */}
       <>
         {/* Blog Section */}
-        <section className="blog-section news-section pt-0">
+        <section className="blog-section news-section pt-5">
 
           <div id="Services" className="homesection servicessection saa viewon">
             <div className="custom-container">

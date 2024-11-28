@@ -21,7 +21,7 @@ i18n
         translation: {
           "hello": "مرحبا بالتطبيق!!",
           "click_me": "اضغط هنا",
-          "logout": "تسجيل الخروج",
+          "Logout": "تسجيل الخروج",
           "login": "تسجيل الدخول",
           "register": "تسجيل",
           "documents": "المستندات",
@@ -90,7 +90,7 @@ i18n
           "Golden Visa Services": "خدمات التأشيرة الذهبية",
           "Why Karama Business Center?": "لماذا مركز الكرامة للأعمال؟",
           "One Stop Transactions": "معاملات متكاملة في مكان واحد",
-          "The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses": "يقدم مركز الكرامة للأعمال في دبي مجموعة شاملة من الخدمات الحكومية، مما يضمن الراحة والكفاءة للمقيمين والشركات.",
+          "The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.": "يقدم مركز الكرامة للأعمال في دبي مجموعة شاملة من الخدمات الحكومية، مما يضمن الراحة والكفاءة للمقيمين والشركات.",
           "Premium Fast Track Service": "خدمة متميزة وسريعة",
           "The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.": "يوفر مركز الكرامة للأعمال في دبي خدمة متميزة وسريعة لتسريع مختلف العمليات الحكومية، مما يضمن الكفاءة والراحة للعملاء.",
           "Dedicated Assistance": "مساعدة مخصصة",
@@ -105,7 +105,7 @@ i18n
           "200K+": "200 ألف+",
           "Trusting Companies": "شركات موثوقة",
           "Strategic Partners": "شركاء استراتيجيون",
-          "View all news": "عرض جميع الأخبار",
+          "View all News": "عرض جميع الأخبار",
           "View More": "عرض المزيد",
           "About Company": "عن الشركة",
           "Our Company": "شركتنا",
@@ -139,8 +139,11 @@ i18n
           "Center ensures a smooth conduit for individuals and businesses to engage with DET": "يضمن المركز قناة سلسة للأفراد والشركات للتواصل مع دائرة الاقتصاد والسياحة",
           "Our Typing services are designed to simplify the documentation process": "تم تصميم خدمات الطباعة لدينا لتبسيط عملية التوثيق",
           "Medical Fitness Services and Occupational Health Screening Services for Visa": "خدمات اللياقة الطبية وخدمات الفحص الصحي المهني للتأشيرات",
-          "We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai": "نحن مركز الكرامة للأعمال نقدم العديد من الخدمات للشركات الصغيرة والمتوسطة بأعلى معايير الجودة والسرعة لأي معاملات لجميع الدوائر الحكومية في دبي."
-
+          "We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai": "نحن مركز الكرامة للأعمال نقدم العديد من الخدمات للشركات الصغيرة والمتوسطة بأعلى معايير الجودة والسرعة لأي معاملات لجميع الدوائر الحكومية في دبي.",
+          "Facts By The Numbers": "الارقام تقول",
+          "Enter You Email Here": "ادخل البريد الالكتروني",
+          "Attestation Services": "خدمات التصديق",
+          "Our Services": "خدماتنا",
         }
       }
     },

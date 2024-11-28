@@ -61,10 +61,10 @@ const Footer = () => {
                       <h5 className="footer-title">{t("Booking Services")}</h5>
                       <ul>
                         <li>
-                          <Link to="#">{t("All  Services")}</Link>
+                          <Link to="#">{t("All Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">{t("Medical DHA<")}</Link>
+                          <Link to="#">{t("MEDICAL DHA")}</Link>
                         </li>
                         <li>
                           <Link to="#">{t("Typing Services")}</Link>
@@ -98,7 +98,7 @@ const Footer = () => {
               </div>
               <div className="col-lg-5">
                 <div className="footer-contact footer-widget">
-                  <h5 className="footer-title">{t("Contact Info<")}</h5>
+                  <h5 className="footer-title">{t("Contact Info")}</h5>
                   <div className="footer-contact-info">
                     <div className="footer-address">
                       <span><i className="feather icon-phone-call" /></span>
@@ -115,7 +115,7 @@ const Footer = () => {
                     <div className="update-form">
                       <form action="#">
                         <span><i className="feather icon-mail" /></span>
-                        <input type="email" className="form-control" placeholder="Enter You Email Here" />
+                        <input type="email" className="form-control" placeholder={t("Enter You Email Here")} />
                         <button type="submit" className="btn btn-subscribe"><span><i className="feather icon-send" /></span></button>
                       </form>
                     </div>
