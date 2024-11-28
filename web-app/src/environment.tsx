@@ -2,7 +2,7 @@
 export const base_path = "/";
 export const img_path = "/";
 
-export const CompanyLocation = "Next to Karama Post Office,Dubai";
+export const COMPANY_LOCATION = "Next to Karama Post Office,Dubai";
 export const COMPANY_PHONE_NUMBER = "+(971) 342-6666";
 
 

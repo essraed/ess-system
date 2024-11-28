@@ -4,13 +4,14 @@ import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
 import { observer } from "mobx-react-lite";
 import { TbVip } from "react-icons/tb";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   modalId: string;
 }
 
 const ServiceDetailsDialog = ({ modalId }: Props) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const {
     serviceStore: { currentService },
   } = useStore();
@@ -75,7 +76,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                         <p className="font-medium text-gray-700">Price:</p>
                       </div>
                       <p className="text-gray-600">
-                        {currentService?.priceVIP} AED 
+                        {currentService?.priceVIP} {t('AED')} 
                       </p>
                     </div>
                   )}
@@ -84,7 +85,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       <p className="font-medium text-gray-700">
                         Service Price:
                       </p>
-                      <p className="text-gray-600">{currentService?.price} AED</p>
+                      <p className="text-gray-600">{currentService?.price} {t('AED')}</p>
                     </div>
                   )}
                   {currentService?.createDate && (
@@ -165,7 +166,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                               {option.description || "N/A"}
                             </td>
                             <td className="py-2 px-4 text-gray-600">
-                              {option.additionalFee.toFixed(2)} AED
+                              {option.additionalFee.toFixed(2)} {t('AED')}
                             </td>
                           </tr>
                         ))}

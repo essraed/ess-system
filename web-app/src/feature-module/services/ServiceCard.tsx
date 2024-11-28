@@ -8,16 +8,17 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { ServiceData } from "../../types/service";
 import { TbVip } from "react-icons/tb";
-import { CompanyLocation } from "../../environment";
+import { COMPANY_LOCATION } from "../../environment";
 import FileForm from '../common/FileForm'
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import { useTranslation } from "react-i18next";
 type Props = {
   service: ServiceData;
 };
 
 const ServiceCard = ({ service }: Props) => {
-
+  const { t } = useTranslation();
   const { serviceStore: { uploadImage }, userStore } = useStore();
   const [selectedItems, setSelectedItems] = useState(Array(10).fill(false));
 
@@ -35,7 +36,7 @@ const ServiceCard = ({ service }: Props) => {
   }, []);
 
   return (
-    <div className="col-lg-4 col-md-6 col-12 w-1/4 px-2" data-aos="fade-down">
+    <div className="col-lg-4 col-md-6 col-12 w-1/3 px-2" data-aos="fade-down">
       <div className="listing-item">
         <div className="listing-img">
           <Link to={`/listings/service-details/${service.id}`}>
@@ -53,7 +54,7 @@ const ServiceCard = ({ service }: Props) => {
           >
             {userStore.isAdmin() && <FileForm entityId={service.id} uploadImage={uploadImage} />}
           </div>
-          <span className="featured-text">{service.name}</span>
+          <span className="featured-text">{service.categoryName}</span>
         </div>
         <div className="listing-content">
           <div className="listing-features d-flex align-items-end justify-content-between">
@@ -62,28 +63,7 @@ const ServiceCard = ({ service }: Props) => {
               <h3 className="listing-title">
                 <Link to={`/listings/service-details/${service.id}`}>{service.name}</Link>
               </h3>
-              <div className="list-rating">
-                {/* Assuming `service.rate` is a numeric value representing the rating out of 5 */}
-                {[...Array(5)].map((_, index) => {
-                  // Check if the index is less than the whole number part of the rating
-                  const fullStar = index < Math.floor(service.rate);
-                  // Check if the index is equal to the decimal part of the rating (for half star)
-                  const halfStar =
-                    index === Math.floor(service.rate) &&
-                    service.rate % 1 >= 0.5;
 
-                  return (
-                    <i
-                      style={halfStar ? { color: "#ff9409" } : {}}
-                      key={index}
-                      className={`fas ${fullStar ? "fa-star filled" : "fa-star"} ${halfStar ? "fa-solid fa-star-half-stroke text-yellow-500" : ""}`} // Dynamically fill based on the rate
-                    />
-                  );
-                })}
-                <span>({service.rate})</span>{" "}
-                {/* <span>({service.rate}) 150 Reviews</span>{" "} */}
-                {/* Show actual rating value from the service */}
-              </div>
             </div>
             <div className="list-km">
               <span className="km-count">
@@ -92,8 +72,7 @@ const ServiceCard = ({ service }: Props) => {
                   src="assets/img/icons/map-pin.svg"
                   alt="location"
                 />
-                {service.createDate &&
-                  new Date(service.createDate).toLocaleDateString()}
+                {service.createDate && <p className="p-1">{service.createDate}</p>}
               </span>
             </div>
           </div>
@@ -108,19 +87,17 @@ const ServiceCard = ({ service }: Props) => {
                     alt="Manual"
                   />
                 </span>
-                <p>{service.price ? `$${service.price}` : "Price N/A"}</p>{" "}
+                <p>{service.price ? `${service.price} ${t('AED')}` : "Price N/A"}</p>{" "}
                 {/* Display the price */}
               </li>
-              <li>
-                <span>
-                  <TbVip />
-                </span>
-                <p>
-                  {service.priceVIP
-                    ? `$${service.priceVIP}`
-                    : "Price N/A"}
-                </p>
-              </li>
+              {service.priceVIP &&
+                <li>
+                  <span>
+                    <TbVip />
+                  </span> 
+                  <p>{service.priceVIP} {t('AED')}</p>
+                </li>
+              }
             </ul>
           </div>
           <div className="listing-location-details">
@@ -128,7 +105,7 @@ const ServiceCard = ({ service }: Props) => {
               <span>
                 <i className="feather icon-map-pin" />
               </span>
-              {CompanyLocation || "Unknown Location"}
+              {t(COMPANY_LOCATION) || "Unknown Location"}
             </div>
             <div className="listing-price">
               <h6>
@@ -142,7 +119,7 @@ const ServiceCard = ({ service }: Props) => {
               <span>
                 <i className="feather icon-calendar me-2" />
               </span>
-              Book Now
+              {t('Book Now')}
             </Link>
           </div>
         </div>
