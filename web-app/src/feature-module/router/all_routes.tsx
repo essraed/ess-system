@@ -1,9 +1,8 @@
 
 export const all_routes = {
   // home routes
-  homeOne: "/index",
-  homeTwo: "/index-2",
-  homeThree: "/index-3",
+  homeOne: "/",
+
 
   // auth routes
   register: "/authentication/register",

@@ -15,6 +15,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const LetterList = () => {
   const { t } = useTranslation();
@@ -91,7 +92,7 @@ const LetterList = () => {
     }
   }, [userStore.token, loadDocuments]);
 
-  if (!documents) return <p>Loading...</p>;
+  if (!documents) return <LoadingSpinner />;
 
   return (
     <div className="col-lg-12">

@@ -36,11 +36,11 @@ export const publicRoutes = [
   },
   {
     path: "/",
-    element: <Navigate to="/index" />,
+    element: <Navigate to="/" />,
   },
   {
     path: "*",
-    element: <Navigate to="/index" />,
+    element: <Navigate to="/" />,
   },
   {
     path: routes.serviceList,

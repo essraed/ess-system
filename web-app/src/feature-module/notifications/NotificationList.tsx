@@ -13,6 +13,7 @@ import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import ConfirmDialog from "../common/ConfirmDialog";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const NotificationList = () => {
   // const { t } = useTranslation();
@@ -70,7 +71,7 @@ const NotificationList = () => {
     }
   }, [userStore.token, loadNotifications]);
 
-  if (!Array.isArray(notifications)) return <p>Loading...</p>;
+  if (!Array.isArray(notifications)) return <LoadingSpinner />;
 
   return (
     <div className="col-lg-12">

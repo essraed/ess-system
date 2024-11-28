@@ -13,6 +13,7 @@ import CategoryForm from "./CategoryForm";
 import { dialogFlags } from "../../constants/constants";
 import CategoryDetails from "./CategoryDetails";
 import TableFilterBar from "../common/TableFilterBar";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const CategoryDashboardList = () => {
   const { t } = useTranslation();
@@ -83,7 +84,7 @@ const CategoryDashboardList = () => {
     }
   }, [userStore.token, loadCategories]);
 
-  if (!Array.isArray(categories)) return <p>Loading...</p>;
+  if (!Array.isArray(categories)) return <LoadingSpinner />;
 
   const getViewId = (id: string) => {
     getCategory(id);
