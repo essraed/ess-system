@@ -82,7 +82,7 @@ i18n
           "View": "عرض",
           "Aboutus": "معلومات عنا",
           "Booking Services": "خدمات الحجز",
-          "Dashboards": "لوحة القيادة",
+          "Dashboards": "لوحة التحكم",
           "Contact": "تواصل",
           "MEDICAL DHA": "الخدمات الطبية - هيئة الصحة بدبي",
           "Typing Services": "خدمات الطباعة",
@@ -166,6 +166,11 @@ i18n
           "Phone Number": "رقم الهاتف",
           "Emirates Secretarial Services": "مكتب الامارات للخدمات الحكومية",
           "Owner Details": "معلومات لمدير النظام",
+          "ABOUT OUR COMPANY":"",
+          "One Stop Government Transactions":"",
+          "In line with Dubais strategy for providing quality government services in one place and as quickly as possible, Al Karama Business Center has been one of the largest centers in Dubai to prove this idea since its inception. It provides a range of government and business services for the various business sectors using the latest intelligent systems. Because our clients’ time has an invaluable value and because the success of the individual depends on how it is invested for its time, we have developed the quality and speed of service delivery to facilitate customer’s access to it.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.":"",
+          "How It Works":"",
+
         }
       }
     },

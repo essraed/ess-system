@@ -26,6 +26,7 @@ import ServiceUpdate from "../services/ServiceUpdate";
 import ServiceList from "../services/ServiceList";
 import AboutUs from "../aboutus/aboutus";
 
+
 const routes = all_routes;
 
 export const publicRoutes = [
@@ -46,8 +47,8 @@ export const publicRoutes = [
     element: <ServiceList />,
   },
   {
-path: routes.aboutUs,
-element:<AboutUs/>
+    path: routes.aboutUs,
+    element: <AboutUs />
   },
   // {
   //   path: routes.contactUs,
