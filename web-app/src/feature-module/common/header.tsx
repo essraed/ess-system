@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
@@ -8,9 +8,28 @@ import { observer } from "mobx-react-lite";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { COMPANY_PHONE_NUMBER } from "../../environment";
+import { set_is_mobile_sidebar } from "../../core/data/redux/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const routes = all_routes;
+
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+
+  const mobileSidebar = useSelector((state: any) => state.mobileSidebar);
+
+  const handleClick = () => {
+    dispatch(set_is_mobile_sidebar(!mobileSidebar));
+  };
+
+  const [mobileSubmenu, setMobileSubmenu] = useState(false);
+
+  const mobileSubmenus = () => {
+    setMobileSubmenu(!mobileSubmenu);
+  };
+
 
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
@@ -25,6 +44,7 @@ const Header = () => {
 
   const { t } = useTranslation();
 
+ 
 
 
   return (
@@ -89,7 +109,7 @@ const Header = () => {
           <div className="custom-container">
             <div className="navbar-header">
               {/* handleClick */}
-              <Link id="mobile_btn" to="#" onClick={() => { }}>
+              <Link id="mobile_btn" to="#" onClick={handleClick}>
                 <span className="bar-icon">
                   <span />
                   <span />
@@ -111,7 +131,7 @@ const Header = () => {
                   id="menu_close"
                   className="menu-close"
                   to="#"
-                  onClick={() => { }}
+                  onClick={handleClick}
                 >
                   {/* handleClick */}
                   {" "}
@@ -139,10 +159,10 @@ const Header = () => {
                   // we need update the condition here for active
                   className={`has-submenu ${location.pathname.includes("services/") ? "active" : ""}`}
                 >
-                  <Link to="#">
+                  <Link to="#" onClick={mobileSubmenus}>
                     {t("Booking Services")} <i className="fas fa-chevron-down" />
                   </Link>
-                  <ul className="submenu">
+                  <ul className={`submenu ${mobileSubmenu ? 'd-block' : 'd-none'}`}>
                     {categories?.map((item, index) => (
                       <li
                         key={index}
@@ -161,10 +181,10 @@ const Header = () => {
                 {isAdmin() && <li
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
-                  <Link to="#">
+                  <Link to="#" onClick={mobileSubmenus}>
                     {t("Dashboards")} <i className="fas fa-chevron-down" />
                   </Link>
-                  <ul className="submenu">
+                  <ul className={`submenu ${mobileSubmenu ? 'd-block' : 'd-none'}`}>
 
                     <li
                       className={
