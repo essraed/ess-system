@@ -14,8 +14,6 @@ import LetterFormIndex from "../letters/create/LetterFormIndex";
 import AuthorityDashboard from "../authorities/AuthorityDashboard";
 import BookingDetails from "../booking/BookingDetails";
 import CategoryDashboard from "../Categories/CategoryDashboard";
-
-
 import CategoryForm from "../Categories/CategoryForm";
 import BookingDashboard from "../booking/BookingDashboard";
 import CarDashboard from "../cars/CarDashboard";
@@ -26,6 +24,7 @@ import ServiceDashboard from "../services/ServiceDashboard";
 import ServiceCreate from "../services/ServiceCreate";
 import ServiceUpdate from "../services/ServiceUpdate";
 import ServiceList from "../services/ServiceList";
+import AboutUs from "../aboutus/aboutus";
 
 const routes = all_routes;
 
@@ -45,6 +44,10 @@ export const publicRoutes = [
   {
     path: routes.serviceList,
     element: <ServiceList />,
+  },
+  {
+path: routes.aboutUs,
+element:<AboutUs/>
   },
   // {
   //   path: routes.contactUs,
