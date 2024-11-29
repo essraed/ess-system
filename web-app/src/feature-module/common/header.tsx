@@ -10,7 +10,7 @@ import { COMPANY_PHONE_NUMBER } from "../../environment";
 
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
-import AnimatedCursor from "react-animated-cursor";
+// import AnimatedCursor from "react-animated-cursor";
 
 const Header = () => {
   const routes = all_routes;
@@ -25,27 +25,36 @@ const Header = () => {
     dispatch(set_is_mobile_sidebar(!mobileSidebar));
   };
 
-  const [mobileSubmenu, setMobileSubmenu] = useState(false);
+  // Separate submenu states
+  const [bookingServicesSubmenu, setBookingServicesSubmenu] = useState(false);
+  const [dashboardsSubmenu, setDashboardsSubmenu] = useState(false);
 
-  const mobileSubmenus = () => {
-    setMobileSubmenu(!mobileSubmenu);
+
+  const toggleBookingServicesSubmenu = () => {
+    setBookingServicesSubmenu(!bookingServicesSubmenu);
+    setDashboardsSubmenu(false);
+  };
+
+  const toggleDashboardsSubmenu = () => {
+    setDashboardsSubmenu(!dashboardsSubmenu);
+    setBookingServicesSubmenu(false);
   };
 
 
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
-    userStore: { isAdmin, logout, isLoggedIn },
+    userStore: { isAdmin, logout, isLoggedIn, user },
     categoryStore: { categories, loadCategories }
   } = useStore();
 
   useEffect(() => {
-    loadCategories()
+    loadCategories();
   }, [loadCategories])
 
   const { t } = useTranslation();
 
- 
+
 
 
   return (
@@ -80,31 +89,35 @@ const Header = () => {
                 </li>
                 <li>|</li>
                 {isLoggedIn ? (
-                  <li className="nav-item">
-                    <Link className="nav-link header-login" to="#" onClick={logout}>
-                      <span className="mx-1">
-                        <i className="fa-regular fa-user" />
-                      </span>
-                      {t("Logout")}
-                    </Link>
-                  </li>
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link header-login" to="#" onClick={logout}>
+                        <span className="mx-1">
+                          <i className="fa-regular fa-user" />
+                        </span>
+                        {t("Logout")}
+                      </Link>
+                    </li>
+                    <li>|</li>
+                    <li className="nav-item">
+                    <Link className="nav-link header-login" to="#">
+                           {user?.username}
+                      </Link>
+                    </li>
+                  </>
                 ) : (
                   <li className="nav-item">
                     <Link className="nav-link header-login" to={routes.login}>
                       <span>
                         <i className="fa-regular fa-user" />
                       </span>
-                      {t("Sign In")}
+                      {t("Sign In For Admin")}
                     </Link>
                   </li>
                 )}
               </ul>
-
-
             </div>
-
           </div>
-
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
@@ -160,10 +173,11 @@ const Header = () => {
                   // we need update the condition here for active
                   className={`has-submenu ${location.pathname.includes("services/") ? "active" : ""}`}
                 >
-                  <Link to="#" onClick={mobileSubmenus}>
+                  <Link to="#" onClick={toggleBookingServicesSubmenu}>
                     {t("Booking Services")} <i className="fas fa-chevron-down" />
                   </Link>
-                  <ul className={`submenu ${mobileSubmenu ? 'd-block' : 'd-none'}`}>
+                  <ul className={`submenu ${bookingServicesSubmenu ? "d-block" : "d-none"
+                    }`}>
                     {categories?.map((item, index) => (
                       <li
                         key={index}
@@ -182,14 +196,15 @@ const Header = () => {
                 {isAdmin() && <li
                   className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                 >
-                  <Link to="#" onClick={mobileSubmenus}>
+                  <Link to="#" onClick={toggleDashboardsSubmenu}>
                     {t("Dashboards")} <i className="fas fa-chevron-down" />
                   </Link>
-                  <ul className={`submenu ${mobileSubmenu ? 'd-block' : 'd-none'}`}>
+                  <ul className={`submenu ${dashboardsSubmenu ? "d-block" : "d-none"
+                    }`}>
 
                     <li
                       className={
-                        locationPathname===routes.letterDashboard
+                        locationPathname === routes.letterDashboard
                           ? "active"
                           : ""
                       }
@@ -198,7 +213,7 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        locationPathname===routes.serviceDashboard
+                        locationPathname === routes.serviceDashboard
                           ? "active"
                           : ""
                       }
@@ -207,7 +222,7 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        locationPathname===routes.categoryDashboard
+                        locationPathname === routes.categoryDashboard
                           ? "active"
                           : ""
                       }
@@ -217,7 +232,7 @@ const Header = () => {
 
                     <li
                       className={
-                        locationPathname===routes.authorityDashboard
+                        locationPathname === routes.authorityDashboard
                           ? "active"
                           : ""
                       }
@@ -227,7 +242,7 @@ const Header = () => {
 
                     <li
                       className={
-                        locationPathname===routes.carDashboard
+                        locationPathname === routes.carDashboard
                           ? "active"
                           : ""
                       }
@@ -236,7 +251,7 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        locationPathname===routes.notificationDashboard
+                        locationPathname === routes.notificationDashboard
 
                           ? "active"
                           : ""
@@ -248,7 +263,7 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        locationPathname===routes.bookingDashboard
+                        locationPathname === routes.bookingDashboard
 
                           ? "active"
                           : ""
@@ -258,7 +273,7 @@ const Header = () => {
                     </li>
                     <li
                       className={
-                        locationPathname===routes.WorkingTimeDashboard
+                        locationPathname === routes.WorkingTimeDashboard
                           ? "active"
                           : ""
                       }
@@ -286,9 +301,9 @@ const Header = () => {
               </ul>
             </div>
           </div>
-          <AnimatedCursor  color='8, 113, 128' innerStyle={{
-    zIndex: '999999'
-  }}/>
+          {/* <AnimatedCursor color='8, 113, 128' innerStyle={{
+            zIndex: '1'
+          }} /> */}
 
         </nav>
 

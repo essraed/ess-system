@@ -150,10 +150,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-      {/* /services */}
-<Footer/>
-
-
       <>
         {/* FAQ  */}
 
