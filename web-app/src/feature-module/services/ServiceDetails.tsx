@@ -10,6 +10,8 @@ import { useStore } from "../../app/stores/store";
 import ServiceDetailSidebar from "./ServiceDetailSidebar";
 import BackToButton from "../common/BackToButton";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { MdOutlineDescription } from "react-icons/md";
+
 
 const ListingDetails = () => {
   const navigate = useNavigate();
@@ -34,22 +36,21 @@ const ListingDetails = () => {
           <div className="detail-page-head">
             <div className="detail-headings">
               <div className="star-rated">
-                <ul className="list-rating">
+                <ul className="felx flex-col gap-3 list-rating">
                   <li>
                     <div className="car-brand">
                       <span>
                         <ImageWithBasePath
                           lazyLoad={true}
-                          src={currentService.filePath || "assets/img/icons/default-icon.svg"}
+                          src={currentService.filePath || "assets/img/icons/service-01.svg"}
                           alt="img"
                         />
                       </span>
                       {currentService.categoryName || "Category"}
                     </div>
-                  </li>
-                  <li>
-                    2024
-                    {/* <span className="year">{new Date(currentService.createDate).getFullYear()}</span> */}
+                    <div className="car-brand">
+                      {currentService.description || ""}
+                    </div>
                   </li>
                 
                 </ul>

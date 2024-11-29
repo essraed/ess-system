@@ -38,6 +38,7 @@ const LetterFormIndex = () => {
       toast.success("Letter created successfully");
       navigate(all_routes.letterDashboard);
     } else {
+      console.log("erooooooooooooooooooosr");
       setSummaryErrors(handleErrors(result.error));
     }
   };

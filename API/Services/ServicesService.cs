@@ -134,6 +134,11 @@ public class ServiceService : IServiceService
             throw new Exception("Service already exists.");
         }
 
+        if (model.Price >= model.PriceVIP)
+        {
+            throw new Exception("Service center service price must be less than home service price");
+        }
+
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
 
         if (category == null)

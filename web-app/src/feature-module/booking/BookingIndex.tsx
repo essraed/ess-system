@@ -105,7 +105,7 @@ const BookingIndex = ({ service }: Props) => {
                         defaultChecked={true}
                       />
                       <span className="booking_checkmark">
-                        <span className="checked-title">{t("Center")}</span>
+                        <span className="checked-title">{t("Pick & Drop")}</span>
                       </span>
                     </label>
                   </li>
