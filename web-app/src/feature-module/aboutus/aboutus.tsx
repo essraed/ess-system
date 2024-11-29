@@ -1,66 +1,12 @@
 import React, { useEffect } from "react";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
-import CountUp from "react-countup";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Breadcrumbs from "../common/breadcrumbs";
 import Aos from "aos";
-import { Link } from "react-router-dom";
 import Header from "../common/header";
+import Footer from "../common/footer";
 
 const AboutUs = () => {
-  const testimonials = [
-    {
-      id: 1,
-      name: "Rabien Ustoc",
-      image: "/assets/img/profiles/avatar-02.jpg",
-      rating: 5.0,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      id: 2,
-      name: "Valerie L. Ellis",
-      image: "/assets/img/profiles/avatar-03.jpg",
-      rating: 5.0,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      id: 3,
-      name: "Laverne Marier",
-      image: "/assets/img/profiles/avatar-04.jpg",
-      rating: 5.0,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      id: 4,
-      name: "Sydney Salmons",
-      image: "/assets/img/profiles/avatar-06.jpg",
-      rating: 5.0,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      id: 5,
-      name: "Lucas Moquin",
-      image: "/assets/img/profiles/avatar-07.jpg",
-      rating: 5.0,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    // Add more testimonials as needed
-  ];
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-  };
   useEffect(() => {
     Aos.init({ duration: 1200, once: true });
   }, []);
@@ -68,7 +14,7 @@ const AboutUs = () => {
     <>
 
 
-<Header />
+      <Header />
 
       {/* About */}
       <section className="section about-sec">
@@ -93,8 +39,8 @@ const AboutUs = () => {
                 <h6>ABOUT OUR COMPANY</h6>
                 <h2>One Stop Government Transactions </h2>
                 <p>
-                In line with Dubai's strategy for providing quality government services in one place and as quickly as possible, Al Karama Business Center has been one of the largest centers in Dubai to prove this idea since its inception. It provides a range of government and business services for the various business sectors using the latest intelligent systems. Because our clients’ time has an invaluable value and because the success of the individual depends on how it is invested for its time,
-                 we have developed the quality and speed of service delivery to facilitate customer’s access to it.
+                  In line with Dubais strategy for providing quality government services in one place and as quickly as possible, Al Karama Business Center has been one of the largest centers in Dubai to prove this idea since its inception. It provides a range of government and business services for the various business sectors using the latest intelligent systems. Because our clients’ time has an invaluable value and because the success of the individual depends on how it is invested for its time,
+                  we have developed the quality and speed of service delivery to facilitate customer’s access to it.
                 </p>
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -212,6 +158,7 @@ const AboutUs = () => {
 
         {/* /FAQ */}
       </>
+      <Footer />
     </>
   );
 };
