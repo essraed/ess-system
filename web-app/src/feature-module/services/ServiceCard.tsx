@@ -55,9 +55,9 @@ const ServiceCard = ({ service }: Props) => {
                 {service.name}
               </Link>
             </h3>
-            <p className="text-gray-500 text-xs">
+            {/* <p className="text-gray-500 text-xs">
               {service.createDate || "Unknown Date"}
-            </p>
+            </p> */}
           </div>
           <p className="text-gray-600 text-sm mt-1">
             {service.price
@@ -71,11 +71,11 @@ const ServiceCard = ({ service }: Props) => {
             </p>
           )}
           <div className="mt-3 flex justify-between items-center">
-            <span className="text-gray-600 text-xs flex items-center"> 
+            {/* <span className="text-gray-600 text-xs flex items-center"> 
               <i className="feather icon-map-pin mr-2"></i>
               {t(COMPANY_LOCATION) || "Unknown Location"}
 
-            </span>
+            </span> */}
             <Link
               to={`/listings/service-details/${service.id}`}
               className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs hover:bg-blue-600 transition"

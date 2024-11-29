@@ -81,12 +81,12 @@ const HomeOne = () => {
       <CategoryList />
       <section className="section choose-us-section">
         <div id="Services" className="homesection servicessection saa viewon">
-          <div className="custom-container">
+          <div className="custom-container custom-container-inner">
             <div className="section-heading" data-aos="fade-down">
               <h2 className="section-title"> {t("Why Karama Business Center?")}</h2>
             </div>
             <div className="row">
-              <div className="col-lg-7">
+              <div className="col-lg-12">
                 {/* Heading title*/}
                 <div className="section-heading heading-one" data-aos="fade-down">
                   <p>
@@ -95,7 +95,7 @@ const HomeOne = () => {
                 </div>
                 {/* /Heading title */}
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="quality-wrap" data-aos="fade-down">
                       <span>
                         <i className="bx bxs-bookmarks" />
@@ -106,7 +106,7 @@ const HomeOne = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="quality-wrap" data-aos="fade-down">
                       <span>
                         <i className="bx bxs-bolt-circle" />
@@ -118,7 +118,7 @@ const HomeOne = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="quality-wrap" data-aos="fade-down">
                       <span>
                         <i className="bx bxs-calendar-heart" />
@@ -129,7 +129,19 @@ const HomeOne = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
+                    <div className="quality-wrap" data-aos="fade-down">
+                      <span>
+                        <i className="bx bxs-badge-dollar" />
+                      </span>
+                      <h6>{t("Experienced Staff:")}</h6>
+                      <p>
+                        {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="col-md-4">
                     <div className="quality-wrap" data-aos="fade-down">
                       <span>
                         <i className="bx bxs-badge-dollar" />
@@ -144,16 +156,16 @@ const HomeOne = () => {
               </div>
             </div>
 
-            <div className="quality-img">
+             {/* <div className="quality-img">
               <ImageWithBasePath
                 lazyLoad={true}
-                src="assets/img/_63A3883.jpg"
+                src="assets/img/karamabuilding.png"
                 data-aos="fade-left"
                 className="img-fluid"
                 alt="img"
               />
             </div>
-            <div className="quality-bg">
+           <div className="quality-bg">
               <ImageWithBasePath
                 lazyLoad={true}
                 src="assets/img/bg/quality-bg.png"
@@ -168,7 +180,7 @@ const HomeOne = () => {
                 className="img-fluid"
                 alt="img"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

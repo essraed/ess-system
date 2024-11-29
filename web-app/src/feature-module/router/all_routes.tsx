@@ -98,6 +98,6 @@ export const all_routes = {
 
 
   // pages routes
-  aboutUs: "/pages/aboutUs",
-  contactUs: "/contact-us",
+  aboutUs: "/aboutus/aboutus",
+  contactUs: "contact/contact",
 };
