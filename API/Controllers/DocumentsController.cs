@@ -45,7 +45,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateDocument([FromBody] DocumentCreateDto model)
+        public async Task<ActionResult> CreateDocument([FromForm] DocumentCreateDto model)
         {
             try
             {

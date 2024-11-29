@@ -30,8 +30,10 @@ export default class DocumentStore {
 
   addDocument = async (data: FormData): Promise<ActionResult<string>> => {
     try {
+      
       const response = await agent.Documents.create(data);
       runInAction(() => {
+        console.log("data",data);
         this.documents = this.documents
           ? [...this.documents, response]
           : [response];

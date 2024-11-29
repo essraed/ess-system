@@ -7,11 +7,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { ServiceData } from "../../types/service";
 import { TbVip } from "react-icons/tb";
-import { COMPANY_LOCATION } from "../../environment";
 import FileForm from '../common/FileForm'
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { useTranslation } from "react-i18next";
+import { Divider } from "@nextui-org/react";
 type Props = {
   service: ServiceData;
 };
@@ -29,7 +29,7 @@ const ServiceCard = ({ service }: Props) => {
 
   return (
     <div
-      className="col-lg-3 col-md-6 col-12 px-3 mb-5" 
+      className="col-lg-3 col-md-6 col-12 px-3 mb-5"
       data-aos="fade-up"
     >
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -38,7 +38,7 @@ const ServiceCard = ({ service }: Props) => {
             <ImageWithBasePath
               lazyLoad={true}
               src={service.filePath || "assets/img/cars/car-03.jpg"}
-              className="w-full h-48 object-cover" 
+              className="w-full h-48 object-cover"
               alt={service.name}
             />
           </Link>
@@ -48,41 +48,30 @@ const ServiceCard = ({ service }: Props) => {
             </div>
           )}
         </div>
-        <div className="p-3"> 
-          <div className="flex justify-between items-center">
-            <h3 className="text-base font-bold text-gray-800 truncate">
+        <div className="p-3 flex flex-col gap-2">
+          <div className="flex justify-center items-center">
+            <div className="text-lg font-semibold text-slate-900">
               <Link to={`/listings/service-details/${service.id}`}>
                 {service.name}
               </Link>
-            </h3>
-            <p className="text-gray-500 text-xs">
-              {service.createDate || "Unknown Date"}
-            </p>
+            </div>
           </div>
-          <p className="text-gray-600 text-sm mt-1">
-            {service.price
-              ? `${service.price} ${t("AED")}`
-              : t("Price Not Available")}
-          </p>
-          {service.priceVIP && (
-            <p className="flex items-center text-xs text-gray-700 mt-1">
-              <TbVip className="mr-1 text-yellow-500" />
-              {service.priceVIP} {t("AED")}
-            </p>
-          )}
-          <div className="mt-3 flex justify-between items-center">
-            <span className="text-gray-600 text-xs flex items-center"> 
-              <i className="feather icon-map-pin mr-2"></i>
-              {t(COMPANY_LOCATION) || "Unknown Location"}
-
-            </span>
+          <Divider />
+          <div className="flex justify-between items-center ">
             <Link
               to={`/listings/service-details/${service.id}`}
-              className="px-3 py-1 bg-blue-500 text-white rounded-md text-xs hover:bg-blue-600 transition"
+              className="flex px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition justify-center"
             >
-              {t("Book Now")}
-
+              <div>
+                {t("Book Now")}
+              </div>
             </Link>
+            <p className="text-gray-900 text-sm mt-1 border p-2 rounded">
+              {service.price
+                ? `${service.price} ${t("AED")}`
+                : t("Price Not Available")}
+            </p>
+
           </div>
         </div>
       </div>
