@@ -151,6 +151,7 @@ const AboutUs = () => {
         </div>
       </section>
       {/* /services */}
+<Footer/>
 
 
       <>
