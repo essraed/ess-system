@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
@@ -8,8 +7,10 @@ import { observer } from "mobx-react-lite";
 import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { COMPANY_PHONE_NUMBER } from "../../environment";
+
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
+import AnimatedCursor from "react-animated-cursor";
 
 const Header = () => {
   const routes = all_routes;
@@ -285,7 +286,12 @@ const Header = () => {
               </ul>
             </div>
           </div>
+          <AnimatedCursor  color='8, 113, 128' innerStyle={{
+    zIndex: '999999'
+  }}/>
+
         </nav>
+
       </header>
     </>
   );
