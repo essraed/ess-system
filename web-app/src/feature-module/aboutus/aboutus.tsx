@@ -8,6 +8,7 @@ import Breadcrumbs from "../common/breadcrumbs";
 import Aos from "aos";
 import { Link } from "react-router-dom";
 import Header from "../common/header";
+import Footer from "../common/footer";
 
 const AboutUs = () => {
   const testimonials = [
@@ -205,6 +206,7 @@ const AboutUs = () => {
         </div>
       </section>
       {/* /services */}
+<Footer/>
 
 
       <>
