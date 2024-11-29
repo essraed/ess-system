@@ -11,7 +11,7 @@ import ServiceDetailSidebar from "./ServiceDetailSidebar";
 import BackToButton from "../common/BackToButton";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { MdOutlineDescription } from "react-icons/md";
-
+import Slider from "react-slick"; // Import slick carousel slider
 
 const ListingDetails = () => {
   const navigate = useNavigate();
@@ -27,6 +27,18 @@ const ListingDetails = () => {
   }, [getService, navigate]);
 
   if (!currentService) return <LoadingSpinner />;
+
+  // Slick Carousel settings
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false, // Optional: To remove arrows if needed
+  };
 
   return (
     <div className="main-wrapper">
@@ -52,7 +64,6 @@ const ListingDetails = () => {
                       {currentService.description || ""}
                     </div>
                   </li>
-                
                 </ul>
               </div>
             </div>
@@ -72,6 +83,27 @@ const ListingDetails = () => {
           </div>
         </div>
       </section>
+
+      {/* Car Image Carousel Section */}
+      {/* <section className="section car-images">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <h3 className="text-center mb-4">Our Cars for Pick and Drop Service</h3>
+              <Slider {...carouselSettings}>
+
+                <div className="car-image-item">
+                  <img
+                    src= "/assets/img/64dc49b73c0c3.jpg"// Default image if not available
+                    alt="car"
+                    className="w-full h-auto rounded-lg shadow-lg"
+                  />
+                </div>
+              </Slider>
+            </div>
+          </div>
+        </div>
+      </section> */}
 
       {/* Booking Section */}
       <section className="section product-details">

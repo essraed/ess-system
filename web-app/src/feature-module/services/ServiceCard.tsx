@@ -43,7 +43,7 @@ const ServiceCard = ({ service }: Props) => {
             />
           </Link>
           {userStore.isAdmin() && (
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute top-6 right-4">
               <FileForm entityId={service.id} uploadImage={uploadImage} />
             </div>
           )}

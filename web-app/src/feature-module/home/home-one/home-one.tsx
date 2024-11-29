@@ -239,7 +239,7 @@ const HomeOne = () => {
                         <h4>
                           <CountUp
                             className="counterUp"
-                            end={2}
+                            end={2000}
                             duration={3}
                             separator=","
                           />
@@ -267,7 +267,7 @@ const HomeOne = () => {
                         <h4>
                           <CountUp
                             className="counterUp"
-                            end={625}
+                            end={625000}
                             duration={3}
                             separator=","
                           />
@@ -296,7 +296,7 @@ const HomeOne = () => {
                         <h4>
                           <CountUp
                             className="counterUp"
-                            end={200}
+                            end={200000}
                             duration={3}
                             separator=","
                           />

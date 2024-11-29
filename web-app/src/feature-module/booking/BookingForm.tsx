@@ -144,126 +144,149 @@ const BookingForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-4">
-        {/* Customer Name */}
-        <Input
-          radius="sm"
-          label={t("Customer Name")}
-          variant="bordered"
-          {...register("customerName")}
-          isInvalid={!!errors.customerName}
-          errorMessage={errors.customerName?.message}
-        />
 
-        {/* Phone */}
-        <InputMask
-          mask="+971 50 999 9999"
-          maskChar="_"
-          value={watch("phone")}
-          onChange={(e: any) => setValue("phone", e.target.value)}
-        >
-          {() => (
-            <Input
-              radius="sm"
-              label={t("Phone")}
-              variant="bordered"
-              isInvalid={!!errors.phone}
-              errorMessage={errors.phone?.message}
-            />
-          )}
-        </InputMask>
-
-        {/* Email */}
-        <Input
-          radius="sm"
-          label={t("Email")}
-          variant="bordered"
-          {...register("email")}
-          isInvalid={!!errors.email}
-          errorMessage={errors.email?.message}
-        />
-
-        {/* Address */}
-        <Input
-          radius="sm"
-          label={t("Address")}
-          variant="bordered"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          isInvalid={!!errors.address}
-          errorMessage={errors.address?.message}
-        />
-
+      <div className="space-y-6">
         {/* Date Picker */}
-        <div className="flex items-center gap-5">
-          <div className="flex-1">
-            <DatePicker
-              className="sm:w-1/2 w-full"
-              onChange={(newDate) =>
-                setDate(newDate ? newDate.toDate() : undefined)
-              }
-              placeholder={t("Pickup Date")}
-            />
-            <span></span>
+        <div className="flex flex-col gap-3">
+          <label
+            htmlFor="pickup-date"
+            className="text-xl font-semibold text-gray-700"
+          >
+            {t("Pickup Date")}
+          </label>
+          <div className="flex items-center gap-3">
+            <div className="flex-1">
+              <DatePicker
+                className="sm:w-1/2 w-full"
+                onChange={(newDate) =>
+                  setDate(newDate ? newDate.toDate() : undefined)
+                }
+                placeholder={t("Pickup Date")}
+              />
+              <span></span>
+            </div>
           </div>
         </div>
 
         {/* Available Slots (Autocomplete) */}
-        <Autocomplete
-          label={t("Available slots")}
-          placeholder={t("Select a time")}
-          defaultItems={items}
-          onSelectionChange={(key) => setValue("bookingTime", key as string)}
-          {...register("bookingTime")}
-          isInvalid={!!errors.bookingTime}
-          errorMessage={errors.bookingTime?.message}
-        >
-          {(item) => (
-            <AutocompleteItem key={item.label}>{item.label}</AutocompleteItem>
-          )}
-        </Autocomplete>
+        <div className="flex flex-col gap-3 ">
+          <label
+            htmlFor="booking-time"
+            className="text-xl font-semibold text-gray-700"
+          >
+            {t("Available slots")}
+          </label>
+          <div className="relative">
+            <Autocomplete
+              label={t("Select a time")}
+              placeholder={t("Select a time")}
+              defaultItems={items}
+              onSelectionChange={(key) => setValue("bookingTime", key as string)}
+              {...register("bookingTime")}
+              isInvalid={!!errors.bookingTime}
+              errorMessage={errors.bookingTime?.message}
+            >
+              {(item) => (
+                <AutocompleteItem key={item.label}>{item.label}</AutocompleteItem>
+              )}
+            </Autocomplete>
+          </div>
+        </div>
 
-        <div style={{ height: "400px" }}>
-          <SearchMapInput
-            onSearch={(lat, lng) => {
-              setSelectedLat(lat);
-              setSelectedLng(lng);
-            }}
+        <div className="space-y-4">
+          {/* Customer Name */}
+          <Input
+            radius="sm"
+            label={t("Customer Name")}
+            variant="bordered"
+            {...register("customerName")}
+            isInvalid={!!errors.customerName}
+            errorMessage={errors.customerName?.message}
           />
 
-          <MapContainer
-            center={position}
-            zoom={12}
-            style={{ height: "100%", width: "100%" }}
+          {/* Phone */}
+          <InputMask
+            mask="+971 50 999 9999"
+            maskChar="_"
+            value={watch("phone")}
+            onChange={(e: any) => setValue("phone", e.target.value)}
           >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <LocationPicker
-              onLocationChange={(lat, lng) => {
+            {() => (
+              <Input
+                radius="sm"
+                label={t("Phone")}
+                variant="bordered"
+                isInvalid={!!errors.phone}
+                errorMessage={errors.phone?.message}
+              />
+            )}
+          </InputMask>
+
+          {/* Email */}
+          <Input
+            radius="sm"
+            label={t("Email")}
+            variant="bordered"
+            {...register("email")}
+            isInvalid={!!errors.email}
+            errorMessage={errors.email?.message}
+          />
+
+          {/* Address */}
+          <Input
+            radius="sm"
+            label={t("Address")}
+            variant="bordered"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            isInvalid={!!errors.address}
+            errorMessage={errors.address?.message}
+          />
+          <div style={{ height: "400px" }}>
+            <SearchMapInput
+              onSearch={(lat, lng) => {
                 setSelectedLat(lat);
                 setSelectedLng(lng);
               }}
             />
-            {selectedLat && selectedLng && (
-              <Marker position={[selectedLat, selectedLng]} icon={customIcon} />
-            )}
-          </MapContainer>
-          {!selectedLat || !selectedLng ? (
-            <div className="text-red-500 text-sm mt-2">
-              {t("Please select a location on the map.")}
-            </div>
-          ) : null}
+
+            <MapContainer
+              center={position}
+              zoom={12}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <LocationPicker
+                onLocationChange={(lat, lng) => {
+                  setSelectedLat(lat);
+                  setSelectedLng(lng);
+                }}
+              />
+              {selectedLat && selectedLng && (
+                <Marker position={[selectedLat, selectedLng]} icon={customIcon} />
+              )}
+            </MapContainer>
+            {!selectedLat || !selectedLng ? (
+              <div className="text-red-500 text-sm mt-2">
+                {t("Please select a location on the map.")}
+              </div>
+            ) : null}
+          </div>
         </div>
+        <div>
+          <Button
+            className="mt-4"
+            radius="sm"
+            isLoading={isSubmitting}
+            fullWidth
+            color="primary"
+            type="submit"
+          >
+            {t("Book")}
+          </Button>
+        </div>
+
       </div>
-      <Button
-        className="mt-20"
-        radius="sm"
-        isLoading={isSubmitting}
-        fullWidth
-        color="primary"
-        type="submit"
-      >
-        {t("Book")}
-      </Button>
     </form>
   );
 };
