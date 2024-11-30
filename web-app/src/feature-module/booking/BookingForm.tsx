@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import SearchMapInput from "../common/map/SearchMapInput";
 import LocationPicker from "../common/map/LocationPicker";
 import InputMask from "react-input-mask";
+import MapViewUpdater from "../common/map/MapViewUpdater";
 
 type Props = {
   serviceId: string;
@@ -242,35 +243,40 @@ const BookingForm = ({
             isInvalid={!!errors.address}
             errorMessage={errors.address?.message}
           />
-          <div style={{ height: "400px" }}>
+          <div>
             <SearchMapInput
               onSearch={(lat, lng) => {
                 setSelectedLat(lat);
                 setSelectedLng(lng);
               }}
             />
+            <div style={{ height: "400px", position: "relative" }} className="transition-transform transform scale-100 duration-200 ease-in-out">
+              <MapContainer
+                center={position}
+                zoom={12}
+                style={{ height: "100%", width: "100%", zIndex: 0 }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <LocationPicker
+                  onLocationChange={(lat, lng) => {
+                    setSelectedLat(lat);
+                    setSelectedLng(lng);
+                  }}
+                />
+                {selectedLat && selectedLng && (
+                  <Marker position={[selectedLat, selectedLng]} icon={customIcon} />
+                )}
+                <MapViewUpdater lat={selectedLat} lng={selectedLng} />
+              </MapContainer>
 
-            <MapContainer
-              center={position}
-              zoom={12}
-              style={{ height: "100%", width: "100%" }}
-            >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <LocationPicker
-                onLocationChange={(lat, lng) => {
-                  setSelectedLat(lat);
-                  setSelectedLng(lng);
-                }}
-              />
-              {selectedLat && selectedLng && (
-                <Marker position={[selectedLat, selectedLng]} icon={customIcon} />
-              )}
-            </MapContainer>
-            {!selectedLat || !selectedLng ? (
-              <div className="text-red-500 text-sm mt-2">
-                {t("Please select a location on the map.")}
-              </div>
-            ) : null}
+              {!selectedLat || !selectedLng ? (
+                <div className="text-red-500 text-sm mt-2">
+                  {t("Please select a location on the map.")}
+                </div>
+              ) : null}
+            </div>
+
+
           </div>
         </div>
         <div>

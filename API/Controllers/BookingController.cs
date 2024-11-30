@@ -3,6 +3,7 @@ using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -41,6 +42,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<BookingDetilasDto>> GetBookingById(Guid id)
         {
             try
@@ -59,6 +61,7 @@ namespace API.Controllers
         }
 
         [HttpGet("available-slots/{date}")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<TimeOnly>>> GetAvailableSlotsAsync(DateOnly date)
         {
             try
@@ -73,6 +76,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<BookingDto>> AddBooking([FromBody] BookingSaveDto model)
         {
             try

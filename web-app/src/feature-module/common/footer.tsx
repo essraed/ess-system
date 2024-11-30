@@ -5,11 +5,18 @@ import 'aos/dist/aos.css';
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useTranslation } from "react-i18next";
+import { useStore } from "../../app/stores/store";
 
 const Footer = () => {
   const routes = all_routes;
 
   const { t } = useTranslation();
+
+  const{categoryStore:{categories,loadCategories}}=useStore();
+
+  useEffect(()=>{
+    loadCategories();
+  },[categories])
 
   AOS.init();
   useEffect(() => {
@@ -49,7 +56,10 @@ const Footer = () => {
                           <Link to="#">{t("Services")}</Link>
                         </li>
                         <li>
-                          <Link to="#">{t("Contact")}</Link>
+                          <Link to={all_routes.contactUs}>{t("Contact")}</Link>
+                        </li>
+                        <li>
+                          <Link to={all_routes.businessSetup}>{t("Business Setup")}</Link>
                         </li>
                       </ul>
                     </div>
@@ -60,22 +70,12 @@ const Footer = () => {
                     <div className="footer-widget footer-menu">
                       <h5 className="footer-title">{t("Booking Services")}</h5>
                       <ul>
-                        <li>
-                          <Link to="#">{t("All Services")}</Link>
-                        </li>
-                        <li>
-                          <Link to="#">{t("MEDICAL DHA")}</Link>
-                        </li>
-                        <li>
-                          <Link to="#">{t("Typing Services")}</Link>
-                        </li>
-                        <li>
-                          <Link to="#">{t("Golden Visa Services")}</Link>
-                        </li>
-                        <li>
-                          <Link to="#">{t("Attestation Services")}</Link>
-                        </li>
-                      </ul>
+                    {categories?.map((item, index) => (
+                      <li key={item.id}>
+                        <Link to={`/services/${item.id}`}>{item.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
                     </div>
                     {/* /Footer Widget */}
                   </div>

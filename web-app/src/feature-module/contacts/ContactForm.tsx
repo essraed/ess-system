@@ -3,18 +3,45 @@ import Breadcrumbs from "../common/breadcrumbs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useSelector } from "react-redux";
-
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { Link } from "react-router-dom";
 import Header from "../common/header";
 import { ContactUs } from "../../core/data/interface/interface";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema, ContactSchema } from "../../lib/schemas/contactSchema";
+import { useStore } from "../../app/stores/store";
+import toast from "react-hot-toast";
+import { Input } from "@nextui-org/react";
+import InputMask from "react-input-mask";
+import { useTranslation } from "react-i18next";
+import Footer from "../common/footer";
 
-const Contact = () => {
+
+const ContactForm = () => {
+  const { t } = useTranslation();
+
+  const { contactStore: { addContact } } = useStore();
   const data = useSelector((state: ContactUs) => state.contactdata);
 
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
+
+  const { register, handleSubmit, setValue,
+    watch, formState: { errors }, reset } = useForm<ContactSchema>({
+      resolver: zodResolver(contactSchema),
+    });
+
+  const onSubmit = async (data: ContactSchema) => {
+    const result = await addContact(data);
+    if (result.status === "success") {
+      toast.success("Contact updated successfully");
+    } else {
+      toast.error("Error: " + result.error);
+    }
+    reset();
+  };
 
   return (
     <div className="main-wrapper">
@@ -65,7 +92,7 @@ const Contact = () => {
                 />
               </div>
               <div className="col-lg-6">
-                <form action="#">
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
                     <h1>Get in touch!</h1>
                     <div className="col-md-12">
@@ -77,7 +104,11 @@ const Contact = () => {
                           type="text"
                           className="form-control"
                           placeholder=""
+                          {...register("name")}
                         />
+                        {errors.name && (
+                          <p className="text-danger">{errors.name.message}</p>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-12">
@@ -86,22 +117,53 @@ const Contact = () => {
                           Email Address <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
                           placeholder=""
+                          {...register("email")}
                         />
+                        {errors.email && (
+                          <p className="text-danger">{errors.email.message}</p>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-12">
                       <div className="input-block">
                         <label>
-                          Phone number <span className="text-danger">*</span>
+                          Phone Number <span className="text-danger">*</span>
+                        </label>
+                        <InputMask
+                          mask="+971 50 999 9999"
+                          maskChar="_"
+                          value={watch("phone")}
+                          onChange={(e: any) => setValue("phone", e.target.value)}
+                        >
+                          {() => (
+                            <input
+                              type="text"
+                              className="form-control"
+                            />
+                          )}
+                        </InputMask>
+                        {errors.phone && (
+                          <p className="text-danger">{errors.phone.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>
+                          Subject<span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
                           placeholder=""
+                          {...register("subject")}
                         />
+                        {errors.subject && (
+                          <p className="text-danger">{errors.subject.message}</p>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-12">
@@ -114,20 +176,29 @@ const Contact = () => {
                           rows={4}
                           cols={50}
                           placeholder=""
-                          defaultValue={"\t\t\t\t\t\t\t\t\t\t\t"}
+                          {...register("message")}
                         />
+                        {errors.message && (
+                          <p className="text-danger">{errors.message.message}</p>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <button className="btn contact-btn">Send Enquiry</button>
+                  <button type="submit" className="btn contact-btn">
+                    Send Enquiry
+                  </button>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <Footer/>
     </div>
+
+    
   );
 };
 
-export default Contact;
+export default ContactForm;

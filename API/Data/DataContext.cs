@@ -41,5 +41,6 @@ namespace API.Data
         public DbSet<WorkingTime> WorkingTimes { get; set; }
         public DbSet<FileEntity> FileEntities { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
 }

@@ -44,7 +44,7 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {(routeUrl === all_routes.categoryDashboard || routeUrl === all_routes.serviceDashboard) && (
+          {(routeUrl === all_routes.categoryDashboard || routeUrl === all_routes.serviceDashboard || routeUrl === all_routes.contactDashboard ) && (
             <Link
               className="dropdown-item"
               to="#"
@@ -77,7 +77,7 @@ const Table = ({
             routeUrl !== all_routes.categoryDashboard &&
             routeUrl !== all_routes.carDashboard &&
             routeUrl !== all_routes.notificationDashboard &&
-
+            routeUrl !== all_routes.contactDashboard &&
             routeUrl !== all_routes.bookingDashboard && (
 
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>

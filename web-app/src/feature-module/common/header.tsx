@@ -87,9 +87,10 @@ const Header = () => {
                     <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
                   </a>
                 </li>
-                <li>|</li>
+               
                 {isLoggedIn ? (
                   <>
+                   <li>|</li>
                     <li className="nav-item">
                       <Link className="nav-link header-login" to="#" onClick={logout}>
                         <span className="mx-1">
@@ -106,14 +107,15 @@ const Header = () => {
                     </li>
                   </>
                 ) : (
-                  <li className="nav-item">
-                    <Link className="nav-link header-login" to={routes.login}>
-                      <span>
-                        <i className="fa-regular fa-user" />
-                      </span>
-                      {t("Sign In For Admin")}
-                    </Link>
-                  </li>
+                  // <li className="nav-item">
+                  //   <Link className="nav-link header-login" to={routes.login}>
+                  //     <span>
+                  //       <i className="fa-regular fa-user" />
+                  //     </span>
+                  //     {t("Sign In For Admin")}
+                  //   </Link>
+                  // </li>
+                  <p></p>
                 )}
               </ul>
             </div>
@@ -282,6 +284,17 @@ const Header = () => {
                         {t("WorkingTime List")}
                       </Link>
                     </li>
+                    <li
+                      className={
+                        locationPathname === routes.contactDashboard
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <Link to={routes.contactDashboard} onClick={() => setLocationPathname(routes.contactDashboard)}>
+                        {t("Contact List")}
+                      </Link>
+                    </li>
                   </ul>
                 </li>}
 
@@ -291,6 +304,13 @@ const Header = () => {
                   }
                 >
                   <Link to={routes.contactUs}>{t("Contact")}</Link>
+                </li>
+                <li
+                  className={
+                    location.pathname.includes(routes.businessSetup) ? "active" : ""
+                  }
+                >
+                  <Link to={routes.businessSetup}>{t("Business Setup")}</Link>
                 </li>
                 <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>
