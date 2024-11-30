@@ -4,6 +4,7 @@ import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
 import { CarSchema } from "../../lib/schemas/CarSchema";
 import { CategorySchema } from "../../lib/schemas/categorySchema";
+import { ContactSchema } from "../../lib/schemas/contactSchema";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import { NotificationSchema } from "../../lib/schemas/notificationSchema";
 import { RegisterSchema } from "../../lib/schemas/registerSchema";
@@ -14,6 +15,7 @@ import { AuthorityModel } from "../../types/AuthorityModel";
 import { BookingData, BookingDetailsData } from "../../types/booking";
 import { CarData } from "../../types/car";
 import { CategoryData } from "../../types/category";
+import { ContactData } from "../../types/contact";
 import { DocumentModel, DocumentUpdateModel } from "../../types/Document";
 import { DropdownType } from "../../types/Dropdown";
 import { NotificationData } from "../../types/notification";
@@ -94,6 +96,13 @@ const Cars = {
   getById: (id: string) => requests.get<CarData>(`cars/${id}`),
   create: (car: CarSchema) => requests.post<CarData>("cars", car),
   delete: (id: string) => requests.del<string>(`cars/${id}`),
+};
+const Contacts = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<ContactData[]>>("contacts", { params }).then(responseBody),
+  getById: (id: string) => requests.get<ContactData>(`contacts/${id}`),
+  create: (contact: ContactSchema) => requests.post<ContactData>("contacts", contact),
+  delete: (id: string) => requests.del<string>(`contacts/${id}`),
 };
 
 const Categories = {
@@ -260,6 +269,7 @@ const agent = {
   WorkingTime,
   Bookings,
   Notifications,
+  Contacts,
 };
 
 export default agent;

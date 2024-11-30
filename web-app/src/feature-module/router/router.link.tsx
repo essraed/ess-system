@@ -25,6 +25,9 @@ import ServiceCreate from "../services/ServiceCreate";
 import ServiceUpdate from "../services/ServiceUpdate";
 import ServiceList from "../services/ServiceList";
 import AboutUs from "../aboutus/aboutus";
+import ContactDashboard from "../contacts/ContactDashboard";
+import ContactForm from "../contacts/ContactForm";
+import BusinessSetup from "../contacts/BusinessSetup";
 
 
 const routes = all_routes;
@@ -43,6 +46,10 @@ export const publicRoutes = [
     element: <Navigate to="/" />,
   },
   {
+    path: routes.admin,
+    element: <Login />,
+  },
+  {
     path: routes.serviceList,
     element: <ServiceList />,
   },
@@ -50,10 +57,19 @@ export const publicRoutes = [
     path: routes.aboutUs,
     element: <AboutUs />
   },
-  // {
-  //   path: routes.contactUs,
-  //   element: <Contact />,
-  // },
+  {
+    path: routes.contactUs,
+    element: <ContactForm />,
+  },
+  {
+    path: routes.businessSetup,
+    element: <BusinessSetup />,
+  },
+  // services
+  {
+    path: routes.serivceDetails,
+    element: <ServiceDetails />,
+  },
 ];
 
 export const listingroutes = [
@@ -79,11 +95,7 @@ export const listingroutes = [
     path: routes.authorityDashboard,
     element: <AuthorityDashboard />,
   },
-  // services
-  {
-    path: routes.serivceDetails,
-    element: <ServiceDetails />,
-  },
+
   // booking
   {
     path: routes.bookingDashboard,
@@ -129,6 +141,11 @@ export const listingroutes = [
   {
     path: routes.WorkingTimeDashboard,
     element: <WorkingTimeDashboard />,
+  },
+  // Contacts
+  {
+    path: routes.contactDashboard,
+    element: <ContactDashboard />,
   },
 ];
 

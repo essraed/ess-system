@@ -48,6 +48,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(BookingProfile).Assembly);
             services.AddAutoMapper(typeof(ServicesProfile).Assembly);
             services.AddAutoMapper(typeof(WorkingTimesProfile).Assembly);
+            services.AddAutoMapper(typeof(ContactProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -73,6 +74,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IBookingService), typeof(BookingService));
             services.AddScoped(typeof(INotificationService), typeof(NotificationService));
             services.AddScoped(typeof(IEmailService), typeof(EmailService));
+            services.AddScoped(typeof(IContactService), typeof(ContactService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             // Report services

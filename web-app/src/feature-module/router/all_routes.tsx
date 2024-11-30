@@ -1,3 +1,4 @@
+import BusinessSetup from "../contacts/BusinessSetup";
 
 export const all_routes = {
   // home routes
@@ -92,6 +93,10 @@ export const all_routes = {
 
   WorkingTimeDashboard:"/listings/WorkingTimeDashboard",
 
+  //Contacts
+  contactDashboard:"/listings/contacts",
+  contactDetails: "/listings/contacts/view/:id",
+
 
 
 // shini
@@ -99,5 +104,8 @@ export const all_routes = {
 
   // pages routes
   aboutUs: "/aboutus/aboutus",
-  contactUs: "contact/contact",
+  contactUs: "/contact",
+  businessSetup:"/businessSetup",
+
+  admin:"/admin"
 };

@@ -68,14 +68,7 @@ const ListingDetails = () => {
               </div>
             </div>
             <div className="details-btn">
-              <span className="total-badge">
-                <i className="bx bx-calendar-edit" />
-                Total Booking: 300
-              </span>
-              <Link to="#">
-                <i className="bx bx-git-compare" />
-                Compare
-              </Link>
+             
             </div>
           </div>
           <div className="container bg-slate-100 p-2 mt-4 rounded">

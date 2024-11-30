@@ -8,6 +8,7 @@ import ServiceStore from "./serviceStore";
 import WorkingTimeStore from "./workingTimeStore";
 import BookingStore from "./bookingStore";
 import NotificationStore from "./notificationStore";
+import ContactStore from "./contactStore";
 
 
 interface Store {
@@ -20,7 +21,7 @@ interface Store {
     workingTimeStore: WorkingTimeStore,
     bookingStore: BookingStore,
     notificationStore: NotificationStore,
-
+    contactStore:ContactStore,
 }
 
 export const store: Store = {
@@ -33,6 +34,7 @@ export const store: Store = {
     workingTimeStore: new WorkingTimeStore(),
     bookingStore: new BookingStore(),
     notificationStore: new NotificationStore(),
+    contactStore: new ContactStore(),
 
 }
 
