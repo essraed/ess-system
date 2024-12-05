@@ -56,7 +56,7 @@ const BookingIndex = ({ service }: Props) => {
         <div className="stickybar">
           <div className="review-sec mt-0">
             <div className="review-header">
-              <p className="font-bold text-2xl">{t('Book Service')}</p>
+              <p className="font-bold text-slate-950 text-2xl">{t('Book Service')}</p>
               <h6 className="flex items-center gap-3">
                 <p>{t('Total Cost')}:</p>
                 <span className="text-red-700 border p-2 rounded-lg">

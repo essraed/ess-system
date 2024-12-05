@@ -92,9 +92,7 @@ const BookingForm = ({
   };
 
   const fetchAvailableSlots = async () => {
-    await getAvailableSlots(
-      date?.toDateString() ?? new Date().toDateString()
-    );
+    await getAvailableSlots(date?.toDateString() ?? new Date().toDateString());
   };
 
   useEffect(() => {
@@ -145,52 +143,52 @@ const BookingForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-
       <div className="space-y-6">
-        {/* Date Picker */}
-        <div className="flex flex-col gap-3">
-          <label
-            htmlFor="pickup-date"
-            className="text-xl font-semibold text-gray-700"
-          >
-            {t("Pickup Date")}
-          </label>
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <DatePicker
-                className="sm:w-1/2 w-full"
-                onChange={(newDate) =>
-                  setDate(newDate ? newDate.toDate() : undefined)
-                }
-                placeholder={t("Pickup Date")}
-              />
-              <span></span>
-            </div>
-          </div>
-        </div>
-
-        {/* Available Slots (Autocomplete) */}
-        <div className="flex flex-col gap-3 ">
-          <label
-            htmlFor="booking-time"
-            className="text-xl font-semibold text-gray-700"
-          >
-            {t("Available slots")}
-          </label>
-          <div className="relative">
-            <Autocomplete
-              label={t("Select a time")}
-              placeholder={t("Select a time")}
-              defaultItems={items}
-              onSelectionChange={(key) => setValue("bookingTime", key as string)}
-              {...register("bookingTime")}
-              isInvalid={!!errors.bookingTime}
-              errorMessage={errors.bookingTime?.message}
+        <div className="flex flex-col lg:flex-row gap-1 items-center lg:items-start w-full">
+          {/* Date Picker */}
+          <div className="flex flex-col w-full lg:w-1/2">
+            <label
+              htmlFor="pickup-date"
+              className="text-lg font-semibold text-gray-800 "
             >
-              {(item) => (
-                <AutocompleteItem key={item.label}>{item.label}</AutocompleteItem>
-              )}
-            </Autocomplete>
+              {t("Pickup Date")}
+            </label>
+            <DatePicker
+              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(newDate) =>
+                setDate(newDate ? newDate.toDate() : undefined)
+              }
+              placeholder={t("Pickup Date")}
+            />
+          </div>
+
+          {/* Available Slots (Autocomplete) */}
+          <div className="flex flex-col w-full lg:w-1/2 ">
+            <label
+              htmlFor="booking-time"
+              className="text-lg mb-2 font-semibold text-gray-800 "
+            >
+              {t("Available Slots")}
+            </label>
+            <div className="relative rounded-none">
+              <Autocomplete
+                label={t("Select a time")}
+                placeholder={t("")}
+                defaultItems={items}
+                onSelectionChange={(key) =>
+                  setValue("bookingTime", key as string)
+                }
+                {...register("bookingTime")}
+                isInvalid={!!errors.bookingTime}
+                errorMessage={errors.bookingTime?.message}
+              >
+                {(item) => (
+                  <AutocompleteItem key={item.label}>
+                    {item.label}
+                  </AutocompleteItem>
+                )}
+              </Autocomplete>
+            </div>
           </div>
         </div>
 
@@ -250,7 +248,10 @@ const BookingForm = ({
                 setSelectedLng(lng);
               }}
             />
-            <div style={{ height: "400px", position: "relative" }} className="transition-transform transform scale-100 duration-200 ease-in-out">
+            <div
+              style={{ height: "400px", position: "relative" }}
+              className="transition-transform transform scale-100 duration-200 ease-in-out"
+            >
               <MapContainer
                 center={position}
                 zoom={12}
@@ -264,7 +265,10 @@ const BookingForm = ({
                   }}
                 />
                 {selectedLat && selectedLng && (
-                  <Marker position={[selectedLat, selectedLng]} icon={customIcon} />
+                  <Marker
+                    position={[selectedLat, selectedLng]}
+                    icon={customIcon}
+                  />
                 )}
                 <MapViewUpdater lat={selectedLat} lng={selectedLng} />
               </MapContainer>
@@ -275,8 +279,6 @@ const BookingForm = ({
                 </div>
               ) : null}
             </div>
-
-
           </div>
         </div>
         <div>
@@ -291,7 +293,6 @@ const BookingForm = ({
             {t("Book")}
           </Button>
         </div>
-
       </div>
     </form>
   );

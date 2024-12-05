@@ -18,7 +18,7 @@ const ServiceList = () => {
   } = useStore();
 
   useEffect(() => {
-    if (id) loadServices(id);
+    if (id) loadServices(id);else loadServices();
   }, [loadServices, userStore.token, id]);
 
   if (!services) return <LoadingSpinner />;
@@ -34,7 +34,7 @@ const ServiceList = () => {
               <div className="flex items-center flex-wrap ">
                 {services.length > 0 ? (
                   services.map((service) => (
-                    <ServiceCard key={service.id} service={service} />
+                    <ServiceCard id={id} key={service.id} service={service} />
                   ))
                 ) : (
                   <EmptyListComponent label="services" />

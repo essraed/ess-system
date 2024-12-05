@@ -1,22 +1,25 @@
 import React, { useEffect } from "react";
 import { all_routes } from "../router/all_routes";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 const Footer = () => {
   const routes = all_routes;
 
   const { t } = useTranslation();
 
-  const{categoryStore:{categories,loadCategories}}=useStore();
+  const {
+    categoryStore: { categories, loadCategories },
+  } = useStore();
 
-  useEffect(()=>{
+  useEffect(() => {
     loadCategories();
-  },[categories])
+  }, [loadCategories]);
 
   AOS.init();
   useEffect(() => {
@@ -28,9 +31,9 @@ const Footer = () => {
     AOS.refresh();
   };
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -53,13 +56,15 @@ const Footer = () => {
                           <Link to={routes.aboutUs}>{t("Our Company")}</Link>
                         </li>
                         <li>
-                          <Link to="#">{t("Services")}</Link>
+                          <Link to={routes.allServices}>{t("Services")}</Link>
                         </li>
                         <li>
                           <Link to={all_routes.contactUs}>{t("Contact")}</Link>
                         </li>
                         <li>
-                          <Link to={all_routes.businessSetup}>{t("Business Setup")}</Link>
+                          <Link to={all_routes.businessSetup}>
+                            {t("Business Setup")}
+                          </Link>
                         </li>
                       </ul>
                     </div>
@@ -70,12 +75,12 @@ const Footer = () => {
                     <div className="footer-widget footer-menu">
                       <h5 className="footer-title">{t("Booking Services")}</h5>
                       <ul>
-                    {categories?.map((item, index) => (
-                      <li key={item.id}>
-                        <Link to={`/services/${item.id}`}>{item.name}</Link>
-                      </li>
-                    ))}
-                  </ul>
+                        {categories?.map((item, index) => (
+                          <li key={index}>
+                            <Link to={`/services/${item.id}`}>{item.name}</Link>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                     {/* /Footer Widget */}
                   </div>
@@ -101,41 +106,65 @@ const Footer = () => {
                   <h5 className="footer-title">{t("Contact Info")}</h5>
                   <div className="footer-contact-info">
                     <div className="footer-address">
-                      <span><i className="feather icon-phone-call" /></span>
+                      <span>
+                        <i className="feather icon-phone-call" />
+                      </span>
                       <div className="addr-info">
                         <Link to="tel:+1(888)7601940">+ 971 (04) 342 6666</Link>
                       </div>
                     </div>
                     <div className="footer-address">
-                      <span><i className="feather icon-mail" /></span>
+                      <span>
+                        <i className="feather icon-mail" />
+                      </span>
                       <div className="addr-info">
                         <Link to="mailto:support@example.com">info@ess.ae</Link>
                       </div>
                     </div>
                     <div className="update-form">
                       <form action="#">
-                        <span><i className="feather icon-mail" /></span>
-                        <input type="email" className="form-control" placeholder={t("Enter You Email Here")} />
-                        <button type="submit" className="btn btn-subscribe"><span><i className="feather icon-send" /></span></button>
+                        <span>
+                          <i className="feather icon-mail" />
+                        </span>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder={t("Enter You Email Here")}
+                        />
+                        <button type="submit" className="btn btn-subscribe">
+                          <span>
+                            <i className="feather icon-send" />
+                          </span>
+                        </button>
                       </form>
                     </div>
                   </div>
                   <div className="footer-social-widget">
                     <ul className="nav-social">
                       <li>
-                        <Link to="#"><i className="fa-brands fa-facebook-f fa-facebook fi-icon" /></Link>
+                        <Link to="#">
+                          <i className="fa-brands fa-facebook-f fa-facebook fi-icon" />
+                        </Link>
                       </li>
                       <li>
-                        <Link to="#"><i className="fab fa-instagram fi-icon" /></Link>
+                        <Link to="#">
+                          <i className="fab fa-instagram fi-icon" />
+                        </Link>
                       </li>
                       <li>
-                        <Link to="#"><i className="fab fa-behance fi-icon" /></Link>
+                        <Link to="#">
+                          <i className="fab fa-behance fi-icon" />
+                        </Link>
                       </li>
                       <li>
-                        <Link to="#"><i className="fab fa-twitter fi-icon" /> </Link>
+                        <Link to="#">
+                          <i className="fab fa-twitter fi-icon" />{" "}
+                        </Link>
                       </li>
                       <li>
-                        <Link to="#"><i className="fab fa-linkedin fi-icon" /></Link>
+                        <Link to="#">
+                          <i className="fab fa-linkedin fi-icon" />
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -153,7 +182,11 @@ const Footer = () => {
               <div className="row align-items-center">
                 <div className="col-md-6">
                   <div className="copyright-text">
-                    <p>{t("© 2024 Karama Business Center. All Rights Reserved.")}</p>
+                    <p>
+                      {t(
+                        "© 2024 Karama Business Center. All Rights Reserved."
+                      )}
+                    </p>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -161,18 +194,46 @@ const Footer = () => {
                   <div className="copyright-menu">
                     <div className="vistors-details">
                       <ul className="d-flex">
-                        <li><Link to="#"><ImageWithBasePath
-
-                          lazyLoad={true} className="img-fluid" src="assets/img/icons/paypal.svg" alt="Paypal" /></Link></li>
-                        <li><Link to="#"><ImageWithBasePath
-
-                          lazyLoad={true} className="img-fluid" src="assets/img/icons/visa.svg" alt="Visa" /></Link></li>
-                        <li><Link to="#"><ImageWithBasePath
-
-                          lazyLoad={true} className="img-fluid" src="assets/img/icons/master.svg" alt="Master" /></Link></li>
-                        <li><Link to="#"><ImageWithBasePath
-
-                          lazyLoad={true} className="img-fluid" src="assets/img/icons/applegpay.svg" alt="applegpay" /></Link></li>
+                        <li>
+                          <Link to="#">
+                            <ImageWithBasePath
+                              lazyLoad={true}
+                              className="img-fluid"
+                              src="assets/img/icons/paypal.svg"
+                              alt="Paypal"
+                            />
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="#">
+                            <ImageWithBasePath
+                              lazyLoad={true}
+                              className="img-fluid"
+                              src="assets/img/icons/visa.svg"
+                              alt="Visa"
+                            />
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="#">
+                            <ImageWithBasePath
+                              lazyLoad={true}
+                              className="img-fluid"
+                              src="assets/img/icons/master.svg"
+                              alt="Master"
+                            />
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="#">
+                            <ImageWithBasePath
+                              lazyLoad={true}
+                              className="img-fluid"
+                              src="assets/img/icons/applegpay.svg"
+                              alt="applegpay"
+                            />
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -190,4 +251,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default observer (Footer);

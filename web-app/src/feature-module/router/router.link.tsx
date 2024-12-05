@@ -54,6 +54,10 @@ export const publicRoutes = [
     element: <ServiceList />,
   },
   {
+    path: routes.allServices,
+    element: <ServiceList />,
+  },
+  {
     path: routes.aboutUs,
     element: <AboutUs />
   },

@@ -12,6 +12,8 @@ import BackToButton from "../common/BackToButton";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { MdOutlineDescription } from "react-icons/md";
 import Slider from "react-slick"; // Import slick carousel slider
+import Header from "../common/header";
+import Footer from "../common/footer";
 
 const ListingDetails = () => {
   const navigate = useNavigate();
@@ -39,40 +41,47 @@ const ListingDetails = () => {
     autoplaySpeed: 3000,
     arrows: false, // Optional: To remove arrows if needed
   };
-
+  
   return (
-    <div className="main-wrapper">
+    
+    <div className="main-wrapper mt-0">
+      <Header/>
+
       {/* Detail Page Head */}
-      <section className="product-detail-head">
-        <div className="container">
-          <div className="detail-page-head">
-            <div className="detail-headings">
-              <div className="star-rated">
-                <ul className="felx flex-col gap-3 list-rating">
-                  <li>
-                    <div className="car-brand">
-                      <span>
-                        <ImageWithBasePath
-                          lazyLoad={true}
-                          src={currentService.filePath || "assets/img/icons/service-01.svg"}
-                          alt="img"
-                        />
-                      </span>
-                      {currentService.categoryName || "Category"}
-                    </div>
-                    <div className="car-brand">
-                      {currentService.description || ""}
-                    </div>
-                  </li>
-                </ul>
+      <section className="product-detail-head py-3">
+        <div className="container mx-auto bg-slate-100 p-4 rounded-lg">
+          {/* Header Section */}
+          <div className="detail-page-head flex flex-col lg:flex-row items-center justify-between gap-6">
+            {/* Service Info */}
+            <div className="detail-headings flex-1 lg:mb-0 mb-7 ">
+              <div className="star-rated space-y-4">
+                <div className="car-brand flex items-center gap-4">
+                  <ImageWithBasePath
+                    lazyLoad={true}
+                    src={
+                      currentService.filePath ||
+                      "assets/img/icons/service-01.svg"
+                    }
+                    alt="Service Icon"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    {currentService.categoryName || "Category"}
+                  </h2>
+                </div>
+                {/* <p className="text-gray-600 text-sm">
+                  {currentService.description || "No description available."}
+                </p> */}
               </div>
             </div>
+
+            {/* Action Buttons */}
             <div className="details-btn">
-             
+              <BackToButton
+                href={`/services/${currentService.categoryId}`}
+                label="Back"
+              />
             </div>
-          </div>
-          <div className="container bg-slate-100 p-2 mt-4 rounded">
-            <BackToButton href={`/services/${currentService.categoryId}`} label="Back" />
           </div>
         </div>
       </section>
@@ -109,6 +118,8 @@ const ListingDetails = () => {
           </div>
         </div>
       </section>
+
+      <Footer/>
     </div>
   );
 };

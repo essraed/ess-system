@@ -6,7 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ServiceData } from "../../types/service";
-import { TbVip } from "react-icons/tb";
 import FileForm from '../common/FileForm'
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
@@ -14,9 +13,10 @@ import { useTranslation } from "react-i18next";
 import { Divider } from "@nextui-org/react";
 type Props = {
   service: ServiceData;
+  id:string |undefined;
 };
 
-const ServiceCard = ({ service }: Props) => {
+const ServiceCard = ({ service ,id}: Props) => {
   const { t } = useTranslation();
   const {
     serviceStore: { uploadImage },
@@ -44,7 +44,7 @@ const ServiceCard = ({ service }: Props) => {
           </Link>
           {userStore.isAdmin() && (
             <div className="absolute top-6 right-4">
-              <FileForm entityId={service.id} uploadImage={uploadImage} />
+              <FileForm entityId={service.id}  uploadImage={(formData) => uploadImage(formData,id)} />
             </div>
           )}
         </div>
