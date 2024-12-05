@@ -74,7 +74,6 @@ const ListingDetails = () => {
                 </p> */}
               </div>
             </div>
-
             {/* Action Buttons */}
             <div className="details-btn">
               <BackToButton
@@ -109,7 +108,7 @@ const ListingDetails = () => {
 
       {/* Booking Section */}
       <section className="section product-details">
-        <div className="container">
+        <div className="custom-container">
           <div className="row">
             <div className="col-lg-8">
               <BookingIndex service={currentService} />

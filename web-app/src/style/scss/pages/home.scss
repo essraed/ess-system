@@ -2315,6 +2315,25 @@ h2.section-title {
     }
 }
 
+.justify-between-new {
+    justify-content : center;
+}
+
+.bg-blue-5000 {
+    --tw-bg-opacity: 1;
+    background-color: #0f8992;
+}
+
+
+section .h1::after, section h1::after {
+    content: ' ';
+    border-bottom: 2px solid transparent;
+    border-bottom-color: transparent;
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    width: 100%;
+  }
 
 
 .choose-us-section {
