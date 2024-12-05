@@ -17,21 +17,28 @@ import InputMask from "react-input-mask";
 import { useTranslation } from "react-i18next";
 import Footer from "../common/footer";
 
-
 const ContactForm = () => {
   const { t } = useTranslation();
 
-  const { contactStore: { addContact } } = useStore();
+  const {
+    contactStore: { addContact },
+  } = useStore();
   const data = useSelector((state: ContactUs) => state.contactdata);
 
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
   }, []);
 
-  const { register, handleSubmit, setValue,
-    watch, formState: { errors }, reset } = useForm<ContactSchema>({
-      resolver: zodResolver(contactSchema),
-    });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<ContactSchema>({
+    resolver: zodResolver(contactSchema),
+  });
 
   const onSubmit = async (data: ContactSchema) => {
     const result = await addContact(data);
@@ -59,19 +66,21 @@ const ContactForm = () => {
                   data-aos-duration={1200}
                   data-aos-delay="0.1"
                 >
-                  <div className="single-contact-info flex-fill">
-                    <span>
-                      <i className={info.icon} />
-                    </span>
-                    <h3>{info.title}</h3>
-                    {info.type === "phone" ? (
-                      <Link to={info.link}>{info.text}</Link>
-                    ) : (
-                      <p>
+                  <a href={info.link} className="flex-fill box-border">
+                    <div className="single-contact-info flex-fill">
+                      <span>
+                        <i className={info.icon} />
+                      </span>
+                      <h3>{info.title}</h3>
+                      {info.type === "phone" ? (
                         <Link to={info.link}>{info.text}</Link>
-                      </p>
-                    )}
-                  </div>
+                      ) : (
+                        <p>
+                          <Link to={info.link}>{info.text}</Link>
+                        </p>
+                      )}
+                    </div>
+                  </a>
                 </div>
               ))}
             </div>
@@ -136,14 +145,11 @@ const ContactForm = () => {
                           mask="+971 50 999 9999"
                           maskChar="_"
                           value={watch("phone")}
-                          onChange={(e: any) => setValue("phone", e.target.value)}
+                          onChange={(e: any) =>
+                            setValue("phone", e.target.value)
+                          }
                         >
-                          {() => (
-                            <input
-                              type="text"
-                              className="form-control"
-                            />
-                          )}
+                          {() => <input type="text" className="form-control" />}
                         </InputMask>
                         {errors.phone && (
                           <p className="text-danger">{errors.phone.message}</p>
@@ -162,7 +168,9 @@ const ContactForm = () => {
                           {...register("subject")}
                         />
                         {errors.subject && (
-                          <p className="text-danger">{errors.subject.message}</p>
+                          <p className="text-danger">
+                            {errors.subject.message}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -179,7 +187,9 @@ const ContactForm = () => {
                           {...register("message")}
                         />
                         {errors.message && (
-                          <p className="text-danger">{errors.message.message}</p>
+                          <p className="text-danger">
+                            {errors.message.message}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -194,10 +204,8 @@ const ContactForm = () => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
-
-    
   );
 };
 

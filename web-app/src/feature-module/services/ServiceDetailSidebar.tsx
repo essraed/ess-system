@@ -9,102 +9,76 @@ const ServiceDetailSidebar = () => {
 
   return (
     <div className="col-lg-4 theiaStickySidebar">
-      <div className="stickybar">
-
-        <div className="review-sec extra-service mt-0">
-          <div className="review-header">
-            <h4>{t('Owner Details')}</h4>
-          </div>
-          <div className="owner-detail">
-            <div className="owner-img">
+      <div className="stickybar bg-white p-6 rounded-lg shadow-md">
+        {/* Owner Details Section */}
+        <div className="owner-details mb-6">
+          <h4 className="text-xl font-semibold text-gray-800">{t('Owner Details')}</h4>
+          <div className="owner-info flex items-center mt-4">
+            <div className="owner-img mr-4">
               <Link to="#">
-                <ImageWithBasePath
-
-                  lazyLoad={true} src="assets/img/logo.svg" alt="User" />
+                <ImageWithBasePath lazyLoad={true} src="assets/img/logo.svg" alt="User" className="w-16 h-16 rounded-full" />
               </Link>
-              <span className="badge-check">
-                <ImageWithBasePath
-                  lazyLoad={true} src="assets/img/logo.svg" alt="User" />
-              </span>
             </div>
-            <div className="reviewbox-list-rating">
-              <h5>
-                <Link to={""}>{t(COMPANY_NAME)}</Link>
-              </h5>
-              <p>
-                <i className="fas fa-star filled" />
-                <i className="fas fa-star filled" />
-                <i className="fas fa-star filled" />
-                <i className="fas fa-star filled" />
-                <i className="fas fa-star filled" />
-                <span> (4.3)</span>
-              </p>
+            <div className="owner-text">
+              <h5 className="text-lg font-semibold text-gray-700">{COMPANY_NAME}</h5>
+              <div className="rating flex items-center mt-2">
+                {[...Array(5)].map((_, index) => (
+                  <i key={index} className="fas fa-star text-yellow-500" />
+                ))}
+                <span className="ml-2 text-gray-600">(4.3)</span>
+              </div>
             </div>
-          </div>
-          <ul className="booking-list">
-            <li>
-              {t('Email')}
-              <span className="addr-info">
-                <a className="text-blue-500 underline" href={`mailto:${COMPANY_MAIL}`}>{COMPANY_MAIL}</a>
-              </span>
-            </li>
-            <li>
-              {t('Phone Number')}
-              <span className="addr-info">
-                <a className="text-blue-500 underline" href="tel:0523412595">{COMPANY_PHONE_NUMBER}</a>
-              </span>
-            </li>
-            <li>
-              {t('Location')}
-              <span className="addr-info">{t(COMPANY_LOCATION)}</span>
-            </li>
-          </ul>
-          <div className="message-btn font-bold">
-            <a className="flex items-center gap-2 chat-link font-semibold btn btn-order" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer">
-              <i className="fa-brands fa-whatsapp" />
-              <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
-            </a>
           </div>
         </div>
-{/* 
-        <div className="review-sec share-car mt-0 mb-0">
-          <div className="review-header">
-            <h4>{ t ('Share')}</h4>
-          </div>
-          <ul className="nav-social">
-            <li>
-              <Link to="#">
-                <i className="fa-brands fa-facebook-f fa-facebook fi-icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <i className="fab fa-instagram fi-icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <i className="fab fa-behance fi-icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <i className="fa-brands fa-pinterest-p fi-icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <i className="fab fa-twitter fi-icon" />{" "}
-              </Link>
-            </li>
-            <li>
-              <Link to="#">
-                <i className="fab fa-linkedin fi-icon" />
-              </Link>
-            </li>
-          </ul>
-        </div> */}
 
+        {/* Contact Info Section */}
+        <div className="contact-info mb-6">
+          {/* Email */}
+          <div className="contact-item mb-4">
+            <h5 className="text-sm font-semibold text-gray-700">{t('Email')}</h5>
+            <a
+              href={`mailto:${COMPANY_MAIL}`}
+              className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
+            >
+              <i className="fas fa-envelope mr-2 text-gray-500" />
+              {COMPANY_MAIL}
+            </a>
+          </div>
+
+          {/* Phone Number */}
+          <div className="contact-item mb-4">
+            <h5 className="text-sm font-semibold text-gray-700">{t('Phone Number')}</h5>
+            <a
+              href={`tel:${COMPANY_PHONE_NUMBER}`}
+              className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
+            >
+              <i className="fas fa-phone-alt mr-2 text-gray-500" />
+              {COMPANY_PHONE_NUMBER}
+            </a>
+          </div>
+
+          {/* Location */}
+          <div className="contact-item mb-4">
+            <h5 className="text-sm font-semibold text-gray-700">{t('Location')}</h5>
+            <p className="text-gray-600">
+              <i className="fas fa-map-marker-alt mr-2 text-gray-500" />
+              {t(COMPANY_LOCATION)}
+            </p>
+          </div>
+        </div>
+
+        {/* WhatsApp Contact Button */}
+        <div className="whatsapp-button mt-6">
+          <a
+             href="https://api.whatsapp.com/send?phone=97143426666"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-center gap-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"
+          >
+            <i className="fab fa-whatsapp" />
+            <span>{COMPANY_PHONE_NUMBER}</span>
+          </a>
+        </div>
       </div>
     </div>
   );

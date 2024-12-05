@@ -192,6 +192,15 @@ const Header = () => {
                         <Link to={`/services/${item.id}`} onClick={() => setLocationPathname(`/services/${item.id}`)}>{item.name}</Link>
                       </li>
                     ))}
+                    <li
+                        className={
+                          locationPathname === `/services`
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={`/services`} onClick={() => setLocationPathname(`/services`)}>All Services</Link>
+                      </li>
                   </ul>
                 </li>
 
@@ -297,10 +306,9 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>}
-
                 <li
                   className={
-                    location.pathname.includes(routes.contactUs) ? "active" : ""
+                    location.pathname===routes.contactUs ? "active" : ""
                   }
                 >
                   <Link to={routes.contactUs}>{t("Contact")}</Link>

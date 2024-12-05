@@ -76,6 +76,7 @@ export const all_routes = {
   //Services
   serviceDashboard:"/listings/services",
   serviceList:"/services/:id",
+  allServices:"/services",
   ServiceDetails: "/listings/services/view/:id",
   serviceEdit: "/listings/services/edit/:id",
   serviceCreate: "/listings/services/add",
