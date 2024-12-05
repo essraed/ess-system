@@ -26,11 +26,17 @@ const ServiceList = () => {
   return (
     <>
       <Header />
+      <section className="section"> 
       <div className="listing-page">
-        <Breadcrumbs title="Services List" subtitle="Services" />
+      <div className="custom-container">
+            <div className="section-heading" data-aos="fade-down">
+              <h2 className="section-title"> DHA Medical </h2>
+            </div>
+        {/* <Breadcrumbs title="Services List" subtitle="Services" /> */}
+        
         <section className="section car-listing pt-0">
-          <div className="container">
-            <div className="p-6 mt-4   border-gray-200 bg-white">
+          <div className="custom-container">
+            <div className="p-6 mt-4 bg-white">
               <div className="flex items-center flex-wrap ">
                 {services.length > 0 ? (
                   services.map((service) => (
@@ -44,6 +50,8 @@ const ServiceList = () => {
           </div>
         </section>
       </div>
+      </div>
+      </section>
       <Footer />
     </>
   );

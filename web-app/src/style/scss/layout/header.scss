@@ -32,9 +32,6 @@
     }
 
 
-
-
-    
     .header-nav {
         -webkit-box-align: center;
         -ms-flex-align: center;
@@ -62,7 +59,7 @@
                 >a {
                     color: #CECDCD;
                     line-height: 50px;
-                    font-weight: $__medium;
+                    //font-weight: $__medium;
                     @include respond-below(custom991) {
                         font-size: $__font__size__14;
                     }
@@ -144,8 +141,6 @@
                 z-index: 99;
                 top:-70px;
                 display: inline-block;
-
-
             }
             @include respond-below(custom575) {
                 right: 0;
@@ -357,7 +352,8 @@
                  
                 ul {
                     @include respond-above(custom992) {
-                        background-color: $__white   ;
+                        //background-color: rgb(8, 112, 120,0.5)  ;
+                        background-color:#ffffff;
                         border-radius: 5px;
                         box-shadow: 0 0 3px rgb(0 0 0 / 10%);
                         display: $__block;
@@ -376,6 +372,9 @@
                         top: 100%;
                         visibility: hidden;
                         z-index: 1000;
+                        border-bottom-left-radius: 20px;
+                        border-bottom-right-radius: 20px;
+                        border-bottom: 2px solid #087178;
                     }
                 }
             }            

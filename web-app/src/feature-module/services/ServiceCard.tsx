@@ -28,11 +28,16 @@ const ServiceCard = ({ service }: Props) => {
   }, []);
 
   return (
+    
+
     <div
       className="col-lg-3 col-md-6 col-12 px-3 mb-5"
       data-aos="fade-up"
     >
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="max-w-sm bg-white border border-gray-200 rounded-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="flex justify-center items-center">
+     
+          </div>
         <div className="relative overflow-hidden rounded-t-lg">
           <Link to={`/listings/service-details/${service.id}`}>
             <ImageWithBasePath
@@ -49,28 +54,28 @@ const ServiceCard = ({ service }: Props) => {
           )}
         </div>
         <div className="p-3 flex flex-col gap-2">
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             <div className="text-lg font-semibold text-slate-900">
               <Link to={`/listings/service-details/${service.id}`}>
                 {service.name}
               </Link>
             </div>
-          </div>
+          </div> */}
           <Divider />
-          <div className="flex justify-between items-center ">
+          <div className="flex justify-between-new items-center">
             <Link
               to={`/listings/service-details/${service.id}`}
-              className="flex px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition justify-center"
+              className="flex px-3 py-1.5 bg-blue-5000 text-white rounded hover:bg-blue-600 transition justify-center"
             >
               <div>
                 {t("Book Now")}
               </div>
             </Link>
-            <p className="text-gray-900 text-sm mt-1 border p-2 rounded">
+            {/* <p className="text-gray-900 text-sm mt-1 border p-2 rounded">
               {service.price
                 ? `${service.price} ${t("AED")}`
                 : t("Price Not Available")}
-            </p>
+            </p> */}
 
           </div>
         </div>

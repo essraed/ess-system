@@ -56,7 +56,7 @@ const ListingDetails = () => {
                 </ul>
               </div>
             </div>
-            <div className="details-btn">
+            {/* <div className="details-btn">
               <span className="total-badge">
                 <i className="bx bx-calendar-edit" />
                 Total Booking: 300
@@ -65,7 +65,7 @@ const ListingDetails = () => {
                 <i className="bx bx-git-compare" />
                 Compare
               </Link>
-            </div>
+            </div> */}
           </div>
           <div className="container bg-slate-100 p-2 mt-4 rounded">
             <BackToButton href={`/services/${currentService.categoryId}`} label="Back" />
@@ -75,7 +75,7 @@ const ListingDetails = () => {
 
       {/* Booking Section */}
       <section className="section product-details">
-        <div className="container">
+        <div className="custom-container">
           <div className="row">
             <div className="col-lg-8">
               <BookingIndex service={currentService} />
