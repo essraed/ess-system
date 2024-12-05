@@ -5,7 +5,7 @@
 .product-details {
     position: $__relative;
     z-index: 9;
-    @include margin-padding(null,60px 0 36px 0);
+    @include margin-padding(null,20px 0 16px 0);
     @include respond-below(custom991) {           
         @include margin-padding(null,50px 0 26px 0);
      }
