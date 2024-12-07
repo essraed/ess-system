@@ -56,15 +56,19 @@ const BookingIndex = ({ service }: Props) => {
         <div className="stickybar">
           <div className="review-sec mt-0">
             <div className="review-header">
-              <p className="font-bold text-slate-950 text-2xl">{t('Book Service')}</p>
-              <h6 className="flex items-center gap-3">
-                <p>{t('Total Cost')}:</p>
-                <span className="text-red-700 border p-2 rounded-lg">
+              <p className="font-bold text-slate-950 text-lg">
+                {t("Book Service")}
+              </p>    
+              <div className="flex items-center gap-2 p-2 rounded-md border border-slate-50">
+                <p className="text-sm font-medium text-gray-600">
+                  {t("Total Cost")}:
+                </p>
+                <span className="text-sm font-semibold text-red-600 bg-gray-100 px-3 py-1 rounded-md">
                   {selectedPrice
-                    ? `${(selectedPrice + selectedOptionsPrice).toFixed(2)} ${t('AED')}`
-                    : t("Price Not Available")}{" "}
+                    ? `${(selectedPrice + selectedOptionsPrice).toFixed(2)} ${t("AED")}`
+                    : t("Price Not Available")}
                 </span>
-              </h6>
+              </div>
             </div>
             <div className="location-content">
               <div className="delivery-tab">
@@ -72,12 +76,52 @@ const BookingIndex = ({ service }: Props) => {
                   {Number(service?.priceVIP) > 0 && (
                     <li
                       onClick={() => {
-                        handleSelectedPrice(Number(service?.priceVIP) ?? Number(service.price));
+                        handleSelectedPrice(
+                          Number(service?.priceVIP) ?? Number(service.price)
+                        );
                         setIsAtHome(true);
                       }}
                     >
                       <label
-                        className="booking_custom_check"
+                        className="booking_custom_check_2"
+                        data-bs-toggle="tab"
+                      >
+                        <input
+                          type="radio"
+                          name="rent_type"
+                          defaultChecked={true}
+                        />
+                        <span className="booking_checkmark_2">
+                          <span className="checked-title-2">{t("AtHome")}</span>
+                        </span>
+                      </label>
+                    </li>
+                  )}
+                  <li
+                    onClick={() => {
+                      handleSelectedPrice(Number(service.price));
+                      setIsAtHome(false);
+                    }}
+                  >
+                    {Number(service?.priceVIP) > 0 ? (
+                      <label
+                        className={`booking_custom_check_2 ${service?.priceVIP ? "" : "active"}`}
+                        data-bs-toggle="tab"
+                      >
+                        <input
+                          type="radio"
+                          name="rent_type"
+                          defaultChecked={true}
+                        />
+                        <span className="booking_checkmark_2">
+                          <span className="checked-title-2">
+                            {t("Pick & Drop")}
+                          </span>
+                        </span>
+                      </label>
+                    ) : (
+                      <label
+                        className={`booking_custom_check ${service?.priceVIP ? "" : "active"}`}
                         data-bs-toggle="tab"
                       >
                         <input
@@ -86,28 +130,12 @@ const BookingIndex = ({ service }: Props) => {
                           defaultChecked={true}
                         />
                         <span className="booking_checkmark">
-                          <span className="checked-title">{t("AtHome")}</span>
+                          <span className="checked-title">
+                            {t("Pick & Drop")}
+                          </span>
                         </span>
                       </label>
-                    </li>
-                  )}
-                  <li onClick={() => {
-                    handleSelectedPrice(Number(service.price))
-                    setIsAtHome(false)
-                  }}>
-                    <label
-                      className={`booking_custom_check ${service?.priceVIP ? "" : "active"}`}
-                      data-bs-toggle="tab"
-                    >
-                      <input
-                        type="radio"
-                        name="rent_type"
-                        defaultChecked={true}
-                      />
-                      <span className="booking_checkmark">
-                        <span className="checked-title">{t("Pick & Drop")}</span>
-                      </span>
-                    </label>
+                    )}
                   </li>
                 </ul>
               </div>

@@ -74,6 +74,10 @@ export const publicRoutes = [
     path: routes.serivceDetails,
     element: <ServiceDetails />,
   },
+  {
+    path: routes.bookingDetails,
+    element: <BookingDetails />,
+  },
 ];
 
 export const listingroutes = [
@@ -104,10 +108,6 @@ export const listingroutes = [
   {
     path: routes.bookingDashboard,
     element: <BookingDashboard />,
-  },
-  {
-    path: routes.bookingDetails,
-    element: <BookingDetails />,
   },
   // category
   {

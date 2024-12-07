@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useTranslation } from "react-i18next";
-import { COMPANY_LOCATION, COMPANY_MAIL, COMPANY_NAME, COMPANY_PHONE_NUMBER } from "../../environment";
+import {
+  COMPANY_LOCATION,
+  COMPANY_MAIL,
+  COMPANY_NAME,
+  COMPANY_PHONE_NUMBER,
+} from "../../environment";
 
 const ServiceDetailSidebar = () => {
   const { t } = useTranslation();
@@ -11,8 +16,8 @@ const ServiceDetailSidebar = () => {
     <div className="col-lg-4 theiaStickySidebar">
       <div className="stickybar bg-white p-6 rounded-lg shadow-md">
         {/* Owner Details Section */}
-        <div className="owner-details mb-6">
-          <h4 className="text-xl font-semibold text-gray-800">{t('Owner Details')}</h4>
+        {/* <div className="owner-details mb-6">
+          <h4 className="text-xl font-semibold text-gray-800">{t('For Inqueries')}</h4>
           <div className="owner-info flex items-center mt-4">
             <div className="owner-img mr-4">
               <Link to="#">
@@ -29,13 +34,18 @@ const ServiceDetailSidebar = () => {
               </div>
             </div>
           </div>
+        </div> */}
+        <div className="mb-6">
+          <h5 className="text-lg font-semibold text-gray-700">For Inquiries</h5>
         </div>
 
         {/* Contact Info Section */}
         <div className="contact-info mb-6">
           {/* Email */}
           <div className="contact-item mb-4">
-            <h5 className="text-sm font-semibold text-gray-700">{t('Email')}</h5>
+            <h5 className="text-sm font-semibold text-gray-700">
+              {t("Email")}
+            </h5>
             <a
               href={`mailto:${COMPANY_MAIL}`}
               className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
@@ -47,7 +57,9 @@ const ServiceDetailSidebar = () => {
 
           {/* Phone Number */}
           <div className="contact-item mb-4">
-            <h5 className="text-sm font-semibold text-gray-700">{t('Phone Number')}</h5>
+            <h5 className="text-sm font-semibold text-gray-700">
+              {t("Phone Number")}
+            </h5>
             <a
               href={`tel:${COMPANY_PHONE_NUMBER}`}
               className="block text-blue-600 hover:text-blue-800 transition-colors duration-200"
@@ -59,7 +71,9 @@ const ServiceDetailSidebar = () => {
 
           {/* Location */}
           <div className="contact-item mb-4">
-            <h5 className="text-sm font-semibold text-gray-700">{t('Location')}</h5>
+            <h5 className="text-sm font-semibold text-gray-700">
+              {t("Location")}
+            </h5>
             <p className="text-gray-600">
               <i className="fas fa-map-marker-alt mr-2 text-gray-500" />
               {t(COMPANY_LOCATION)}
@@ -70,7 +84,7 @@ const ServiceDetailSidebar = () => {
         {/* WhatsApp Contact Button */}
         <div className="whatsapp-button mt-6">
           <a
-             href="https://api.whatsapp.com/send?phone=97143426666"
+            href="https://api.whatsapp.com/send?phone=97143426666"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center gap-3 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200"

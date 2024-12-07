@@ -80,8 +80,6 @@ const BookingForm = ({
     data.address = address;
     data.isVIP = IsAtHome;
 
-    console.log("Booking data: ", data);
-
     const result = await addBooking(data);
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
@@ -143,18 +141,18 @@ const BookingForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-6">
+      <div className="space-y-2">
         <div className="flex flex-col lg:flex-row gap-1 items-center lg:items-start w-full">
           {/* Date Picker */}
           <div className="flex flex-col w-full lg:w-1/2">
             <label
               htmlFor="pickup-date"
-              className="text-lg font-semibold text-gray-800 "
+              className="text-small font-normal text-gray-800 "
             >
               {t("Pickup Date")}
             </label>
             <DatePicker
-              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 size-12"
               onChange={(newDate) =>
                 setDate(newDate ? newDate.toDate() : undefined)
               }
@@ -166,12 +164,13 @@ const BookingForm = ({
           <div className="flex flex-col w-full lg:w-1/2 ">
             <label
               htmlFor="booking-time"
-              className="text-lg mb-2 font-semibold text-gray-800 "
+              className="text-small mb-2 font-normal text-gray-800 "
             >
               {t("Available Slots")}
             </label>
             <div className="relative rounded-none">
               <Autocomplete
+                size="sm"
                 label={t("Select a time")}
                 placeholder={t("")}
                 defaultItems={items}
@@ -192,10 +191,11 @@ const BookingForm = ({
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2">
           {/* Customer Name */}
           <Input
             radius="sm"
+            size="sm"
             label={t("Customer Name")}
             variant="bordered"
             {...register("customerName")}
@@ -207,13 +207,19 @@ const BookingForm = ({
           <InputMask
             mask="+999 99 999 9999"
             maskChar="_"
+            size="sm"
             value={watch("phone")}
             onChange={(e: any) => setValue("phone", e.target.value)}
           >
             {() => (
               <Input
                 radius="sm"
+
                 label="Phone"
+
+                size="sm"
+
+
                 variant="bordered"
                 isInvalid={!!errors.phone}
                 errorMessage={errors.phone?.message}
@@ -225,6 +231,7 @@ const BookingForm = ({
           {/* Email */}
           <Input
             radius="sm"
+            size="sm"
             label={t("Email")}
             variant="bordered"
             {...register("email")}
@@ -235,6 +242,7 @@ const BookingForm = ({
           {/* Address */}
           <Input
             radius="sm"
+            size="sm"
             label={t("Address")}
             variant="bordered"
             value={address}
@@ -250,7 +258,7 @@ const BookingForm = ({
               }}
             />
             <div
-              style={{ height: "400px", position: "relative" }}
+              style={{ height: "300px", position: "relative" }}
               className="transition-transform transform scale-100 duration-200 ease-in-out"
             >
               <MapContainer

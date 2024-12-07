@@ -25,6 +25,8 @@ export default class BookingStore {
   toDate: string | null = null;
   serviceId: string | null = null;
 
+  isSession: string[] | null = null;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -40,11 +42,69 @@ export default class BookingStore {
           ? [...this.bookings, response]
           : [response];
       });
+
+      // Generate a unique session ID if it doesn't exist
+      const sessionId = this.getSessionId();
+
+      const storedBookings = JSON.parse(
+        localStorage.getItem(sessionId) || "[]"
+      );
+      storedBookings.push(response.id);
+      localStorage.setItem(sessionId, JSON.stringify(storedBookings));
+
+      console.log(`Booking stored successfully for session: ${sessionId}`);
+
       return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error adding booking: ", error);
       return { status: "error", error: error as string };
     }
+  };
+
+  // Utility method to get or create a session ID
+  getSessionId = (): string => {
+    let sessionId = localStorage.getItem("sessionId");
+    if (!sessionId) {
+      // Generate a unique session ID
+      sessionId = this.generateUniqueId();
+      localStorage.setItem("sessionId", sessionId);
+    }
+    return sessionId;
+  };
+
+  getCurrentSessionBookings = (): string[] | null => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    if (sessionId) {
+      const storedBookings = JSON.parse(
+        localStorage.getItem(sessionId) || "[]"
+      );
+      this.isSession = storedBookings;
+
+      const allSessionIds = Object.keys(localStorage).filter(
+        (key) => key !== "sessionId"
+      );
+
+      if (allSessionIds.length > 1) {
+        const lastSessionId = allSessionIds[allSessionIds.length - 1];
+        this.isSession = JSON.parse(
+          localStorage.getItem(lastSessionId) || "[]"
+        );
+      }
+
+      return this.isSession;
+    }
+
+    return null;
+  };
+
+  // Utility method to generate a unique ID (can use a library like UUID)
+  generateUniqueId = (): string => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0,
+        v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   };
 
   // Delete Booking
@@ -73,11 +133,13 @@ export default class BookingStore {
         data.map((item) => {
           bookingList.push({
             ...item,
-            updateDate: item.updateDate ? formatDateTime(item.updateDate) : 'No set',
+            updateDate: item.updateDate
+              ? formatDateTime(item.updateDate)
+              : "No set",
             createDate: formatDateTime(item.createDate),
-            updatedBy: item.updatedBy ? item.updatedBy : 'No set',
+            updatedBy: item.updatedBy ? item.updatedBy : "No set",
             bookingDate: formatDateTime(item.bookingDate?.toString()),
-            totalPrice: item.totalPrice + ' AED',
+            totalPrice: item.totalPrice + " AED",
             bookingStatus: convertEnumToString(
               Number(item.bookingStatus),
               BookingStatus

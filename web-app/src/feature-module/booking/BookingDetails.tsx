@@ -12,7 +12,8 @@ import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
 import Breadcrumbs from "../common/breadcrumbs";
 import StatusBadge from "../common/StatusBadge";
-import LoadingSpinner from "../common/LoadingSpinner";
+import Header from "../common/header";
+import Footer from "../common/footer";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const BookingDetails = () => {
   }, [id, getBooking]);
 
   if (loadingInitial || !currentBooking) {
-    return <LoadingSpinner />
+    return <p className="text-gray-600">Loading booking details...</p>;
   }
 
   const {
@@ -56,7 +57,6 @@ const BookingDetails = () => {
     bookingStatus,
     bookingDate,
     endBookingDate,
-    bookingCode,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -67,254 +67,222 @@ const BookingDetails = () => {
 
   return (
     <>
-      <div className="listing-page">
-        <Breadcrumbs title="Booking Details" subtitle="Bookings" />
+      <Header />
+      <div className="booking-details-page">
+        {/* Header */}
+        {userStore.isAdmin() && (
+          <div className="bg-gray-50 py-2 px-4 shadow-sm border-b">
+            <Breadcrumbs title="Booking Details" subtitle="Bookings" />
+          </div>
+        )}
 
-        <div className="container my-3">
-          <div className="sortby-sec">
-            <div className="sorting-div">
-              <div className="row d-flex align-items-center">
-                <div className="col-xl-4 col-lg-3 col-sm-12 col-12">
-                  <div className="count-search">
-                    <BackToButton
-                      label="Back to booking list"
-                      href={all_routes.bookingDashboard}
-                    />
+        {/* Content */}
+        <div className="container mx-auto py-4 px-3 sm:px-4">
+          <Card className="shadow-md border rounded-lg p-4 bg-white">
+            {/* Back Button for Admin */}
+            {userStore.isAdmin() && (
+              <div className="mb-3">
+                <BackToButton
+                  label="Back to Booking List"
+                  href={all_routes.bookingDashboard}
+                />
+              </div>
+            )}
+
+            {/* Customer Information */}
+            <div className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Customer Information
+                </h2>
+                {totalPrice && (
+                  <span className="bg-red-100 text-red-600 px-2 py-1 rounded">
+                    {totalPrice} AED
+                  </span>
+                )}
+              </div>
+              <Divider className="mb-2" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {customerName && (
+                  <div>
+                    <p className="font-medium text-gray-700">Name:</p>
+                    <p className="text-gray-600">{customerName}</p>
                   </div>
-                </div>
-                <div className="col-xl-8 col-lg-9 col-sm-12 col-12">
-                  <div className="product-filter-group"></div>
-                </div>
+                )}
+                {phone && (
+                  <div>
+                    <p className="font-medium text-gray-700">Phone:</p>
+                    <p className="text-gray-600">{phone}</p>
+                  </div>
+                )}
+                {email && (
+                  <div>
+                    <p className="font-medium text-gray-700">Email:</p>
+                    <p className="text-gray-600">{email}</p>
+                  </div>
+                )}
+                {address && (
+                  <div>
+                    <p className="font-medium text-gray-700">Address:</p>
+                    <p className="text-gray-600">{address}</p>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Car Grid View */}
-
-      <div className="container mb-5 ">
-        <Card className="p-6 shadow-md border border-gray-200">
-          {/* Customer Information Section */}
-          <div className="flex items-center gap-5 justify-between mb-6">
-            <h3 className="text-2xl font-bold text-gray-800  mb-2">
-              Customer Information
-            </h3>
-            {totalPrice && (
-              <div className="flex items-center gap-2 px-4 py-2 border rounded">
-                <p className="text-red-600 text-xl">{totalPrice} AED</p>
-              </div>
-            )}
-          </div>
-          <Divider />
-          <div className="mt-4 grid grid-cols-2 gap-6">
-            {customerName && (
-              <div>
-                <p className="font-medium text-gray-700">Name:</p>
-                <p className="text-gray-600">{customerName}</p>
-              </div>
-            )}
-            {phone && (
-              <div>
-                <p className="font-medium text-gray-700">Phone:</p>
-                <p className="text-gray-600">{phone}</p>
-              </div>
-            )}
-            {email && (
-              <div>
-                <p className="font-medium text-gray-700">Email:</p>
-                <p className="text-gray-600">{email}</p>
-              </div>
-            )}
-            {address && (
-              <div>
-                <p className="font-medium text-gray-700">Address:</p>
-                <p className="text-gray-600">{address}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Booking Information Section */}
-          <h3 className="text-2xl font-bold text-gray-800 mb-2 mt-6">
-            Booking Information
-          </h3>
-          <Divider />
-          <div className="mt-4 grid grid-cols-2 gap-6">
-            {carName && (
-              <div>
-                <p className="font-medium text-gray-700">Car Name:</p>
-                <p className="text-gray-600">{carName}</p>
-              </div>
-            )}
-
-            {bookingStatus && (
-              <div className="flex flex-col items-start gap-2">
-
-                <StatusBadge status={bookingStatus.toString()} />
-
-                {userStore.isAdmin() && (
-                  <>
-                    {bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.InProcess,
-                        BookingStatus
-                      ) && (
-                        <div className="flex items-center gap-2">
+            {/* Booking Information */}
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                Booking Information
+              </h2>
+              <Divider className="mb-2" />
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
+                {serviceName && (
+                  <div>
+                    <p className="font-medium text-gray-700">Service:</p>
+                    <p className="text-gray-600">{serviceName}</p>
+                  </div>
+                )}
+                {carName && (
+                  <div>
+                    <p className="font-medium text-gray-700">Car Name:</p>
+                    <p className="text-gray-600">{carName}</p>
+                  </div>
+                )}
+                {bookingStatus && (
+                  <div>
+                    <p className="font-medium text-gray-700">Status:</p>
+                    <StatusBadge status={bookingStatus.toString()} />
+                    {userStore.isAdmin() && (
+                      <div className="mt-2 space-x-2">
+                        {bookingStatus ===
+                          convertEnumToString(
+                            BookingStatus.InProcess,
+                            BookingStatus
+                          ) && (
+                          <>
+                            <Link
+                              to=""
+                              onClick={() => setStatusCompleted(id ?? "")}
+                              className="text-blue-600 underline"
+                            >
+                              Set as Completed
+                            </Link>
+                            |
+                            <Link
+                              to=""
+                              onClick={() => setStatusPending(id ?? "")}
+                              className="text-blue-600 underline"
+                            >
+                              Set as Pending
+                            </Link>
+                          </>
+                        )}
+                        {bookingStatus ===
+                          convertEnumToString(
+                            BookingStatus.Canceled,
+                            BookingStatus
+                          ) && (
                           <Link
-                            to={""}
-                            onClick={() => setStatusCompleted(id ?? "")}
-                            className="text-blue-600 underline"
-                          >
-                            Set as completed
-                          </Link>{" "}
-                          |
-                          <Link
-                            to={""}
-                            onClick={() => setStatusPending(id ?? "")}
-                            className="text-blue-600 underline"
-                          >
-                            Set as Pending
-                          </Link>
-                        </div>
-                      )}
-
-                    {bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.Canceled,
-                        BookingStatus
-                      ) && (
-                        <Link
-                          to={""}
-                          onClick={() => setStatusInProcess(id ?? "")}
-                          className="text-blue-600 underline"
-                        >
-                          Set as In-Progress
-                        </Link>
-                      )}
-
-                    {bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.Pending,
-                        BookingStatus
-                      ) && (
-                        <div className="flex items-center gap-2">
-                          <Link
-                            to={""}
-                            onClick={() => setStatusCanceled(id ?? "")}
-                            className="text-blue-600 underline"
-                          >
-                            Set as Canceled
-                          </Link>{" "}
-                          |
-                          <Link
-                            to={""}
+                            to=""
                             onClick={() => setStatusInProcess(id ?? "")}
                             className="text-blue-600 underline"
                           >
                             Set as In-Progress
                           </Link>
-                        </div>
-                      )}
-                  </>
+                        )}
+                        {bookingStatus ===
+                          convertEnumToString(
+                            BookingStatus.Pending,
+                            BookingStatus
+                          ) && (
+                          <>
+                            <Link
+                              to=""
+                              onClick={() => setStatusCanceled(id ?? "")}
+                              className="text-blue-600 underline"
+                            >
+                              Set as Canceled
+                            </Link>
+                            |
+                            <Link
+                              to=""
+                              onClick={() => setStatusInProcess(id ?? "")}
+                              className="text-blue-600 underline"
+                            >
+                              Set as In-Progress
+                            </Link>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {bookingDate && (
+                  <div>
+                    <p className="font-medium text-gray-700">Booking Date:</p>
+                    <p className="text-gray-600">
+                      {formatDateTime(bookingDate?.toString())}
+                    </p>
+                  </div>
+                )}
+                {endBookingDate && (
+                  <div>
+                    <p className="font-medium text-gray-700">End Date:</p>
+                    <p className="text-gray-600">
+                      {formatDateTime(endBookingDate?.toString())}
+                    </p>
+                  </div>
+                )}
+
+                {serviceOptionName && (
+                  <div>
+                    <p className="font-medium text-gray-700">Service Option:</p>
+                    <p className="text-gray-600">{serviceOptionName}</p>
+                  </div>
+                )}
+                {serviceOptionFee && (
+                  <div>
+                    <p className="font-medium text-gray-700">Service Fee:</p>
+                    <p className="text-gray-600">{serviceOptionFee} AED</p>
+                  </div>
                 )}
               </div>
-            )}
-            {bookingCode && <div>
-              <p className="font-medium text-gray-700">Booking Code:</p>
-              <p className="text-gray-600">
-                {bookingCode}
-              </p>
-            </div>}
-            {bookingDate && (
-              <div>
-                <p className="font-medium text-gray-700">Booking Date:</p>
-                <p className="text-gray-600">
-                  {formatDateTime(bookingDate?.toString())}
-                </p>
-              </div>
-            )}
-            {endBookingDate && (
-              <div>
-                <p className="font-medium text-gray-700">End Booking Date:</p>
-                <p className="text-gray-600">
-                  {formatDateTime(endBookingDate?.toString())}
-                </p>
-              </div>
-            )}
-            {createdBy && (
-              <div>
-                <p className="font-medium text-gray-700">Created By:</p>
-                <p className="text-gray-600">{createdBy}</p>
-              </div>
-            )}
-            {updatedBy && (
-              <div>
-                <p className="font-medium text-gray-700">Updated By:</p>
-                <p className="text-gray-600">{updatedBy}</p>
-              </div>
-            )}
-            {createDate && (
-              <div>
-                <p className="font-medium text-gray-700">Create Date:</p>
-                <p className="text-gray-600">{formatDateTime(createDate)}</p>
-              </div>
-            )}
-            {updateDate && (
-              <div>
-                <p className="font-medium text-gray-700">Update Date:</p>
-                <p className="text-gray-600">{formatDateTime(updateDate)}</p>
+            </div>
+
+            {/* Map Section */}
+            {latitude && longitude && userStore.isAdmin() && (
+              <div className="mb-4">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  Location
+                </h2>
+                <Divider className="mb-2" />
+                <div className="h-72 rounded-md overflow-hidden border border-gray-300">
+                  <MapContainer
+                    center={[latitude, longitude]}
+                    zoom={15}
+                    style={{ height: "100%", width: "100%" }}
+                  >
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <Marker position={[latitude, longitude]} icon={customIcon}>
+                      <Popup>{address || "Booking Location"}</Popup>
+                    </Marker>
+                  </MapContainer>
+                </div>
               </div>
             )}
 
-            {serviceName && (
-              <div>
-                <p className="font-medium text-gray-700">Service:</p>
-                <p className="text-gray-600">{serviceName}</p>
-              </div>
-            )}
-            {serviceOptionName && (
-              <div>
-                <p className="font-medium text-gray-700">Service Option:</p>
-                <p className="text-gray-600">{serviceOptionName}</p>
-              </div>
-            )}
-
-            {serviceOptionFee && (
-              <div>
-                <p className="font-medium text-gray-700">Service Option Fee:</p>
-                <p className="text-gray-600">{serviceOptionFee} AED</p>
-              </div>
-            )}
-          </div>
-
-          {/* Map Section */}
-          {latitude && longitude && (
-            <>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">
-                Location
-              </h3>
-              <Divider />
-              <div className="h-72 mt-4 rounded-lg overflow-hidden border border-gray-300">
-                <MapContainer
-                  center={[latitude, longitude]}
-                  zoom={15}
-                  style={{ height: "100%", width: "100%" }}
-                >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={[latitude, longitude]} icon={customIcon}>
-                    <Popup>{address || "Booking Location"}</Popup>
-                  </Marker>
-                </MapContainer>
-              </div>
-            </>
-          )}
-
-          {/* Confirm Button */}
-          <Button color="primary" className="mt-8 w-full" size="lg">
-            Confirm Booking
-          </Button>
-        </Card>
+            {/* Confirm Button */}
+            <div className="mt-6">
+              <Button color="primary" className="w-full" size="lg">
+                Confirm Booking
+              </Button>
+            </div>
+          </Card>
+        </div>
       </div>
+      <Footer />
     </>
   );
 };

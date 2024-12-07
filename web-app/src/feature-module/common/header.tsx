@@ -29,7 +29,6 @@ const Header = () => {
   const [bookingServicesSubmenu, setBookingServicesSubmenu] = useState(false);
   const [dashboardsSubmenu, setDashboardsSubmenu] = useState(false);
 
-
   const toggleBookingServicesSubmenu = () => {
     setBookingServicesSubmenu(!bookingServicesSubmenu);
     setDashboardsSubmenu(false);
@@ -40,27 +39,25 @@ const Header = () => {
     setBookingServicesSubmenu(false);
   };
 
-
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
     userStore: { isAdmin, logout, isLoggedIn, user },
-    categoryStore: { categories, loadCategories }
+    categoryStore: { categories, loadCategories },
+    bookingStore: { isSession, getCurrentSessionBookings },
   } = useStore();
 
   useEffect(() => {
     loadCategories();
-  }, [loadCategories])
+    getCurrentSessionBookings();
+  }, [loadCategories]);
 
   const { t } = useTranslation();
-
-
-
 
   return (
     <>
       <header className="header">
-        <div className="custom-container">
+        <div className="custom-container ">
           <div className="row">
             <div className="col-md-6 col-6">
               <Link to={routes.homeOne} className="navbar-brand logo">
@@ -73,26 +70,102 @@ const Header = () => {
               </Link>
             </div>
             <div className="col-md-6 col-6 rightLogo">
-
-
               <ul className="nav header-navbar-rht">
-
                 <li className="nav-item">
                   <LanguageSelector />
                 </li>
                 <li>|</li>
                 <li className="contact-number nav-item pe-4">
-                  <a className="flex items-center font-semibold" href="https://api.whatsapp.com/send?phone=97143426666" target="_blank" rel="noreferrer">
+                  <a
+                    className="flex items-center font-semibold"
+                    href="https://api.whatsapp.com/send?phone=97143426666"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <i className="fab fa-whatsapp pe-2"></i>
                     <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
                   </a>
                 </li>
-               
+                {isSession && !isAdmin() && (
+                  <>
+                    <li>|</li>
+                    <li className="nav-item">
+                      {isSession.length === 1 ? (
+                        // If only one session, no dropdown, just go to booking details
+                        <Link
+                          className="nav-link header-login px-0"
+                          to={`/listings/booking/view/${isSession[0]}`}
+                          onClick={logout}
+                        >
+                          <span className="position-relative">
+                            <i className="fas fa-calendar-alt"></i>
+                            <span
+                              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              style={{
+                                fontSize: "0.75rem",
+                                transform: "translate(-50%, -50%)",
+                              }}
+                            >
+                              1
+                            </span>
+                          </span>
+                          <span className="mx-1">{t("My Booking")}</span>
+                        </Link>
+                      ) : (
+                        // If there are multiple sessions, show dropdown
+                        <div className="dropdown">
+                          <Link
+                            className="nav-link header-login px-0 dropdown-toggle"
+                            to="#"
+                            id="sessionDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <span className="position-relative">
+                              <i className="fas fa-calendar-alt"></i>
+                              <span
+                                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                style={{
+                                  fontSize: "0.75rem",
+                                  transform: "translate(-50%, -50%)",
+                                }}
+                              >
+                                {isSession.length}
+                              </span>
+                            </span>
+                            <span className="mx-1">{t("My Bookings")}</span>
+                          </Link>
+                          <ul
+                            className="dropdown-menu min-w-full" 
+                            aria-labelledby="sessionDropdown"
+                          >
+                            {isSession.map((sessionId, index) => (
+                              <li key={index}>
+                                <Link
+                                  className="dropdown-item block px-4 py-2 text-sm" 
+                                  to={`/listings/booking/view/${sessionId}`}
+                                  onClick={logout}
+                                >
+                                  {t(`Booking ${index + 1}`)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  </>
+                )}
+
                 {isLoggedIn ? (
                   <>
-                   <li>|</li>
+                    <li>|</li>
                     <li className="nav-item">
-                      <Link className="nav-link header-login" to="#" onClick={logout}>
+                      <Link
+                        className="nav-link header-login"
+                        to="#"
+                        onClick={logout}
+                      >
                         <span className="mx-1">
                           <i className="fa-regular fa-user" />
                         </span>
@@ -101,8 +174,8 @@ const Header = () => {
                     </li>
                     <li>|</li>
                     <li className="nav-item">
-                    <Link className="nav-link header-login" to="#">
-                           {user?.username}
+                      <Link className="nav-link header-login" to="#">
+                        {user?.username}
                       </Link>
                     </li>
                   </>
@@ -149,9 +222,7 @@ const Header = () => {
                   to="#"
                   onClick={handleClick}
                 >
-                  {/* handleClick */}
-                  {" "}
-                  <i className="fas fa-times" />
+                  {/* handleClick */} <i className="fas fa-times" />
                 </Link>
               </div>
               <ul className="main-nav">
@@ -176,10 +247,14 @@ const Header = () => {
                   className={`has-submenu ${location.pathname.includes("services/") ? "active" : ""}`}
                 >
                   <Link to="#" onClick={toggleBookingServicesSubmenu}>
-                    {t("Booking Services")} <i className="fas fa-chevron-down" />
+                    {t("Booking Services")}{" "}
+                    <i className="fas fa-chevron-down" />
                   </Link>
-                  <ul className={`submenu ${bookingServicesSubmenu ? "d-block" : "d-none"
-                    }`}>
+                  <ul
+                    className={`submenu ${
+                      bookingServicesSubmenu ? "d-block" : "d-none"
+                    }`}
+                  >
                     {categories?.map((item, index) => (
                       <li
                         key={index}
@@ -189,133 +264,204 @@ const Header = () => {
                             : ""
                         }
                       >
-                        <Link to={`/services/${item.id}`} onClick={() => setLocationPathname(`/services/${item.id}`)}>{item.name}</Link>
+                        <Link
+                          to={`/services/${item.id}`}
+                          onClick={() =>
+                            setLocationPathname(`/services/${item.id}`)
+                          }
+                        >
+                          {item.name}
+                        </Link>
                       </li>
                     ))}
                     <li
+                      className={
+                        locationPathname === `/services` ? "active" : ""
+                      }
+                    >
+                      <Link
+                        to={`/services`}
+                        onClick={() => setLocationPathname(`/services`)}
+                      >
+                        All Services
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+
+                {isAdmin() && (
+                  <li
+                    className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
+                  >
+                    <Link to="#" onClick={toggleDashboardsSubmenu}>
+                      {t("Dashboards")} <i className="fas fa-chevron-down" />
+                    </Link>
+                    <ul
+                      className={`submenu ${
+                        dashboardsSubmenu ? "d-block" : "d-none"
+                      }`}
+                    >
+                      <li
                         className={
-                          locationPathname === `/services`
+                          locationPathname === routes.letterDashboard
                             ? "active"
                             : ""
                         }
                       >
-                        <Link to={`/services`} onClick={() => setLocationPathname(`/services`)}>All Services</Link>
+                        <Link
+                          to={routes.letterDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.letterDashboard)
+                          }
+                        >
+                          {t("Letter List")}
+                        </Link>
                       </li>
-                  </ul>
-                </li>
+                      <li
+                        className={
+                          locationPathname === routes.serviceDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.serviceDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.serviceDashboard)
+                          }
+                        >
+                          {t("Service List")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          locationPathname === routes.categoryDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.categoryDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.categoryDashboard)
+                          }
+                        >
+                          {t("Category List")}
+                        </Link>
+                      </li>
 
-                {isAdmin() && <li
-                  className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
-                >
-                  <Link to="#" onClick={toggleDashboardsSubmenu}>
-                    {t("Dashboards")} <i className="fas fa-chevron-down" />
-                  </Link>
-                  <ul className={`submenu ${dashboardsSubmenu ? "d-block" : "d-none"
-                    }`}>
+                      <li
+                        className={
+                          locationPathname === routes.authorityDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.authorityDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.authorityDashboard)
+                          }
+                        >
+                          {t("Authority List")}
+                        </Link>
+                      </li>
 
-                    <li
-                      className={
-                        locationPathname === routes.letterDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.letterDashboard} onClick={() => setLocationPathname(routes.letterDashboard)}>{t("Letter List")}</Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.serviceDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.serviceDashboard} onClick={() => setLocationPathname(routes.serviceDashboard)}>{t("Service List")}</Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.categoryDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.categoryDashboard} onClick={() => setLocationPathname(routes.categoryDashboard)}>{t("Category List")}</Link>
-                    </li>
-
-                    <li
-                      className={
-                        locationPathname === routes.authorityDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.authorityDashboard} onClick={() => setLocationPathname(routes.authorityDashboard)}>{t("Authority List")}</Link>
-                    </li>
-
-                    <li
-                      className={
-                        locationPathname === routes.carDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.carDashboard} onClick={() => setLocationPathname(routes.carDashboard)}>{t("Car List")}</Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.notificationDashboard
-
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.notificationDashboard} onClick={() => setLocationPathname(routes.notificationDashboard)}>
-                        {t("Notification List")}
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.bookingDashboard
-
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.bookingDashboard} onClick={() => setLocationPathname(routes.bookingDashboard)}>{t("Booking List")}</Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.WorkingTimeDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.WorkingTimeDashboard} onClick={() => setLocationPathname(routes.WorkingTimeDashboard)}>
-                        {t("WorkingTime List")}
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        locationPathname === routes.contactDashboard
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link to={routes.contactDashboard} onClick={() => setLocationPathname(routes.contactDashboard)}>
-                        {t("Contact List")}
-                      </Link>
-                    </li>
-                  </ul>
-                </li>}
+                      <li
+                        className={
+                          locationPathname === routes.carDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.carDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.carDashboard)
+                          }
+                        >
+                          {t("Car List")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          locationPathname === routes.notificationDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.notificationDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.notificationDashboard)
+                          }
+                        >
+                          {t("Notification List")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          locationPathname === routes.bookingDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.bookingDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.bookingDashboard)
+                          }
+                        >
+                          {t("Booking List")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          locationPathname === routes.WorkingTimeDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.WorkingTimeDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.WorkingTimeDashboard)
+                          }
+                        >
+                          {t("WorkingTime List")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          locationPathname === routes.contactDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.contactDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.contactDashboard)
+                          }
+                        >
+                          {t("Contact List")}
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                )}
                 <li
                   className={
-                    location.pathname===routes.contactUs ? "active" : ""
+                    location.pathname === routes.contactUs ? "active" : ""
                   }
                 >
                   <Link to={routes.contactUs}>{t("Contact")}</Link>
                 </li>
                 <li
                   className={
-                    location.pathname.includes(routes.businessSetup) ? "active" : ""
+                    location.pathname.includes(routes.businessSetup)
+                      ? "active"
+                      : ""
                   }
                 >
                   <Link to={routes.businessSetup}>{t("Business Setup")}</Link>
@@ -332,9 +478,7 @@ const Header = () => {
           {/* <AnimatedCursor color='8, 113, 128' innerStyle={{
             zIndex: '1'
           }} /> */}
-
         </nav>
-
       </header>
     </>
   );
