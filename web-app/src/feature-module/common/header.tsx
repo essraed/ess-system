@@ -53,10 +53,6 @@ const Header = () => {
   }, [loadCategories])
 
   const { t } = useTranslation();
-
-
-
-
   return (
     <>
       <header className="header">
@@ -73,10 +69,7 @@ const Header = () => {
               </Link>
             </div>
             <div className="col-md-6 col-6 rightLogo">
-
-
               <ul className="nav header-navbar-rht">
-
                 <li className="nav-item">
                   <LanguageSelector />
                 </li>
@@ -306,19 +299,21 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>}
-                <li
-                  className={
-                    location.pathname===routes.contactUs ? "active" : ""
-                  }
-                >
-                  <Link to={routes.contactUs}>{t("Contact")}</Link>
-                </li>
+             
                 <li
                   className={
                     location.pathname.includes(routes.businessSetup) ? "active" : ""
                   }
                 >
                   <Link to={routes.businessSetup}>{t("Business Setup")}</Link>
+                </li>
+
+                <li
+                  className={
+                    location.pathname===routes.contactUs ? "active" : ""
+                  }
+                >
+                  <Link to={routes.contactUs}>{t("Contact")}</Link>
                 </li>
                 <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>

@@ -78,6 +78,51 @@ const HomeOne = () => {
         notification
         notificationSound
       />
+<section className="section-top">
+<div className="characteristics">
+		<div className="custom-container">
+			<div className="row">
+
+				<div className="col-lg-3 col-md-6 col-6 char_col">
+					<div className="char_item d-flex flex-row align-items-center justify-content-start">
+						<div className="char_icon"><img src="assets/img/icons-05.png" alt=""/></div>
+						<div className="char_content">
+							<div className="char_title">Booking Appointments</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="col-lg-3 col-md-6 col-6 char_col">
+					<div className="char_item d-flex flex-row align-items-center justify-content-start">
+						<div className="char_icon"><img src="assets/img/icons-07.png" alt=""/></div>
+						<div className="char_content">
+							<div className="char_title">Documents Delivery</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="col-lg-3 col-md-6 col-6 char_col">
+					<div className="char_item d-flex flex-row align-items-center justify-content-start">
+						<div className="char_icon"><img src="assets/img/icons-06.png" alt=""/></div>
+						<div className="char_content">
+							<div className="char_title">Pick & Drop</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="col-lg-3 col-md-6 col-6 char_col">
+					<div className="char_item d-flex flex-row align-items-center justify-content-start">
+						<div className="char_icon"><img src="assets/img/icons-08.png" alt=""/></div>
+						<div className="char_content">
+							<div className="char_title">Fast Track</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </section>
+
       <CategoryList />
       <section className="section choose-us-section">
         <div id="Services" className="homesection servicessection saa viewon">

@@ -153,12 +153,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link to="#">
-                          <i className="fab fa-behance fi-icon" />
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="#">
-                          <i className="fab fa-twitter fi-icon" />{" "}
+                          <i className="fab fa-tiktok fi-icon" />
                         </Link>
                       </li>
                       <li>

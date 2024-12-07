@@ -89,13 +89,12 @@ const ContactForm = () => {
             className="form-info-area"
             data-aos="fade-down"
             data-aos-duration={1200}
-            data-aos-delay="0.5"
-          >
+            data-aos-delay="0.5">
             <div className="row">
               <div className="col-lg-6 d-flex">
                 <ImageWithBasePath
                   lazyLoad={true}
-                  src="assets/img/contact-info.jpg"
+                  src="assets/img/contact-inner.png"
                   className="img-fluid"
                   alt="Contact"
                 />

@@ -12,7 +12,7 @@ const ServiceDetailSidebar = () => {
       <div className="stickybar bg-white p-6 rounded-lg shadow-md">
         {/* Owner Details Section */}
         <div className="owner-details mb-6">
-          <h4 className="text-xl font-semibold text-gray-800">{t('Owner Details')}</h4>
+          <h4 className="text-xl font-semibold text-gray-800">{t('Contact Us')}</h4>
           <div className="owner-info flex items-center mt-4">
             <div className="owner-img mr-4">
               <Link to="#">

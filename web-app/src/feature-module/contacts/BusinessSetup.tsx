@@ -54,37 +54,8 @@ const BusinessSetup = () => {
     <div className="main-wrapper">
       <Header />
       <Breadcrumbs title="Business Setup" subtitle="Pages" />
-      <section className="contact-section">
-        <div className="container">
-          <div className="contact-info-area">
-            <div className="row">
-              {data.map((info: ContactUs, index: number) => (
-                <div
-                  key={index}
-                  className="col-lg-3 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                  data-aos-duration={1200}
-                  data-aos-delay="0.1"
-                >
-                  <a href={info.link} className="flex-fill box-border">
-                    <div className="single-contact-info flex-fill">
-                      <span>
-                        <i className={info.icon} />
-                      </span>
-                      <h3>{info.title}</h3>
-                      {info.type === "phone" ? (
-                        <Link to={info.link}>{info.text}</Link>
-                      ) : (
-                        <p>
-                          <Link to={info.link}>{info.text}</Link>
-                        </p>
-                      )}
-                    </div>
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
+      <section className="businesssetup-section">
+        <div className="custom-container">
           <div
             className="form-info-area"
             data-aos="fade-down"
@@ -95,7 +66,7 @@ const BusinessSetup = () => {
               <div className="col-lg-6 d-flex">
                 <ImageWithBasePath
                   lazyLoad={true}
-                  src="assets/img/contact-info.jpg"
+                  src="assets/img/businesssetuo-inner.png"
                   className="img-fluid"
                   alt="Contact"
                 />
@@ -103,7 +74,7 @@ const BusinessSetup = () => {
               <div className="col-lg-6">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
-                    <h1>Get in touch!</h1>
+                    <h1>For Enquiry!</h1>
                     <div className="col-md-12">
                       <div className="input-block">
                         <label>
