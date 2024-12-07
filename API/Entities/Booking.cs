@@ -9,6 +9,8 @@ namespace API.Entities
     {
         public Guid Id { get; set; }
 
+        public required string BookingCode { get; set; }
+
         [Required]
         public string CustomerName { get; set; } = default!;
 

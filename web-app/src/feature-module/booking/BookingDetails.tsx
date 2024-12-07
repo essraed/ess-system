@@ -12,6 +12,7 @@ import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
 import Breadcrumbs from "../common/breadcrumbs";
 import StatusBadge from "../common/StatusBadge";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const BookingDetails = () => {
   }, [id, getBooking]);
 
   if (loadingInitial || !currentBooking) {
-    return <p className="text-gray-600">Loading booking details...</p>;
+    return <LoadingSpinner />
   }
 
   const {
@@ -55,6 +56,7 @@ const BookingDetails = () => {
     bookingStatus,
     bookingDate,
     endBookingDate,
+    bookingCode,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -147,7 +149,7 @@ const BookingDetails = () => {
 
             {bookingStatus && (
               <div className="flex flex-col items-start gap-2">
-                
+
                 <StatusBadge status={bookingStatus.toString()} />
 
                 {userStore.isAdmin() && (
@@ -157,53 +159,30 @@ const BookingDetails = () => {
                         BookingStatus.InProcess,
                         BookingStatus
                       ) && (
-                      <div className="flex items-center gap-2">
-                        <Link
-                          to={""}
-                          onClick={() => setStatusCompleted(id ?? "")}
-                          className="text-blue-600 underline"
-                        >
-                          Set as completed
-                        </Link>{" "}
-                        |
-                        <Link
-                          to={""}
-                          onClick={() => setStatusPending(id ?? "")}
-                          className="text-blue-600 underline"
-                        >
-                          Set as Pending
-                        </Link>
-                      </div>
-                    )}
+                        <div className="flex items-center gap-2">
+                          <Link
+                            to={""}
+                            onClick={() => setStatusCompleted(id ?? "")}
+                            className="text-blue-600 underline"
+                          >
+                            Set as completed
+                          </Link>{" "}
+                          |
+                          <Link
+                            to={""}
+                            onClick={() => setStatusPending(id ?? "")}
+                            className="text-blue-600 underline"
+                          >
+                            Set as Pending
+                          </Link>
+                        </div>
+                      )}
 
                     {bookingStatus ===
                       convertEnumToString(
                         BookingStatus.Canceled,
                         BookingStatus
                       ) && (
-                      <Link
-                        to={""}
-                        onClick={() => setStatusInProcess(id ?? "")}
-                        className="text-blue-600 underline"
-                      >
-                        Set as In-Progress
-                      </Link>
-                    )}
-
-                    {bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.Pending,
-                        BookingStatus
-                      ) && (
-                      <div className="flex items-center gap-2">
-                        <Link
-                          to={""}
-                          onClick={() => setStatusCanceled(id ?? "")}
-                          className="text-blue-600 underline"
-                        >
-                          Set as Canceled
-                        </Link>{" "}
-                        |
                         <Link
                           to={""}
                           onClick={() => setStatusInProcess(id ?? "")}
@@ -211,12 +190,41 @@ const BookingDetails = () => {
                         >
                           Set as In-Progress
                         </Link>
-                      </div>
-                    )}
+                      )}
+
+                    {bookingStatus ===
+                      convertEnumToString(
+                        BookingStatus.Pending,
+                        BookingStatus
+                      ) && (
+                        <div className="flex items-center gap-2">
+                          <Link
+                            to={""}
+                            onClick={() => setStatusCanceled(id ?? "")}
+                            className="text-blue-600 underline"
+                          >
+                            Set as Canceled
+                          </Link>{" "}
+                          |
+                          <Link
+                            to={""}
+                            onClick={() => setStatusInProcess(id ?? "")}
+                            className="text-blue-600 underline"
+                          >
+                            Set as In-Progress
+                          </Link>
+                        </div>
+                      )}
                   </>
                 )}
               </div>
             )}
+            {bookingCode && <div>
+              <p className="font-medium text-gray-700">Booking Code:</p>
+              <p className="text-gray-600">
+                {bookingCode}
+              </p>
+            </div>}
             {bookingDate && (
               <div>
                 <p className="font-medium text-gray-700">Booking Date:</p>
