@@ -80,6 +80,7 @@ public class BookingService : IBookingService
     {
         var booking = await _context.Bookings
             .Include(x => x.Service)
+            .Include(X=>X.ServiceOption)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .FirstOrDefaultAsync(x => x.Id == id);

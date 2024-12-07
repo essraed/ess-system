@@ -41,46 +41,28 @@ const ListingDetails = () => {
     autoplaySpeed: 3000,
     arrows: false, // Optional: To remove arrows if needed
   };
-  
+
   return (
-    
-    <div className="main-wrapper mt-0">
-      <Header/>
+    <div className="main-wrapper mt-0 ">
+      <Header />
 
       {/* Detail Page Head */}
       <section className="product-detail-head py-3">
-        <div className="container mx-auto bg-slate-100 p-4 rounded-lg">
+        <div className="custom-container mx-auto bg-slate-100 p-3 lg:p-4 rounded-lg">
           {/* Header Section */}
-          <div className="detail-page-head flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex lg:flex gap-20">
             {/* Service Info */}
-            <div className="detail-headings flex-1 lg:mb-0 mb-7 ">
-              <div className="star-rated space-y-4">
-                <div className="car-brand flex items-center gap-4">
-                  <ImageWithBasePath
-                    lazyLoad={true}
-                    src={
-                      currentService.filePath ||
-                      "assets/img/icons/service-01.svg"
-                    }
-                    alt="Service Icon"
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <h2 className="text-xl font-semibold text-gray-800">
-                    {currentService.categoryName || "Category"}
-                  </h2>
-                </div>
-                {/* <p className="text-gray-600 text-sm">
-                  {currentService.description || "No description available."}
-                </p> */}
-              </div>
+            <div className="detail-headings lg:flex-1">
+              <h2 className="text-xl font-semibold text-gray-800">
+                {currentService.categoryName || "Category"}
+              </h2>
             </div>
             {/* Action Buttons */}
-            <div className="details-btn">
-              <BackToButton
-                href={`/services/${currentService.categoryId}`}
-                label="Back"
-              />
-            </div>
+
+            <BackToButton
+              href={`/services/${currentService.categoryId}`}
+              label="Back"
+            />
           </div>
         </div>
       </section>
@@ -107,8 +89,8 @@ const ListingDetails = () => {
       </section> */}
 
       {/* Booking Section */}
-      <section className="section product-details">
-        <div className="custom-container">
+      <section className="section product-details custom-container">
+        <div>
           <div className="row">
             <div className="col-lg-8">
               <BookingIndex service={currentService} />
@@ -118,7 +100,7 @@ const ListingDetails = () => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

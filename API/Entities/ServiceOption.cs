@@ -15,7 +15,7 @@ namespace API.Entities
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal AdditionalFee { get; set; }
+        public decimal   AdditionalFee { get; set; }
 
 
         // related tables

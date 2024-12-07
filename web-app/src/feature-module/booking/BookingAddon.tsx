@@ -24,77 +24,54 @@ const BookingAddon = ({
   };
 
   return (
-    <div className="my-4">
+    <div className="mb-3 w-ful border border-slate-950 rounded-lg ">
       {/* Button to toggle the dropdown */}
       {serviceData.serviceOptions && serviceData.serviceOptions.length > 0 && (
         <Button
           onPress={toggleDropdown}
-          className="w-full text-left p-4 rounded-lg shadow-md font-semibold transition-all duration-300 focus:ring-4"
-          style={{ backgroundColor: "#0f8992" }}
+          className="w-full p-2 bg-teal-600 text-white rounded-md flex justify-between items-center text-sm "
+          style={{ backgroundColor: "#fff" }}//0A97B0
         >
           <div className="flex items-center justify-between">
-            <span className="text-lg" style={{ color: "#c8cbcb" }}>
+            <span className="checked-title-2" style={{ color: "#000" }}>
               {t("Additional Services")}
             </span>
             <i
-              className={`bx text-xl transition-transform duration-300 ${isDropdownOpen ? "bx-chevron-up" : "bx-chevron-down"
-                }`}
-              style={{ color: "#c8cbcb" }}
+              className={`bx text-xl transition-transform duration-300 ${
+                isDropdownOpen ? "bx-chevron-up" : "bx-chevron-down"
+              }`}
+              style={{ color: "#000" }}
             />
           </div>
         </Button>
       )}
 
-
       {/* Dropdown content */}
       {isDropdownOpen && (
-        <ul className="space-y-4 mt-4">
+        <ul className="mt-2 border rounded-md shadow-md text-sm">
           {serviceData.serviceOptions &&
             serviceData.serviceOptions.map((item) => (
               <li
                 key={item.id}
-                className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="p-2 flex justify-between items-center hover:bg-gray-100"
               >
-                {/* Service name and price */}
-                <div className="flex items-center justify-between">
-                  <div className="d-flex items-center adon-name-info">
-                    <span className="adon-icon text-xl text-teal-600 mr-3">
-                      <i className="bx bxs-droplet"></i>
-                    </span>
-                    <div className="adon-name">
-                      <h6 className="text-lg font-semibold text-gray-800">
-                        {item.name}
-                      </h6>
-                    </div>
-                  </div>
-                  <span className="adon-price text-gray-500">{item.additionalFee} AED</span>
-                </div>
-
-                {/* Add or Remove button */}
-                <div className="mt-2">
-                  {selectedServiceOptionsId && selectedServiceOptionsId.includes(item.id) ? (
-                    <Button
-                      radius="sm"
-                      isDisabled={item.additionalFee === 0}
-                      onPress={() => handleServiceOptions(item.id, item.additionalFee)}
-                      color="default"
-                      className="transition-all duration-200 hover:bg-red-700 hover:text-white"
-                    >
-                      <i className="bx bx-minus-circle me-2" />
-                      {t("Remove")}
-                    </Button>
-                  ) : (
-                    <Button
-                      radius="sm"
-                      isDisabled={item.additionalFee === 0}
-                      onPress={() => handleServiceOptions(item.id, item.additionalFee)}
-                      color="primary"
-                      className="transition-all duration-200 hover:bg-teal-700 hover:text-white"
-                    >
-                      <i className="bx bx-plus-circle me-2" />
-                      {t("Add")}
-                    </Button>
-                  )}
+                <span className="text-slate-950">{item.name}</span>
+                <div className="flex items-center gap-2">
+                  <span>{item.additionalFee} AED</span>
+                  <button
+                    onClick={() =>
+                      handleServiceOptions(item.id, item.additionalFee)
+                    }
+                    className={`px-2 py-1 text-xs rounded-md ${
+                      selectedServiceOptionsId?.includes(item.id)
+                        ? "bg-red-500 text-white"
+                        : "bg-gray-800 text-white"
+                    }`}
+                  >
+                    {selectedServiceOptionsId?.includes(item.id)
+                      ? t("Remove")
+                      : t("Add")}
+                  </button>
                 </div>
               </li>
             ))}
