@@ -214,12 +214,8 @@ const BookingForm = ({
             {() => (
               <Input
                 radius="sm"
-
                 label="Phone"
-
                 size="sm"
-
-
                 variant="bordered"
                 isInvalid={!!errors.phone}
                 errorMessage={errors.phone?.message}

@@ -8,6 +8,9 @@ namespace API.DTOs
 
         public string CustomerName { get; set; } = default!;
 
+        public required string BookingCode { get; set; }
+
+
         public string Phone { get; set; } = default!;
 
         public string Email { get; set; } = default!;
@@ -31,7 +34,7 @@ namespace API.DTOs
         public string? UpdatedBy { get; set; }
 
         public DateTime? CreateDate { get; set; }
-        
+
         public DateTime? UpdateDate { get; set; }
 
         public string? ServiceOptionName { get; set; }
@@ -41,7 +44,7 @@ namespace API.DTOs
         public BookingStatus? BookingStatus { get; set; }
 
         public DateTime? BookingDate { get; set; }
-        
+
         public DateTime? EndBookingDate { get; set; }
     }
 }
