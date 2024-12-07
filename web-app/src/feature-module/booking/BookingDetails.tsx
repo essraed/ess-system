@@ -48,10 +48,7 @@ const BookingDetails = () => {
     totalPrice,
     serviceName,
     carName,
-    createdBy,
-    updatedBy,
-    createDate,
-    updateDate,
+    bookingCode,
     serviceOptionName,
     serviceOptionFee,
     bookingStatus,
@@ -248,6 +245,14 @@ const BookingDetails = () => {
                     <p className="text-gray-600">{serviceOptionFee} AED</p>
                   </div>
                 )}
+                {bookingCode && (
+                  <div>
+                    <p className="font-medium text-gray-700">Booking Code:</p>
+                    <p className="text-gray-600">{bookingCode} AED</p>
+                  </div>
+                )}
+
+                
               </div>
             </div>
 

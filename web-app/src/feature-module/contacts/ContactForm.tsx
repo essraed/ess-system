@@ -141,7 +141,7 @@ const ContactForm = () => {
                           Phone Number <span className="text-danger">*</span>
                         </label>
                         <InputMask
-                          mask="+971 50 999 9999"
+                          mask="+999 99 999 9999"
                           maskChar="_"
                           value={watch("phone")}
                           onChange={(e: any) =>

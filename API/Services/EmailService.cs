@@ -14,7 +14,7 @@ namespace API.Services
 
         private readonly string _smtpServer = "smtp.gmail.com";
         private readonly int _smtpPort = 465;
-        private readonly string _smtpUsername = "raed.ali.alfarhan@gmail.com";
+        private readonly string _smtpUsername = "esskarama@gmail.com";
         private readonly string _smtpPassword = "bfxvsucywkfrzoqw";
         
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
