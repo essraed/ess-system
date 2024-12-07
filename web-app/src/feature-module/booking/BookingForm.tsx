@@ -68,10 +68,10 @@ const BookingForm = ({
       return;
     }
 
-    if (selectedLat === undefined || selectedLng === undefined) {
-      toast.error(t("Please select a location on the map."));
-      return;
-    }
+    // if (selectedLat === undefined || selectedLng === undefined) {
+    //   toast.error(t("Please select a location on the map."));
+    //   return;
+    // }
 
     // Convert date to 'yyyy-MM-dd' format for back-end
     data.bookingDate = moment(date).format("YYYY-MM-DD");
@@ -205,7 +205,7 @@ const BookingForm = ({
 
           {/* Phone */}
           <InputMask
-            mask="+971 50 999 9999"
+            mask="+999 99 999 9999"
             maskChar="_"
             value={watch("phone")}
             onChange={(e: any) => setValue("phone", e.target.value)}
@@ -213,13 +213,14 @@ const BookingForm = ({
             {() => (
               <Input
                 radius="sm"
-                label={t("Phone")}
+                label="Phone"
                 variant="bordered"
                 isInvalid={!!errors.phone}
                 errorMessage={errors.phone?.message}
               />
             )}
           </InputMask>
+
 
           {/* Email */}
           <Input
@@ -273,11 +274,11 @@ const BookingForm = ({
                 <MapViewUpdater lat={selectedLat} lng={selectedLng} />
               </MapContainer>
 
-              {!selectedLat || !selectedLng ? (
+              {/* {!selectedLat || !selectedLng ? (
                 <div className="text-red-500 text-sm mt-2">
                   {t("Please select a location on the map.")}
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         </div>

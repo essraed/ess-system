@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "yet-another-react-lightbox/styles.css";
@@ -10,8 +10,6 @@ import { useStore } from "../../app/stores/store";
 import ServiceDetailSidebar from "./ServiceDetailSidebar";
 import BackToButton from "../common/BackToButton";
 import LoadingSpinner from "../common/LoadingSpinner";
-import { MdOutlineDescription } from "react-icons/md";
-import Slider from "react-slick"; // Import slick carousel slider
 import Header from "../common/header";
 import Footer from "../common/footer";
 
@@ -29,18 +27,6 @@ const ListingDetails = () => {
   }, [getService, navigate]);
 
   if (!currentService) return <LoadingSpinner />;
-
-  // Slick Carousel settings
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false, // Optional: To remove arrows if needed
-  };
   
   return (
     

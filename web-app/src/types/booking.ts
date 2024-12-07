@@ -21,6 +21,7 @@ export interface BookingData {
   bookingStatus?: BookingStatus;
   bookingDate?: string | null;
   isVIP?: boolean;
+  bookingCode: string
 }
 
 export interface BookingDetailsData {
@@ -44,4 +45,5 @@ export interface BookingDetailsData {
   bookingStatus?: BookingStatus;
   bookingDate?: Date | null;
   endBookingDate?: Date | null;
+  bookingCode: string
 }

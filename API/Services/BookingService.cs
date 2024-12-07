@@ -18,6 +18,7 @@ public class BookingService : IBookingService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly INotificationService _notificationService;
     private readonly IEmailService _emailService;
+    private readonly Random _random = new Random();
 
     private readonly string _email = "raf-se@hotmail.com";
     private string _subject = "Your Notification";
@@ -46,7 +47,8 @@ public class BookingService : IBookingService
         {
             query = query.Where(
                 x => x.CustomerName.Contains(bookingParams.SearchTerm) ||
-                x.Phone.Contains(bookingParams.SearchTerm)
+                x.Phone.Contains(bookingParams.SearchTerm) ||
+                x.BookingCode.Contains(bookingParams.SearchTerm)
                 );
         }
 
@@ -192,6 +194,7 @@ public class BookingService : IBookingService
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();
         booking.BookingStatus = BookingStatus.Pending;
+        booking.BookingCode = GenerateBookingCode();
 
         _context.Bookings.Add(booking);
 
@@ -202,29 +205,47 @@ public class BookingService : IBookingService
         {
             try
             {
+                // Sending Notification
                 await _notificationService.SendNotification(
-                    $"Dear {booking.CustomerName}, your booking is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}.",
+                    $"Dear {booking.CustomerName}, your booking (ID: {booking.Id}) is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}.",
                     "Booking Confirmation",
                     NotificationType.Reminder,
                     $"Booking/view/{booking.Id}",
                     booking.EndBookingDate);
 
+                // Preparing Email Body
                 string _body = $@"
-                    <p>Dear Admin</p>
-                    <p>We wanted to inform you about the following update:</p>
-                    <h3>Booking Confirmation</h3>
-                    <p>booking is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}</p>
-                    <p>Thank you for your attention.</p>
-                    <p>Best regards,<br/></p>
-                    <p><small>This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.</small></p>
-                ";
+            <html>
+            <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
+                <p>Dear Admin,</p>
+                <p>We wanted to inform you about the following update:</p>
+                <h3>Booking Confirmation</h3>
+                <p>
+                    <strong>Booking ID:</strong> {booking.BookingCode}<br/>
+                    <strong>Customer Name:</strong> {booking.CustomerName}<br/>
+                    <strong>Booking Date:</strong> {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}<br/>
+                </p>
+                <p>Thank you for your attention.</p>
+                <p>Best regards,<br/>Your Team</p>
+                <p>
+                    <small>
+                        This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.
+                    </small>
+                </p>
+            </body>
+            </html>";
 
-                await _emailService.SendEmailAsync(_email, _subject, _body);
+                // Sending Email
+                await _emailService.SendEmailAsync(_email, "Booking Confirmation", _body);
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending notification or email: {ex.Message}");
+            }
 
             return _mapper.Map<BookingDto>(booking);
         }
+
 
         throw new Exception("");
     }
@@ -315,5 +336,19 @@ public class BookingService : IBookingService
         {
             throw new InvalidOperationException("EndBookingDate must be at least 30 minutes after BookingDate.");
         }
+    }
+
+    private string GenerateBookingCode()
+    {
+        string prefix = "BK";
+        string datePart = DateTime.UtcNow.ToString("yyMMdd"); // Short date (YYMMDD)
+        string randomPart = GenerateRandomString(4); // 4 random characters
+        return $"{prefix}-{datePart}-{randomPart}";
+    }
+
+    private string GenerateRandomString(int length)
+    {
+        const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Readable set
+        return new string(Enumerable.Range(1, length).Select(_ => chars[_random.Next(chars.Length)]).ToArray());
     }
 }
