@@ -974,7 +974,7 @@ ul.slick-dots li button:before {
   border-radius: 5px;
   line-height: 1;
   margin: 0;
-  padding: 10px 17px;
+  padding: 8px 15px;
 }
 
 .btn-view-custom:hover {
@@ -991,6 +991,10 @@ ul.slick-dots li button:before {
 @media only screen and (max-width: 575.98px) {
   .p-calendar.p-component.p-inputwrapper .p-inputtext.p-component {
     max-width: 100%;
+  }
+
+  .btn-view-custom {
+    padding: 3px 10px;
   }
 
   .input-block.date-widge .p-calendar {
