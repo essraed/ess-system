@@ -54,8 +54,8 @@ const BusinessSetup = () => {
     <div className="main-wrapper">
       <Header />
       <Breadcrumbs title="Business Setup" subtitle="Pages" />
-      <section className="contact-section">
-        <div className="container">
+      <section className="businesssetup-section">
+        <div className="custom-container">
           <div
             className="form-info-area"
             data-aos="fade-down"
@@ -66,7 +66,7 @@ const BusinessSetup = () => {
               <div className="col-lg-6 d-flex">
                 <ImageWithBasePath
                   lazyLoad={true}
-                  src="assets/img/contact-info.jpg"
+                  src="assets/img/businesssetuo-inner.png"
                   className="img-fluid"
                   alt="Contact"
                 />
@@ -74,7 +74,7 @@ const BusinessSetup = () => {
               <div className="col-lg-6">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
-                    <h1>Business Setup</h1>
+                    <h1>For Enquiry!</h1>
                     <div className="col-md-12">
                       <div className="input-block">
                         <label>
