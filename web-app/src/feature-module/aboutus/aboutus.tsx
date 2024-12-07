@@ -39,26 +39,24 @@ const AboutUs = () => {
                 <h6>ABOUT OUR COMPANY</h6>
                 <h2>One Stop Government Transactions </h2>
                 <p>
-                  In line with Dubais strategy for providing quality government services in one place and as quickly as possible, Al Karama Business Center has been one of the largest centers in Dubai to prove this idea since its inception. It provides a range of government and business services for the various business sectors using the latest intelligent systems. Because our clients’ time has an invaluable value and because the success of the individual depends on how it is invested for its time,
-                  we have developed the quality and speed of service delivery to facilitate customer’s access to it.
+                Karama Business Center, located in Dubai's Al Karama district, is one of the city's largest 
+                centers dedicated to providing quality government services efficiently in a single location. 
+                Since its inception, the center has aimed to align with Dubai's strategy of delivering prompt and comprehensive services to the public.
                 </p>
                 <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium, totam rem aperiam, eaque
-                  ipsa quae ab illo inventore veritatis et quasi architecto
-                  beatae vitae dicta sunt explicabo.
+                The center offers a wide range of services, making it a one-stop destination for various governmental and business needs.
                 </p>
                 <div className="row">
                   <div className="col-md-6">
                     <ul>
-                      <li>At vero et accusamus iusto dignissimos</li>
-                      <li>At vero et accusamus iusto dignissimos</li>
+                      <li>Facilitating various governmental processes under one roof.</li>
+                      <li>Assisting entrepreneurs and investors in establishing companies in Dubai.</li>
                     </ul>
                   </div>
                   <div className="col-md-6">
                     <ul>
-                      <li>Nam libero tempore, cum soluta nobis</li>
-                      <li>Nam libero tempore, cum soluta nobis</li>
+                      <li>Providing Public Relations Officer services to handle documentation and approvals.</li>
+                      <li>Handling medical typing requirements for various purposes.</li>
                     </ul>
                   </div>
                 </div>
@@ -82,9 +80,7 @@ const AboutUs = () => {
           <div className="section-heading" data-aos="fade-down">
             <h2>How It Works</h2>
             <p>
-              Lorem Ipsum has been the industry standard dummy text ever since
-              the 1500s,
-            </p>
+            At Karama Business Center, our mission and vision are aligned with Dubai's strategic objectives to provide efficient, high-quality government services.            </p>
           </div>
           {/* /Heading title */}
           <div className="services-work">
@@ -99,11 +95,9 @@ const AboutUs = () => {
                     />
                   </div>
                   <div className="services-content">
-                    <h3>1. Choose Locations</h3>
+                    <h3>1. Mission</h3>
                     <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry
-                      standard dummy text ever since the 1500s,
+                    To be the preferred destination for customers and businessmen, delighting clients in line with the vision of the Government of Dubai.
                     </p>
                   </div>
                 </div>
@@ -118,11 +112,10 @@ const AboutUs = () => {
                     />
                   </div>
                   <div className="services-content">
-                    <h3>2. Pick-Up Locations</h3>
+                    <h3>2. Vision</h3>
                     <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry
-                      standard dummy text ever since the 1500s,
+                    To save customers' time and effort by providing all necessary smart services in one place.
+                    <br></br>
                     </p>
                   </div>
                 </div>
@@ -137,11 +130,9 @@ const AboutUs = () => {
                     />
                   </div>
                   <div className="services-content">
-                    <h3>3. Book your Car</h3>
+                    <h3>3. Goals</h3>
                     <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry
-                      standard dummy text ever since the 1500s,
+                    Offer top-tier services to both public and private sectors through a qualified and trained staff utilizing the latest electronic and intelligent systems.
                     </p>
                   </div>
                 </div>
