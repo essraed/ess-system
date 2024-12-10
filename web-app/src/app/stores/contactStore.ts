@@ -19,7 +19,6 @@ export default class ContactStore {
         makeAutoObservable(this);
     }
 
-    // Add Authority
     addContact = async (
         data: ContactSchema
     ): Promise<ActionResult<string>> => {

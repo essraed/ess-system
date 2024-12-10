@@ -32,7 +32,7 @@ export interface BookingDetailsData {
   address?: string | null;
   latitude?: number | null;
   longitude?: number | null;
-  totalPrice?: number | null;
+  totalPrice?: number | null |undefined;
   note?: string | null;
   serviceName: string;
   carName?: string | null;
@@ -45,5 +45,6 @@ export interface BookingDetailsData {
   bookingStatus?: BookingStatus;
   bookingDate?: Date | null;
   endBookingDate?: Date | null;
-  bookingCode: string
+  bookingCode: string;
+  paymentStatus:string|null;
 }

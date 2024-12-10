@@ -78,7 +78,7 @@ namespace API.Services
                 throw new Exception("An error occured during saving contact.");
 
             // send mail to manager
-            await _emailService.SendEmailAsync("raf-se@hotmail.com", model.Subject, model.Message);
+            // await _emailService.SendEmailAsync("raf-se@hotmail.com", model.Subject, model.Message);
 
             return _mapper.Map<ContactDto>(contact);
         }

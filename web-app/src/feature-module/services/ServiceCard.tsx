@@ -54,8 +54,6 @@ const ServiceCard = ({ service ,id}: Props) => {
           )}
         </div>
         <div className="p-3 flex flex-col gap-2">
-        {service.categoryName}
-
           {/* <div className="flex justify-center items-center">
             <div className="text-lg font-semibold text-slate-900">
               <Link to={`/listings/service-details/${service.id}`}>

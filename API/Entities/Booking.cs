@@ -66,6 +66,8 @@ namespace API.Entities
 
         public Notification? Notification { get; set; }
 
+        public Payment? Payment { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }

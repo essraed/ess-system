@@ -109,6 +109,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/in-process")]
+        [AllowAnonymous]
         public async Task<IActionResult> SetBookingStateInProcess(Guid id)
         {
             try

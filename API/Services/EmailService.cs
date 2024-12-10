@@ -14,13 +14,13 @@ namespace API.Services
 
         private readonly string _smtpServer = "smtp.gmail.com";
         private readonly int _smtpPort = 465;
-        private readonly string _smtpUsername = "esskarama@gmail.com";
+        private readonly string _smtpUsername = "esskaram@gmail.com";
         private readonly string _smtpPassword = "bfxvsucywkfrzoqw";
         
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Raed Alfarhan", _smtpUsername));
+            message.From.Add(new MailboxAddress("Abedelhameed Alshorafa", _smtpUsername));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = subject;
 

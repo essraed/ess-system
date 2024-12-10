@@ -9,6 +9,7 @@ namespace API.DTOs
         public string CustomerName { get; set; } = default!;
 
         public required string BookingCode { get; set; }
+        public string? PaymentStatus { get; set; }
 
 
         public string Phone { get; set; } = default!;

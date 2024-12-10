@@ -48,6 +48,7 @@ public class BookingService : IBookingService
             query = query.Where(
                 x => x.CustomerName.Contains(bookingParams.SearchTerm) ||
                 x.Phone.Contains(bookingParams.SearchTerm) ||
+                x.BookingCode.Contains(bookingParams.SearchTerm) ||
                 x.BookingCode.Contains(bookingParams.SearchTerm)
                 );
         }
@@ -83,6 +84,7 @@ public class BookingService : IBookingService
         var booking = await _context.Bookings
             .Include(x => x.Service)
             .Include(X=>X.ServiceOption)
+            .Include(x=>x.Payment)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .FirstOrDefaultAsync(x => x.Id == id);

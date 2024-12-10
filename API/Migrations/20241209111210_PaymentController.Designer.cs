@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241209111210_PaymentController")]
+    partial class PaymentController
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -760,10 +763,12 @@ namespace API.Migrations
                     b.Property<string>("TransactionHint")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("bookingId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("bookingId");
 
                     b.ToTable("Payments");
                 });
@@ -997,13 +1002,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("Payment", b =>
                 {
-                    b.HasOne("API.Entities.Booking", "Booking")
-                        .WithOne("Payment")
-                        .HasForeignKey("Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("API.Entities.Booking", "booking")
+                        .WithMany()
+                        .HasForeignKey("bookingId");
 
-                    b.Navigation("Booking");
+                    b.Navigation("booking");
                 });
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
@@ -1014,11 +1017,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Authority", b =>
                 {
                     b.Navigation("Documents");
-                });
-
-            modelBuilder.Entity("API.Entities.Booking", b =>
-                {
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("API.Entities.Car", b =>
