@@ -29,6 +29,12 @@ namespace API.Data
                 .Property(x => x.BookingStatus)
                 .HasConversion<string>();
 
+                modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Booking)
+            .WithOne(b => b.Payment)
+            .HasForeignKey<Payment>(p => p.OrderId) // Foreign key to Booking
+            .OnDelete(DeleteBehavior.Cascade);
+
         }
 
         public DbSet<Document> Documents { get; set; }
@@ -42,5 +48,6 @@ namespace API.Data
         public DbSet<FileEntity> FileEntities { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }

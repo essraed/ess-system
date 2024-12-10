@@ -152,6 +152,13 @@ const WorkingTime = {
     return requests.post<WorkingTimeData>("workingtime", mappedData);
   },
 };
+
+
+const Payment= {
+  initiate: (data:FormData) => requests.post("payment/initiate-payment", data),
+  callback: (data:FormData) => requests.post("payment/payment-callback", data),
+  getById: (id:string) => requests.get(`payment/${id}`),
+};
 // Helper function to ensure the time is in the correct format (HH:mm)
 
 const Bookings = {
@@ -270,6 +277,7 @@ const agent = {
   Bookings,
   Notifications,
   Contacts,
+  Payment,
 };
 
 export default agent;

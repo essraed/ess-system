@@ -41,6 +41,7 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: ContactSchema) => {
+    console.log("data",data);
     const result = await addContact(data);
     if (result.status === "success") {
       toast.success("Contact updated successfully");

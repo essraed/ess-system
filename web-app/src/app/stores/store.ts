@@ -9,6 +9,7 @@ import WorkingTimeStore from "./workingTimeStore";
 import BookingStore from "./bookingStore";
 import NotificationStore from "./notificationStore";
 import ContactStore from "./contactStore";
+import PaymentStore from "./paymentStore";
 
 
 interface Store {
@@ -22,6 +23,7 @@ interface Store {
     bookingStore: BookingStore,
     notificationStore: NotificationStore,
     contactStore:ContactStore,
+    paymentStore:PaymentStore,
 }
 
 export const store: Store = {
@@ -35,6 +37,7 @@ export const store: Store = {
     bookingStore: new BookingStore(),
     notificationStore: new NotificationStore(),
     contactStore: new ContactStore(),
+    paymentStore:new PaymentStore(),
 
 }
 

@@ -19,7 +19,8 @@ import LoadingSpinner from "../common/LoadingSpinner";
 const BookingList = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { bookingStore: {
+  const {
+    bookingStore: {
       bookings,
       loadBookings,
       deleteBooking,
@@ -33,7 +34,7 @@ const BookingList = () => {
       setStatusCompleted,
       setStatusFilter,
     },
-    userStore
+    userStore,
   } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -100,13 +101,13 @@ const BookingList = () => {
   }, [userStore.token, loadBookings]);
 
   if (!bookings) return <LoadingSpinner />;
-  
+
   return (
     <div className="col-lg-12">
       <div className="row">
         <div className="col-lg-12 d-flex">
           <div className="card book-card flex-fill mb-0">
-          <TableFilterBar
+            <TableFilterBar
               pagination={pagination}
               pageSize={pageSize}
               handlePageSizeChange={handlePageSizeChange}
@@ -114,16 +115,21 @@ const BookingList = () => {
               setSearchQuery={setSearchQuery}
               handleSearch={handleSearch}
               handleReset={handleReset}
-            >
-              
-            </TableFilterBar>
+            ></TableFilterBar>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-
                   dialogFlags={dialogFlags}
                   setSelectedId={setSelectedId}
-                  exceptColumns={["id", "aiResult", "createDate", "address", "email", "createdBy", "updatedBy"]}
+                  exceptColumns={[
+                    "id",
+                    "aiResult",
+                    "createDate",
+                    "address",
+                    "email",
+                    "createdBy",
+                    "updatedBy",
+                  ]}
                   data={bookings}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
@@ -140,17 +146,20 @@ const BookingList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title="Confirm Delete"
         description="Are you sure you want to delete this booking?"
       />
-      <ConfirmDialog modalId={dialogFlags.completeDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.completeDialog}
         onConfirm={handleComplete}
         title="Confirm Setting As Completed"
         description="Are you sure you want to set this booking as completed?"
       />
-      <ConfirmDialog modalId={dialogFlags.cancelDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.cancelDialog}
         onConfirm={handleCancel}
         title="Confirm Cancel"
         description="Are you sure you want to cancel this booking?"

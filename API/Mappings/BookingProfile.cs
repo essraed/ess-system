@@ -25,7 +25,9 @@ namespace API.Mappings
                 .ForMember(dest => dest.CreatedBy, opt =>
                     opt.MapFrom(src => src.CreatedBy != null ? src.CreatedBy.DisplayName : null))
                 .ForMember(dest => dest.UpdatedBy, opt =>
-                    opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null));
+                    opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null))
+                    .ForMember(dest => dest.PaymentStatus, opt =>
+                    opt.MapFrom(src => src.Payment!.Status));
 
             // Mapping from Booking to BookingDetilasDto
             CreateMap<Booking, BookingDetilasDto>()
@@ -38,7 +40,9 @@ namespace API.Mappings
                 .ForMember(dest => dest.ServiceOptionName, opt =>
                     opt.MapFrom(src => src.ServiceOption != null ? src.ServiceOption.Name : null))
                 .ForMember(dest => dest.ServiceOptionFee, opt =>
-                    opt.MapFrom(src => src.ServiceOption!.AdditionalFee));
+                    opt.MapFrom(src => src.ServiceOption!.AdditionalFee))
+                .ForMember(dest => dest.PaymentStatus, opt =>
+                    opt.MapFrom(src => src.Payment!.Status));
         }
     }
 }

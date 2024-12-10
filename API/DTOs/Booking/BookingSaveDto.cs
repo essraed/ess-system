@@ -24,7 +24,7 @@ namespace API.DTOs
         public decimal? TotalPrice { get; set; }
 
         public DateOnly BookingDate { get; set; }
-        public string BookingTime { get; set; }
+        public string? BookingTime { get; set; }
         
         public DateOnly? EndBookingDate { get; set; }
         public string? EndBookingTime { get; set; }

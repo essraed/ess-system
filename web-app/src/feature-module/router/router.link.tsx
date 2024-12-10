@@ -28,6 +28,9 @@ import AboutUs from "../aboutus/aboutus";
 import ContactDashboard from "../contacts/ContactDashboard";
 import ContactForm from "../contacts/ContactForm";
 import BusinessSetup from "../contacts/BusinessSetup";
+import PaymentStore from "../../app/stores/paymentStore";
+import PaymentSuccess from "../payment/PaymentSuccess";
+import PaymentFailed from "../payment/PaymentFailed";
 
 
 const routes = all_routes;
@@ -73,6 +76,18 @@ export const publicRoutes = [
   {
     path: routes.serivceDetails,
     element: <ServiceDetails />,
+  },
+  {
+    path: routes.bookingDetails,
+    element: <BookingDetails />,
+  },
+  {
+    path: routes.paymentSuccess,
+    element: <PaymentSuccess />,
+  },
+  {
+    path: routes.paymentFailed,
+    element: <PaymentFailed />,
   },
   {
     path: routes.bookingDetails,

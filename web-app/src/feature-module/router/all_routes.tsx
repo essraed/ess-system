@@ -98,6 +98,11 @@ export const all_routes = {
   contactDashboard:"/listings/contacts",
   contactDetails: "/listings/contacts/view/:id",
 
+  //Payments
+  paymentSuccess:"/payment/success",
+  paymentFailed:"/payment/success",
+
+
 
 
 // shini
