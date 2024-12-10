@@ -300,71 +300,7 @@ const Header = () => {
                         dashboardsSubmenu ? "d-block" : "d-none"
                       }`}
                     >
-                      <li
-                        className={
-                          locationPathname === routes.letterDashboard
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        <Link
-                          to={routes.letterDashboard}
-                          onClick={() =>
-                            setLocationPathname(routes.letterDashboard)
-                          }
-                        >
-                          {t("Letter List")}
-                        </Link>
-                      </li>
-                      <li
-                        className={
-                          locationPathname === routes.serviceDashboard
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        <Link
-                          to={routes.serviceDashboard}
-                          onClick={() =>
-                            setLocationPathname(routes.serviceDashboard)
-                          }
-                        >
-                          {t("Service List")}
-                        </Link>
-                      </li>
-                      <li
-                        className={
-                          locationPathname === routes.categoryDashboard
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        <Link
-                          to={routes.categoryDashboard}
-                          onClick={() =>
-                            setLocationPathname(routes.categoryDashboard)
-                          }
-                        >
-                          {t("Category List")}
-                        </Link>
-                      </li>
-
-                      <li
-                        className={
-                          locationPathname === routes.authorityDashboard
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        <Link
-                          to={routes.authorityDashboard}
-                          onClick={() =>
-                            setLocationPathname(routes.authorityDashboard)
-                          }
-                        >
-                          {t("Authority List")}
-                        </Link>
-                      </li>
+                     
                     <li
                       className={
                         locationPathname === routes.letterDashboard
@@ -457,7 +393,7 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
-                </li>}
+                </li>)}
                 <li
                   className={
                     location.pathname.includes(routes.businessSetup)
