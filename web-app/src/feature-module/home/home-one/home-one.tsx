@@ -229,6 +229,10 @@ const HomeOne = () => {
           </div>
         </div>
       </section>
+
+    
+
+
       <section className="section facts-number">
         <div id="Services" className="homesection servicessection saa viewon">
           <div className="custom-container">
@@ -358,6 +362,26 @@ const HomeOne = () => {
           </div>
         </div>
       </section>
+
+      <section className="section-GoldenVisa">
+      <div className="wantToWork-area wantToWork-area2 w-padding2">
+      <div className="custom-container">
+      <div className="row align-items-center justify-content-between">
+                    <div className="col-xl-8 col-lg-8 col-md-8">
+                        <div className="wantToWork-caption wantToWork-caption2">
+                            <h2>For Golden Visa</h2>
+                            <p className="btn btn-primary">Contact Now</p>
+                        </div>
+                    </div>
+                    <div className="col-xl-4 col-lg-4 col-md-4">
+                        <a href="#" className="btn btn-black f-right">contact us now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+
 
       {/* About us Testimonials */}
       {/* FAQ  */}
