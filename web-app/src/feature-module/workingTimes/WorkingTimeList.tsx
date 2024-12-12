@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Table from "../common/Table";
 import { observer } from "mobx-react-lite";
@@ -16,7 +15,6 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const WorkingTimeList = () => {
   const navigate = useNavigate();
-
 
   const {
     workingTimeStore: {
@@ -45,7 +43,6 @@ const WorkingTimeList = () => {
       toast.error("Unauthorized");
     } else {
       loadWorkingTimes();
-      console.log("services", workingTimes);
     }
   }, [userStore.token, loadWorkingTimes]);
 
@@ -56,10 +53,7 @@ const WorkingTimeList = () => {
       <div className="row">
         <div className="col-lg-12 d-flex">
           <div className="card book-card flex-fill mb-0">
-          <TableFilterBar
-              pagination={pagination}
-              handleReset={handleReset}
-            >
+            <TableFilterBar pagination={pagination} handleReset={handleReset}>
               <WorkingTimeForm />
             </TableFilterBar>
 
@@ -78,7 +72,6 @@ const WorkingTimeList = () => {
                   ]}
                   data={workingTimes}
                   pageSize={pagination?.pageSize} // Use pageSize state variable here
-
                   rowsPerPageOptions={[10, 25, 50]}
                   routeUrl={all_routes.WorkingTimeDashboard}
                 />

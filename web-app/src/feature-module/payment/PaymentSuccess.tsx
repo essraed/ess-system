@@ -8,7 +8,7 @@ const PaymentSuccess: React.FC = observer(() => {
   const [message, setMessage] = useState<string>('Processing your payment...');
   const navigate = useNavigate();
   const location = useLocation();
-  const {paymentStore} = useStore();
+  const {paymentStore,bookingStore} = useStore();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -16,7 +16,7 @@ const PaymentSuccess: React.FC = observer(() => {
     const orderId = queryParams.get('orderId');
 
     if (paymentStatus === 'SUCCESS' && orderId) {
-
+      bookingStore.setStatusInProcess(orderId ?? "");
       paymentStore.handlePaymentCallback(orderId,paymentStatus)
         .then((response) => {
           if (response.status === 'success') {

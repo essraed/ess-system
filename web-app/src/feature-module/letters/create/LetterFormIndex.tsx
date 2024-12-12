@@ -15,9 +15,9 @@ import { observer } from "mobx-react-lite";
 
 import AIAssistedLetterEditor from "./AIAssistedLetterEditor";
 import { TfiSave } from "react-icons/tfi";
+import LanguageSelector from "../../common/LanguageSelector";
 
 const LetterFormIndex = () => {
-
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
@@ -69,11 +69,14 @@ const LetterFormIndex = () => {
           )}
 
           <UserPromptForm />
-          
+
           <AIAssistedLetterEditor />
 
           <div className="flex items-center gap-5 justify-between">
-            <BackToButton href={all_routes.letterDashboard} label='Back to letters' />
+            <BackToButton
+              href={all_routes.letterDashboard}
+              label="Back to letters"
+            />
             <Button
               className="btn-view-custom"
               isDisabled={!brief && !aiGeneratedResult}
@@ -90,4 +93,4 @@ const LetterFormIndex = () => {
   );
 };
 
-export default observer (LetterFormIndex);
+export default observer(LetterFormIndex);

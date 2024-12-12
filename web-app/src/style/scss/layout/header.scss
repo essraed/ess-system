@@ -10,6 +10,7 @@
 .header {
     background: $__white;
     position: sticky;
+    box-sizing: border-box;
     box-shadow: 0px 10px 40px rgba(202, 202, 202, 0.2);
     left: 0;
     top: 0;
@@ -212,6 +213,22 @@
         }
     }
 
+
+    @media (max-width: 768px) {
+        .bookings-container {
+          order: -1;
+          width: 10%; 
+          display: flex;
+          justify-content: center;
+        }
+      
+        .bookings-container .nav-item {
+          justify-content: end; 
+        }
+      }
+      
+
+
     .main-menu-wrapper {
         margin: 0 15px 0;
         width: 100%;
@@ -247,7 +264,7 @@
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
-                height: 65px;
+                height: 40px;
                 align-items: center;
                 background: $__white;
             }
