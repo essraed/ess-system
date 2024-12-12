@@ -15,27 +15,6 @@ const ServiceDetailSidebar = () => {
   return (
     <div className="col-lg-4 theiaStickySidebar">
       <div className="stickybar bg-white p-6 rounded-lg shadow-md">
-        {/* Owner Details Section */}
-
-        <div className="owner-details mb-6">
-          <h4 className="text-xl font-semibold text-gray-800">{t('Contact Us')}</h4>
-          <div className="owner-info flex items-center mt-4">
-            <div className="owner-img mr-4">
-              <Link to="#">
-                <ImageWithBasePath lazyLoad={true} src="assets/img/logo.svg" alt="User" className="w-16 h-16 rounded-full" />
-              </Link>
-            </div>
-            <div className="owner-text">
-              <h5 className="text-lg font-semibold text-gray-700">{COMPANY_NAME}</h5>
-              <div className="rating flex items-center mt-2">
-                {[...Array(5)].map((_, index) => (
-                  <i key={index} className="fas fa-star text-yellow-500" />
-                ))}
-                <span className="ml-2 text-gray-600">(4.3)</span>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className="mb-6">
           <h5 className="text-lg font-semibold text-gray-700">For Inquiries</h5>
         </div>

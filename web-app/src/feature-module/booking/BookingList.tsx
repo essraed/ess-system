@@ -129,6 +129,7 @@ const BookingList = () => {
                     "email",
                     "createdBy",
                     "updatedBy",
+                    "paymentStatus",
                   ]}
                   data={bookings}
                   pageSize={pageSize}

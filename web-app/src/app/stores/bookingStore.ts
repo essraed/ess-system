@@ -82,7 +82,7 @@ export default class BookingStore {
       this.isSession = storedBookings;
 
       const allSessionIds = Object.keys(localStorage).filter(
-        (key) => key !== "sessionId"
+        (key) => key !== "sessionId" && key !== "language"
       );
 
       if (allSessionIds.length > 1) {
@@ -169,7 +169,6 @@ export default class BookingStore {
             BookingStatus
           ),
         };
-        console.log("this.currentBooking: ", this.currentBooking.bookingStatus);
       });
     } catch (error) {
       console.error("Error fetching booking: ", error);

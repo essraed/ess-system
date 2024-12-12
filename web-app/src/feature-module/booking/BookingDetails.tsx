@@ -14,11 +14,9 @@ import Breadcrumbs from "../common/breadcrumbs";
 import StatusBadge from "../common/StatusBadge";
 import Header from "../common/header";
 import Footer from "../common/footer";
-import { log } from "console";
 import toast from "react-hot-toast";
 
 const BookingDetails = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const { bookingStore, userStore, paymentStore } = useStore();
   const {
@@ -69,7 +67,6 @@ const BookingDetails = () => {
           toast.error("Payment initiation failed!");
         }
       } catch (error) {
-        console.error("Error initiating payment:", error);
         toast.error("An error occurred while initiating payment.");
       }
     }
@@ -101,6 +98,7 @@ const BookingDetails = () => {
     bookingDate,
     endBookingDate,
     paymentStatus,
+    createDate,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -194,15 +192,20 @@ const BookingDetails = () => {
                   </div>
                 )}
                 {userStore.isAdmin() && (
-                  <div className=" bg-white  rounded-md">
+                  <div className="bg-white rounded-md">
                     <h4 className="text-lg font-semibold text-gray-800 mb-2">
                       Payment Status
                     </h4>
                     {bookingStatus ===
-                    convertEnumToString(
-                      BookingStatus.InProcess,
-                      BookingStatus
-                    ) ? (
+                      convertEnumToString(
+                        BookingStatus.InProcess,
+                        BookingStatus
+                      ) ||
+                    bookingStatus ===
+                      convertEnumToString(
+                        BookingStatus.Completed,
+                        BookingStatus
+                      ) ? (
                       paymentStatus ? (
                         <span className="inline-block px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full">
                           {paymentStatus}
@@ -323,6 +326,16 @@ const BookingDetails = () => {
                   <div>
                     <p className="font-medium text-gray-700">Booking Code:</p>
                     <p className="text-gray-600">{bookingCode} AED</p>
+                  </div>
+                )}
+                {createDate && (
+                  <div>
+                    <p className="font-medium text-gray-700">
+                      Booking Crete Date:
+                    </p>
+                    <p className="text-gray-600">
+                      {formatDateTime(createDate.toString())}
+                    </p>
                   </div>
                 )}
               </div>

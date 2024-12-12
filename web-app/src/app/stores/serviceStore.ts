@@ -68,10 +68,13 @@ export default class ServiceStore {
     }
   };
 
-  uploadImage = async (formData: FormData ,id?:string): Promise<ActionResult<string>> => {
+  uploadImage = async (
+    formData: FormData,
+    id?: string
+  ): Promise<ActionResult<string>> => {
     try {
       await agent.Services.uploadImage(formData);
-      await this.loadServices(id)
+      await this.loadServices(id);
       return { status: "success", data: "Service image uploaded successfully" };
     } catch (error) {
       console.error("Error uploading service: ", error);
@@ -97,7 +100,8 @@ export default class ServiceStore {
   loadServices = async (id?: string) => {
     const serviceList: ServiceData[] = [];
     try {
-      if (id) await this.setCategoryIdParam(id);else this.setCategoryIdParam("");
+      if (id) await this.setCategoryIdParam(id);
+      else this.setCategoryIdParam("");
 
       const result = await agent.Services.getAll(this.axiosParams);
       runInAction(() => {
@@ -115,14 +119,12 @@ export default class ServiceStore {
               : "No Set",
             price: item.price,
             totalPrice: item.totalPrice,
-            priceVIP: item.priceVIP ? item.priceVIP : '',
+            priceVIP: item.priceVIP ? item.priceVIP : "",
             updatedBy: item.updatedBy ? item.updatedBy : "No Set",
           });
         });
 
         this.services = serviceList;
-
-        console.log("services",this.services);
       });
     } catch (error) {
       console.error("Error loading services:", error);

@@ -10,7 +10,6 @@ import { COMPANY_PHONE_NUMBER } from "../../environment";
 
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
-// import AnimatedCursor from "react-animated-cursor";
 
 const Header = () => {
   const routes = all_routes;
@@ -57,98 +56,83 @@ const Header = () => {
     <>
       <header className="header">
         <div className="custom-container ">
-          <div className="row">
-            <div className="col-md-6 col-6">
+          <div className="flex flex-wrap items-center justify-between">
+            {/* Logo Section */}
+            <div className="w-1/2 mr-24 md:w-1/4 md:mr-0">
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
                   lazyLoad={true}
                   src="assets/img/ESSLogo.png"
-                  className="img-fluid"
+                  className="img-fluid "
                   alt="Logo"
                 />
               </Link>
             </div>
-            <div className="col-md-6 col-6 rightLogo">
-              <ul className="nav header-navbar-rht">
-                <li className="nav-item">
-                  <LanguageSelector />
-                </li>
-                <li>|</li>
-                <li className="contact-number nav-item pe-4">
-                  <a
-                    className="flex items-center font-semibold"
-                    href="https://api.whatsapp.com/send?phone=97143426666"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <i className="fab fa-whatsapp pe-2"></i>
-                    <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
-                  </a>
-                </li>
+
+            {/* Navbar Items Section */}
+            <div className="w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container">
+              <ul className="flex flex-wrap justify-end items-center bookings-container ">
+                {/* {location.pathname === routes.letterCreate ? (
+                  <>
+                    <li className="nav-item px-2">
+                      <LanguageSelector />
+                    </li>
+                    <li>|</li>
+                  </>
+                ) : null} */}
                 {isSession && !isAdmin() && (
                   <>
-                    <li>|</li>
                     <li className="nav-item">
                       {isSession.length === 1 ? (
-                        // If only one session, no dropdown, just go to booking details
                         <Link
-                          className="nav-link header-login px-0"
+                          className="nav-link header-login px-0 hover:scale-105 transition-all duration-200 flex items-center "
                           to={`/listings/booking/view/${isSession[0]}`}
-                          onClick={logout}
                         >
-                          <span className="position-relative">
-                            <i className="fas fa-calendar-alt"></i>
+                          <span className="relative">
+                            <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
                             <span
-                              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              className="absolute bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
                               style={{
-                                fontSize: "0.75rem",
-                                transform: "translate(-50%, -50%)",
+                                transform: "translate(50%, -50%)",
                               }}
                             >
-                              1
+                              {isSession.length}
                             </span>
                           </span>
-                          <span className="mx-1">{t("My Booking")}</span>
                         </Link>
                       ) : (
-                        // If there are multiple sessions, show dropdown
-                        <div className="dropdown">
+                        <div className="dropdown relative">
                           <Link
-                            className="nav-link header-login px-0 dropdown-toggle"
+                            className="nav-link header-login px-0 hover:scale-110 transition-transform duration-200 dropdown-toggle flex items-center justify-center"
                             to="#"
                             id="sessionDropdown"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           >
-                            <span className="position-relative">
-                              <i className="fas fa-calendar-alt"></i>
-                              <span
-                                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                style={{
-                                  fontSize: "0.75rem",
-                                  transform: "translate(-50%, -50%)",
-                                }}
-                              >
+                            <span className="relative inline-block">
+                              <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
+                              <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                                 {isSession.length}
                               </span>
                             </span>
-                            <span className="mx-1">{t("My Bookings")}</span>
                           </Link>
                           <ul
-                            className="dropdown-menu min-w-full"
+                            className="dropdown-menu absolute z-10 mt-2 bg-white shadow-lg rounded-md py-2 w-30"
                             aria-labelledby="sessionDropdown"
                           >
-                            {isSession.map((sessionId, index) => (
-                              <li key={index}>
-                                <Link
-                                  className="dropdown-item block px-4 py-2 text-sm"
-                                  to={`/listings/booking/view/${sessionId}`}
-                                  onClick={logout}
-                                >
-                                  {t(`Booking ${index + 1}`)}
-                                </Link>
-                              </li>
-                            ))}
+                            {isSession
+                              .slice()
+                              .reverse()
+                              .map((sessionId, index) => (
+                                <li key={index} className="block">
+                                  <Link
+                                    className="dropdown-item block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
+                                    to={`/listings/booking/view/${sessionId}`}
+                                  >
+                                    {t(`Booking  ${index + 1}`)}
+                                  </Link>
+                                </li>
+                              ))}
                           </ul>
                         </div>
                       )}
@@ -156,49 +140,42 @@ const Header = () => {
                   </>
                 )}
 
+                {/* Authentication Links */}
                 {isLoggedIn ? (
                   <>
-                    <li>|</li>
                     <li className="nav-item">
                       <Link
-                        className="nav-link header-login"
+                        className="nav-link header-login px-3 py-2 hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-200 ease-in-out flex items-center"
                         to="#"
                         onClick={logout}
                       >
-                        <span className="mx-1">
-                          <i className="fa-regular fa-user" />
+                        <span className="mx-2">
+                          <i className="fa-regular fa-user text-lg" />
                         </span>
-                        {t("Logout")}
+                        <span className="font-semibold">{t("Logout")}</span>
                       </Link>
                     </li>
-                    <li>|</li>
-                    <li className="nav-item">
-                      <Link className="nav-link header-login" to="#">
+                    <li className="text-gray-500 ">|</li>
+                    <li className="nav-item px-3 py-2  hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-100 ease-in-out">
+                      <Link
+                        className="nav-link header-login text-gray-700 font-medium "
+                        to="#"
+                      >
                         {user?.username}
                       </Link>
                     </li>
                   </>
-                ) : (
-                  // <li className="nav-item">
-                  //   <Link className="nav-link header-login" to={routes.login}>
-                  //     <span>
-                  //       <i className="fa-regular fa-user" />
-                  //     </span>
-                  //     {t("Sign In For Admin")}
-                  //   </Link>
-                  // </li>
-                  <p></p>
-                )}
+                ) : null}
               </ul>
             </div>
           </div>
         </div>
         <nav className="navbar navbar-expand-lg header-nav">
           <div className="custom-container">
-            <div className="navbar-header">
+            <div className="navbar-header bookings-container-mobilebutton">
               {/* handleClick */}
               <Link id="mobile_btn" to="#" onClick={handleClick}>
-                <span className="bar-icon">
+                <span className="bar-icon mt-3 mr-3">
                   <span />
                   <span />
                   <span />
@@ -300,7 +277,6 @@ const Header = () => {
                         dashboardsSubmenu ? "d-block" : "d-none"
                       }`}
                     >
-
                       <li
                         className={
                           locationPathname === routes.letterDashboard

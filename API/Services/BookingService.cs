@@ -20,7 +20,7 @@ public class BookingService : IBookingService
     private readonly IEmailService _emailService;
     private readonly Random _random = new Random();
 
-    private readonly string _email = "raf-se@hotmail.com";
+    private readonly string _email = "abed@hotmail.com";
     private string _subject = "Your Notification";
 
     public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
