@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 
 import CountUp from "react-countup";
@@ -10,11 +9,11 @@ import "aos/dist/aos.css";
 import ImageWithBasePath from "../../../core/data/img/ImageWithBasePath";
 import Footer from "../../common/footer";
 import { observer } from "mobx-react-lite";
-import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
+import "../../../../node_modules/font-awesome/css/font-awesome.min.css";
 import Header from "../../common/header";
 import CategoryList from "../../Categories/CategoryList";
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import 'react-accessible-accordion/dist/fancy-example.css';
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+import "react-accessible-accordion/dist/fancy-example.css";
 
 import {
   Accordion,
@@ -22,11 +21,11 @@ import {
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemPanel,
-} from 'react-accessible-accordion';
+} from "react-accessible-accordion";
 import { useTranslation } from "react-i18next";
+import { Video } from "react-feather";
 
 const HomeOne = () => {
-
   const { t } = useTranslation();
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
@@ -38,31 +37,58 @@ const HomeOne = () => {
         <div className="float-sm">
           <div className="fl-fl float-fb">
             <i className="fa fa-facebook fa-2x"></i>
-            <a href="" target="_blank"> Like us!</a>
+            <a href="" target="_blank">
+              {" "}
+              Like us!
+            </a>
           </div>
           <div className="fl-fl float-tw">
             <i className="fa fa-twitter fa-2x"></i>
-            <a href="" target="_blank">Follow us!</a>
+            <a href="" target="_blank">
+              Follow us!
+            </a>
           </div>
 
           <div className="fl-fl float-ig">
             <i className="fa fa-instagram fa-2x"></i>
-            <a href="" target="_blank">Follow us!</a>
+            <a href="" target="_blank">
+              Follow us!
+            </a>
           </div>
           <div className="fl-fl float-pn">
             <i className="fa fa-linkedin fa-2x"></i>
-            <a href="" target="_blank">Follow us!</a>
+            <a href="" target="_blank">
+              Follow us!
+            </a>
           </div>
           <div className="fl-fl float-yt">
             <i className="fa fa-youtube fa-2x"></i>
-            <a href="" target="_blank">Follow us!</a>
+            <a href="" target="_blank">
+              Follow us!
+            </a>
           </div>
         </div>
       </div>
       <section className="banner-section banner-slider">
         <div className="container-fluid">
           <div className="home-banner">
-            <div className="row align-items-center">
+            <div className="row align-items-center bg-black">
+              {/* Video on the Right Side */}
+              <div className="col-md-5 offset-md-7 position-absolute bottom-32 end-12 video-content">
+                <div className="video-wrapper">
+                  <video
+                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
+                    style={{ opacity: 0.8 }}
+                    controls
+                    muted
+                    loop 
+                    autoPlay
+                  >
+                    <source src="/assets/videos/ALL SERVICE VIDEO.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -78,64 +104,79 @@ const HomeOne = () => {
         notification
         notificationSound
       />
-<section className="section-top">
-<div className="characteristics">
-		<div className="custom-container">
-			<div className="row">
+      <section className="section-top">
+        <div className="characteristics">
+          <div className="custom-container">
+            <div className="row">
+              <div className="col-lg-3 col-md-6 col-6 char_col">
+                <div className="char_item d-flex flex-row align-items-center justify-content-start">
+                  <div className="char_icon">
+                    <img src="assets/img/icons-05.png" alt="" />
+                  </div>
+                  <div className="char_content">
+                    <div className="char_title">Booking Appointments</div>
+                  </div>
+                </div>
+              </div>
 
-				<div className="col-lg-3 col-md-6 col-6 char_col">
-					<div className="char_item d-flex flex-row align-items-center justify-content-start">
-						<div className="char_icon"><img src="assets/img/icons-05.png" alt=""/></div>
-						<div className="char_content">
-							<div className="char_title">Booking Appointments</div>
-						</div>
-					</div>
-				</div>
+              <div className="col-lg-3 col-md-6 col-6 char_col">
+                <div className="char_item d-flex flex-row align-items-center justify-content-start">
+                  <div className="char_icon">
+                    <img src="assets/img/icons-07.png" alt="" />
+                  </div>
+                  <div className="char_content">
+                    <div className="char_title">Documents Delivery</div>
+                  </div>
+                </div>
+              </div>
 
-				<div className="col-lg-3 col-md-6 col-6 char_col">
-					<div className="char_item d-flex flex-row align-items-center justify-content-start">
-						<div className="char_icon"><img src="assets/img/icons-07.png" alt=""/></div>
-						<div className="char_content">
-							<div className="char_title">Documents Delivery</div>
-						</div>
-					</div>
-				</div>
+              <div className="col-lg-3 col-md-6 col-6 char_col">
+                <div className="char_item d-flex flex-row align-items-center justify-content-start">
+                  <div className="char_icon">
+                    <img src="assets/img/icons-06.png" alt="" />
+                  </div>
+                  <div className="char_content">
+                    <div className="char_title">Pick & Drop</div>
+                  </div>
+                </div>
+              </div>
 
-				<div className="col-lg-3 col-md-6 col-6 char_col">
-					<div className="char_item d-flex flex-row align-items-center justify-content-start">
-						<div className="char_icon"><img src="assets/img/icons-06.png" alt=""/></div>
-						<div className="char_content">
-							<div className="char_title">Pick & Drop</div>
-						</div>
-					</div>
-				</div>
-
-				<div className="col-lg-3 col-md-6 col-6 char_col">
-					<div className="char_item d-flex flex-row align-items-center justify-content-start">
-						<div className="char_icon"><img src="assets/img/icons-08.png" alt=""/></div>
-						<div className="char_content">
-							<div className="char_title">Fast Track</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-  </section>
+              <div className="col-lg-3 col-md-6 col-6 char_col">
+                <div className="char_item d-flex flex-row align-items-center justify-content-start">
+                  <div className="char_icon">
+                    <img src="assets/img/icons-08.png" alt="" />
+                  </div>
+                  <div className="char_content">
+                    <div className="char_title">Fast Track</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <CategoryList />
       <section className="section choose-us-section">
         <div id="Services" className="homesection servicessection saa viewon">
           <div className="custom-container custom-container-inner">
             <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title"> {t("Why Karama Business Center?")}</h2>
+              <h2 className="section-title">
+                {" "}
+                {t("Why Karama Business Center?")}
+              </h2>
             </div>
             <div className="row">
               <div className="col-lg-12">
                 {/* Heading title*/}
-                <div className="section-heading heading-one" data-aos="fade-down">
+                <div
+                  className="section-heading heading-one"
+                  data-aos="fade-down"
+                >
                   <p>
-                    {t("We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai")}
+                    {t(
+                      "We Karama Business Center offers many services to small and medium businesses with the highest standards of quality and speed for any transactions of all Government departments in Dubai"
+                    )}
                   </p>
                 </div>
                 {/* /Heading title */}
@@ -145,9 +186,11 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-bookmarks" />
                       </span>
-                      <h6>{t('One Stop Transactions')}</h6>
+                      <h6>{t("One Stop Transactions")}</h6>
                       <p>
-                        {t("The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses.")}
+                        {t(
+                          "The Karama Business Center in Dubai offers a comprehensive range of government services, ensuring convenience and efficiency for residents and businesses."
+                        )}
                       </p>
                     </div>
                   </div>
@@ -156,10 +199,11 @@ const HomeOne = () => {
                       <span>
                         <i className="bx bxs-bolt-circle" />
                       </span>
-                      <h6>{(t("Premium Fast Track Service"))}</h6>
+                      <h6>{t("Premium Fast Track Service")}</h6>
                       <p>
-                        {t("The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients.")}
-
+                        {t(
+                          "The Karama Business Center in Dubai offers a Premium Fast Track Service to expedite various government-related processes, ensuring efficiency and convenience for clients."
+                        )}
                       </p>
                     </div>
                   </div>
@@ -170,7 +214,9 @@ const HomeOne = () => {
                       </span>
                       <h6>{t("Dedicated Assistance")}</h6>
                       <p>
-                        {t("Personalized support throughout the application process.")}
+                        {t(
+                          "Personalized support throughout the application process."
+                        )}
                       </p>
                     </div>
                   </div>
@@ -181,7 +227,9 @@ const HomeOne = () => {
                       </span>
                       <h6>{t("Experienced Staff:")}</h6>
                       <p>
-                        {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
+                        {t(
+                          "A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes"
+                        )}
                       </p>
                     </div>
                   </div>
@@ -193,7 +241,9 @@ const HomeOne = () => {
                       </span>
                       <h6>{t("Experienced Staff:")}</h6>
                       <p>
-                        {t("A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes")}
+                        {t(
+                          "A team of knowledgeable professionals is available to assist clients, providing guidance and support throughout various processes"
+                        )}
                       </p>
                     </div>
                   </div>
@@ -201,7 +251,7 @@ const HomeOne = () => {
               </div>
             </div>
 
-             {/* <div className="quality-img">
+            {/* <div className="quality-img">
               <ImageWithBasePath
                 lazyLoad={true}
                 src="assets/img/karamabuilding.png"
@@ -229,9 +279,6 @@ const HomeOne = () => {
           </div>
         </div>
       </section>
-
-    
-
 
       <section className="section facts-number">
         <div id="Services" className="homesection servicessection saa viewon">
@@ -364,35 +411,37 @@ const HomeOne = () => {
       </section>
 
       <section className="section-GoldenVisa">
-      <div className="wantToWork-area wantToWork-area2 w-padding2">
-      <div className="custom-container">
-      <div className="row align-items-center justify-content-between">
-                    <div className="col-xl-8 col-lg-8 col-md-8">
-                        <div className="wantToWork-caption wantToWork-caption2">
-                            <h2>For Golden Visa</h2>
-                            <p className="btn btn-primary">Contact Now</p>
-                        </div>
-                    </div>
-                    <div className="col-xl-4 col-lg-4 col-md-4">
-                        <a href="#" className="btn btn-black f-right">contact us now</a>
-                    </div>
+        <div className="wantToWork-area wantToWork-area2 w-padding2">
+          <div className="custom-container">
+            <div className="row align-items-center justify-content-between">
+              <div className="col-xl-8 col-lg-8 col-md-8">
+                <div className="wantToWork-caption wantToWork-caption2">
+                  <h2>For Golden Visa</h2>
+                  <p className="btn btn-primary">Contact Now</p>
                 </div>
+              </div>
+              <div className="col-xl-4 col-lg-4 col-md-4">
+                <a href="#" className="btn btn-black f-right">
+                  contact us now
+                </a>
+              </div>
             </div>
+          </div>
         </div>
-        </section>
-
-
+      </section>
 
       {/* About us Testimonials */}
       {/* FAQ  */}
       <section className="section faq-section bg-light-primary">
         <div id="Services" className="homesection servicessection saa viewon">
-
           <div className="custom-container">
             {/* Heading title*/}
             <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title">{t("Frequently Asked Questions")} </h2>
-            </div>          {/* Heading title*/}
+              <h2 className="section-title">
+                {t("Frequently Asked Questions")}{" "}
+              </h2>
+            </div>{" "}
+            {/* Heading title*/}
             <Accordion>
               <AccordionItem>
                 <AccordionItemHeading>
@@ -418,17 +467,16 @@ const HomeOne = () => {
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    {t("Dubai visa medical report can be tracked and downloaded from DHA mobile application.")}
+                    {t(
+                      "Dubai visa medical report can be tracked and downloaded from DHA mobile application."
+                    )}
                   </p>
                 </AccordionItemPanel>
               </AccordionItem>
             </Accordion>
             {/* /Heading title */}
-
           </div>
-
         </div>
-
       </section>
       {/* /FAQ */}
       {/* Pricing Plan */}
@@ -437,7 +485,6 @@ const HomeOne = () => {
       <>
         {/* Blog Section */}
         <section className="blog-section news-section pt-5">
-
           <div id="Services" className="homesection servicessection saa viewon">
             <div className="custom-container">
               {/* Heading title*/}
@@ -447,8 +494,6 @@ const HomeOne = () => {
               {/* /Heading title */}
 
               <div className="row">
-
-
                 <div className="col-lg-4 col-md-6 d-lg-flex">
                   <div className="blog grid-blog">
                     <div className="blog-image">
@@ -456,19 +501,13 @@ const HomeOne = () => {
                         lazyLoad={true}
                         className="img-fluid"
                         src="assets/img/blog/DET_Opening.jpg"
-
                         alt="Post Image"
                       />
-
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="#">
-                          {t("2024 - DED Opening")}
-                        </a>
+                        <a href="#">{t("2024 - DED Opening")}</a>
                       </h3>
-
-
                     </div>
                   </div>
                 </div>
@@ -484,9 +523,7 @@ const HomeOne = () => {
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="#">
-                          {t("2023 - National Day Celeberation")}
-                        </a>
+                        <a href="#">{t("2023 - National Day Celeberation")}</a>
                       </h3>
                     </div>
                   </div>
@@ -503,9 +540,7 @@ const HomeOne = () => {
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
-                        <a href="#">
-                          {t("2024 - Best Employee of the Month")}
-                        </a>
+                        <a href="#">{t("2024 - Best Employee of the Month")}</a>
                       </h3>
                     </div>
                   </div>
@@ -525,10 +560,9 @@ const HomeOne = () => {
                   </span>
                 </a>
               </div>
-
             </div>
           </div>
-        </section >
+        </section>
         {/* /Blog Section */}
       </>
       <Footer />

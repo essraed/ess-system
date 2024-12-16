@@ -68,6 +68,11 @@ namespace API.Services
 
         public async Task<ContactDto> AddContactAsync(ContactSaveDto model)
         {
+            // string subject="For Contact";
+            // if(model.EnquiryType)
+            // {
+            //     subject="For Busniss";
+            // }
             var contact = _mapper.Map<Contact>(model);
             contact.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
@@ -78,7 +83,7 @@ namespace API.Services
                 throw new Exception("An error occured during saving contact.");
 
             // send mail to manager
-            // await _emailService.SendEmailAsync("raf-se@hotmail.com", model.Subject, model.Message);
+            // await _emailService.SendEmailAsync("raf-se@hotmail.com", subject, model.Message);
 
             return _mapper.Map<ContactDto>(contact);
         }

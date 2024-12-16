@@ -5,6 +5,10 @@ import BookingForm from "./BookingForm";
 import BookingAddon from "./BookingAddon";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { useTranslation } from "react-i18next";
+import { useStore } from "../../app/stores/store";
+import BookingStore from "../../app/stores/bookingStore";
+import bookingStore from "../../app/stores/bookingStore";
+import BookingSecondForm from "./bookingSecondForm";
 
 type Props = {
   service: ServiceData;
@@ -19,6 +23,10 @@ const BookingIndex = ({ service }: Props) => {
     string | undefined
   >(undefined);
   const [isAtHome, setIsAtHome] = useState(false);
+
+  const {
+    bookingStore: { isSession },
+  } = useStore();
 
   const handleSelectedPrice = (price: number) => {
     setSelectedPrice(price);
@@ -58,7 +66,7 @@ const BookingIndex = ({ service }: Props) => {
             <div className="review-header">
               <p className="font-bold text-slate-950 text-lg">
                 {t("Book Service")}
-              </p>    
+              </p>
               <div className="flex items-center gap-2 p-2 rounded-md border border-slate-50">
                 <p className="text-sm font-medium text-gray-600">
                   {t("Total Cost")}:
@@ -146,12 +154,21 @@ const BookingIndex = ({ service }: Props) => {
                     handleServiceOptions={handleServiceOptions}
                     selectedServiceOptionsId={selectedServiceOptionsId}
                   />
-                  <BookingForm
-                    serviceId={service.id}
-                    serviceOptionId={selectedServiceOptionsId}
-                    totalPrice={selectedPrice + selectedOptionsPrice}
-                    IsAtHome={isAtHome}
-                  />
+                  {isSession !== null ? (
+                    <BookingSecondForm
+                      serviceId={service.id}
+                      serviceOptionId={selectedServiceOptionsId}
+                      totalPrice={selectedPrice + selectedOptionsPrice}
+                      IsAtHome={isAtHome}
+                    />
+                  ) : (
+                    <BookingForm
+                      serviceId={service.id}
+                      serviceOptionId={selectedServiceOptionsId}
+                      totalPrice={selectedPrice + selectedOptionsPrice}
+                      IsAtHome={isAtHome}
+                    />
+                  )}
                 </div>
               </div>
             </div>

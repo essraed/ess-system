@@ -52,8 +52,6 @@ export default class BookingStore {
       storedBookings.push(response.id);
       localStorage.setItem(sessionId, JSON.stringify(storedBookings));
 
-      console.log(`Booking stored successfully for session: ${sessionId}`);
-
       return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error adding booking: ", error);

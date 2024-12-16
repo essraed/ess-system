@@ -70,8 +70,6 @@ const ServiceDashboardList = () => {
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    console.log("newPageSize: ", newPageSize);
-
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
     loadServices(); // Reload services with new page size

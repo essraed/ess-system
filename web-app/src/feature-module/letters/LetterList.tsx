@@ -45,9 +45,6 @@ const LetterList = () => {
   };
 
   const handleSearch = () => {
-
-    console.log('handlesearch', searchQuery);
-
     setSearchTerm(searchQuery);
     setPagingParams(new PagingParams(1, pageSize));
     loadDocuments();
@@ -72,8 +69,6 @@ const LetterList = () => {
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    console.log("newPageSize: ", newPageSize);
-
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
     loadDocuments(); // Reload documents with new page size

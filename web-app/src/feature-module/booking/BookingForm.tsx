@@ -67,13 +67,6 @@ const BookingForm = ({
       toast.error(t("Please select a valid date."));
       return;
     }
-
-    // if (selectedLat === undefined || selectedLng === undefined) {
-    //   toast.error(t("Please select a location on the map."));
-    //   return;
-    // }
-
-    // Convert date to 'yyyy-MM-dd' format for back-end
     data.bookingDate = moment(date).format("YYYY-MM-DD");
     data.latitude = selectedLat;
     data.longitude = selectedLng;

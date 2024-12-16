@@ -123,10 +123,10 @@ const NotificationsDropdown = () => {
               ))}
             </DropdownSection>
             <DropdownSection>
-              <DropdownItem>
+              <DropdownItem key={""}>
                 <Divider />
               </DropdownItem>
-              <DropdownItem>
+              <DropdownItem key={""}>
                 {notifications.length > 7 && (
                   <Link
                     to="#"
