@@ -15,8 +15,7 @@ type Props = {
   setSelectedId?: (id: string) => void;
   routeUrl: string;
   dialogFlags: any;
-  getViewId?: (id: string) => void
-
+  getViewId?: (id: string) => void;
 };
 
 const Table = ({
@@ -44,12 +43,14 @@ const Table = ({
           <i className="fas fa-ellipsis-vertical me-1"></i>
         </Link>
         <div className="dropdown-menu dropdown-menu-end">
-          {(routeUrl === all_routes.categoryDashboard || routeUrl === all_routes.serviceDashboard || routeUrl === all_routes.contactDashboard ) && (
+          {(routeUrl === all_routes.categoryDashboard ||
+            routeUrl === all_routes.serviceDashboard ||
+            routeUrl === all_routes.contactDashboard) && (
             <Link
               className="dropdown-item"
               to="#"
               onClick={() => {
-                if (getViewId) getViewId(id)
+                if (getViewId) getViewId(id);
               }}
               data-bs-toggle="modal"
               data-bs-target={`#${routeUrl}`}
@@ -58,7 +59,8 @@ const Table = ({
             </Link>
           )}
 
-          {(routeUrl === all_routes.letterDashboard || routeUrl === all_routes.bookingDashboard) && (
+          {(routeUrl === all_routes.letterDashboard ||
+            routeUrl === all_routes.bookingDashboard) && (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
               <i className="feather icon-file-plus me-1"></i> View
             </Link>
@@ -79,7 +81,6 @@ const Table = ({
             routeUrl !== all_routes.notificationDashboard &&
             routeUrl !== all_routes.contactDashboard &&
             routeUrl !== all_routes.bookingDashboard && (
-
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit me-1"></i> Edit
               </Link>
@@ -112,7 +113,7 @@ const Table = ({
   };
 
   const confirmDialog = (id: string) => {
-    if(setSelectedId) setSelectedId(id);
+    if (setSelectedId) setSelectedId(id);
   };
 
   return (
@@ -131,10 +132,15 @@ const Table = ({
               key={key}
               field={key}
               header={separateCamelCase(key)}
-
               body={(rowData: any) => {
                 if (key === "bookingStatus") {
                   return <StatusBadge status={rowData[key]} />;
+                }
+                if (key === "enquiryType") {
+                  return rowData[key] ? "Business Setup" : "General Contact";
+                }
+                if (key === "email") {
+                  return rowData[key] ? rowData[key] : "No Data";
                 }
                 return rowData[key];
               }}

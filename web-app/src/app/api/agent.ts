@@ -4,7 +4,7 @@ import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
 import { CarSchema } from "../../lib/schemas/CarSchema";
 import { CategorySchema } from "../../lib/schemas/categorySchema";
-import { ContactSchema } from "../../lib/schemas/contactSchema";
+import { BusinessSchema } from "../../lib/schemas/businessSchema";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import { NotificationSchema } from "../../lib/schemas/notificationSchema";
 import { RegisterSchema } from "../../lib/schemas/registerSchema";
@@ -25,6 +25,7 @@ import { User, UserIdAndName } from "../../types/User";
 import { WorkingTimeData } from "../../types/workingTime";
 import { store } from "../stores/store";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { ContactSchema } from "../../lib/schemas/contactSchema";
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -101,7 +102,7 @@ const Contacts = {
   getAll: (params: URLSearchParams) =>
     axios.get<PagedResponse<ContactData[]>>("contacts", { params }).then(responseBody),
   getById: (id: string) => requests.get<ContactData>(`contacts/${id}`),
-  create: (contact: ContactSchema) => requests.post<ContactData>("contacts", contact),
+  create: (contact: ContactSchema|BusinessSchema) => requests.post<ContactData>("contacts", contact),
   delete: (id: string) => requests.del<string>(`contacts/${id}`),
 };
 
@@ -148,7 +149,6 @@ const WorkingTime = {
       ...workingTime,
       day: dayOfWeekMap[workingTime.day],
     };
-    console.log("working after convert", mappedData);
     return requests.post<WorkingTimeData>("workingtime", mappedData);
   },
 };

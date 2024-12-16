@@ -44,7 +44,6 @@ export default class UserStore {
       return { status: 'success', data: 'Logged in' }
 
     } catch (error) {
-      console.log("Error: ", error);
       return { status: 'error', error: error as string }
     }
   }
@@ -59,7 +58,6 @@ export default class UserStore {
       return { status: 'success', data: 'We have got current user' }
 
     } catch (error) {
-      console.log("Error: ", error);
       return { status: 'error', error: error as string }
     }
   }
@@ -77,7 +75,6 @@ export default class UserStore {
       return { status: 'success', data: 'Sign up' };
 
     } catch (error) {
-      console.log("User Store: ", error);
       return { status: 'error', error: error as string };
     }
   };

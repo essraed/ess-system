@@ -57,8 +57,6 @@ const ServiceForm = ({ service, id }: Props) => {
   }
 
   const onSubmit = async (data: ServiceSchema) => {
-    console.log("data: ", service);
-
     const submissionData = {
       categoryId: categoryId ?? service?.categoryId,
       ...data,

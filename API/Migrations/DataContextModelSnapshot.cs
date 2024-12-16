@@ -287,13 +287,22 @@ namespace API.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("Ejari")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBussinesSetup")
+                    b.Property<bool>("EnquiryType")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LicenseType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("LocalAgent")
                         .HasColumnType("bit");
 
                     b.Property<string>("Message")
@@ -305,10 +314,6 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

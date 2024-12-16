@@ -33,7 +33,6 @@ export default class DocumentStore {
       
       const response = await agent.Documents.create(data);
       runInAction(() => {
-        console.log("data",data);
         this.documents = this.documents
           ? [...this.documents, response]
           : [response];
@@ -41,7 +40,6 @@ export default class DocumentStore {
       return { status: "success", data: response.id };
     } catch (error) {
       handleErrors(error as string | ZodIssue[]);
-      console.log("Error: ", error);
       return { status: "error", error: error as string };
     }
   };
@@ -52,7 +50,6 @@ export default class DocumentStore {
       return { status: "success", data: response as string };
     } catch (error) {
       handleErrors(error as string | ZodIssue[]);
-      console.log("Error: ", error);
       return { status: "error", error: error as string };
     }
   };
@@ -70,7 +67,6 @@ export default class DocumentStore {
       return { status: "success", data: response as string };
     } catch (error) {
       handleErrors(error as string | ZodIssue[]);
-      console.log("Error: ", error);
       return { status: "error", error: error as string };
     }
   };
@@ -113,7 +109,6 @@ export default class DocumentStore {
         this.documents = letterList;
       });
     } catch (error) {
-      console.log(error);
       handleErrors(error as string | ZodIssue[]);
     }
   };
@@ -127,7 +122,6 @@ export default class DocumentStore {
       });
     } catch (error) {
       handleErrors(error as string | ZodIssue[]);
-      console.log(error);
     }
   };
 
@@ -147,14 +141,11 @@ export default class DocumentStore {
         this.aiGeneratedResult = result;
         this.brief = data.brief;
         this.authorityId = data.authorityId;
-
-        console.log("data.authorityId: ", data.authorityId);
       });
 
       return { status: "success", data: "success" };
     } catch (error) {
       handleErrors(error as string | ZodIssue[]);
-      console.log("Error: ", error);
       return { status: "error", error: error as string };
     }
   };

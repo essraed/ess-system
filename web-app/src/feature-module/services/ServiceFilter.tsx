@@ -37,7 +37,6 @@ const ServiceFilter = ({ pageSize }: Props) => {
   const { t } = useTranslation();
 
   const handleFilter = () => {
-    console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pageSize)); // Reset to first page when searching
     loadServices();

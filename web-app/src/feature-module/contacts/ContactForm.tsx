@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../common/breadcrumbs";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -9,21 +9,23 @@ import Header from "../common/header";
 import { ContactUs } from "../../core/data/interface/interface";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactSchema, ContactSchema } from "../../lib/schemas/contactSchema";
 import { useStore } from "../../app/stores/store";
 import toast from "react-hot-toast";
-import { Input } from "@nextui-org/react";
 import InputMask from "react-input-mask";
 import { useTranslation } from "react-i18next";
 import Footer from "../common/footer";
+import { contactSchema, ContactSchema } from "../../lib/schemas/contactSchema";
+// import ReCAPTCHA from "react-google-recaptcha";
+
 
 const ContactForm = () => {
   const { t } = useTranslation();
-
   const {
     contactStore: { addContact },
   } = useStore();
   const data = useSelector((state: ContactUs) => state.contactdata);
+
+  const [captchaVerified, setCaptchaVerified] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
@@ -41,7 +43,11 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: ContactSchema) => {
-    console.log("data",data);
+    if (!captchaVerified) {
+      toast.error("Please complete the CAPTCHA verification.");
+      return;
+    }
+
     const result = await addContact(data);
     if (result.status === "success") {
       toast.success("Contact updated successfully");
@@ -49,6 +55,15 @@ const ContactForm = () => {
       toast.error("Error: " + result.error);
     }
     reset();
+    setCaptchaVerified(false); // Reset CAPTCHA state
+  };
+
+  const handleCaptchaChange = (token: string | null) => {
+    if (token) {
+      setCaptchaVerified(true);
+    } else {
+      setCaptchaVerified(false);
+    }
   };
 
   return (
@@ -58,6 +73,7 @@ const ContactForm = () => {
       <section className="contact-section">
         <div className="container">
           <div className="contact-info-area">
+            {/* Contact Information */}
             <div className="row">
               {data.map((info: ContactUs, index: number) => (
                 <div
@@ -90,7 +106,8 @@ const ContactForm = () => {
             className="form-info-area"
             data-aos="fade-down"
             data-aos-duration={1200}
-            data-aos-delay="0.5">
+            data-aos-delay="0.5"
+          >
             <div className="row">
               <div className="col-lg-6 d-flex">
                 <ImageWithBasePath
@@ -159,24 +176,6 @@ const ContactForm = () => {
                     <div className="col-md-12">
                       <div className="input-block">
                         <label>
-                          Subject<span className="text-danger">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder=""
-                          {...register("subject")}
-                        />
-                        {errors.subject && (
-                          <p className="text-danger">
-                            {errors.subject.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>
                           Comments <span className="text-danger">*</span>
                         </label>
                         <textarea
@@ -194,6 +193,13 @@ const ContactForm = () => {
                       </div>
                     </div>
                   </div>
+                  {/* reCAPTCHA */}
+                  {/* <div className="captcha-block">
+                    <ReCAPTCHA
+                      sitekey="YOUR_SITE_KEY"
+                      onChange={handleCaptchaChange}
+                    />
+                  </div> */}
                   <button type="submit" className="btn contact-btn">
                     Send Enquiry
                   </button>
@@ -203,7 +209,6 @@ const ContactForm = () => {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );

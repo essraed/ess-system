@@ -10,7 +10,6 @@ import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
 
-
 const ContactFilter = () => {
   const {
     contactStore: {
@@ -20,15 +19,15 @@ const ContactFilter = () => {
       pagination,
       fromDate: startDate,
       toDate: endDate,
-    }
+    },
   } = useStore();
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const[enquiryType,setEnquiryType]=useState("");
   const { t } = useTranslation();
 
   const handleFilter = () => {
-    console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pagination?.pageSize)); // Reset to first page when searching
     loadContact();
@@ -38,7 +37,6 @@ const ContactFilter = () => {
     setFromDate(startDate);
     setToDate(endDate);
   }, [startDate, endDate]);
-
 
   useEffect(() => {
     handleFilter();
@@ -71,6 +69,18 @@ const ContactFilter = () => {
               onChange={(e) => handleToDateChange(e)}
               label={t("To Date")}
             />
+            {/* <Autocomplete
+              value={enquiryType ?? ""}
+              className="mb-2"
+              label={t("Enquiry Type")} // Translate "External Authority"rDropdown ?? []}
+              onSelectionChange={(key) =>
+                handleCategorySelect(key?.toString() as string)
+              }
+            >
+              {(item) => (
+                <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>
+              )}
+            </Autocomplete> */}
           </div>
         </div>
       </div>

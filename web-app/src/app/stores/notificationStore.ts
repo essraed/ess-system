@@ -8,7 +8,6 @@ import { ActionResult } from "../../types";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 export default class NotificationStore {
-
   notifications: NotificationData[] | undefined = [];
 
   unreadCount: number = 0;
@@ -31,9 +30,7 @@ export default class NotificationStore {
   startConnection = async () => {
     try {
       if (this.connection) await this.connection.start();
-      console.log("Connected to SignalR hub");
     } catch (err) {
-      console.error("Initial connection failed. Retrying...", err);
       setTimeout(this.startConnection, 5000);
     }
   };
@@ -82,7 +79,6 @@ export default class NotificationStore {
       this.connection &&
       this.connection.state === signalR.HubConnectionState.Connected
     ) {
-      console.log("SignalR already initialized.");
       return;
     }
 
@@ -118,9 +114,7 @@ export default class NotificationStore {
             updateDate: item.updateDate
               ? formatDateTime(item.updateDate?.toString())
               : "No Set",
-            moreDetailsUrl: item.moreDetailsUrl
-              ? item.moreDetailsUrl
-              : "#",
+            moreDetailsUrl: item.moreDetailsUrl ? item.moreDetailsUrl : "#",
           });
         });
 
@@ -147,15 +141,17 @@ export default class NotificationStore {
     try {
       const response = await agent.Notifications.delete(id);
       runInAction(() => {
-        this.notifications = this.notifications?.filter(item => item.id !== id)
-      })
+        this.notifications = this.notifications?.filter(
+          (item) => item.id !== id
+        );
+      });
       return { status: "success", data: response };
     } catch (error) {
       console.error("Failed to mark notification as read", error);
       return { status: "error", error: error as string };
     }
   };
-  
+
   get axiosParams() {
     const params = new URLSearchParams();
 

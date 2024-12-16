@@ -51,7 +51,6 @@ const NotificationList = () => {
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    console.log("newPageSize: ", newPageSize);
 
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));

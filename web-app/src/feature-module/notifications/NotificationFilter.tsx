@@ -29,7 +29,6 @@ const NotificationFilter = () => {
   const { t } = useTranslation();
 
   const handleFilter = () => {
-    console.log("from Date: ", "");
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pagination?.pageSize)); // Reset to first page when searching
     loadNotifications();

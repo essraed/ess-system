@@ -114,7 +114,7 @@ const ContactList = () => {
                   getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id","message","isDeleted"]}
+                  exceptColumns={["id","message","isDeleted","ejari","localAgent","licenseType"]}
                   data={contacts}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
