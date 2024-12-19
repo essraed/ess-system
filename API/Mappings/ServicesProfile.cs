@@ -12,8 +12,8 @@ namespace API.Mappings
             CreateMap<Category, CategoryDto>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src =>
                     src.CreatedBy != null ? src.CreatedBy.DisplayName : string.Empty))
-                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src =>
-                    src.FileEntity != null ? src.FileEntity.FilePath : string.Empty));
+                .ForMember(dest => dest.FileEntities, opt => opt.MapFrom(src =>
+                   src.FileEntities));
 
             CreateMap<CategorySaveDto, Category>();
             ;
@@ -29,8 +29,8 @@ namespace API.Mappings
                     src.Category != null ? src.Category.Id.ToString() : string.Empty)) // Correct mapping for CategoryId
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src =>
                     src.Category != null ? src.Category.Name : string.Empty))
-                .ForMember(dest => dest.FilePath, opt => opt.MapFrom(src =>
-                    src.FileEntity != null ? src.FileEntity.FilePath : string.Empty));
+                               .ForMember(dest => dest.FileEntities, opt => opt.MapFrom(src =>
+                   src.FileEntities));
 
 
             CreateMap<ServiceSaveDto, Service>()

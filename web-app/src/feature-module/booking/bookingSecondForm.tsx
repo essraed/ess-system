@@ -54,6 +54,7 @@ const BookingSecondForm = ({
   const [selectedLng, setSelectedLng] = useState<number | undefined>(undefined);
   const [address, setAddress] = useState<string>("");
   const [reuseData, setReuseData] = useState(false);
+  const [reuseDate, setReuseDate] = useState(false);
 
   const {
     register,
@@ -67,7 +68,8 @@ const BookingSecondForm = ({
   });
 
   const onSubmit = async (data: BookingSchema) => {
-    console.log("hiiiiiiiiiiii");
+    data.address = address;
+    console.log("hiiiiiiiiiiii", data);
     data.totalPrice = totalPrice;
     data.serviceId = serviceId;
     data.serviceOptionId = serviceOptionId;
@@ -75,17 +77,6 @@ const BookingSecondForm = ({
     if (!date || moment(date).isBefore(moment(), "day")) {
       toast.error(t("Please select a valid future date."));
       return;
-    }
-
-    // Check if reuseData is enabled
-    if (reuseData && currentBooking) {
-      data.latitude = currentBooking.latitude!;
-      data.longitude = currentBooking.longitude!;
-      data.address = currentBooking.address!;
-    } else {
-      data.latitude = selectedLat;
-      data.longitude = selectedLng;
-      data.address = address;
     }
 
     // Add isVIP flag
@@ -107,17 +98,22 @@ const BookingSecondForm = ({
     await getAvailableSlots(date?.toDateString() ?? new Date().toDateString());
   };
 
-  const fetchLocationDetails = async (lat: number, lng: number) => {
+  async function fetchLocationDetails(lat: number, lng: number) {
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
       );
       const data = await response.json();
-      setAddress(data.display_name || "Unknown Address");
+      if (data && data.display_name) {
+        setAddress(data.display_name); // Update local state with fetched address
+      } else {
+        setAddress("Location details not found");
+      }
     } catch (error) {
+      console.error("Error fetching location details:", error);
       setAddress("Error fetching location details");
     }
-  };
+  }
 
   useEffect(() => {
     fetchAvailableSlots();
@@ -133,21 +129,38 @@ const BookingSecondForm = ({
   }, [selectedLat, selectedLng, setValue]);
   useEffect(() => {
     if (reuseData && currentBooking) {
+      const bookingDate = new Date(currentBooking.bookingDate || "");
       setValue("customerName", currentBooking.customerName || "");
       setValue("phone", currentBooking.phone || "");
       setValue("email", currentBooking.email || "");
       setAddress(currentBooking.address || "");
       setValue("address", currentBooking.address || "");
+      setValue("longitude", currentBooking.longitude || undefined);
+      setValue("latitude", currentBooking.latitude || undefined);
     } else {
       setValue("customerName", "");
       setValue("phone", "");
       setValue("email", "");
       setAddress("");
       setValue("address", "");
+      setValue("longitude", undefined);
+      setValue("latitude", undefined);
     }
-  }, [reuseData, currentBooking, setValue]);
+  }, [reuseData]);
+  useEffect(() => {
+    if (reuseDate&& currentBooking) {
+      const bookingDate = new Date(currentBooking.bookingDate || "");
+      setDate(bookingDate);
+      setValue("bookingDate", bookingDate.toISOString().split("T")[0]);
+      setValue("bookingTime", moment(bookingDate).format("hh:mm A"));
+    } else {
+      setDate(undefined);
+      setValue("bookingDate", "");
+      setValue("bookingTime", "");
+    }
+  }, [reuseDate]);
 
-  const items = (availableSlots ?? []).map((item) => ({ label: item }));
+  const items = (availableSlots ?? []).map((item) => ({ label: item }))
 
   const customIcon = new L.Icon({
     iconUrl: "/location-pin.png",
@@ -176,153 +189,171 @@ const BookingSecondForm = ({
             {t("Reuse previous booking details")}
           </label>
         </div>
-        <div className="flex flex-col lg:flex-row gap-1 items-center lg:items-start w-full">
-          {/* Date Picker */}
-          <div className="flex flex-col w-full lg:w-1/2">
-            <label
-              htmlFor="pickup-date"
-              className="text-small font-normal text-gray-800 "
-            >
-              {t("Pickup Date")}
-            </label>
-            <DatePicker
-              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 size-12"
-              onChange={(newDate) =>
-                setDate(newDate ? newDate.toDate() : undefined)
-              }
-              placeholder={t("Pickup Date")}
-            />
-          </div>
 
-          {/* Available Slots (Autocomplete) */}
-          <div className="flex flex-col w-full lg:w-1/2 ">
-            <label
-              htmlFor="booking-time"
-              className="text-small mb-2 font-normal text-gray-800 "
-            >
-              {t("Available Slots")}
-            </label>
-            <div className="relative rounded-none">
-              <Autocomplete
-                size="sm"
-                value={
-                  reuseData
-                    ? moment(currentBooking?.bookingDate).format("HH:mm")
-                    : ""
-                }
-                label={t("Select a time")}
-                placeholder={t("")}
-                defaultItems={items}
-                onSelectionChange={(key) =>
-                  setValue("bookingTime", key as string)
-                }
-                {...register("bookingTime")}
-                isInvalid={!!errors.bookingTime}
-                errorMessage={errors.bookingTime?.message}
-              >
-                {(item) => (
-                  <AutocompleteItem key={item.label}>
-                    {item.label}
-                  </AutocompleteItem>
-                )}
-              </Autocomplete>
-            </div>
-          </div>
+        <div className="flex items-center mb-4">
+          <input
+            type="checkbox"
+            id="reuseDate"
+            className="mr-2"
+            checked={reuseDate}
+            onChange={() => setReuseDate(!reuseDate)}
+          />
+          <label htmlFor="reuseDate" className="text-gray-700 text-sm">
+            {t("Reuse booking date and time")}
+          </label>
         </div>
-        <div className="space-y-2">
-          <Input
-            radius="sm"
-            size="sm"
-            label={t("Customer Name")}
-            variant="bordered"
-            value={watch("customerName") || ""}
-            onChange={(e) => setValue("customerName", e.target.value)}
-            isInvalid={!!errors.customerName}
-            errorMessage={errors.customerName?.message}
-          />
 
-          {/* Customer Name */}
-
-          {/* Phone */}
-          {/* Phone */}
-          <InputMask
-            mask="+999 99 999 9999"
-            maskChar="_"
-            size="sm"
-            value={watch("phone")}
-            onChange={(e: any) => setValue("phone", e.target.value)}
-          >
-            {() => (
-              <Input
-                radius="sm"
-                label="Phone"
-                size="sm"
-                variant="bordered"
-                isInvalid={!!errors.phone}
-                errorMessage={errors.phone?.message}
-              />
-            )}
-          </InputMask>
-
-          {/* Email */}
-          <Input
-            radius="sm"
-            size="sm"
-            label={t("Email")}
-            value={watch("email") || ""}
-            variant="bordered"
-            onChange={(e) => setValue("email", e.target.value)} // Update form state
-            isInvalid={!!errors.email}
-            errorMessage={errors.email?.message}
-          />
-          {/* Address */}
-          <Input
-            radius="sm"
-            variant="bordered"
-            size="sm"
-            label={t("Address")}
-            value={watch("address") || address} // Fallback to address state
-            onChange={(e) => {
-              setValue("address", e.target.value); // Update form state
-              setAddress(e.target.value); // Sync local state
-            }}
-            isInvalid={!!errors.address}
-            errorMessage={errors.address?.message}
-          />
-
-          {/* Map */}
-          <div>
-            <SearchMapInput
-              onSearch={(lat, lng) => {
-                setSelectedLat(lat);
-                setSelectedLng(lng);
-              }}
-            />
-            <div
-              style={{ height: "300px", position: "relative" }}
-              className="transition-transform transform scale-100 duration-200 ease-in-out"
-            >
-              <MapContainer
-                center={position}
-                zoom={12}
-                style={{ height: "100%", width: "100%", zIndex: 0 }}
+        {/* Conditional Rendering of Date and Slots */}
+        {!reuseDate && (
+          <div className="flex flex-col lg:flex-row gap-1 items-center lg:items-start w-full">
+            {/* Date Picker */}
+            <div className="flex flex-col w-full lg:w-1/2">
+              <label
+                htmlFor="pickup-date"
+                className="text-small font-normal text-gray-800 "
               >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <LocationPicker
-                  onLocationChange={(lat, lng) => {
-                    setSelectedLat(lat);
-                    setSelectedLng(lng);
-                  }}
-                />
-                {selectedLat && selectedLng && (
-                  <Marker
-                    position={[selectedLat, selectedLng]}
-                    icon={customIcon}
-                  />
-                )}
-                <MapViewUpdater lat={selectedLat} lng={selectedLng} />
-              </MapContainer>
+                {t("Pickup Date")}
+              </label>
+              <DatePicker
+                className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 size-12"
+                onChange={(newMoment) => {
+                  if (newMoment && newMoment.isValid()) {
+                    setDate(newMoment.toDate()); // Convert to Date object if valid
+                  } else {
+                    setDate(undefined); // Reset date when cleared
+                  }
+                }}
+                placeholder={t("Pickup Date")}
+                format="YYYY-MM-DD"
+                allowClear // Allow clearing the date
+              />
             </div>
+
+            {/* Available Slots (Autocomplete) */}
+            <div className="flex flex-col w-full lg:w-1/2 ">
+              <label
+                htmlFor="booking-time"
+                className="text-small mb-2 font-normal text-gray-800 "
+              >
+                {t("Available Slots")}
+              </label>
+              <div className="relative rounded-none">
+                <Autocomplete
+                  size="sm"
+                  value={watch("bookingTime") || ""}
+                  label={t("Select a time")}
+                  placeholder={t("")}
+                  defaultItems={items}
+                  onSelectionChange={(key) =>
+                    setValue("bookingTime", moment(key).format("hh:mm A"))
+                  }
+                  {...register("bookingTime")}
+                  isInvalid={!!errors.bookingTime}
+                  errorMessage={errors.bookingTime?.message}
+                >
+                  {(item) => (
+                    <AutocompleteItem key={item.label}>
+                      {item.label}
+                    </AutocompleteItem>
+                  )}
+                </Autocomplete>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Customer Name */}
+        <Input
+          radius="sm"
+          size="sm"
+          label={t("Customer Name")}
+          variant="bordered"
+          value={watch("customerName") || ""}
+          onChange={(e) => setValue("customerName", e.target.value)}
+          isInvalid={!!errors.customerName}
+          errorMessage={errors.customerName?.message}
+        />
+
+        {/* Phone */}
+        <InputMask
+          mask="+999 99 999 9999"
+          maskChar="_"
+          size="sm"
+          value={watch("phone")}
+          onChange={(e: any) => setValue("phone", e.target.value)}
+        >
+          {() => (
+            <Input
+              radius="sm"
+              label="Phone"
+              size="sm"
+              variant="bordered"
+              isInvalid={!!errors.phone}
+              errorMessage={errors.phone?.message}
+            />
+          )}
+        </InputMask>
+
+        {/* Email */}
+        <Input
+          radius="sm"
+          size="sm"
+          label={t("Email")}
+          value={watch("email") || ""}
+          variant="bordered"
+          onChange={(e) => setValue("email", e.target.value)}
+          isInvalid={!!errors.email}
+          errorMessage={errors.email?.message}
+        />
+
+        {/* Address */}
+        <Input
+          radius="sm"
+          variant="bordered"
+          size="sm"
+          label={t("Address")}
+          value={watch("address") || address} // Use watch for form value or fallback to address state
+          onChange={(e) => {
+            const addressValue = e.target.value;
+            setValue("address", addressValue);
+            setAddress(addressValue);
+          }}
+          isInvalid={!!errors.address}
+          errorMessage={errors.address?.message}
+        />
+
+        {/* Map */}
+        <div>
+          <SearchMapInput
+            onSearch={(lat, lng) => {
+              setSelectedLat(lat);
+              setSelectedLng(lng);
+            }}
+          />
+          <div
+            style={{ height: "300px", position: "relative" }}
+            className="transition-transform transform scale-100 duration-200 ease-in-out"
+          >
+            <MapContainer
+              center={position}
+              zoom={12}
+              style={{ height: "100%", width: "100%", zIndex: 0 }}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <LocationPicker
+                onLocationChange={(lat, lng) => {
+                  setSelectedLat(lat);
+                  setSelectedLng(lng);
+                }}
+              />
+              {selectedLat && selectedLng && (
+                <Marker
+                  position={[selectedLat, selectedLng]}
+                  icon={customIcon}
+                />
+              )}
+              <MapViewUpdater lat={selectedLat} lng={selectedLng} />
+            </MapContainer>
           </div>
         </div>
 

@@ -39,9 +39,9 @@ const AboutUs = () => {
                 <h6>ABOUT OUR COMPANY</h6>
                 <h2>One Stop Government Transactions </h2>
                 <p>
-                Karama Business Center, located in Dubai's Al Karama district, is one of the city's largest 
+                Karama Business Center, located in Dubai&#39;s Al Karama district, is one of the city&#39;s largest 
                 centers dedicated to providing quality government services efficiently in a single location. 
-                Since its inception, the center has aimed to align with Dubai's strategy of delivering prompt and comprehensive services to the public.
+                Since its inception, the center has aimed to align with Dubai&#39;s strategy of delivering prompt and comprehensive services to the public.
                 </p>
                 <p>
                 The center offers a wide range of services, making it a one-stop destination for various governmental and business needs.
@@ -80,7 +80,7 @@ const AboutUs = () => {
           <div className="section-heading" data-aos="fade-down">
             <h2>How It Works</h2>
             <p>
-            At Karama Business Center, our mission and vision are aligned with Dubai's strategic objectives to provide efficient, high-quality government services.            </p>
+            At Karama Business Center, our mission and vision are aligned with Dubai&#39;s strategic objectives to provide efficient, high-quality government services.            </p>
           </div>
           {/* /Heading title */}
           <div className="services-work">
@@ -114,7 +114,7 @@ const AboutUs = () => {
                   <div className="services-content">
                     <h3>2. Vision</h3>
                     <p>
-                    To save customers' time and effort by providing all necessary smart services in one place.
+                    To save customers&#39; time and effort by providing all necessary smart services in one place.
                     <br></br>
                     </p>
                   </div>

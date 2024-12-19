@@ -6,17 +6,17 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ServiceData } from "../../types/service";
-import FileForm from '../common/FileForm'
+import FileForm from "../common/FileForm";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@nextui-org/react";
 type Props = {
   service: ServiceData;
-  id:string |undefined;
+  id: string | undefined;
 };
 
-const ServiceCard = ({ service ,id}: Props) => {
+const ServiceCard = ({ service, id }: Props) => {
   const { t } = useTranslation();
   const {
     serviceStore: { uploadImage },
@@ -28,30 +28,43 @@ const ServiceCard = ({ service ,id}: Props) => {
   }, []);
 
   return (
-    
-
-    <div
-      className="col-lg-3 col-md-6 col-12 px-3 mb-5"
-      data-aos="fade-up"
-    >
+    <div className="col-lg-3 col-md-6 col-12 px-3 mb-5" data-aos="fade-up">
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg hover:shadow-xl transition-shadow duration-300">
-      <div className="flex justify-center items-center">
-     
+        <div className="flex justify-center items-center"></div>
+        {userStore.isAdmin() && (
+          <div
+            className="position-absolute top-0 end-0 mt-2 mr-5"
+            style={{ zIndex: 10 }}
+          >
+            <FileForm
+              entityId={service.id}
+              uploadImage={(formData) => uploadImage(formData, id)}
+            />
           </div>
+        )}
         <div className="relative overflow-hidden rounded-t-lg">
           <Link to={`/listings/service-details/${service.id}`}>
-            <ImageWithBasePath
-              lazyLoad={true}
-              src={service.filePath || "assets/img/cars/car-03.jpg"}
-              className="w-full h-48 object-cover"
-              alt={service.name}
-            />
+          {service.fileEntities &&
+                      service.fileEntities.length > 0 ? (
+                        <ImageWithBasePath
+                          lazyLoad={true}
+                          src={
+                            !service.fileEntities[0]?.filePath
+                              ? "assets/img/Amer Services.png"
+                              : service.fileEntities[0].filePath
+                          }
+                          alt={service.name ?? "Service"}
+                          className="img-fluid"
+                        />
+                      ) : (
+                        <ImageWithBasePath
+                          lazyLoad={true}
+                          src="assets/img/Amer Services.png"
+                          alt={service.name ?? "Service"}
+                          className="img-fluid"
+                        />
+                      )}
           </Link>
-          {userStore.isAdmin() && (
-            <div className="absolute top-6 right-4">
-              <FileForm entityId={service.id}  uploadImage={(formData) => uploadImage(formData,id)} />
-            </div>
-          )}
         </div>
         <div className="p-3 flex flex-col gap-2">
           {/* <div className="flex justify-center items-center">
@@ -67,16 +80,13 @@ const ServiceCard = ({ service ,id}: Props) => {
               to={`/listings/service-details/${service.id}`}
               className="flex px-3 py-1.5 bg-blue-5000 text-white rounded hover:bg-blue-600 transition justify-center"
             >
-              <div>
-                {t("Book Now")}
-              </div>
+              <div>{t("Book Now")}</div>
             </Link>
             {/* <p className="text-gray-900 text-sm mt-1 border p-2 rounded">
               {service.price
                 ? `${service.price} ${t("AED")}`
                 : t("Price Not Available")}
             </p> */}
-
           </div>
         </div>
       </div>

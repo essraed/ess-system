@@ -42,52 +42,77 @@ export default class BookingStore {
           ? [...this.bookings, response]
           : [response];
       });
-
-      // Generate a unique session ID if it doesn't exist
+  
       const sessionId = this.getSessionId();
-
-      const storedBookings = JSON.parse(
-        localStorage.getItem(sessionId) || "[]"
+  
+      const storedSessionData = JSON.parse(
+        localStorage.getItem(sessionId) || '{"value": []}'
       );
-      storedBookings.push(response.id);
-      localStorage.setItem(sessionId, JSON.stringify(storedBookings));
-
+      const storedBookings: string[] = storedSessionData.value || [];
+  
+      console.log("Before adding: ", storedBookings);
+  
+      if (!storedBookings.includes(response.id)) {
+        storedBookings.push(response.id);
+      }
+  
+      console.log("After adding: ", storedBookings);
+  
+      this.setSessionData(sessionId, storedBookings);
+  
       return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error adding booking: ", error);
       return { status: "error", error: error as string };
     }
   };
-
-  // Utility method to get or create a session ID
+  
+  
+  setSessionData = (sessionId: string, data: string[]) => {
+    const expiryTime = new Date().getTime() + 20 * 60 * 1000; // 20 minutes from now
+    const sessionData = {
+      value: data,
+      expiry: expiryTime,
+    };
+    localStorage.setItem(sessionId, JSON.stringify(sessionData));
+  };
   getSessionId = (): string => {
     let sessionId = localStorage.getItem("sessionId");
     if (!sessionId) {
-      // Generate a unique session ID
       sessionId = this.generateUniqueId();
       localStorage.setItem("sessionId", sessionId);
     }
     return sessionId;
   };
-
   getCurrentSessionBookings = (): string[] | null => {
     const sessionId = localStorage.getItem("sessionId");
 
     if (sessionId) {
-      const storedBookings = JSON.parse(
-        localStorage.getItem(sessionId) || "[]"
-      );
-      this.isSession = storedBookings;
+      this.removeExpiredSessions(sessionId);
 
-      const allSessionIds = Object.keys(localStorage).filter(
-        (key) => key !== "sessionId" && key !== "language"
+      const storedSessionData = localStorage.getItem(sessionId);
+      if (storedSessionData) {
+        const parsedSessionData = JSON.parse(storedSessionData);
+
+        const currentSessionBookings = parsedSessionData.value; 
+        this.isSession = currentSessionBookings;
+      }
+
+      Object.keys(localStorage)
+        .filter((key) => key !== "sessionId" && key !== "language") 
+        .forEach((id) => this.removeExpiredSessions(id));
+
+      const validSessionIds = Object.keys(localStorage).filter(
+        (id) => id !== "sessionId" && localStorage.getItem(id) !== null
       );
 
-      if (allSessionIds.length > 1) {
-        const lastSessionId = allSessionIds[allSessionIds.length - 1];
-        this.isSession = JSON.parse(
-          localStorage.getItem(lastSessionId) || "[]"
+      if (validSessionIds.length > 0) {
+        const latestSessionId = validSessionIds[validSessionIds.length - 1];
+        const latestSessionData = JSON.parse(
+          localStorage.getItem(latestSessionId) || "{}"
         );
+
+        this.isSession = latestSessionData.value;
       }
 
       return this.isSession;
@@ -96,6 +121,19 @@ export default class BookingStore {
     return null;
   };
 
+  removeExpiredSessions = (sessionId: string) => {
+    const sessionData = localStorage.getItem(sessionId);
+    if (sessionData) {
+      const { expiry } = JSON.parse(sessionData);
+      const currentTime = new Date().getTime();
+
+      if (currentTime > expiry) {
+        localStorage.removeItem(sessionId);
+      }
+    }
+  };
+
+  
   // Utility method to generate a unique ID (can use a library like UUID)
   generateUniqueId = (): string => {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -168,8 +206,10 @@ export default class BookingStore {
           ),
         };
       });
+      return this.currentBooking;
     } catch (error) {
       console.error("Error fetching booking: ", error);
+      return null
     }
   };
 

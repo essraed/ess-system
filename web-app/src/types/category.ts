@@ -1,7 +1,9 @@
+import { FileResponseData } from "./filesTypes";
+
 export interface CategoryData {
   id: string;
   name: string;
-  filePath?: string;
+  fileEntities?: FileResponseData[];
   description?: string;
   createDate?:string;
   createdBy?: string;

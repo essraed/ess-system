@@ -72,70 +72,39 @@ const Header = () => {
             {/* Navbar Items Section */}
             <div className="w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container">
               <ul className="flex flex-wrap justify-end items-center bookings-container ">
-                {/* {location.pathname === routes.letterCreate ? (
-                  <>
-                    <li className="nav-item px-2">
+           
+                    {/* <li className="nav-item px-2">
                       <LanguageSelector />
                     </li>
-                    <li>|</li>
-                  </>
-                ) : null} */}
+                    <li>|</li> */}
+                    {/* <li className=" nav-item pr-4 ">
+                      <Link
+                        className="flex items-center font-semibold"
+                        to="https://api.whatsapp.com/send?phone=97143426666"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <i className="fab fa-whatsapp pe-2"></i>
+                        <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
+                      </Link>
+                    </li>
+                    <li>|</li> */}
+    
+           
                 {isSession && !isAdmin() && (
                   <>
                     <li className="nav-item">
-                      {isSession.length === 1 ? (
-                        <Link
-                          className="nav-link header-login px-0 hover:scale-105 transition-all duration-200 flex items-center "
-                          to={`/listings/booking/view/${isSession[0]}`}
-                        >
-                          <span className="relative">
-                            <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
-                            <span
-                              className="absolute bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
-                              style={{
-                                transform: "translate(50%, -50%)",
-                              }}
-                            >
-                              {isSession.length}
-                            </span>
+                      <Link
+                        className="nav-link header-login hover:scale-105 transition-all duration-200 flex items-center "
+                        to={`/listings/booking/view/${isSession[0]}`}
+                      >
+                        <span className="relative inline-block">
+                          <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
+                          <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            {isSession.length}
                           </span>
-                        </Link>
-                      ) : (
-                        <div className="dropdown relative">
-                          <Link
-                            className="nav-link header-login px-0 hover:scale-110 transition-transform duration-200 dropdown-toggle flex items-center justify-center"
-                            to="#"
-                            id="sessionDropdown"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <span className="relative inline-block">
-                              <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
-                              <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                {isSession.length}
-                              </span>
-                            </span>
-                          </Link>
-                          <ul
-                            className="dropdown-menu absolute z-10 mt-2 bg-white shadow-lg rounded-md py-2 w-30"
-                            aria-labelledby="sessionDropdown"
-                          >
-                            {isSession
-                              .slice()
-                              .reverse()
-                              .map((sessionId, index) => (
-                                <li key={index} className="block">
-                                  <Link
-                                    className="dropdown-item block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
-                                    to={`/listings/booking/view/${sessionId}`}
-                                  >
-                                    {t(`Booking  ${index + 1}`)}
-                                  </Link>
-                                </li>
-                              ))}
-                          </ul>
-                        </div>
-                      )}
+                        </span>
+                      </Link>
                     </li>
                   </>
                 )}

@@ -51,6 +51,6 @@ namespace API.Entities
 
         public ICollection<ServiceOption>? ServiceOptions { get; set; }
 
-        public FileEntity? FileEntity { get; set; }
+        public ICollection<FileEntity>? FileEntities { get; set; }
     }
 }

@@ -34,7 +34,7 @@ public class ServiceService : IServiceService
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
             .Include(x => x.Category)
-            .Include(x => x.FileEntity)
+            .Include(x => x.FileEntities)
             .AsNoTracking()
             .AsQueryable();
 
@@ -77,7 +77,7 @@ public class ServiceService : IServiceService
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
             .Include(x => x.Category)
-            .Include(x => x.FileEntity)
+            .Include(x => x.FileEntities)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (service == null)
@@ -91,38 +91,89 @@ public class ServiceService : IServiceService
     public async Task<string> UploadImage(FileUploadNewDto model)
     {
         var service = await _context.Services
-            .Include(x => x.FileEntity)
+            .Include(x => x.FileEntities)
             .FirstOrDefaultAsync(x => x.Id == model.EntityId);
 
-        if (service is not null)
+        if (service == null) return null!;
+
+        if (service.FileEntities?.Count > 0)
         {
-            if (service.FileEntity is not null)
+            var fileEntitiesList = service.FileEntities.ToList();
+
+            for (int i = 0; i < model.Files.Count; i++)
             {
-                var fileToUpdate = await _fileService.UpdateImageAsync(service.FileEntity.Id, model.Files[0], model.directory);
-
-                var file = await _fileService.GetFileByIdAsync(fileToUpdate.Id);
-                file.ServiceId = model.EntityId;
-
-                await _context.SaveChangesAsync();
-
-                return fileToUpdate.FilePath!;
-            }
-            else
-            {
-                var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
-                createdFiles.ForEach(async item =>
+                if (i < fileEntitiesList.Count)
                 {
-                    var file = await _fileService.GetFileByIdAsync(item.Id);
-                    file.ServiceId = model.EntityId;
 
-                });
-                
-                await _context.SaveChangesAsync();
+                    var updatedFile = await _fileService.UpdateFileAsync(
+                        fileEntitiesList[i].Id,
+                        model.Files[i],
+                        model.directory,
+                        isImage: true
+                    );
+                    var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                    fileEntity.ServiceId = model.EntityId;
+                }
+                else
+                {
+                    var newFileDto = await _fileService.SaveFileEntityAsync(
+                        model.Files[i],
+                        model.directory,
+                        isImage: true
+                    );
+                    var newFileEntity = new FileEntity
+                    {
+                        Id = newFileDto.Id,
+                        FileName = newFileDto.FileName,
+                        FilePath = newFileDto.FilePath,
+                        ContentType = newFileDto.ContentType,
+                        Size = newFileDto.Size,
+                        ServiceId = model.EntityId,
+                        CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                        CreatedById = GetCurrentUserId()
+                    };
 
-                return createdFiles[0].FilePath!;
+                    service.FileEntities.Add(newFileEntity);
+
+                }
+
             }
         }
-        return null!;
+        else
+        {
+            foreach (var file in model.Files)
+            {
+                var createdFile = await _fileService.SaveFileEntityAsync(file, model.directory, isImage: true);
+
+                var newFileEntity = new FileEntity
+                {
+                    Id = createdFile.Id,
+                    FileName = createdFile.FileName,
+                    FilePath = createdFile.FilePath,
+                    ContentType = createdFile.ContentType,
+                    Size = createdFile.Size,
+                    ServiceId = model.EntityId,
+                    CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                    CreatedById = GetCurrentUserId()
+                };
+
+                // Detach the new entity if already tracked
+                var trackedEntity = _context.ChangeTracker.Entries<FileEntity>()
+                    .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
+
+                if (trackedEntity != null)
+                {
+                    _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
+                }
+
+                service?.FileEntities?.Add(newFileEntity);
+            }
+
+        }
+
+        await _context.SaveChangesAsync();
+
+        return service.FileEntities.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
     }
 
     public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)
