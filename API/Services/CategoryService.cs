@@ -8,7 +8,9 @@ using API.Interfaces;
 using API.RequestParams;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 public class CategoryService : ICategoryService
 {
@@ -33,7 +35,7 @@ public class CategoryService : ICategoryService
 
         var query = _context.Categories
         .Include(x => x.CreatedBy)
-        .Include(x => x.FileEntity)
+        .Include(x => x.FileEntities)
         .Where(x => !x.IsDeleted)
         .AsNoTracking()
                 .AsQueryable();
@@ -74,7 +76,7 @@ public class CategoryService : ICategoryService
     {
         var category = await _context.Categories
         .Include(x => x.Services)
-        .Include(x => x.FileEntity)
+        .Include(x => x.FileEntities)
         .Include(x => x.CreatedBy)
         .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -89,40 +91,99 @@ public class CategoryService : ICategoryService
     public async Task<string> UploadImage(FileUploadNewDto model)
     {
         var category = await _context.Categories
-            .Include(x => x.FileEntity)
+            .Include(x => x.FileEntities)
             .FirstOrDefaultAsync(x => x.Id == model.EntityId);
 
-        if (category is not null)
+        if (category == null) return null!;
+
+        // Case 1: Update existing files if they exist
+        if (category.FileEntities?.Count > 0)
         {
+            var fileEntitiesList = category.FileEntities.ToList();
 
-            if (category.FileEntity is not null)
+            for (int i = 0; i < model.Files.Count; i++)
             {
-                var fileToUpdate = await _fileService.UpdateImageAsync(category.FileEntity.Id, model.Files[0], model.directory);
-
-                var file = await _fileService.GetFileByIdAsync(fileToUpdate.Id);
-                file.CategoryId = model.EntityId;
-
-                await _context.SaveChangesAsync();
-
-                return fileToUpdate.FilePath!;
-            }
-            else
-            {
-                var createdFiles = await _fileService.SaveImagesAsync(model.Files, model.directory);
-                createdFiles.ForEach(async item =>
+                if (i < fileEntitiesList.Count)
                 {
-                    var file = await _fileService.GetFileByIdAsync(item.Id);
-                    file.CategoryId = model.EntityId;
-                });
 
-                await _context.SaveChangesAsync();
+                    var updatedFile = await _fileService.UpdateFileAsync(
+                        fileEntitiesList[i].Id,
+                        model.Files[i],
+                        model.directory,
+                        isImage: true
+                    );
 
-                return createdFiles[0].FilePath!;
+                    // Ensure the CategoryId is properly set
+                    var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                    fileEntity.CategoryId = model.EntityId;
+                }
+                else
+                {
+                    // Add new file if model.Files has more files than existing FileEntities
+                    var newFileDto = await _fileService.SaveFileEntityAsync(
+                        model.Files[i],
+                        model.directory,
+                        isImage: true
+                    );
+
+                    // Map FileResponseDto to FileEntity
+                    var newFileEntity = new FileEntity
+                    {
+                        Id = newFileDto.Id,
+                        FileName = newFileDto.FileName,
+                        FilePath = newFileDto.FilePath,
+                        ContentType = newFileDto.ContentType,
+                        Size = newFileDto.Size,
+                        CategoryId = model.EntityId,
+                        CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                        CreatedById = GetCurrentUserId()
+                    };
+
+                    category.FileEntities.Add(newFileEntity);
+
+                }
+
             }
         }
-        return null!;
-    }
+        else
+        {
+            // Case 2: Save new files if no existing FileEntities
+            foreach (var file in model.Files)
+            {
+                var createdFile = await _fileService.SaveFileEntityAsync(file, model.directory, isImage: true);
 
+                // Map FileResponseDto to FileEntity
+                var newFileEntity = new FileEntity
+                {
+                    Id = createdFile.Id,
+                    FileName = createdFile.FileName,
+                    FilePath = createdFile.FilePath,
+                    ContentType = createdFile.ContentType,
+                    Size = createdFile.Size,
+                    CategoryId = model.EntityId,
+                    CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                    CreatedById = GetCurrentUserId()
+                };
+
+                // Detach the new entity if already tracked
+                var trackedEntity = _context.ChangeTracker.Entries<FileEntity>()
+                    .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
+
+                if (trackedEntity != null)
+                {
+                    _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
+                }
+
+                category.FileEntities.Add(newFileEntity);
+            }
+
+        }
+
+        await _context.SaveChangesAsync();
+
+        // Return the path of the first file or a default path
+        return category.FileEntities.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
+    }
     public async Task<CategoryDto> AddCategoryAsync(CategorySaveDto model)
     {
 

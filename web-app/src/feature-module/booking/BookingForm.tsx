@@ -37,7 +37,7 @@ const BookingForm = ({
   IsAtHome,
 }: Props) => {
   const {
-    bookingStore: { getAvailableSlots, availableSlots, addBooking },
+    bookingStore: { getAvailableSlots, availableSlots, addBooking,getCurrentSessionBookings},
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -76,6 +76,7 @@ const BookingForm = ({
     const result = await addBooking(data);
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
+      getCurrentSessionBookings();
       navigate(`/listings/booking/view/${result.data}`);
     } else {
       toast.error(`${t("Error")}: ${result.error}`);

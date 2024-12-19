@@ -24,7 +24,8 @@ namespace API.Services
         }
 
         // Save files & images into server
-        private async Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false)
+        // Save files & images into server
+        public async Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false)
         {
             string uploadPath = Path.Combine(_environment.WebRootPath, directory);
 
@@ -34,7 +35,6 @@ namespace API.Services
             }
 
             string uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
-
             string filePath = Path.Combine(uploadPath, uniqueFileName);
 
             if (isImage && !file.ContentType.StartsWith("image/"))
@@ -50,7 +50,7 @@ namespace API.Services
             return Path.Combine(directory, uniqueFileName);
         }
 
-        public async Task<FileEntity> GetFileByIdAsync (Guid id)
+        public async Task<FileEntity> GetFileByIdAsync(Guid id)
         {
             if (id == Guid.Empty) throw new Exception($"File with id {id} not found.");
             return await _context.FileEntities.FindAsync(id) ?? null!;
@@ -83,8 +83,7 @@ namespace API.Services
             return _mapper.Map<FileResponseDto>(fileEntity);
         }
 
-
-        // Save files 
+        // Save multiple files
         public async Task<List<FileResponseDto>> SaveFilesAsync(IList<IFormFile> files, string directory)
         {
             List<FileResponseDto> fileDtos = new List<FileResponseDto>();
@@ -139,14 +138,24 @@ namespace API.Services
             return _mapper.Map<FileResponseDto>(fileEntity);
         }
 
-        // Update Image
-        public async Task<FileResponseDto> UpdateImageAsync(Guid imageId, IFormFile newImage, string directory)
+        // Update Images
+        public async Task<List<FileResponseDto>> UpdateImageAsync(Guid imageId, IList<IFormFile> newImages, string directory)
         {
-            return await UpdateFileAsync(imageId, newImage, directory, isImage: true);
+            List<FileResponseDto> imageDtos = new List<FileResponseDto>();
+
+            foreach (var image in newImages)
+            {
+                if (image.Length > 0)
+                {
+                    imageDtos.Add(await UpdateFileAsync(imageId, image, directory, isImage: true));
+                }
+            }
+
+            return imageDtos;
         }
 
         // Delete from server
-        private void DeleteFileOrImage(string filePath)
+        public void DeleteFileOrImage(string filePath)
         {
             var path = Path.Combine(_environment.WebRootPath, filePath);
             if (File.Exists(path))
@@ -179,5 +188,6 @@ namespace API.Services
                 .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                     ?? null!;
         }
+
     }
 }

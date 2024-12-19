@@ -126,8 +126,9 @@ public class BookingService : IBookingService
         var bookings = await _context.Bookings
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
-                        (b.BookingStatus == BookingStatus.InProcess ||
-                        b.BookingStatus == BookingStatus.Pending))
+                        (b.BookingStatus == BookingStatus.InProcess 
+                        // || b.BookingStatus == BookingStatus.Pending
+                        ))
             .ToListAsync();
 
         var currentStartTime = workingFrom;
@@ -182,7 +183,10 @@ public class BookingService : IBookingService
         }
         var booking = _mapper.Map<Booking>(model);
 
-        var availableCar = await _context.Cars
+        var bookings=_context.Bookings.Where(b=>b.BookingDate==booking.BookingDate).ToList();
+
+        if(bookings.Count==0){
+            var availableCar = await _context.Cars
             .Where(c => !c.IsDeleted &&
                 !_context.Bookings.Any(b =>
                     b.CarId == c.Id &&
@@ -193,6 +197,10 @@ public class BookingService : IBookingService
         if (availableCar == null) throw new Exception("No available cars for the selected time slot.");
 
         booking.CarId = availableCar.Id;
+        }
+        else{
+            booking.CarId=bookings[0].CarId;
+        }
         ValidateBookingConditionsAsync(booking);
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();

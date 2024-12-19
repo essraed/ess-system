@@ -9,7 +9,7 @@ namespace API.DTOs
 
     public class FileUpdateDto
     {
-        public required IFormFile File { get; set; }
+        public required IList<IFormFile> File { get; set; }
         public required string directory { get; set; }
     }
 

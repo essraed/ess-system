@@ -27,12 +27,12 @@ namespace API.Controllers
             return Ok(await _fileService.SaveImagesAsync(fileUploadDto.Files, fileUploadDto.directory));
         }
 
-        [HttpPut("updateFile/{id}")]
-        public async Task<IActionResult> UpdateFile(Guid id, [FromForm] FileUpdateDto fileUploadDto)
-        {
-            var result = await _fileService.UpdateFileAsync(id, fileUploadDto.File, fileUploadDto.directory);
-            return Ok(result);
-        }
+        // [HttpPut("updateFile/{id}")]
+        // // public async Task<IActionResult> UpdateFile(Guid id, [FromForm] FileUpdateDto fileUploadDto)
+        // // {
+        // //     var result = await _fileService.UpdateFileAsync(id, fileUploadDto.File, fileUploadDto.directory);
+        // //     return Ok(result);
+        // // }
 
         [HttpPut("updateImage/{id}")]
         public async Task<IActionResult> UpdateImage(Guid id, [FromForm] FileUpdateDto fileUploadDto)

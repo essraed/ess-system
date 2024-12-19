@@ -117,7 +117,7 @@ const CategoryDashboardList = () => {
                   getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "pictureUrl", "description", "filePath"]}
+                  exceptColumns={["id", "pictureUrl", "description", "fileEntities"]}
                   data={categories}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

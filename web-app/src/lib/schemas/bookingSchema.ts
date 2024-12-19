@@ -21,7 +21,7 @@ export const bookingSchema = z.object({
   bookingDate: z.string().optional(),
   bookingTime: z
     .string()
-    .regex(timeFormat, "Invalid time format, expected 'HH:mm AM/PM'"),
+    .regex(timeFormat, "Invalid time format, expected 'HH:mm AM/PM'").optional(),
   serviceId: z.string().uuid("Invalid service ID format").optional(),
   isVIP: z.boolean().default(false),
   serviceOptionId: z.string().optional(),

@@ -11,7 +11,7 @@ namespace API.DTOs.ServiceDto
         public decimal? PriceVIP { get; set; }
         public string? ServiceVipName { get; set; }
         public decimal? TotalPrice { get; set; }
-        public string? FilePath { get; set; }
+        public ICollection<FileResponseDto>? FileEntities { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string? CreatedBy { get; set; }

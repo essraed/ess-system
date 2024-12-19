@@ -1,3 +1,5 @@
+import { FileResponseData } from "./filesTypes";
+
 export interface ServiceData {
   id: string;
   name: string;
@@ -7,7 +9,7 @@ export interface ServiceData {
   priceVIP?: string;
   serviceVipName?: string;
   totalPrice?: string;
-  filePath?: string; 
+  fileEntities?: FileResponseData[];
   createDate?: string;
   updateDate?: string;
   createdBy?: string;

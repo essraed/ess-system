@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Card, Button, Divider } from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { Card, Divider } from "@nextui-org/react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BookingStatus } from "../../types/booking";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
@@ -14,11 +14,11 @@ import Breadcrumbs from "../common/breadcrumbs";
 import StatusBadge from "../common/StatusBadge";
 import Header from "../common/header";
 import Footer from "../common/footer";
-import toast from "react-hot-toast";
+import BookingCheckout from "./BookingCheckout";
 
 const BookingDetails = () => {
   const { id } = useParams();
-  const { bookingStore, userStore, paymentStore } = useStore();
+  const { bookingStore, userStore } = useStore();
   const {
     getBooking,
     currentBooking,
@@ -29,48 +29,6 @@ const BookingDetails = () => {
     setStatusPending,
   } = bookingStore;
 
-  const [paymentType, setPaymentType] = useState("");
-  const [error, setError] = useState("");
-
-  const onConfirmClick = () => {
-    if (!paymentType) {
-      setError("You must choose a payment method to complete your booking."); // Show error
-      return;
-    }
-    setError(""); // Clear error if payment method is valid
-    handleConfirmBooking(); // Proceed with the confirmation logic
-  };
-
-  const handleConfirmBooking = async () => {
-    if (paymentType === "Direct") {
-      setStatusInProcess(id ?? "");
-    } else if (paymentType === "Online") {
-      const formData = new FormData();
-
-      formData.append(
-        "TransactionAmount",
-        currentBooking?.totalPrice ? currentBooking.totalPrice.toString() : ""
-      );
-      formData.append("CustomerName", currentBooking?.customerName ?? "");
-      formData.append("CustomerEmail", currentBooking?.email ?? "");
-      formData.append("CustomerPhone", currentBooking?.phone ?? "");
-      formData.append("OrderName", currentBooking?.serviceName ?? "");
-      formData.append("OrderId", currentBooking!.id);
-
-      try {
-        const result = await paymentStore.initiatePayment(formData);
-
-        if (result?.status === "success") {
-          console.log("PaymentURl", result.data);
-          window.location.href = result.data as string;
-        } else {
-          toast.error("Payment initiation failed!");
-        }
-      } catch (error) {
-        toast.error("An error occurred while initiating payment.");
-      }
-    }
-  };
   useEffect(() => {
     if (id) {
       getBooking(id); // Fetch booking details using the ID
@@ -110,6 +68,8 @@ const BookingDetails = () => {
   return (
     <>
       <Header />
+
+      { userStore.isAdmin() ? (
       <div className="booking-details-page">
         {/* Header */}
         {userStore.isAdmin() && (
@@ -191,7 +151,6 @@ const BookingDetails = () => {
                     <p className="text-gray-600">{carName}</p>
                   </div>
                 )}
-                {userStore.isAdmin() && (
                   <div className="bg-white rounded-md">
                     <h4 className="text-lg font-semibold text-gray-800 mb-2">
                       Payment Status
@@ -221,7 +180,6 @@ const BookingDetails = () => {
                       </span>
                     )}
                   </div>
-                )}
 
                 {bookingStatus && (
                   <div>
@@ -342,7 +300,7 @@ const BookingDetails = () => {
             </div>
 
             {/* Map Section */}
-            {latitude && longitude && userStore.isAdmin() && (
+            {latitude && longitude && (
               <div className="mb-4">
                 <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   Location
@@ -362,67 +320,9 @@ const BookingDetails = () => {
                 </div>
               </div>
             )}
-
-            {/* Payment Selection */}
-            {!userStore.isAdmin() &&
-              bookingStatus ===
-                convertEnumToString(BookingStatus.Pending, BookingStatus) && (
-                <div className="mb-4">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                    Payment Method
-                  </h2>
-                  <Divider className="mb-2" />
-                  <div className="flex flex-col space-y-3">
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        name="paymentType"
-                        value="Direct"
-                        checked={paymentType === "Direct"}
-                        onChange={(e) => setPaymentType(e.target.value)}
-                        className="form-radio h-5 w-5 text-blue-600"
-                      />
-                      <span className="text-gray-700 text-lg">
-                        Direct Payment
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        name="paymentType"
-                        value="Online"
-                        checked={paymentType === "Online"}
-                        onChange={(e) => setPaymentType(e.target.value)}
-                        className="form-radio h-5 w-5 text-blue-600"
-                      />
-                      <span className="text-gray-700 text-lg">
-                        Online Payment
-                      </span>
-                    </label>
-                  </div>
-                  {error && (
-                    <p className="text-red-600 text-sm mt-2">{error}</p> // Show error message
-                  )}
-                </div>
-              )}
-            {/* Confirm Button */}
-            {!userStore.isAdmin() &&
-              bookingStatus ===
-                convertEnumToString(BookingStatus.Pending, BookingStatus) && (
-                <div className="mt-6">
-                  <Button
-                    color="primary"
-                    className="w-full"
-                    size="lg"
-                    onClick={onConfirmClick}
-                  >
-                    Confirm Booking
-                  </Button>
-                </div>
-              )}
           </Card>
         </div>
-      </div>
+      </div>):<BookingCheckout/>}
       <Footer />
     </>
   );

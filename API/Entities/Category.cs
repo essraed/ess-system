@@ -23,6 +23,6 @@ namespace API.Entities
 
         // related tables
         public ICollection<Service>? Services { get; set; }
-        public FileEntity? FileEntity { get; set; }
+        public ICollection<FileEntity>? FileEntities { get; set; }
     }
 }
