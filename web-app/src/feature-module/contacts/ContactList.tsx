@@ -30,7 +30,8 @@ const ContactList = () => {
       deleteContact,
       clearContacts,
       setDateFilter,
-      getContact
+      getContact,
+      setEnquiryType,
     },
     userStore,
   } = useStore();
@@ -54,8 +55,9 @@ const ContactList = () => {
     setSearchTerm("");
     setSearchQuery("");
     setDateFilter("", "");
+    setEnquiryType(null);
     setPagingParams(new PagingParams(1, pageSize));
-    loadContact(); 
+    loadContact();
   };
 
   const handleDelete = async () => {
@@ -69,7 +71,7 @@ const ContactList = () => {
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
-    loadContact(); 
+    loadContact();
   };
 
   useEffect(() => {
@@ -98,7 +100,6 @@ const ContactList = () => {
               pagination={pagination}
               pageSize={pageSize}
               handlePageSizeChange={handlePageSizeChange}
-
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               handleSearch={handleSearch}
@@ -114,7 +115,14 @@ const ContactList = () => {
                   getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id","message","isDeleted","ejari","localAgent","licenseType"]}
+                  exceptColumns={[
+                    "id",
+                    "message",
+                    "isDeleted",
+                    "ejari",
+                    "localAgent",
+                    "licenseType",
+                  ]}
                   data={contacts}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

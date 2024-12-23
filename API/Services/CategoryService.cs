@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Claims;
 using API.Data;
 using API.DTOs;
@@ -97,53 +98,72 @@ public class CategoryService : ICategoryService
         if (category == null) return null!;
 
         // Case 1: Update existing files if they exist
-        if (category.FileEntities?.Count > 0)
+        if (category.FileEntities?.Count > 0 && model.number != null)
         {
             var fileEntitiesList = category.FileEntities.ToList();
 
-            for (int i = 0; i < model.Files.Count; i++)
+            if (model.Files.Count == 1)
             {
-                if (i < fileEntitiesList.Count)
-                {
-
-                    var updatedFile = await _fileService.UpdateFileAsync(
-                        fileEntitiesList[i].Id,
-                        model.Files[i],
-                        model.directory,
-                        isImage: true
-                    );
-
-                    // Ensure the CategoryId is properly set
-                    var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
-                    fileEntity.CategoryId = model.EntityId;
-                }
-                else
-                {
-                    // Add new file if model.Files has more files than existing FileEntities
-                    var newFileDto = await _fileService.SaveFileEntityAsync(
-                        model.Files[i],
-                        model.directory,
-                        isImage: true
-                    );
-
-                    // Map FileResponseDto to FileEntity
-                    var newFileEntity = new FileEntity
-                    {
-                        Id = newFileDto.Id,
-                        FileName = newFileDto.FileName,
-                        FilePath = newFileDto.FilePath,
-                        ContentType = newFileDto.ContentType,
-                        Size = newFileDto.Size,
-                        CategoryId = model.EntityId,
-                        CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
-                        CreatedById = GetCurrentUserId()
-                    };
-
-                    category.FileEntities.Add(newFileEntity);
-
-                }
-
+                var updatedFile = await _fileService.UpdateFileAsync(
+                fileEntitiesList[Convert.ToInt32(model.number) - 1].Id,
+                model.Files[0],
+                model.directory,
+                isImage: true
+            );
+            
+                var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                fileEntity.CategoryId = model.EntityId;
             }
+            else
+            {
+                for (int i = 0; i < model.Files.Count; i++)
+                {
+                    if (i < fileEntitiesList.Count)
+                    {
+
+                        var updatedFile = await _fileService.UpdateFileAsync(
+                                                fileEntitiesList[i].Id,
+                                                model.Files[i],
+                                                model.directory,
+                                                isImage: true
+                                            );
+
+                        // Ensure the CategoryId is properly set
+                        var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                        fileEntity.CategoryId = model.EntityId;
+
+
+                    }
+                    else
+                    {
+                        // Add new file if model.Files has more files than existing FileEntities
+                        var newFileDto = await _fileService.SaveFileEntityAsync(
+                            model.Files[i],
+                            model.directory,
+                            isImage: true
+                        );
+
+                        // Map FileResponseDto to FileEntity
+                        var newFileEntity = new FileEntity
+                        {
+                            Id = newFileDto.Id,
+                            FileName = newFileDto.FileName,
+                            FilePath = newFileDto.FilePath,
+                            ContentType = newFileDto.ContentType,
+                            Size = newFileDto.Size,
+                            CategoryId = model.EntityId,
+                            CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                            CreatedById = GetCurrentUserId()
+                        };
+
+                        category.FileEntities.Add(newFileEntity);
+
+                    }
+
+                }
+            }
+
+
         }
         else
         {
@@ -174,7 +194,7 @@ public class CategoryService : ICategoryService
                     _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
                 }
 
-                category.FileEntities.Add(newFileEntity);
+                category.FileEntities?.Add(newFileEntity);
             }
 
         }
@@ -182,7 +202,7 @@ public class CategoryService : ICategoryService
         await _context.SaveChangesAsync();
 
         // Return the path of the first file or a default path
-        return category.FileEntities.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
+        return category.FileEntities?.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
     }
     public async Task<CategoryDto> AddCategoryAsync(CategorySaveDto model)
     {

@@ -17,6 +17,7 @@ export default class ContactStore {
   searchTerm: string = "";
   fromDate: string = "";
   toDate: string = "";
+  enquiryType: boolean | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -62,6 +63,11 @@ export default class ContactStore {
     if (this.searchTerm) params.append("searchTerm", this.searchTerm);
     if (this.fromDate) params.append("from", this.fromDate);
     if (this.toDate) params.append("to", this.toDate);
+    if (this.enquiryType !== null) {
+      params.append("enquiryType", this.enquiryType.toString());
+    } else {
+      params.append("enquiryType", "null"); // or just skip appending for null
+    }
 
     return params;
   }
@@ -119,5 +125,9 @@ export default class ContactStore {
   setDateFilter = (from: string, to: string) => {
     this.fromDate = from;
     this.toDate = to;
+  };
+  setEnquiryType = (enquiryType: boolean | null) => {
+    this.enquiryType = enquiryType;
+    console.log("here", enquiryType);
   };
 }

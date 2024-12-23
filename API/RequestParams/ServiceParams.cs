@@ -9,5 +9,6 @@ namespace API.RequestParams
         public DateTime? To { get; set; }
         public string? UserId { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? CategoryAllId { get; set; }
     }
 }

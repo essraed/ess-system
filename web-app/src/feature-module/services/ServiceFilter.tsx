@@ -58,7 +58,7 @@ const ServiceFilter = ({ pageSize }: Props) => {
 
   useEffect(() => {
     handleFilter();
-  }, [fromDate, toDate, userId]);
+  }, [fromDate, toDate, userId,categoryId]);
 
   useEffect(() => {
     loadUsers();
@@ -114,7 +114,7 @@ const ServiceFilter = ({ pageSize }: Props) => {
               )}
             </Autocomplete>
             <Autocomplete
-              value={categoryId ?? ''}
+              value={categoryId }
               className="mb-2"
               label={t("External Category")} // Translate "External Authority"
               placeholder={t("Search an Category")} // Translate "Search an authority"

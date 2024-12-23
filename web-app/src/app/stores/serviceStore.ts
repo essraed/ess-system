@@ -14,6 +14,7 @@ export default class ServiceStore {
   pagination: PaginationData | null = null;
   pagingParams = new PagingParams();
   searchTerm?: string = "";
+  categoryAllId?: string = "";
   categoryId?: string = "";
   fromDate: string = "";
   toDate: string = "";
@@ -100,10 +101,11 @@ export default class ServiceStore {
   loadServices = async (id?: string) => {
     const serviceList: ServiceData[] = [];
     try {
-      if (id) await this.setCategoryIdParam(id);
-      else this.setCategoryIdParam("");
+      if (id) await this.setCategoryAllIdParam(id);
+      else this.setCategoryAllIdParam("");
 
       const result = await agent.Services.getAll(this.axiosParams);
+      this.clearFilters();
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
@@ -161,6 +163,7 @@ export default class ServiceStore {
     params.append("pageSize", this.pagingParams.pageSize.toString());
     if (this.searchTerm) params.append("searchTerm", this.searchTerm);
     if (this.categoryId) params.append("categoryId", this.categoryId);
+    if (this.categoryAllId) params.append("categoryAllId", this.categoryAllId);
     if (this.fromDate) params.append("from", this.fromDate);
     if (this.toDate) params.append("to", this.toDate);
     if (this.userId) params.append("userId", this.userId);
@@ -194,5 +197,18 @@ export default class ServiceStore {
   };
   setSelectedUser = (userId: string) => {
     this.userId = userId;
+  };
+  setCategoryAllIdParam = (categoryID: string) => {
+    this.categoryAllId = categoryID;
+  };
+
+  clearFilters = () => {
+    this.searchTerm = "";
+    this.categoryId = "";
+    this.categoryAllId = "";
+    this.fromDate = "";
+    this.toDate = "";
+    this.userId = "";
+    this.pagingParams = new PagingParams(); // Reset pagination
   };
 }

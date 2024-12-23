@@ -34,7 +34,7 @@ const ServiceList = () => {
       <section className="section">
         <div className="custom-container mx-auto px-4 py-8">
           {/* Header */}
-          <div className="text-left ml-12 mb-8" data-aos="fade-down">
+          {/* <div className="text-left ml-12 mb-8" data-aos="fade-down">
             <h2 className="text-3xl font-extrabold text-gray-800">
               {id ? currentCategory?.name : "All Categories"}
             </h2>
@@ -44,7 +44,7 @@ const ServiceList = () => {
                 : "Explore our range of services across all categories."}
             </p>
             <div className="mt-2 h-1 w-16 bg-gradient-to-r from-slate-50 to-teal-700 rounded-full"></div>
-          </div>
+          </div> */}
 
           {/* Services List */}
           <section className="section car-listing pt-0">
@@ -63,44 +63,53 @@ const ServiceList = () => {
             </div>
           </section>
 
-          <section className="section about-sec">
-            <div className="container">
-              <div className="row align-items-center">
-                <div className="col-lg-6" data-aos="fade-down">
-                  <div className="about-img">
-                    <div className="about-exp">
-                      <span>12+ years of experiences</span>
-                    </div>
-                    <div className="abt-img">
-                    {currentCategory?.fileEntities &&
-                      currentCategory.fileEntities.length > 0 ? (
-                        <ImageWithBasePath
-                          lazyLoad={true}
-                          src={
-                            !currentCategory.fileEntities[1]?.filePath
-                              ? "assets/img/Amer Services.png"
-                              : currentCategory.fileEntities[1].filePath
-                          }
-                          alt={currentCategory.name ?? "Service"}
-                          className="img-fluid"
-                        />
-                      ) : (
-                        <ImageWithBasePath
-                          lazyLoad={true}
-                          src="assets/img/Amer Services.png"
-                          alt={currentCategory?.name ?? "Service"}
-                          className="img-fluid"
-                        />
-                      )}
-                    </div>
+          <section className="section about-sec bg-gradient-to-r from-gray-50 via-gray-100 to-white py-12">
+            <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 lg:gap-10 space-y-8 lg:space-y-0">
+              {/* Image Section */}
+              <div
+                className="lg:w-1/2 flex justify-center mb-8 lg:mb-0"
+                data-aos="fade-down"
+              >
+                <div className="relative">
+                  <div className="absolute top-0 left-0 bg-teal-600 text-white py-2 px-4 rounded-md text-sm shadow-md">
+                    20+ Years of Experience
                   </div>
+                  {currentCategory?.fileEntities &&
+                  currentCategory.fileEntities.length > 0 &&
+                  id ? (
+                    <ImageWithBasePath
+                      lazyLoad={true}
+                      src={
+                        currentCategory.fileEntities[1]?.filePath
+                          ? currentCategory.fileEntities[1].filePath
+                          : "assets/img/Amer Services.png"
+                      }
+                      alt={currentCategory.name ?? "Service"}
+                      className="rounded-lg shadow-md"
+                    />
+                  ) : (
+                    <ImageWithBasePath
+                      lazyLoad={true}
+                      src="assets/img/Amer Services.png"
+                      alt={currentCategory?.name ?? "Service"}
+                      className="rounded-lg shadow-md"
+                    />
+                  )}
                 </div>
-                <div className="col-lg-6" data-aos="fade-down">
-                  <div className="about-content">
-                    <h6>{currentCategory?.name}</h6>
-                    <p>{currentCategory?.description}</p>
-                  </div>
-                </div>
+              </div>
+
+              {/* Content Section */}
+              <div className="lg:w-1/2" data-aos="fade-down">
+                <h6 className="text-lg font-semibold text-teal-600 uppercase mb-2">
+                  {id?currentCategory?.name :"AllServices"}
+                </h6>
+                {/* <h3 className="text-3xl font-bold text-gray-800 mb-4">
+                  {id ? `About ${currentCategory?.name}` : "Who We Are"}
+                </h3> */}
+                <p className="text-gray-600 leading-relaxed">
+                  {id?currentCategory?.description :
+                    "We are committed to delivering exceptional services with over two decades of experience in the industry. Explore our categories and find what suits your needs."}
+                </p>
               </div>
             </div>
           </section>

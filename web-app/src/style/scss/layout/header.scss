@@ -689,6 +689,11 @@
                 @include margin-padding(null, null);
             }
 
+            // @include respond-below(custom991) {
+            //    display: none;
+            // }
+
+
             .add-listing {
                 font-weight: $__medium;
                 font-size: $__font__size__16;

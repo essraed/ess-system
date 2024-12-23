@@ -72,28 +72,31 @@ const Header = () => {
             {/* Navbar Items Section */}
             <div className="w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container">
               <ul className="flex flex-wrap justify-end items-center bookings-container ">
-           
-                    {/* <li className="nav-item px-2">
+                {/* <li className="nav-item px-2">
                       <LanguageSelector />
                     </li>
                     <li>|</li> */}
-                    {/* <li className=" nav-item pr-4 ">
-                      <Link
-                        className="flex items-center font-semibold"
-                        to="https://api.whatsapp.com/send?phone=97143426666"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i className="fab fa-whatsapp pe-2"></i>
-                        <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
-                      </Link>
-                    </li>
-                    <li>|</li> */}
-    
-           
+
+                {!isAdmin() && (
+                  <li className=" nav-item pr-4 hidden md:block">
+                    <Link
+                      className="flex items-center font-semibold"
+                      to="https://api.whatsapp.com/send?phone=97143426666"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <i className="fab fa-whatsapp pe-2"></i>
+                      <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
+                    </Link>
+                  </li>
+                )}
+                {isSession && !isAdmin() && (
+                  <li className=" hidden md:block">|</li>
+                )}
+
                 {isSession && !isAdmin() && (
                   <>
-                    <li className="nav-item">
+                    <li className="nav-item px-3 ">
                       <Link
                         className="nav-link header-login hover:scale-105 transition-all duration-200 flex items-center "
                         to={`/listings/booking/view/${isSession[0]}`}
@@ -411,12 +414,12 @@ const Header = () => {
                 >
                   <Link to={routes.contactUs}>{t("Contact")}</Link>
                 </li>
-                <li className="login-link">
+                {/* <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>
                 </li>
                 <li className="login-link">
                   <Link to={routes.login}>{t("Sign In")}</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

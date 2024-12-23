@@ -1,3 +1,5 @@
+import { Key } from "react";
+
 export type FileResponseData = {
   id: string;
   fileName?: string;
@@ -14,4 +16,5 @@ export type FileFormInputs = {
   file: FileList; 
   directory: string;
   entityId: string;
+  number?:string|null|Key;
 }
