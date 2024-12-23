@@ -48,6 +48,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapFallbackToFile("index.html");
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -65,7 +67,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        var logger = loggerFactory.CreateLogger<Program>();
+        var logger = loggerFactory.CreateLogger<Program>(); 
         logger.LogError(ex, "An error occurred during migration");
     }
 }

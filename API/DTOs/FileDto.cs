@@ -5,6 +5,8 @@ namespace API.DTOs
         public required IList<IFormFile> Files { get; set; }
         public required string directory { get; set; }
         public Guid? EntityId { get; set; }
+
+        public string? number {get;set;}
     }
 
     public class FileUpdateDto

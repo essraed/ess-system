@@ -43,6 +43,11 @@ public class ServiceService : IServiceService
             query = query.Where(x => x.CategoryId == serviceParams.CategoryId);
         }
 
+        if (serviceParams.CategoryAllId != Guid.Empty && serviceParams.CategoryAllId != null)
+        {
+            query = query.Where(x => x.CategoryId == serviceParams.CategoryAllId);
+        }
+
         if (!string.IsNullOrEmpty(serviceParams.SearchTerm))
         {
             query = query.Where(x => x.Name.Contains(serviceParams.SearchTerm));
@@ -100,43 +105,62 @@ public class ServiceService : IServiceService
         {
             var fileEntitiesList = service.FileEntities.ToList();
 
-            for (int i = 0; i < model.Files.Count; i++)
+            if (model.Files.Count == 1)
             {
-                if (i < fileEntitiesList.Count)
-                {
+                var updatedFile = await _fileService.UpdateFileAsync(
+     fileEntitiesList[Convert.ToInt32(model.number) - 1].Id, // Convert model.number to an integer
+     model.Files[0],
+     model.directory,
+     isImage: true
+ );
 
-                    var updatedFile = await _fileService.UpdateFileAsync(
-                        fileEntitiesList[i].Id,
-                        model.Files[i],
-                        model.directory,
-                        isImage: true
-                    );
-                    var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
-                    fileEntity.ServiceId = model.EntityId;
-                }
-                else
+
+
+                // Ensure the CategoryId is properly set
+                var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                fileEntity.ServiceId = model.EntityId;
+            }
+            else
+            {
+
+                for (int i = 0; i < model.Files.Count; i++)
                 {
-                    var newFileDto = await _fileService.SaveFileEntityAsync(
-                        model.Files[i],
-                        model.directory,
-                        isImage: true
-                    );
-                    var newFileEntity = new FileEntity
+                    if (i < fileEntitiesList.Count && model.number != null)
                     {
-                        Id = newFileDto.Id,
-                        FileName = newFileDto.FileName,
-                        FilePath = newFileDto.FilePath,
-                        ContentType = newFileDto.ContentType,
-                        Size = newFileDto.Size,
-                        ServiceId = model.EntityId,
-                        CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
-                        CreatedById = GetCurrentUserId()
-                    };
 
-                    service.FileEntities.Add(newFileEntity);
+                        var updatedFile = await _fileService.UpdateFileAsync(
+                            fileEntitiesList[i].Id,
+                            model.Files[i],
+                            model.directory,
+                            isImage: true
+                        );
+                        var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                        fileEntity.ServiceId = model.EntityId;
+                    }
+                    else
+                    {
+                        var newFileDto = await _fileService.SaveFileEntityAsync(
+                            model.Files[i],
+                            model.directory,
+                            isImage: true
+                        );
+                        var newFileEntity = new FileEntity
+                        {
+                            Id = newFileDto.Id,
+                            FileName = newFileDto.FileName,
+                            FilePath = newFileDto.FilePath,
+                            ContentType = newFileDto.ContentType,
+                            Size = newFileDto.Size,
+                            ServiceId = model.EntityId,
+                            CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                            CreatedById = GetCurrentUserId()
+                        };
+
+                        service.FileEntities.Add(newFileEntity);
+
+                    }
 
                 }
-
             }
         }
         else

@@ -19,12 +19,13 @@ const ContactFilter = () => {
       pagination,
       fromDate: startDate,
       toDate: endDate,
+      setEnquiryType,
+      enquiryType,
     },
   } = useStore();
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const[enquiryType,setEnquiryType]=useState("");
   const { t } = useTranslation();
 
   const handleFilter = () => {
@@ -40,7 +41,11 @@ const ContactFilter = () => {
 
   useEffect(() => {
     handleFilter();
-  }, [fromDate, toDate]);
+  }, [fromDate, toDate, enquiryType]);
+  useEffect(() => {
+    loadContact();
+    console.log("hi");
+  }, [enquiryType]);
 
   function handleFromDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFromDate(e.target.value);
@@ -49,6 +54,20 @@ const ContactFilter = () => {
   function handleToDateChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setToDate(e.target.value);
   }
+
+  const handleEnquertype = (EnqueryType: string | null) => {
+    console.log("hi", enquiryType);
+    if (EnqueryType === "General") {
+      console.log("step1");
+      setEnquiryType(false);
+      loadContact();
+    } else {
+      console.log("step2");
+
+      setEnquiryType(true);
+      loadContact();
+    }
+  };
 
   return (
     <div className="section-search page-search">
@@ -69,18 +88,17 @@ const ContactFilter = () => {
               onChange={(e) => handleToDateChange(e)}
               label={t("To Date")}
             />
-            {/* <Autocomplete
-              value={enquiryType ?? ""}
+            <Autocomplete
               className="mb-2"
-              label={t("Enquiry Type")} // Translate "External Authority"rDropdown ?? []}
-              onSelectionChange={(key) =>
-                handleCategorySelect(key?.toString() as string)
-              }
+              label={t("Enquiry Type")}
+              onSelectionChange={(value) => {
+                console.log("onSelectionChange value:", value);
+                handleEnquertype(value ? value.toString() : null);
+              }}
             >
-              {(item) => (
-                <AutocompleteItem key={item.id}>{item.name}</AutocompleteItem>
-              )}
-            </Autocomplete> */}
+              <AutocompleteItem key="General">General Contact</AutocompleteItem>
+              <AutocompleteItem key="Business">Business Setup</AutocompleteItem>
+            </Autocomplete>
           </div>
         </div>
       </div>

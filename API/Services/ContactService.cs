@@ -43,6 +43,11 @@ namespace API.Services
             {
                 query = query.Where(x => x.CreateDate >= contactParams.From);
             }
+            if (contactParams.enquiryType != "null")
+            {
+                bool enquiryType=contactParams.enquiryType=="true"?true:false;
+                query = query.Where(x => x.EnquiryType ==enquiryType);
+            }
 
             if (contactParams.To != null)
             {
