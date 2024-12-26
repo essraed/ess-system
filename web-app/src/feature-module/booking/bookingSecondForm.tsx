@@ -129,7 +129,6 @@ const BookingSecondForm = ({
   }, [selectedLat, selectedLng, setValue]);
   useEffect(() => {
     if (reuseData && currentBooking) {
-      const bookingDate = new Date(currentBooking.bookingDate || "");
       setValue("customerName", currentBooking.customerName || "");
       setValue("phone", currentBooking.phone || "");
       setValue("email", currentBooking.email || "");

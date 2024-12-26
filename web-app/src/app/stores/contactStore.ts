@@ -5,9 +5,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { formatDateTime } from "../../lib/utils";
 import { ContactData } from "../../types/contact";
 import { BusinessSchema } from "../../lib/schemas/businessSchema";
-import { AuthoritySchema } from "../../lib/schemas/authoritySchema";
 import { ContactSchema } from "../../lib/schemas/contactSchema";
-import { Console } from "console";
 
 export default class ContactStore {
   contacts: ContactData[] | null | undefined = null;

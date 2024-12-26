@@ -28,7 +28,6 @@ import AboutUs from "../aboutus/aboutus";
 import ContactDashboard from "../contacts/ContactDashboard";
 import ContactForm from "../contacts/ContactForm";
 import BusinessSetup from "../contacts/BusinessSetup";
-import PaymentStore from "../../app/stores/paymentStore";
 import PaymentSuccess from "../payment/PaymentSuccess";
 import PaymentFailed from "../payment/PaymentFailed";
 

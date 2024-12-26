@@ -1,4 +1,3 @@
-import BusinessSetup from "../contacts/BusinessSetup";
 
 export const all_routes = {
   // home routes

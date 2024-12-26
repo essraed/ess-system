@@ -20,7 +20,8 @@ import {
 } from "../../lib/schemas/businessSchema";
 
 const BusinessSetup = () => {
-  const { t } = useTranslation();
+  useTranslation();
+
 
   const {
     contactStore: { addContact },

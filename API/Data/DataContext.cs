@@ -32,7 +32,7 @@ namespace API.Data
                 modelBuilder.Entity<Payment>()
             .HasOne(p => p.Booking)
             .WithOne(b => b.Payment)
-            .HasForeignKey<Payment>(p => p.OrderId) // Foreign key to Booking
+            .HasForeignKey<Payment>(p => p.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
 
         }

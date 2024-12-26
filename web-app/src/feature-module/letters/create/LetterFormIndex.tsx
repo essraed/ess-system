@@ -15,7 +15,6 @@ import { observer } from "mobx-react-lite";
 
 import AIAssistedLetterEditor from "./AIAssistedLetterEditor";
 import { TfiSave } from "react-icons/tfi";
-import LanguageSelector from "../../common/LanguageSelector";
 
 const LetterFormIndex = () => {
   const { t } = useTranslation();

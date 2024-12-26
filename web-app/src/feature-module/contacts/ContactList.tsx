@@ -10,7 +10,6 @@ import ConfirmDialog from "../common/ConfirmDialog";
 import Paginator from "../common/Paginator";
 import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
-import CategoryDetails from "./ContactDetails";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ContactDetails from "./ContactDetails";

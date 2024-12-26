@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
 import { observer } from "mobx-react-lite";
-import { formatDateTime } from "../../lib/utils";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 interface Props {

@@ -10,7 +10,7 @@ import {
   Autocomplete,
   AutocompleteItem,
 } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FileFormInputs } from "../../types/filesTypes";
 import { useForm } from "react-hook-form";
 import { allowedImageExtension } from "../../constants/constants";
@@ -19,7 +19,6 @@ import { useTranslation } from "react-i18next";
 import { CiImageOn } from "react-icons/ci";
 import { observer } from "mobx-react-lite";
 import { ActionResult } from "../../types";
-import { useStore } from "../../app/stores/store";
 
 type Props = {
   label?: string;

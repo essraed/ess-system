@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ServiceData } from "../../types/service";
 import { Button } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import { color } from "framer-motion";
 
 type Props = {
   serviceData: ServiceData;

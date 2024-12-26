@@ -23,7 +23,6 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import { useTranslation } from "react-i18next";
-import { Video } from "react-feather";
 
 const HomeOne = () => {
   const { t } = useTranslation();
