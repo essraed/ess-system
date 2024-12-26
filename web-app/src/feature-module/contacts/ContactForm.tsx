@@ -19,7 +19,7 @@ import { contactSchema, ContactSchema } from "../../lib/schemas/contactSchema";
 
 
 const ContactForm = () => {
-  const { t } = useTranslation();
+  useTranslation();
   const {
     contactStore: { addContact },
   } = useStore();
@@ -56,14 +56,6 @@ const ContactForm = () => {
     }
     reset();
     setCaptchaVerified(false); // Reset CAPTCHA state
-  };
-
-  const handleCaptchaChange = (token: string | null) => {
-    if (token) {
-      setCaptchaVerified(true);
-    } else {
-      setCaptchaVerified(false);
-    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Breadcrumbs from "../common/breadcrumbs";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";

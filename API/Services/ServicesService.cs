@@ -147,9 +147,9 @@ public class ServiceService : IServiceService
                         var newFileEntity = new FileEntity
                         {
                             Id = newFileDto.Id,
-                            FileName = newFileDto.FileName,
-                            FilePath = newFileDto.FilePath,
-                            ContentType = newFileDto.ContentType,
+                            FileName = newFileDto.FileName ?? "",
+                            FilePath = newFileDto.FilePath ?? "",
+                            ContentType = newFileDto.ContentType ?? "",
                             Size = newFileDto.Size,
                             ServiceId = model.EntityId,
                             CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
@@ -172,9 +172,9 @@ public class ServiceService : IServiceService
                 var newFileEntity = new FileEntity
                 {
                     Id = createdFile.Id,
-                    FileName = createdFile.FileName,
-                    FilePath = createdFile.FilePath,
-                    ContentType = createdFile.ContentType,
+                    FileName = createdFile.FileName ?? "",
+                    FilePath = createdFile.FilePath ?? "",
+                    ContentType = createdFile.ContentType ?? "",
                     Size = createdFile.Size,
                     ServiceId = model.EntityId,
                     CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
@@ -197,7 +197,7 @@ public class ServiceService : IServiceService
 
         await _context.SaveChangesAsync();
 
-        return service.FileEntities.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
+        return service?.FileEntities?.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
     }
 
     public async Task<ServiceDto> AddServiceAsync(Guid categoryId, ServiceSaveDto model)

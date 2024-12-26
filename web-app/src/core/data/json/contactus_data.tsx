@@ -1,4 +1,3 @@
-import { COMPANY_PHONE_NUMBER } from "../../../environment";
 
 export const contactData = [
   {

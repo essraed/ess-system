@@ -47,6 +47,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseDefaultFiles();
 
 app.MapFallbackToFile("index.html");
 
@@ -61,7 +62,7 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        var context = services.GetRequiredService<DataContext>();
+        var context = services.GetRequiredService<DataContext>();          
         await context.Database.MigrateAsync();
         await Seed.SeedData(context, userManager, roleManager, loggerFactory, webHostEnv);
     }

@@ -102,7 +102,10 @@ public class CategoryService : ICategoryService
         {
             var fileEntitiesList = category.FileEntities.ToList();
 
-            if (model.Files.Count == 1)
+            if (model.Files.Count == 1 &&
+              int.TryParse(model.number, out var number) &&
+              number > 0 &&
+              category.FileEntities.Count >= number)
             {
                 var updatedFile = await _fileService.UpdateFileAsync(
                 fileEntitiesList[Convert.ToInt32(model.number) - 1].Id,
@@ -110,7 +113,7 @@ public class CategoryService : ICategoryService
                 model.directory,
                 isImage: true
             );
-            
+
                 var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
                 fileEntity.CategoryId = model.EntityId;
             }
@@ -118,7 +121,10 @@ public class CategoryService : ICategoryService
             {
                 for (int i = 0; i < model.Files.Count; i++)
                 {
-                    if (i < fileEntitiesList.Count)
+                    if (i < fileEntitiesList.Count &&
+              int.TryParse(model.number, out var num) &&
+              num > 0 &&
+              category.FileEntities?.Count >= num)
                     {
 
                         var updatedFile = await _fileService.UpdateFileAsync(
@@ -136,28 +142,35 @@ public class CategoryService : ICategoryService
                     }
                     else
                     {
+                        var createdFile = await _fileService.SaveFileEntityAsync(model.Files[0], model.directory, isImage: true);
                         // Add new file if model.Files has more files than existing FileEntities
-                        var newFileDto = await _fileService.SaveFileEntityAsync(
-                            model.Files[i],
-                            model.directory,
-                            isImage: true
-                        );
-
-                        // Map FileResponseDto to FileEntity
                         var newFileEntity = new FileEntity
                         {
-                            Id = newFileDto.Id,
-                            FileName = newFileDto.FileName,
-                            FilePath = newFileDto.FilePath,
-                            ContentType = newFileDto.ContentType,
-                            Size = newFileDto.Size,
+                            Id = createdFile.Id,
+                            FileName = createdFile.FileName ?? "",
+                            FilePath = createdFile.FilePath ?? "",
+                            ContentType = createdFile.ContentType ?? "",
+                            Size = createdFile.Size,
                             CategoryId = model.EntityId,
                             CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
                             CreatedById = GetCurrentUserId()
                         };
 
-                        category.FileEntities.Add(newFileEntity);
+                        // Check if the entity is already being tracked
+                        var existingEntity = _context.ChangeTracker.Entries<FileEntity>()
+                            .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
 
+                        if (existingEntity != null)
+                        {
+                            // If already tracked, detach the existing instance
+                            _context.Entry(existingEntity.Entity).State = EntityState.Detached;
+                        }
+
+                        // Ensure the new entity is not being tracked before adding
+                        _context.Entry(newFileEntity).State = EntityState.Detached;
+
+                        // Add the new file entity to the category
+                        category.FileEntities?.Add(newFileEntity);
                     }
 
                 }
@@ -176,9 +189,9 @@ public class CategoryService : ICategoryService
                 var newFileEntity = new FileEntity
                 {
                     Id = createdFile.Id,
-                    FileName = createdFile.FileName,
-                    FilePath = createdFile.FilePath,
-                    ContentType = createdFile.ContentType,
+                    FileName = createdFile.FileName ?? "",
+                    FilePath = createdFile.FilePath ?? "",
+                    ContentType = createdFile.ContentType ?? "",
                     Size = createdFile.Size,
                     CategoryId = model.EntityId,
                     CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),

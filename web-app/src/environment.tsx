@@ -7,8 +7,6 @@ export const COMPANY_PHONE_NUMBER = "+(971) 4342-6666";
 export const COMPANY_MAIL = "info@example.com";
 export const COMPANY_NAME = "Emirates Secretarial Services";
 
-
-
 export const PUBLIC_API_URL = "http://localhost:5000/api/";
 
 export const SIGNALR_HUB_URL = "http://localhost:5000/notificationHub";

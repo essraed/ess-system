@@ -26,7 +26,7 @@ const PaymentSuccess: React.FC = observer(() => {
           }
           setLoading(false);
         })
-        .catch((error) => {
+        .catch(() => {
           setMessage('An error occurred while processing your payment.');
           setLoading(false);
         });

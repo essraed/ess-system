@@ -1,11 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useTranslation } from "react-i18next";
 import {
   COMPANY_LOCATION,
   COMPANY_MAIL,
-  COMPANY_NAME,
   COMPANY_PHONE_NUMBER,
 } from "../../environment";
 

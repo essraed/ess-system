@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useNavigate, useParams } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -29,16 +28,6 @@ const ListingDetails = () => {
   if (!currentService) return <LoadingSpinner />;
 
   // Slick Carousel settings
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false, // Optional: To remove arrows if needed
-  };
 
 
   return (

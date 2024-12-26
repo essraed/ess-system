@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Divider } from "@nextui-org/react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { useNavigate } from "react-router-dom";
-import Breadcrumbs from "../common/breadcrumbs";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../common/LoadingSpinner";
 

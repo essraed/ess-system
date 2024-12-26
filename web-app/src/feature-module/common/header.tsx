@@ -4,7 +4,6 @@ import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import LanguageSelector from "./LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { COMPANY_PHONE_NUMBER } from "../../environment";
 

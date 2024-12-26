@@ -6,8 +6,6 @@ import BookingAddon from "./BookingAddon";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
-import BookingStore from "../../app/stores/bookingStore";
-import bookingStore from "../../app/stores/bookingStore";
 import BookingSecondForm from "./bookingSecondForm";
 
 type Props = {
