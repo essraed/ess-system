@@ -20,7 +20,7 @@
 
 
 .wantToWork-area.wantToWork-area2 {
-    background-image: url(../../../../public/assets/img/footerinfinity-03.png);
+    background-image: url(../../../../public/assets/img/GV-03.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -46,11 +46,11 @@
 }
 
 .wantToWork-area .wantToWork-caption.wantToWork-caption2 h2 {
-    color: #fff;
+    color: #e7c466;
     font-size: 28px;
     line-height: 1.2;
     position: absolute;
-    top: 180px;
+    top: 150px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -70,11 +70,7 @@
     font-size: 18px
 }
 
-.wantToWork-area .wantToWork-caption.wantToWork-caption2 h2 {
-    color: #fff;
-    font-size: 38px;
-    line-height: 1.2
-}
+
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .wantToWork-area .wantToWork-caption.wantToWork-caption2 h2 {
@@ -141,7 +137,7 @@
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .wantToWork-area .wantToWork-btn {
         float: left;
-        margin-top: 30px
+        margin-top: 70px
     }
 }
 
@@ -3293,9 +3289,10 @@ section h1::after {
 
         img {
             border-radius: 10px;
-            width: 100%;
+            width: 70%;
             transform: translateZ(0);
             transition: all 2000ms cubic-bezier(0.19, 1, 0.22, 1) 0ms;
+            margin: auto;
         }
 
         .featured-text {

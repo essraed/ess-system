@@ -10,6 +10,7 @@ import { COMPANY_PHONE_NUMBER } from "../../environment";
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const Header = () => {
   const routes = all_routes;
 

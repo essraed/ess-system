@@ -347,8 +347,7 @@ const HomeOne = () => {
                 </div>
                 <div
                   className="col-lg-3 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                >
+                  data-aos="fade-down">
                   <div className="count-group flex-fill">
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
@@ -364,8 +363,7 @@ const HomeOne = () => {
                             className="counterUp"
                             end={625000}
                             duration={3}
-                            separator=","
-                          />
+                            separator=","/>
                           K+
                           <br />
                         </h4>
@@ -376,8 +374,7 @@ const HomeOne = () => {
                 </div>
                 <div
                   className="col-lg-3 col-md-6 col-12 d-flex"
-                  data-aos="fade-down"
-                >
+                  data-aos="fade-down">
                   <div className="count-group flex-fill">
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
@@ -393,8 +390,7 @@ const HomeOne = () => {
                             className="counterUp"
                             end={200000}
                             duration={3}
-                            separator=","
-                          />
+                            separator=","/>
                           K+
                           <br />
                         </h4>
@@ -418,11 +414,6 @@ const HomeOne = () => {
                   <h2>For Golden Visa</h2>
                   <p className="btn btn-primary">Contact Now</p>
                 </div>
-              </div>
-              <div className="col-xl-4 col-lg-4 col-md-4">
-                <a href="#" className="btn btn-black f-right">
-                  contact us now
-                </a>
               </div>
             </div>
           </div>
