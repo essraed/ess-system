@@ -29,24 +29,19 @@ const ServiceList = () => {
   return (
     <>
       <Header />
-      <section className="section">
-        <div className="custom-container mx-auto px-4 py-8">
+      <section className="section pt-5">
+        <div className="custom-container mx-auto px-4">
           {/* Header */}
-          {/* <div className="text-left ml-12 mb-8" data-aos="fade-down">
+          <div className="text-left ml-12 mb-8" data-aos="fade-down">
             <h2 className="text-3xl font-extrabold text-gray-800">
               {id ? currentCategory?.name : "All Categories"}
             </h2>
-            <p className="text-gray-600 mt-2">
-              {id
-                ? currentCategory?.description
-                : "Explore our range of services across all categories."}
-            </p>
             <div className="mt-2 h-1 w-16 bg-gradient-to-r from-slate-50 to-teal-700 rounded-full"></div>
-          </div> */}
+          </div>
 
           {/* Services List */}
-          <section className="section car-listing pt-0">
-            <div className="custom-container">
+          <section className="mb-5 mx-0">
+            <div className="container">
               <div className="p-6 mt-4 bg-white">
                 <div className="flex items-center flex-wrap ">
                   {services.length > 0 ? (
@@ -61,7 +56,7 @@ const ServiceList = () => {
             </div>
           </section>
 
-          <section className="section about-sec bg-gradient-to-r from-gray-50 via-gray-100 to-white py-12">
+          <section className="about-sec bg-gradient-to-r from-gray-50 via-gray-100 to-white py-12">
             <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between px-4 lg:gap-10 space-y-8 lg:space-y-0">
               {/* Image Section */}
               <div

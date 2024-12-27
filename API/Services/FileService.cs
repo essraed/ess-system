@@ -5,6 +5,9 @@ using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace API.Services
 {
@@ -60,13 +63,24 @@ namespace API.Services
         public async Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false)
         {
             const long maxFileSize = 10 * 1024 * 1024;
+            string filePath;
+
             if (file.Length > maxFileSize)
             {
-                throw new Exception("File size exceeds the allowed limit of 10MB.");
+                if (isImage)
+                {
+                    // Compress the image
+                    filePath = await CompressAndSaveImageAsync(file, directory);
+                }
+                else
+                {
+                    throw new Exception("File size exceeds the allowed limit of 10MB for non-image files.");
+                }
             }
-
-            string filePath = await SaveFileAsync(file, directory, isImage);
-
+            else
+            {
+                filePath = await SaveFileAsync(file, directory, isImage);
+            }
             var fileEntity = new FileEntity
             {
                 FileName = Path.GetFileName(filePath),
@@ -122,11 +136,29 @@ namespace API.Services
             if (fileEntity == null) throw new Exception("File not found.");
 
             DeleteFileOrImage(fileEntity.FilePath);
+            
+            const long maxFileSize = 10 * 1024 * 1024;
+            string filePath;
 
-            string newFilePath = await SaveFileAsync(newFile, directory, isImage);
+            if (newFile.Length > maxFileSize)
+            {
+                if (isImage)
+                {
+                    // Compress the image
+                    filePath = await CompressAndSaveImageAsync(newFile, directory);
+                }
+                else
+                {
+                    throw new Exception("File size exceeds the allowed limit of 10MB for non-image files.");
+                }
+            }
+            else
+            {
+                filePath = await SaveFileAsync(newFile, directory, isImage);
+            }
 
-            fileEntity.FileName = Path.GetFileName(newFilePath);
-            fileEntity.FilePath = newFilePath;
+            fileEntity.FileName = Path.GetFileName(filePath);
+            fileEntity.FilePath = filePath;
             fileEntity.ContentType = newFile.ContentType;
             fileEntity.Size = newFile.Length;
             fileEntity.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
@@ -188,6 +220,55 @@ namespace API.Services
                 .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                     ?? null!;
         }
+
+
+        private async Task<string> CompressAndSaveImageAsync(IFormFile file, string directory)
+        {
+            string uploadPath = Path.Combine(_environment.WebRootPath, directory);
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+
+            string uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            string filePath = Path.Combine(uploadPath, uniqueFileName);
+
+            using (var stream = file.OpenReadStream())
+            using (var image = await Image.LoadAsync(stream))
+            {
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Mode = ResizeMode.Max,
+                    Size = new Size(1920, 1080)
+                }));
+
+                var quality = 75;
+                await SaveImageAsync(image, filePath, quality);
+
+                var fileInfo = new FileInfo(filePath);
+                while (fileInfo.Length > 10 * 1024 * 1024)
+                {
+                    quality -= 5;
+                    if (quality <= 10) break;
+                    await SaveImageAsync(image, filePath, quality);
+                    fileInfo = new FileInfo(filePath);
+                }
+            }
+
+            return Path.Combine(directory, uniqueFileName); // Return the relative path of the compressed image
+        }
+
+        private async Task SaveImageAsync(Image image, string filePath, int quality)
+        {
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                var jpegEncoder = new JpegEncoder { Quality = quality };
+                await image.SaveAsync(fileStream, jpegEncoder);
+            }
+        }
+
+
+
 
     }
 }

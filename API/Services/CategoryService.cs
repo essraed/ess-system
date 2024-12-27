@@ -70,7 +70,7 @@ public class CategoryService : ICategoryService
     }
     public async Task<List<CategoryDto>> GetAllCategoriesForDropdownAsync()
     {
-        return _mapper.Map<List<CategoryDto>>(await _context.Categories.ToListAsync());
+        return _mapper.Map<List<CategoryDto>>(await _context.Categories.Where(c=>!c.IsDeleted).ToListAsync());
     }
 
     public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)
