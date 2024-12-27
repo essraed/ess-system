@@ -101,21 +101,21 @@ public class ServiceService : IServiceService
 
         if (service == null) return null!;
 
-        if (service.FileEntities?.Count > 0)
+        if (service.FileEntities?.Count > 0 && model.number != null)
         {
             var fileEntitiesList = service.FileEntities.ToList();
 
-            if (model.Files.Count == 1)
+            if (model.Files.Count == 1 &&
+              int.TryParse(model.number, out var number) &&
+              number > 0 &&
+              service.FileEntities.Count >= number)
             {
                 var updatedFile = await _fileService.UpdateFileAsync(
-     fileEntitiesList[Convert.ToInt32(model.number) - 1].Id, // Convert model.number to an integer
-     model.Files[0],
-     model.directory,
-     isImage: true
- );
-
-
-
+                fileEntitiesList[Convert.ToInt32(model.number) - 1].Id, // Convert model.number to an integer
+                model.Files[0],
+                model.directory,
+                isImage: true
+            );
                 // Ensure the CategoryId is properly set
                 var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
                 fileEntity.ServiceId = model.EntityId;
@@ -125,7 +125,10 @@ public class ServiceService : IServiceService
 
                 for (int i = 0; i < model.Files.Count; i++)
                 {
-                    if (i < fileEntitiesList.Count && model.number != null)
+                   if (i < fileEntitiesList.Count &&
+                        int.TryParse(model.number, out var num) &&
+                        num > 0 &&
+                        service.FileEntities?.Count >= num)
                     {
 
                         var updatedFile = await _fileService.UpdateFileAsync(
