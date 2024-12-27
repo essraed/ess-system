@@ -86,7 +86,7 @@ const CategoryCard = ({ category }: Props) => {
                       {category.name ?? "Category Name"}
                     </Link>
                   </h3>
-                  <p>{category.description ?? "No description available."}</p>
+                  {/* <p>{category.description ?? "No description available."}</p> */}
                 </div>
               </div>
               <div className="view-more-btn text-center">
@@ -94,7 +94,7 @@ const CategoryCard = ({ category }: Props) => {
                   to={`/services/${category.id}`}
                   className="btn btn-secondary-new"
                 >
-                  {t("View More")}{" "}
+                  {t("View Services")}{" "}
                   <i
                     className="fas fa-arrow-right ps-3"
                     style={{ transform: isRTL ? "rotate(180deg)" : "none" }}
