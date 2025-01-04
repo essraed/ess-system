@@ -75,7 +75,7 @@ namespace API.Services
                         </head>
                         <body style='font-family: Poppins, Arial, sans-serif; margin: 0; padding: 0;'>
                             {message}
-                        </body>
+                        </body> 
                         </html>";
 
 

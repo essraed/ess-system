@@ -27,7 +27,7 @@ const Table = ({
   setSelectedId,
   routeUrl,
   dialogFlags,
-  getViewId,
+  getViewId
 }: Props) => {
   const action = (rowData: any) => {
     const { id } = rowData;
@@ -45,6 +45,7 @@ const Table = ({
         <div className="dropdown-menu dropdown-menu-end">
           {(routeUrl === all_routes.categoryDashboard ||
             routeUrl === all_routes.serviceDashboard ||
+            routeUrl === all_routes.lostDashboard ||
             routeUrl === all_routes.contactDashboard) && (
             <Link
               className="dropdown-item"
@@ -80,12 +81,13 @@ const Table = ({
             routeUrl !== all_routes.carDashboard &&
             routeUrl !== all_routes.notificationDashboard &&
             routeUrl !== all_routes.contactDashboard &&
+            routeUrl !== all_routes.lostDashboard &&
             routeUrl !== all_routes.bookingDashboard && (
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit me-1"></i> Edit
               </Link>
             )}
-          {routeUrl === all_routes.bookingDashboard && (
+          {routeUrl === all_routes.bookingDashboard || routeUrl === all_routes.lostDashboard && (
             <Link
               className="dropdown-item"
               to="#"
@@ -105,6 +107,17 @@ const Table = ({
               data-bs-target={`#${dialogFlags.cancelDialog}`}
             >
               <i className="feather icon-trash-2 me-1"></i> Cancel booking
+            </Link>
+          )}
+          {routeUrl === all_routes.lostDashboard&& (
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.inProocess}`}
+              onClick={() => confirmDialog(id)}
+            >
+              <i className="feather icon-trash-2 me-1"></i> Set as InProcess
             </Link>
           )}
         </div>

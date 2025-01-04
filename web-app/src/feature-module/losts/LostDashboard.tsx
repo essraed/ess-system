@@ -1,18 +1,18 @@
 import React from 'react'
 import Breadcrumbs from '../common/breadcrumbs'
-import CategoryFilter from './CategoryFilter'
-import CategoryDashboardList from './CategoryDashboardList'
+import LostFilter from './LostFilter'
+import LostList from './LostList'
 
-const CategoryDashboard = () => {
+const LostDashboard = () => {
   
   return (
     <>
     {/* // table filters */}
     <div className="listing-page max-md:pt-7">
-      <Breadcrumbs title="Categorys" subtitle="Listings" />
+      <Breadcrumbs title="Losts" subtitle="Listings" />
 
       {/* Search */}
-      <CategoryFilter/>
+      <LostFilter/>
       {/* /Search */}
     </div>
     
@@ -23,7 +23,7 @@ const CategoryDashboard = () => {
           {/* //here the table */}
 
           {/* Payments Table */}
-          <CategoryDashboardList/>
+          <LostList/>
 
           {/* /Payments Table */}
         </div>
@@ -33,4 +33,4 @@ const CategoryDashboard = () => {
   )
 }
 
-export default CategoryDashboard
+export default LostDashboard

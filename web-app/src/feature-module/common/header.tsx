@@ -394,6 +394,22 @@ const Header = () => {
                           {t("Contact List")}
                         </Link>
                       </li>
+                      <li
+                        className={
+                          locationPathname === routes.lostDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.lostDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.lostDashboard)
+                          }
+                        >
+                          {t("Lost List")}
+                        </Link>
+                      </li>
                     </ul>
                   </li>
                 )}
@@ -413,6 +429,15 @@ const Header = () => {
                   }
                 >
                   <Link to={routes.contactUs}>{t("Contact")}</Link>
+                </li>
+                <li
+                  className={
+                    location.pathname===(routes.Losts)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <Link to={routes.Losts}>{t("Losts")}</Link>
                 </li>
                 {/* <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>

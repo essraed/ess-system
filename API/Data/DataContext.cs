@@ -49,5 +49,6 @@ namespace API.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Lost> Losts { get; set; }
     }
 }

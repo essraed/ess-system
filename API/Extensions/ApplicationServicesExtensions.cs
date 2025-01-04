@@ -77,6 +77,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IEmailService), typeof(EmailService));
             services.AddScoped(typeof(IContactService), typeof(ContactService));
             services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
+            services.AddScoped(typeof(ILostService), typeof(LostService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             // Report services

@@ -11,7 +11,7 @@ const BookingDashboard = () => {
   return (
     <>
       {/* Dashboard Header and Filters */}
-      <div className="listing-page">
+      <div className="listing-page max-md:pt-7">
         <Breadcrumbs title="Bookings" subtitle="Listings" />
         {/* Search and Filters */}
         <BookingFilter pageSize={pagination?.pageSize} />

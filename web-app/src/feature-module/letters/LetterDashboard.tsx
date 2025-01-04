@@ -12,7 +12,7 @@ const LetterDashboard = () => {
   return (
     <>
     {/* // table filters */}
-    <div className="listing-page">
+    <div className="listing-page max-md:pt-7">
       <Breadcrumbs title="Letters" subtitle="Listings" />
       {/* Search */}
       <LetterFilter pageSize={pagination?.pageSize}/>

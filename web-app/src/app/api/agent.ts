@@ -26,6 +26,8 @@ import { WorkingTimeData } from "../../types/workingTime";
 import { store } from "../stores/store";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ContactSchema } from "../../lib/schemas/contactSchema";
+import { LostData } from "../../types/lost";
+import { LostSchema } from "../../lib/schemas/lostSchema";
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -104,6 +106,17 @@ const Contacts = {
   getById: (id: string) => requests.get<ContactData>(`contacts/${id}`),
   create: (contact: ContactSchema|BusinessSchema) => requests.post<ContactData>("contacts", contact),
   delete: (id: string) => requests.del<string>(`contacts/${id}`),
+};
+const Losts = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<LostData[]>>("lost", { params }).then(responseBody),
+  getById: (id: string) => requests.get<LostData>(`lost/${id}`),
+  create: (lost: LostSchema) => requests.post<LostData>("lost", lost),
+  delete: (id: string) => requests.del<string>(`lost/${id}`),
+  setStatusInProcess: (id: string) =>
+    requests.put<string>(`lost/${id}/status/in-process`, {}),
+  setStatusCompleted: (id: string) =>
+    requests.put<string>(`lost/${id}/status/completed`, {}),
 };
 
 const Categories = {
@@ -278,6 +291,7 @@ const agent = {
   Notifications,
   Contacts,
   Payment,
+  Losts
 };
 
 export default agent;
