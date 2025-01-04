@@ -13,7 +13,7 @@ const ServiceDashboard = () => {
   return (
     <>
       {/* // table filters */}
-      <div className="listing-page">
+      <div className="listing-page max-md:pt-7">
         <Breadcrumbs title="Services" subtitle="Listings" />
         {/* Search */}
         <ServiceFilter pageSize={pagination?.pageSize} />

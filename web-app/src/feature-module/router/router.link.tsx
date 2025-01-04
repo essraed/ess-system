@@ -30,6 +30,8 @@ import ContactForm from "../contacts/ContactForm";
 import BusinessSetup from "../contacts/BusinessSetup";
 import PaymentSuccess from "../payment/PaymentSuccess";
 import PaymentFailed from "../payment/PaymentFailed";
+import LostForm from "../losts/LostForm";
+import LostDashboard from "../losts/LostDashboard";
 
 
 const routes = all_routes;
@@ -70,6 +72,10 @@ export const publicRoutes = [
   {
     path: routes.businessSetup,
     element: <BusinessSetup />,
+  },
+  {
+    path: routes.Losts,
+    element: <LostForm />,
   },
   // services
   {
@@ -165,6 +171,12 @@ export const listingroutes = [
     path: routes.contactDashboard,
     element: <ContactDashboard />,
   },
+  // Losts
+  {
+    path: routes.lostDashboard,
+    element: <LostDashboard />,
+  },
+  
 ];
 
 export const authenticationRoute = [

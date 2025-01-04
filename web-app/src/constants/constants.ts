@@ -2,6 +2,7 @@ export const dialogFlags = {
   deleteDialog: "delete_dialog",
   completeDialog: "complete_dialog",
   cancelDialog: "cancel_dialog",
+  inProocess:"in_dialog", 
 };
 
 export const dayOfWeekMap: { [key: string]: number } = {

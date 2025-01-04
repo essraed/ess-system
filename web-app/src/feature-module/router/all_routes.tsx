@@ -1,3 +1,5 @@
+import LostDashboard from "../losts/LostDashboard";
+import LostDetails from "../losts/LostDetails";
 
 export const all_routes = {
   // home routes
@@ -97,9 +99,15 @@ export const all_routes = {
   contactDashboard:"/listings/contacts",
   contactDetails: "/listings/contacts/view/:id",
 
+  //Contacts
+  lostDashboard:"/listings/Losts",
+  lostDetails: "/listings/losts/view/:id",
+
   //Payments
   paymentSuccess:"/payment/success",
   paymentFailed:"/payment/success",
+
+  
 
 
 
@@ -111,6 +119,7 @@ export const all_routes = {
   aboutUs: "/aboutus/aboutus",
   contactUs: "/contact",
   businessSetup:"/businessSetup",
+  Losts:"/Losts",
 
   admin:"/admin"
 };
