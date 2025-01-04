@@ -69,7 +69,6 @@ const BookingSecondForm = ({
 
   const onSubmit = async (data: BookingSchema) => {
     data.address = address;
-    console.log("hiiiiiiiiiiii", data);
     data.totalPrice = totalPrice;
     data.serviceId = serviceId;
     data.serviceOptionId = serviceOptionId;

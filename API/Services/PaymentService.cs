@@ -38,8 +38,8 @@ public class PaymentService : IPaymentService
         payment.MerchantId = "Demo Merchant";
         payment.TransactionHint = "CPT:Y;VCC:Y;";
         payment.Currency = "AED";
-        payment.ReturnUrl = "https://partner.ctdev.comtrust.ae/banktestnbad/Authorization.aspx?capture=true";
-        payment.CancelUrl = "http://localhost:3000/payment/failed";
+        payment.ReturnUrl = "https://kbc.center/payment/success";
+        payment.CancelUrl = "https://kbc.center/payment/failed";
 
 
 
