@@ -131,6 +131,7 @@ public class LostService : ILostService
                         <strong>Lost Department:</strong> {lostItem.LostDepartment}<br/>
                         <strong>Lost Date:</strong> {lostItem.LostDate}<br/>
                         <strong>Lost Comments:</strong> {lostItem.Comments}<br/>
+                        <strong>Lost Status:</strong> {lostItem.Status}<br/>
                     </p>
                     <p>Thank you for reporting the issue. Our team will reach out to you shortly.</p>
                     <p>Best regards,<br/>KBC Team</p>
@@ -153,6 +154,8 @@ public class LostService : ILostService
                         <strong>Customer Name:</strong> {lostItem.Name}<br/>
                         <strong>Lost Date:</strong> {lostItem.LostDate}<br/>
                         <strong>Lost Comments:</strong> {lostItem.Comments}<br/>
+                        <strong>Lost Status:</strong> {lostItem.Status}<br/>
+
                     </p>
                     <p>Please follow up with the customer and address the issue as needed.</p>
                     <p>Best regards,<br/>Your Team</p>
@@ -162,7 +165,7 @@ public class LostService : ILostService
                         </small>
                     </p>";
 
-                string coordinatorEmail = "coordinator@example.com"; 
+                string coordinatorEmail = "it@ess.ae"; 
                 await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
             }
             catch (Exception ex)

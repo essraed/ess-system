@@ -25,14 +25,16 @@ export const lostSchema = z.object({
 
   lostDepartment: z.enum(
     [
-      "HR",
-      "IT",
-      "Finance",
-      "Operations",
-      "Admin",
-      "Customer Service",
-      "Legal",
-      "Logistics",
+      "Medical DHA - AREA 6",
+      "Medical DHA - AREA 7",
+      "Medical DHA - AREA 6 XRAY",
+      "Medical DHA - AREA 7 XRAY",
+      "Medical OHC - AREA 4",
+      "AMER - ZONE A",
+      "TAWJEEH - ZONE B",
+      "TYPING - ZONE C",
+      "MAIN RECEPTION",
+      "OTHER AREA",
     ],
     { errorMap: () => ({ message: "Invalid department selected" }) }
   ),
@@ -43,7 +45,12 @@ export const lostSchema = z.object({
     .min(10, "Comments must be at least 10 characters long")
     .max(500, "Comments must not exceed 500 characters"),
 
-  lostDate: z.string().optional(),
+    lostDate: z
+    .string()
+    .refine((date) => new Date(date) <= new Date(), {
+      message: "Lost date cannot be in the future",
+    })
+    .optional(),
 });
 
 export type LostSchema = z.infer<typeof lostSchema>;

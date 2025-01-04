@@ -26,11 +26,13 @@ const LostForm = () => {
   });
 
   const onSubmit = async (data: LostSchema) => {
-    console.log("data",data);
+    console.log("data", data);
     const result = await addLostItem(data);
     if (result.status === "success") {
-        toast.success("Lost item reported successfully. Our team will reach out to you shortly to assist with the next steps.");
-        reset();
+      toast.success(
+        "Lost item reported successfully. Our team will reach out to you shortly to assist with the next steps."
+      );
+      reset();
     } else {
       toast.error("Error: " + result.error);
     }
@@ -38,8 +40,8 @@ const LostForm = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-     <Header />
-     <Breadcrumbs title="Losts" subtitle="Pages" />
+      <Header />
+      <Breadcrumbs title="Losts" subtitle="Pages" />
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-white   border border-gray-300 p-6">
           <h2 className="text-2xl font-bold text-center mb-4">
@@ -114,15 +116,18 @@ const LostForm = () => {
                 }`}
                 {...register("lostDepartment")}
               >
-                <option value="">Select Department</option>
-                <option value="HR">HR</option>
-                <option value="IT">IT</option>
-                <option value="Finance">Finance</option>
-                <option value="Operations">Operations</option>
-                <option value="Admin">Admin</option>
-                <option value="Customer Service">Customer Service</option>
-                <option value="Legal">Legal</option>
-                <option value="Logistics">Logistics</option>
+                <option value="">Select Lost Location</option>
+                <option value="Medical DHA - AREA 6">Medical DHA - AREA 6</option>
+                <option value="Medical DHA - AREA 7">Medical DHA - AREA 7</option>
+                <option value="Medical DHA - AREA 6 XRAY">Medical DHA - AREA 6 XRAY</option>
+                <option value="Medical DHA - AREA 7 XRAY">Medical DHA - AREA 7 XRAY</option>
+                <option value="Medical OHC - AREA 4">Medical OHC - AREA 4</option>
+                <option value="AREA 5">AREA 5</option>
+                <option value="AMER - ZONE A">AMER - ZONE A</option>
+                <option value="TAWJEEH - ZONE B">TAWJEEH - ZONE B</option>
+                <option value="TYPING - ZONE C">TYPING - ZONE C</option>
+                <option value="MAIN RECEPTION">MAIN RECEPTION</option>
+                <option value="OTHER AREA">OTHER AREA</option>
               </select>
               {errors.lostDepartment && (
                 <p className="text-red-500 text-sm mt-1">
@@ -180,7 +185,7 @@ const LostForm = () => {
         </div>
       </main>
 
-     <Footer/>
+      <Footer />
     </div>
   );
 };

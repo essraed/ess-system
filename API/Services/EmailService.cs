@@ -12,15 +12,15 @@ namespace API.Services
         // private readonly string _smtpUsername = "booking@kbc.center";
         // private readonly string _smtpPassword = "booking@224";
 
-        private readonly string _smtpServer = "smtp.gmail.com";
+        private readonly string _smtpServer = "ess.ae";
         private readonly int _smtpPort = 465;
-        private readonly string _smtpUsername = "esskaram@gmail.com";
-        private readonly string _smtpPassword = "bfxvsucywkfrzoqw";
+        private readonly string _smtpUsername = "notifications@ess.ae";
+        private readonly string _smtpPassword = "notifications@123";
         
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Abedelhameed Alshorafa", _smtpUsername));
+            message.From.Add(new MailboxAddress("Notification From Karama Business Center", _smtpUsername));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = subject;
 

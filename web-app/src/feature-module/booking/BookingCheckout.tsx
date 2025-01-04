@@ -93,7 +93,7 @@ const BookingCheckout = () => {
       <div className="custom-container mx-auto px-4 py-8  min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Customer Information */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-7">
             <div className="bg-white  p-6 border border-gray-300">
               <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
                 Customer Information
