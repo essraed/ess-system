@@ -2696,20 +2696,18 @@ section h1::after {
 
 
     @include respond-below(custom991) {
+        height: 250px;
+
+    }
+
+    @include respond-below(custom575) {
         height: 150px;
 
     }
-
-    @include respond-above(custom991) {
-        height: 400px;
-
-    }
-
     @include respond-above(custom1400) {
         height: 600px;
-
     }
-
+ 
 }
 
 .banner-video {
@@ -3243,7 +3241,7 @@ section h1::after {
     position: $__relative;
     background: $__white;
     border-radius: 10px;
-    border: 2px solid #d4e1f4;
+    border: 2px solid #98bfc2;
     @include margin-padding(0 0 24px 0, 5px);
 
     @include respond-below(custom991) {
