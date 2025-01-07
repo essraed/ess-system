@@ -81,7 +81,6 @@ const BookingSecondForm = ({
     // Add isVIP flag
     data.isVIP = IsAtHome;
     data.bookingDate = moment(date).format("YYYY-MM-DD");
-    console.log("databook", data);
 
     // Submit booking data
     const result = await addBooking(data);

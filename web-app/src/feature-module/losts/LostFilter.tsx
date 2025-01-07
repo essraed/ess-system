@@ -60,7 +60,6 @@ useEffect(() => {
   }
   const handleStatusSelect = (status: string) => {
     setStatusFilter(status);
-    console.log("lostStatus",status);
     loadLostItems();
   };
 

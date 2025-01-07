@@ -127,6 +127,5 @@ export default class ContactStore {
   };
   setEnquiryType = (enquiryType: boolean | null) => {
     this.enquiryType = enquiryType;
-    console.log("here", enquiryType);
   };
 }

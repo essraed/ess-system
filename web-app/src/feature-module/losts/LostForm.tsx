@@ -30,7 +30,6 @@ const LostForm = () => {
   });
 
   const onSubmit = async (data: LostSchema) => {
-    console.log("data", data);
     const result = await addLostItem(data);
     if (result.status === "success") {
       toast.success(

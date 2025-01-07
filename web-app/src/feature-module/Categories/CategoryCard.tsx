@@ -19,9 +19,6 @@ const CategoryCard = ({ category }: Props) => {
   } = useStore();
 
   const isRTL = language === "ar";
-
-  console.log("image", category.fileEntities);
-
   return (
     <div
       className="col-lg-3 col-md-3 col-6 aos-init aos-animate wow zoomIn"

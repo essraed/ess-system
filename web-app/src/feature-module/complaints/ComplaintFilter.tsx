@@ -63,7 +63,6 @@ useEffect(() => {
   }
   const handleStatusSelect = (status: string) => {
     setStatusFilter(status);
-    console.log("complaintStatus", status);
     loadComplaintItems();
   };
 

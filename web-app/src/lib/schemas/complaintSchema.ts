@@ -22,16 +22,15 @@ export const complaintSchema = z.object({
 
   department: z.enum(
     [
-      "Medical DHA - AREA 6",
-      "Medical DHA - AREA 7",
-      "Medical DHA - AREA 6 XRAY",
-      "Medical DHA - AREA 7 XRAY",
-      "Medical OHC - AREA 4",
-      "AMER - ZONE A",
-      "TAWJEEH - ZONE B",
-      "TYPING - ZONE C",
+      "AMER RECEPTION",
+      "AMER TYPING",
+      "HR",
+      "DHA",
+      "ACCOUNTS",
+      "CASHIER",
+      "TYPING",
       "MAIN RECEPTION",
-      "OTHER AREA",
+      "OTHER",
     ],
     { errorMap: () => ({ message: "Invalid department selected" }) }
   ),

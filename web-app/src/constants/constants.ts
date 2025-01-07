@@ -47,3 +47,14 @@ export const lostDepartments = [
   { value: "MAIN RECEPTION", label: "MAIN RECEPTION" },
   { value: "OTHER AREA", label: "OTHER AREA" },
 ];
+export const CompalintDepartments = [
+  { value: "AMER RECEPTION", label: "AMER RECEPTION" },
+  { value: "AMER TYPING", label: "AMER TYPING" },
+  { value: "HR", label: "HR" },
+  { value: "DHA", label: "DHA" },
+  { value: "ACCOUNTS", label: "ACCOUNTS" },
+  { value: "CASHIER", label: "CASHIER" },
+  { value: "TYPING", label: "TYPING" },
+  { value: "MAIN RECEPTION", label: "MAIN RECEPTION" },
+  { value: "OTHER", label: "OTHER" },
+];

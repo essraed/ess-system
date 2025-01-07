@@ -50,13 +50,10 @@ export default class BookingStore {
       );
       const storedBookings: string[] = storedSessionData.value || [];
   
-      console.log("Before adding: ", storedBookings);
-  
       if (!storedBookings.includes(response.id)) {
         storedBookings.push(response.id);
       }
   
-      console.log("After adding: ", storedBookings);
   
       this.setSessionData(sessionId, storedBookings);
   

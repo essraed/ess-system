@@ -83,7 +83,6 @@ const LostList = () => {
       toast.error("Unauthorized");
     } else {
       loadLostItems();
-      console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaa",lostItems);
     }
   }, [userStore.token, loadLostItems]);
 
