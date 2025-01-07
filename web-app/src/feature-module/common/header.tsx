@@ -10,7 +10,6 @@ import { COMPANY_PHONE_NUMBER } from "../../environment";
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const Header = () => {
   const routes = all_routes;
 
@@ -70,7 +69,13 @@ const Header = () => {
             </div>
 
             {/* Navbar Items Section */}
-            <div className="w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container">
+            <div
+              className={
+                isSession
+                  ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container"
+                  : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1"
+              }
+            >
               <ul className="flex flex-wrap justify-end items-center bookings-container ">
                 {/* <li className="nav-item px-2">
                       <LanguageSelector />
@@ -447,22 +452,18 @@ const Header = () => {
                   <Link to={routes.contactUs}>{t("Contact")}</Link>
                 </li>
                 <li
-                  className={
-                    location.pathname===(routes.Losts)
-                      ? "active"
-                      : ""
-                  }
+                  className={location.pathname === routes.Losts ? "active" : ""}
                 >
                   <Link to={routes.Losts}>{t("Lost & Found")}</Link>
                 </li>
                 <li
                   className={
-                    location.pathname===(routes.Complaints)
-                      ? "active"
-                      : ""
+                    location.pathname === routes.Complaints ? "active" : ""
                   }
                 >
-                  <Link to={routes.Complaints}>{t("Complaints & Suggestions")}</Link>
+                  <Link to={routes.Complaints}>
+                    {t("Complaints & Suggestions")}
+                  </Link>
                 </li>
                 {/* <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>
