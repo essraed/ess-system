@@ -217,7 +217,7 @@
     @media (max-width: 768px) {
         .bookings-container {
           order: -1;
-          width: 10%; 
+          //width: 12%; 
           display: flex;
           justify-content: center;
         }
@@ -1181,3 +1181,22 @@
         }
     }
 }
+
+.video-wrapper {
+    max-width: 100%;      /* Ensure the video wrapper does not exceed container width */
+    padding: 1rem;  
+    position: absolute;  
+    top: 15%;
+
+    @include respond-below(custom991) {
+        top: 10%; 
+    }
+
+    @include respond-below(custom575) {
+     
+            top: 0;
+            height: 150px;
+            right: 0;
+        
+    }
+  }
