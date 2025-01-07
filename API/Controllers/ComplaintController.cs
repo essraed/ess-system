@@ -13,31 +13,31 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LostController : ControllerBase
+    public class ComplaintController : ControllerBase
     {
-        private readonly ILostService _lostService;
+        private readonly ICompalintService _complaintService;
 
-        public LostController(ILostService lostService)
+        public ComplaintController(ICompalintService complaintService)
         {
-            _lostService = lostService;
+            _complaintService = complaintService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedList<LostDto>>> GetAllLostItems([FromQuery] LostParams lostParams)
+        public async Task<ActionResult<PagedList<ComplaintDto>>> GetAllComplaintItems([FromQuery] ComplaintParams complaintParams)
         {
-            var lostItems = await _lostService.GetAllLostItemsAsync(lostParams);
-            return Ok(lostItems);
+            var complaintItems = await _complaintService.GetAllComplaintItemsAsync(complaintParams);
+            return Ok(complaintItems);
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<LostDto>> GetLostItemById(Guid id)
+        public async Task<ActionResult<ComplaintDto>> GetComplaintItemById(Guid id)
         {
             try
             {
-                var lostItem = await _lostService.GetLostItemByIdAsync(id);
-                return Ok(lostItem);
+                var complaintItem = await _complaintService.GetComplaintItemByIdAsync(id);
+                return Ok(complaintItem);
             }
             catch (KeyNotFoundException ex)
             {
@@ -48,12 +48,12 @@ namespace API.Controllers
         [HttpPost]
         [AllowAnonymous]
 
-        public async Task<ActionResult<LostDto>> AddLostItem([FromBody] LostSaveDto lostSaveDto)
+        public async Task<ActionResult<ComplaintDto>> AddComplaintItem([FromBody] ComplaintSaveDto complaintSaveDto)
         {
             try
             {
-                var createdLostItem = await _lostService.AddLostItemAsync(lostSaveDto);
-                return Ok(createdLostItem);
+                var createdComplaintItem = await _complaintService.AddComplaintItemAsync(complaintSaveDto);
+                return Ok(createdComplaintItem);
             }
             catch (Exception ex)
             {
@@ -68,11 +68,11 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DeleteLostItem(Guid id)
+        public async Task<IActionResult> DeleteComplaintItem(Guid id)
         {
             try
             {
-                await _lostService.DeleteLostItemAsync(id);
+                await _complaintService.DeleteComplaintItemAsync(id);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)
@@ -87,12 +87,12 @@ namespace API.Controllers
 
         [HttpPut("{id}/status/in-process")]
         [AllowAnonymous]
-        public async Task<IActionResult> SetLostStateInProcess(Guid id)
+        public async Task<IActionResult> SetComplaintStateInProcess(Guid id)
         {
             try
             {
-                await _lostService.SetLostStateInProcess(id);
-                return Ok("Lost status set to 'In Process'.");
+                await _complaintService.SetComplaintStateInProcess(id);
+                return Ok("Complaint status set to 'In Process'.");
             }
             catch (KeyNotFoundException ex)
             {
@@ -100,17 +100,17 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred while updating Lost status: {ex.Message}");
+                return BadRequest($"An error occurred while updating Complaint status: {ex.Message}");
             }
         }
 
         [HttpPut("{id}/status/completed")]
-        public async Task<IActionResult> SetLostStateCompleted(Guid id)
+        public async Task<IActionResult> SetComplaintStateCompleted(Guid id)
         {
             try
             {
-                await _lostService.SetLostStateCompleted(id);
-                return Ok("Lost status set to 'Completed'.");
+                await _complaintService.SetComplaintStateCompleted(id);
+                return Ok("Booking status set to 'Completed'.");
             }
             catch (KeyNotFoundException ex)
             {
@@ -118,7 +118,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred while updating Lost status: {ex.Message}");
+                return BadRequest($"An error occurred while updating Complaint status: {ex.Message}");
             }
         }
     }

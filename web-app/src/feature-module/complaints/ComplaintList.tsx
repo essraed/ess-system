@@ -12,28 +12,29 @@ import { all_routes } from "../router/all_routes";
 import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
-import LostDetails from "./LostDetails";
+import ComplaintDetails from "./ComplaintDetails";
 import { Console } from "console";
 
-const LostList = () => {
+const ComplaintList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const {
-    lostStore: {
-      lostItems,
-      loadLostItems,
+    complaintStore: {
+      complaintItems,
+      loadComplaintItems,
       setPagingParams,
       pagination,
       setSearchTerm,
-      deleteLostItem,
-      clearLostItems,
+      deleteComplaintItem,
+      clearComplaintItems,
       setDateFilter,
-      getLostItem,
+      getComplaintItem,
       setStatusInProcess,
       setStatusCompleted,
       setStatusFilter,
+      setType,
     },
     userStore,
   } = useStore();
@@ -44,13 +45,13 @@ const LostList = () => {
 
   const handleGetNext = (page: number) => {
     setPagingParams(new PagingParams(page, pageSize));
-    loadLostItems();
+    loadComplaintItems();
   };
 
   const handleSearch = () => {
     setSearchTerm(searchQuery);
     setPagingParams(new PagingParams(1, pageSize));
-    loadLostItems();
+    loadComplaintItems();
   };
 
   const handleReset = () => {
@@ -58,14 +59,15 @@ const LostList = () => {
     setSearchQuery("");
     setDateFilter("", "");
     setStatusFilter("");
+    setType(null);
     setPagingParams(new PagingParams(1, pageSize));
-    loadLostItems();
+    loadComplaintItems();
   };
 
   const handleDelete = async () => {
     if (selectedId) {
-      await deleteLostItem(selectedId);
-      loadLostItems();
+      await deleteComplaintItem(selectedId);
+      loadComplaintItems();
       navigate(location.pathname, { replace: true });
     }
   };
@@ -73,37 +75,36 @@ const LostList = () => {
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
-    loadLostItems();
+    loadComplaintItems();
   };
 
   useEffect(() => {
     if (!userStore.token) {
-      clearLostItems();
+      clearComplaintItems();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
-      loadLostItems();
-      console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaa",lostItems);
+      loadComplaintItems();
     }
-  }, [userStore.token, loadLostItems]);
+  }, [userStore.token, loadComplaintItems]);
 
-  if (!Array.isArray(lostItems)) return <LoadingSpinner />;
+  if (!Array.isArray(complaintItems)) return <LoadingSpinner />;
 
   const getViewId = (id: string) => {
-    getLostItem(id);
+    getComplaintItem(id);
   };
 
   const handleComplete = async () => {
     if (selectedId) {
       await setStatusCompleted(selectedId);
-      loadLostItems();
+      loadComplaintItems();
       navigate(location.pathname, { replace: true });
     }
   };
   const handleInProcess = async () => {
     if (selectedId) {
       await setStatusInProcess(selectedId);
-      loadLostItems();
+      loadComplaintItems();
       navigate(location.pathname, { replace: true });
     }
   };
@@ -137,16 +138,15 @@ const LostList = () => {
                     "id",
                     "isDeleted",
                     "comments",
-                    "lostDepartment",
+                    "department",
                     "phone",
                     "Email",
                     "updatedBy"
-                    
                   ]}
-                  data={lostItems!}
+                  data={complaintItems!}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
-                  routeUrl={all_routes.lostDashboard}
+                  routeUrl={all_routes.ComplaintDashboard}
                 />
               </div>
               <div className="mx-auto pt-2">
@@ -166,27 +166,27 @@ const LostList = () => {
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(
-          "Lost Item"
+          "Complaint"
         )}${t("?")}`}
       />
 
       {/* Category Details */}
-      <LostDetails modalId={all_routes.lostDashboard} />
+      <ComplaintDetails modalId={all_routes.ComplaintDashboard} />
 
       <ConfirmDialog
         modalId={dialogFlags.completeDialog}
         onConfirm={handleComplete}
         title="Confirm Setting As Completed"
-        description="Are you sure you want to set this Lost as completed?"
+        description="Are you sure you want to set this Complaint as completed?"
       />
        <ConfirmDialog
         modalId={dialogFlags.inProocess}
         onConfirm={handleInProcess}
         title="Confirm Setting As InProcess"
-        description="Are you sure you want to set this Lost as InProcess?"
+        description="Are you sure you want to set this Complaint as InProcess?"
       />
     </div>
   );
 };
 
-export default observer(LostList);
+export default observer(ComplaintList);

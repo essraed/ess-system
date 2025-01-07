@@ -2,16 +2,17 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { PaginationData, PagingParams } from "../../types/pagination";
+import { ComplaintSchema } from "../../lib/schemas/complaintSchema";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
-import { LostData, lostStatus } from "../../types/lost";
-import { LostSchema } from "../../lib/schemas/lostSchema";
+import { ComplaintData, complaintStatus } from "../../types/complaints";
 
-export default class LostStore {
-  lostItems: LostData[] | null | undefined = null;
-  currentLostItem: LostData | null = null;
+export default class ComplaintStore {
+  complaintItems: ComplaintData[] | null | undefined = null;
+  currentComplaint: ComplaintData | null = null;
   pagination: PaginationData | null = null;
   pagingParams = new PagingParams();
-  lostStatus: string | null = null;
+  complaintStatus: string | null = null;
+  type: boolean | null = null;
   searchTerm: string = "";
   fromDate: string | null = null;
   toDate: string | null = null;
@@ -20,13 +21,13 @@ export default class LostStore {
     makeAutoObservable(this);
   }
 
-  addLostItem = async (data: LostSchema): Promise<ActionResult<string>> => {
+  addComplaintItem = async (data: ComplaintSchema): Promise<ActionResult<string>> => {
     try {
-      const response = await agent.Losts.create(data);
+      const response = await agent.Complaints.create(data);
       runInAction(() => {
-        this.lostItems = this.lostItems
+        this.complaintItems = this.complaintItems
           ? [
-              ...this.lostItems,
+              ...this.complaintItems,
               { createDate: formatDateTime(response.createDate!), ...response },
             ]
           : [response];
@@ -34,21 +35,21 @@ export default class LostStore {
 
       return { status: "success", data: response.id };
     } catch (error) {
-      console.error("Error adding lost item:", error);
+      console.error("Error adding complaint item:", error);
       return { status: "error", error: error as string };
     }
   };
 
-  deleteLostItem = async (id: string): Promise<ActionResult<string>> => {
+  deleteComplaintItem = async (id: string): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.delete(id);
+      await agent.Complaints.delete(id);
       runInAction(() => {
-        this.lostItems =
-          this.lostItems?.filter((item) => item.id !== id) || null;
+        this.complaintItems =
+          this.complaintItems?.filter((item) => item.id !== id) || null;
       });
-      return { status: "success", data: "Lost item deleted successfully" };
+      return { status: "success", data: "Complaint item deleted successfully" };
     } catch (error) {
-      console.error("Error deleting lost item:", error);
+      console.error("Error deleting complaint item:", error);
       return { status: "error", error: error as string };
     }
   };
@@ -60,30 +61,32 @@ export default class LostStore {
     if (this.searchTerm) params.append("searchTerm", this.searchTerm);
     if (this.fromDate) params.append("from", this.fromDate);
     if (this.toDate) params.append("to", this.toDate);
-    if (this.lostStatus) params.append("lostStatus", this.lostStatus);
-
-
+    if (this.complaintStatus) params.append("complaintStatus", this.complaintStatus);
+    if (this.type !== null) {
+        params.append("type", this.type.toString());
+      } else {
+        params.append("type", "null"); // or just skip appending for null
+      }
     return params;
   }
 
-  clearLostItems = () => {
-    this.lostItems = null;
+  clearComplaintItems = () => {
+    this.complaintItems = null;
   };
 
   setStatusFilter = (status: string | null) => {
-    this.lostStatus = status;
+    this.complaintStatus = status;
   };
 
-  loadLostItems = async () => {
-    const lostItems: LostData[] = [];
+  loadComplaintItems = async () => {
+    const complaintItems: ComplaintData[] = [];
     try {
-      const result = await agent.Losts.getAll(this.axiosParams);
-
+      const result = await agent.Complaints.getAll(this.axiosParams);
       runInAction(() => {
         const { pageNumber, pageSize, data, pageCount, totalCount } = result;
         this.setPagination({ pageNumber, pageSize, pageCount, totalCount });
         data.map((item) => {
-          lostItems.push({
+          complaintItems.push({
             ...item,
             createDate: item.createDate
             ? formatDateTime(item.createDate?.toString())
@@ -91,24 +94,22 @@ export default class LostStore {
           updateDate: item.updateDate
             ? formatDateTime(item.updateDate?.toString())
             : "No Set",
-            lostDate: formatDateTime(item.lostDate),
-            status: convertEnumToString(Number(item.status), lostStatus),
+            status: convertEnumToString(Number(item.status), complaintStatus),
             createdBy: item.createdBy ? item.createdBy : "Customer",
           });
         });
-
-        this.lostItems = lostItems;
+        this.complaintItems = complaintItems;
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  getLostItem = async (id: string) => {
+  getComplaintItem = async (id: string) => {
     try {
-      const result = await agent.Losts.getById(id);
+      const result = await agent.Complaints.getById(id);
       runInAction(() => {
-        this.currentLostItem = {
+        this.currentComplaint = {
           ...result,
           createDate: result.createDate
           ? formatDateTime(result.createDate?.toString())
@@ -116,10 +117,11 @@ export default class LostStore {
         updateDate: result.updateDate
           ? formatDateTime(result.updateDate?.toString())
           : "No Set",
-          lostDate: formatDateTime(result.lostDate),
-          status: convertEnumToString(Number(result.status), lostStatus),
+        updatedBy: result.updatedBy
+          ? result.updatedBy
+          : "No Set",
+          status: convertEnumToString(Number(result.status), complaintStatus),
           createdBy: result.createdBy ? result.createdBy : "Customer",
-
         };
       });
     } catch (error) {
@@ -129,20 +131,20 @@ export default class LostStore {
 
   setStatusInProcess = async (id: string): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.setStatusInProcess(id);
-      await this.getLostItem(id);
-      return { status: "success", data: "Lost status set to 'In Process'." };
+      await agent.Complaints.setStatusInProcess(id);
+      await this.getComplaintItem(id);
+      return { status: "success", data: "Complaint status set to 'In Process'." };
     } catch (error) {
-      console.error("Error updating booking status: ", error);
+      console.error("Error updating complaint status:", error);
       return { status: "error", error: error as string };
     }
   };
 
   setStatusCompleted = async (id: string): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.setStatusCompleted(id);
-      await this.getLostItem(id);
-      return { status: "success", data: "Lost status set to 'Completed'." };
+      await agent.Complaints.setStatusCompleted(id);
+      await this.getComplaintItem(id);
+      return { status: "success", data: "Complaint status set to 'Completed'." };
     } catch (error) {
       console.error("Error updating booking status: ", error);
       return { status: "error", error: error as string };
@@ -164,5 +166,9 @@ export default class LostStore {
   setDateFilter = (from: string | null, to: string | null) => {
     this.fromDate = from;
     this.toDate = to;
+  };
+
+  setType = (type: boolean | null) => {
+    this.type = type;
   };
 }

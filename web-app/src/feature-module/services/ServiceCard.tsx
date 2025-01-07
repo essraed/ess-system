@@ -66,7 +66,7 @@ const ServiceCard = ({ service, id }: Props) => {
                       )}
           </Link>
         </div>
-        <div className="p-3 flex flex-col gap-2">
+        <div className="p-3 flex flex-col">
           {/* <div className="flex justify-center items-center">
             <div className="text-lg font-semibold text-slate-900">
               <Link to={`/listings/service-details/${service.id}`}>

@@ -13,8 +13,8 @@ export default class ContactStore {
   pagination: PaginationData | null = null;
   pagingParams = new PagingParams();
   searchTerm: string = "";
-  fromDate: string = "";
-  toDate: string = "";
+  fromDate: string | null = null;
+  toDate: string | null = null;
   enquiryType: boolean | null = null;
 
   constructor() {
@@ -120,7 +120,8 @@ export default class ContactStore {
   setSearchTerm = (term: string) => {
     this.searchTerm = term;
   };
-  setDateFilter = (from: string, to: string) => {
+ 
+  setDateFilter = (from: string | null, to: string | null) => {
     this.fromDate = from;
     this.toDate = to;
   };

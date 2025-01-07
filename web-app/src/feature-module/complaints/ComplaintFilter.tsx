@@ -9,22 +9,23 @@ import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
-import { observer } from "mobx-react-lite";
+import { observer} from "mobx-react-lite";
 
-const ContactFilter = () => {
+const ComplaintFilter = () => {
   const {
-    contactStore: {
+    complaintStore: {
       setDateFilter,
-      loadContact,
+      loadComplaintItems,
       setPagingParams,
       pagination,
       fromDate: startDate,
       toDate: endDate,
-      setEnquiryType,
-      enquiryType,
+      complaintStatus,
+      setStatusFilter,
+      setType,
+      type,
     },
   } = useStore();
-
 
   const [fromDate, setFromDate] = useState<string | null>(null);
   const [toDate, setToDate] = useState<string | null>(null);
@@ -33,25 +34,25 @@ const ContactFilter = () => {
   const handleFilter = () => {
     setDateFilter(fromDate, toDate);
     setPagingParams(new PagingParams(1, pagination?.pageSize)); // Reset to first page when searching
-    loadContact();
+    loadComplaintItems();
   };
 
   useEffect(() => {
     setFromDate(startDate);
     setToDate(endDate);
-  }, [startDate, endDate]);
+}, [startDate, endDate]);
 
 useEffect(() => {
     const timeout = setTimeout(() => {
         handleFilter();
     }, 300);
     return () => clearTimeout(timeout);
-}, [fromDate, toDate, enquiryType]);
-  
-  useEffect(() => {
-    loadContact();
-    console.log("hi");
-  }, [enquiryType]);
+}, [fromDate, toDate, type]);
+
+useEffect(() => {
+    loadComplaintItems();
+}, []);
+
 
   function handleFromDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFromDate(e.target.value);
@@ -60,18 +61,25 @@ useEffect(() => {
   function handleToDateChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setToDate(e.target.value);
   }
+  const handleStatusSelect = (status: string) => {
+    setStatusFilter(status);
+    console.log("complaintStatus", status);
+    loadComplaintItems();
+  };
 
-  const handleEnquertype = (EnqueryType: string | null) => {
-    console.log("hi", enquiryType);
-    if (EnqueryType === "General") {
-      console.log("step1");
-      setEnquiryType(false);
-      loadContact();
+  const statusDefaultItems = [
+    { label: "Pending", value: "Pending" },
+    { label: "In Process", value: "InProcess" },
+    { label: "Completed", value: "Completed" },
+  ];
+
+  const handleType = (type: string | null) => {
+    if (type === "Complaints") {
+      setType(true);
+      loadComplaintItems();
     } else {
-      console.log("step2");
-
-      setEnquiryType(true);
-      loadContact();
+      setType(false);
+      loadComplaintItems();
     }
   };
 
@@ -94,15 +102,33 @@ useEffect(() => {
               onChange={(e) => handleToDateChange(e)}
               label={t("To Date")}
             />
+
             <Autocomplete
               className="mb-2"
-              label={t("Enquiry Type")}
+              label={t("Complaint Status")}
+              placeholder={t("Select status")}
+              defaultItems={statusDefaultItems}
+              value={complaintStatus ?? ""}
+              onSelectionChange={(key) =>
+                handleStatusSelect(key?.toString() as string)
+              }
+            >
+              {(item) => (
+                <AutocompleteItem key={item.value}>
+                  {item.label}
+                </AutocompleteItem>
+              )}
+            </Autocomplete>
+
+            <Autocomplete
+              className="mb-2"
+              label={t("Type")}
               onSelectionChange={(value) => {
-                handleEnquertype(value ? value.toString() : null);
+                handleType(value ? value.toString() : null);
               }}
             >
-              <AutocompleteItem key="General">General Contact</AutocompleteItem>
-              <AutocompleteItem key="Business">Business Setup</AutocompleteItem>
+              <AutocompleteItem key="Complaints">Complaints</AutocompleteItem>
+              <AutocompleteItem key="Suggestions">Suggestions</AutocompleteItem>
             </Autocomplete>
           </div>
         </div>
@@ -111,4 +137,4 @@ useEffect(() => {
   );
 };
 
-export default observer(ContactFilter);
+export default observer(ComplaintFilter);
