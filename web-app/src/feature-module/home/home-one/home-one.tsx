@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";
@@ -71,12 +71,12 @@ const HomeOne = () => {
       <section className="banner-section banner-slider">
         <div className="container-fluid">
           <div className="home-banner">
-            <div className="row align-items-center bg-black">
+            <div className="row align-items-center">
               {/* Video on the Right Side */}
-              <div className="col-md-5 offset-md-7 position-absolute bottom-32 end-12 video-content">
+              <div className="col-md-5 offset-md-7">
                 <div className="video-wrapper">
                   <video
-                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
+                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0" 
                     style={{ opacity: 0.8 }}
                     controls
                     muted

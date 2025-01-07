@@ -42,7 +42,8 @@ const ListingDetails = () => {
             {/* Service Info */}
             <div className="detail-headings lg:flex-1">
               <h2 className="text-xl font-semibold text-gray-800">
-                {currentService.categoryName || "Category"}
+                {currentService.categoryName || "Category"}   &gt;&gt; 
+                {currentService.name}
               </h2>
             </div>
             {/* Action Buttons */}
