@@ -159,7 +159,7 @@ const Header = () => {
                 <Link to={routes.homeOne} className="menu-logo">
                   <ImageWithBasePath
                     lazyLoad={true}
-                    src="assets/img/ESS KBC LOGO transparent-01-01.png"
+                    src="assets/img/ESSLogo.png"
                     className="img-fluid"
                     alt="Logo"
                   />
@@ -187,7 +187,7 @@ const Header = () => {
                     location.pathname.includes(routes.aboutUs) ? "active" : ""
                   }
                 >
-                  <Link to={routes.aboutUs}>{t("Aboutus")}</Link>
+                  <Link to={routes.aboutUs}>{t("About")}</Link>
                 </li>
 
                 <li
@@ -453,7 +453,7 @@ const Header = () => {
                       : ""
                   }
                 >
-                  <Link to={routes.Losts}>{t("Losts")}</Link>
+                  <Link to={routes.Losts}>{t("Lost & Found")}</Link>
                 </li>
                 <li
                   className={

@@ -57,7 +57,7 @@ const BusinessSetup = () => {
   return (
     <div className="main-wrapper">
       <Header />
-      <Breadcrumbs title="Contact us" subtitle="Pages" />
+      <Breadcrumbs title="Business Setup" subtitle="Pages" />
       <section className="contact-section">
         <div className="container">
           <div className="contact-info-area">
