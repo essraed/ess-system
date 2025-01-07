@@ -217,7 +217,13 @@
     @media (max-width: 768px) {
         .bookings-container {
           order: -1;
-          //width: 12%; 
+          width: 12%; 
+          display: flex;
+          justify-content: center;
+        }
+      
+        .bookings-container1 {
+          order: -1;
           display: flex;
           justify-content: center;
         }
