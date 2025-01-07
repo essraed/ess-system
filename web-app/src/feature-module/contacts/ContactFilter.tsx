@@ -50,7 +50,6 @@ useEffect(() => {
   
   useEffect(() => {
     loadContact();
-    console.log("hi");
   }, [enquiryType]);
 
   function handleFromDateChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -62,13 +61,10 @@ useEffect(() => {
   }
 
   const handleEnquertype = (EnqueryType: string | null) => {
-    console.log("hi", enquiryType);
     if (EnqueryType === "General") {
-      console.log("step1");
       setEnquiryType(false);
       loadContact();
     } else {
-      console.log("step2");
 
       setEnquiryType(true);
       loadContact();

@@ -54,8 +54,6 @@ const FileForm = ({ label, entityId, uploadImage }: Props) => {
   };
 
   const onSubmit = async (data: FileFormInputs) => {
-    console.log("hiihihi", data.number);
-    console.log("hioii");
     if (!uploadImage) return;
 
     const formData = new FormData();
@@ -71,8 +69,6 @@ const FileForm = ({ label, entityId, uploadImage }: Props) => {
     if (data.number === "1" || data.number === "2") {
       formData.append("number", data.number.toString());
     }
-
-    console.log(formData.values);
     setIsLoading(true);
     const result = await uploadImage(formData);
 

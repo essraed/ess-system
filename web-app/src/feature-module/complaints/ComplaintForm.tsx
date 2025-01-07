@@ -8,7 +8,7 @@ import Header from "../common/header";
 import Breadcrumbs from "../common/breadcrumbs";
 import Footer from "../common/footer";
 import Select from "react-select";
-import { lostDepartments } from "../../constants/constants";
+import { CompalintDepartments} from "../../constants/constants";
 import { complaintSchema, ComplaintSchema } from "../../lib/schemas/complaintSchema";
 
 const ComplaintForm = () => {
@@ -31,7 +31,6 @@ const ComplaintForm = () => {
   });
 
   const onSubmit = async (data: ComplaintSchema) => {
-    console.log("data", data);
     const result = await addComplaintItem(data);
     if (result.status === "success") {
       toast.success(
@@ -133,22 +132,21 @@ const ComplaintForm = () => {
                 Department <span className="text-red-500">*</span>
               </label>
               <Select
-                options={lostDepartments}
+                options={CompalintDepartments}
                 onChange={(selectedOption) => {
                   // Type assertion to ensure the value is one of the valid options
                   setValue(
                     "department",
                     selectedOption?.value as
-                      | "Medical DHA - AREA 6"
-                      | "Medical DHA - AREA 7"
-                      | "Medical DHA - AREA 6 XRAY"
-                      | "Medical DHA - AREA 7 XRAY"
-                      | "Medical OHC - AREA 4"
-                      | "AMER - ZONE A"
-                      | "TAWJEEH - ZONE B"
-                      | "TYPING - ZONE C"
+                      | "AMER RECEPTION"
+                      | "AMER TYPING"
+                      | "HR"
+                      | "DHA"
+                      | "ACCOUNTS"
+                      | "CASHIER"
+                      | "TYPING"
                       | "MAIN RECEPTION"
-                      | "OTHER AREA"
+                      | "OTHER"
                   );
                 }}
                 placeholder="Select Department"
