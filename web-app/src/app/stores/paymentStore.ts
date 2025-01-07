@@ -21,7 +21,7 @@ class PaymentStore {
       return { status: "success", data: response };
     } catch (error:any) {
       runInAction(() => {
-        this.error = error.message || "Failed to initiate payment";
+        this.error = error.message ;
         this.paymentUrl = null;
         this.status = "Failed";
       });

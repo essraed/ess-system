@@ -9,6 +9,7 @@ import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { PagingParams } from "../../types/pagination";
+import { observer } from "mobx-react-lite";
 
 const LostFilter = () => {
   const {
@@ -24,8 +25,9 @@ const LostFilter = () => {
     },
   } = useStore();
 
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+
+  const [fromDate, setFromDate] = useState<string | null>(null);
+  const [toDate, setToDate] = useState<string | null>(null);
   const { t } = useTranslation();
 
   const handleFilter = () => {
@@ -39,9 +41,12 @@ const LostFilter = () => {
     setToDate(endDate);
   }, [startDate, endDate]);
 
-  useEffect(() => {
-    handleFilter();
-  }, [fromDate, toDate]);
+useEffect(() => {
+    const timeout = setTimeout(() => {
+        handleFilter();
+    }, 300);
+    return () => clearTimeout(timeout);
+}, [fromDate, toDate,lostStatus]);
   useEffect(() => {
     loadLostItems();
   }, []);
@@ -73,14 +78,14 @@ const LostFilter = () => {
             <Input
               className="mb-2"
               type="date"
-              value={fromDate}
+              value={fromDate??""}
               onChange={(e) => handleFromDateChange(e)}
               label={t("From Date")}
             />
             <Input
               className="mb-2"
               type="date"
-              value={toDate}
+              value={toDate??""}
               onChange={(e) => handleToDateChange(e)}
               label={t("To Date")}
             />
@@ -108,4 +113,4 @@ const LostFilter = () => {
   );
 };
 
-export default LostFilter;
+export default observer(LostFilter);

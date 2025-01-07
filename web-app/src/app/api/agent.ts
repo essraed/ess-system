@@ -28,6 +28,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { ContactSchema } from "../../lib/schemas/contactSchema";
 import { LostData } from "../../types/lost";
 import { LostSchema } from "../../lib/schemas/lostSchema";
+import { ComplaintSchema } from "../../lib/schemas/complaintSchema";
+import { ComplaintData } from "../../types/complaints";
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -117,6 +119,17 @@ const Losts = {
     requests.put<string>(`lost/${id}/status/in-process`, {}),
   setStatusCompleted: (id: string) =>
     requests.put<string>(`lost/${id}/status/completed`, {}),
+};
+const Complaints = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<ComplaintData[]>>("complaint", { params }).then(responseBody),
+  getById: (id: string) => requests.get<ComplaintData>(`complaint/${id}`),
+  create: (complaint: ComplaintSchema) => requests.post<ComplaintData>("complaint", complaint),
+  delete: (id: string) => requests.del<string>(`complaint/${id}`),
+  setStatusInProcess: (id: string) =>
+    requests.put<string>(`complaint/${id}/status/in-process`, {}),
+  setStatusCompleted: (id: string) =>
+    requests.put<string>(`complaint/${id}/status/completed`, {}),
 };
 
 const Categories = {
@@ -291,7 +304,8 @@ const agent = {
   Notifications,
   Contacts,
   Payment,
-  Losts
+  Losts,
+  Complaints,
 };
 
 export default agent;

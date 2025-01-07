@@ -99,9 +99,13 @@ export const all_routes = {
   contactDashboard:"/listings/contacts",
   contactDetails: "/listings/contacts/view/:id",
 
-  //Contacts
+  //Losts
   lostDashboard:"/listings/Losts",
   lostDetails: "/listings/losts/view/:id",
+
+  //Losts
+  ComplaintDashboard:"/listings/Complaints",
+  ComplaintsDetails: "/listings/Complaints/view/:id",
 
   //Payments
   paymentSuccess:"/payment/success",
@@ -120,6 +124,7 @@ export const all_routes = {
   contactUs: "/contact",
   businessSetup:"/businessSetup",
   Losts:"/Losts",
+  Complaints:"/Complaints",
 
   admin:"/admin"
 };

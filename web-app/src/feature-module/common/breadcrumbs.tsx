@@ -28,6 +28,9 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname === routes.Losts || 
     location.pathname === routes.lostDashboard || 
     location.pathname === routes.allServices ||
+    location.pathname===routes.businessSetup||
+    location.pathname===routes.Complaints||
+    location.pathname===routes.ComplaintDashboard||
     location.pathname.startsWith(routes.contactDetails.slice(0, -3)) 
   ) {
     addButton = (

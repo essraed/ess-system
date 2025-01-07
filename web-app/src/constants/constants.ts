@@ -33,3 +33,17 @@ export const pageSizeOptions = [
   { name: "25" },
   { name: "30" },
 ];
+
+export const lostDepartments = [
+  { value: "Medical DHA - AREA 6", label: "Medical DHA - AREA 6" },
+  { value: "Medical DHA - AREA 7", label: "Medical DHA - AREA 7" },
+  { value: "Medical DHA - AREA 6 XRAY", label: "Medical DHA - AREA 6 XRAY" },
+  { value: "Medical DHA - AREA 7 XRAY", label: "Medical DHA - AREA 7 XRAY" },
+  { value: "Medical OHC - AREA 4", label: "Medical OHC - AREA 4" },
+  { value: "AREA 5", label: "AREA 5" },
+  { value: "AMER - ZONE A", label: "AMER - ZONE A" },
+  { value: "TAWJEEH - ZONE B", label: "TAWJEEH - ZONE B" },
+  { value: "TYPING - ZONE C", label: "TYPING - ZONE C" },
+  { value: "MAIN RECEPTION", label: "MAIN RECEPTION" },
+  { value: "OTHER AREA", label: "OTHER AREA" },
+];

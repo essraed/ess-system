@@ -113,7 +113,6 @@ public class LostService : ILostService
         var lostItem = _mapper.Map<Lost>(model);
 
         lostItem.CreateDate = DateTime.UtcNow;
-        lostItem.CreatedById = GetCurrentUserId();
 
         _context.Losts.Add(lostItem);
         var result = await _context.SaveChangesAsync() > 0;
@@ -165,8 +164,8 @@ public class LostService : ILostService
                         </small>
                     </p>";
 
-                string coordinatorEmail = "it@ess.ae"; 
-                await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
+                // string coordinatorEmail = "it@ess.ae"; 
+                // await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
             }
             catch (Exception ex)
             {

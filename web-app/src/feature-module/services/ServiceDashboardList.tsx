@@ -131,6 +131,8 @@ const ServiceDashboardList = () => {
                     "serviceVipName",
                     "serviceOptions",
                     "fileEntities",
+                    "description",
+                    "priceVIP",
                   ]}
                   data={services}
                   pageSize={pageSize} // Use pageSize state variable here

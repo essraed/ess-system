@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { lostSchema, LostSchema } from "../../lib/schemas/lostSchema";
 import { useStore } from "../../app/stores/store";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -10,12 +9,14 @@ import Breadcrumbs from "../common/breadcrumbs";
 import Footer from "../common/footer";
 import Select from "react-select";
 import { lostDepartments } from "../../constants/constants";
+import { complaintSchema, ComplaintSchema } from "../../lib/schemas/complaintSchema";
 
-const LostForm = () => {
+const ComplaintForm = () => {
   useTranslation();
+  const [isComplaint, setIsComplaint] = useState(true);
 
   const {
-    lostStore: { addLostItem },
+    complaintStore: { addComplaintItem },
   } = useStore();
 
   const {
@@ -24,17 +25,17 @@ const LostForm = () => {
     formState: { errors },
     reset,
     control,
-    setValue, // Destructure setValue from useForm
-  } = useForm<LostSchema>({
-    resolver: zodResolver(lostSchema),
+    setValue,
+  } = useForm<ComplaintSchema>({
+    resolver: zodResolver(complaintSchema),
   });
 
-  const onSubmit = async (data: LostSchema) => {
+  const onSubmit = async (data: ComplaintSchema) => {
     console.log("data", data);
-    const result = await addLostItem(data);
+    const result = await addComplaintItem(data);
     if (result.status === "success") {
       toast.success(
-        "Lost item reported successfully. Our team will reach out to you shortly to assist with the next steps."
+        `${isComplaint ? "Complaint" : "Suggestion"} submitted successfully. Our team will reach out to you shortly.`
       );
       reset();
     } else {
@@ -42,16 +43,39 @@ const LostForm = () => {
     }
   };
 
+  useEffect(()=>{
+    setValue("isComplaint",isComplaint);
+  },[isComplaint])
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <Breadcrumbs title="Losts" subtitle="Pages" />
+      <Breadcrumbs title={isComplaint ? "Complaints" : "Suggestions"} subtitle="Pages" />
       <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto bg-white border border-gray-300 p-6">
-          <h2 className="text-2xl font-bold text-center mb-4">
-            Report Lost Item
+        <div className="max-w-2xl mx-auto bg-white border border-gray-300 rounded-lg p-8">
+          <h2 className="text-3xl font-bold text-center mb-6">
+            {isComplaint ? "File a Complaint" : "Make a Suggestion"}
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="flex justify-center mb-6">
+            <button
+              onClick={() => setIsComplaint(true)}
+              className={`py-2 px-4 rounded-l-lg ${
+                isComplaint ? "bg-cyan-900 text-white" : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              Complaint
+            </button>
+            <button
+              onClick={() => setIsComplaint(false)}
+              className={`py-2 px-4 rounded-r-lg ${
+                !isComplaint ? "bg-cyan-900 text-white" : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              Suggestion
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -65,9 +89,7 @@ const LostForm = () => {
                 {...register("name")}
               />
               {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
               )}
             </div>
 
@@ -84,9 +106,7 @@ const LostForm = () => {
                 {...register("phone")}
               />
               {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.phone.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
               )}
             </div>
 
@@ -103,23 +123,21 @@ const LostForm = () => {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
               )}
             </div>
 
-            {/* Lost Department */}
+            {/* Department */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Lost Department <span className="text-red-500">*</span>
+                Department <span className="text-red-500">*</span>
               </label>
               <Select
                 options={lostDepartments}
                 onChange={(selectedOption) => {
                   // Type assertion to ensure the value is one of the valid options
                   setValue(
-                    "lostDepartment",
+                    "department",
                     selectedOption?.value as
                       | "Medical DHA - AREA 6"
                       | "Medical DHA - AREA 7"
@@ -135,21 +153,19 @@ const LostForm = () => {
                 }}
                 placeholder="Select Department"
                 className={`mt-1 block w-full py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                  errors.lostDepartment ? "border-red-500" : "border-gray-300"
+                  errors.department ? "border-red-500" : "border-gray-300"
                 }`}
               />
-
-              {errors.lostDepartment && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.lostDepartment.message}
-                </p>
+              {errors.department && (
+                <p className="text-red-500 text-sm mt-1">{errors.department.message}</p>
               )}
             </div>
 
             {/* Comments */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Comments <span className="text-red-500">*</span>
+                {isComplaint ? "Complaint Details" : "Suggestion Details"}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <textarea
                 className={`mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
@@ -159,45 +175,23 @@ const LostForm = () => {
                 {...register("comments")}
               ></textarea>
               {errors.comments && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.comments.message}
-                </p>
-              )}
-            </div>
-
-            {/* Lost Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Lost Date <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                className={`mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50 ${
-                  errors.lostDate ? "border-red-500" : "border-gray-300"
-                }`}
-                {...register("lostDate")}
-              />
-              {errors.lostDate && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.lostDate.message}
-                </p>
+                <p className="text-red-500 text-sm mt-1">{errors.comments.message}</p>
               )}
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-cyan-900 text-white py-2 px-4 rounded-md hover:bg-slate-500 transition"
+              className="w-full bg-cyan-900 text-white py-2 px-4 rounded-md hover:bg-cyan-700 transition"
             >
               Submit
             </button>
           </form>
         </div>
       </main>
-
       <Footer />
     </div>
   );
 };
 
-export default LostForm;
+export default ComplaintForm;

@@ -32,6 +32,8 @@ import PaymentSuccess from "../payment/PaymentSuccess";
 import PaymentFailed from "../payment/PaymentFailed";
 import LostForm from "../losts/LostForm";
 import LostDashboard from "../losts/LostDashboard";
+import ComplaintForm from "../complaints/ComplaintForm";
+import ComplaintDashboard from "../complaints/ComplaintDashboard";
 
 
 const routes = all_routes;
@@ -76,6 +78,10 @@ export const publicRoutes = [
   {
     path: routes.Losts,
     element: <LostForm />,
+  },
+  {
+    path: routes.Complaints,
+    element: <ComplaintForm />,
   },
   // services
   {
@@ -175,6 +181,11 @@ export const listingroutes = [
   {
     path: routes.lostDashboard,
     element: <LostDashboard />,
+  },
+  
+  {
+    path: routes.ComplaintDashboard,
+    element: <ComplaintDashboard />,
   },
   
 ];

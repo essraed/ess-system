@@ -410,6 +410,22 @@ const Header = () => {
                           {t("Lost List")}
                         </Link>
                       </li>
+                      <li
+                        className={
+                          locationPathname === routes.ComplaintDashboard
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link
+                          to={routes.ComplaintDashboard}
+                          onClick={() =>
+                            setLocationPathname(routes.ComplaintDashboard)
+                          }
+                        >
+                          {t("Complaint List")}
+                        </Link>
+                      </li>
                     </ul>
                   </li>
                 )}
@@ -438,6 +454,15 @@ const Header = () => {
                   }
                 >
                   <Link to={routes.Losts}>{t("Losts")}</Link>
+                </li>
+                <li
+                  className={
+                    location.pathname===(routes.Complaints)
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <Link to={routes.Complaints}>{t("Complaints & Suggestions")}</Link>
                 </li>
                 {/* <li className="login-link">
                   <Link to={routes.register}>{t("Sign Up")}</Link>

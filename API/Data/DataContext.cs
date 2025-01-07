@@ -50,5 +50,6 @@ namespace API.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Lost> Losts { get; set; }
+        public DbSet<Complaint> Complaints { get; set; }
     }
 }

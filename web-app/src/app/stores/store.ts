@@ -11,6 +11,7 @@ import NotificationStore from "./notificationStore";
 import ContactStore from "./contactStore";
 import PaymentStore from "./paymentStore";
 import LostStore from "./lostStore";
+import ComplaintStore from "./complaintStore";
 
 interface Store {
   userStore: UserStore;
@@ -25,6 +26,7 @@ interface Store {
   contactStore: ContactStore;
   paymentStore: PaymentStore;
   lostStore: LostStore;
+  complaintStore:ComplaintStore;
 }
 
 export const store: Store = {
@@ -40,6 +42,7 @@ export const store: Store = {
   contactStore: new ContactStore(),
   paymentStore: new PaymentStore(),
   lostStore: new LostStore(),
+  complaintStore:new ComplaintStore(),
 };
 
 export const StoreContext = createContext(store);
