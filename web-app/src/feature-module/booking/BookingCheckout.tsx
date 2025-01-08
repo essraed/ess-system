@@ -42,7 +42,7 @@ const BookingCheckout = () => {
       const bookingIds = bookings.map((x) => x.id).join(", ");
 
       formData.append("OrderName", serviceNames || "");
-      formData.append("OrderId", bookingIds || "");
+      formData.append("OrderId", bookings[0].id || "");
 
       try {
         const result = await paymentStore.initiatePayment(formData);

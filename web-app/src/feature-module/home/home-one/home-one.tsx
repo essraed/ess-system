@@ -113,7 +113,7 @@ const HomeOne = () => {
                     <img src="assets/img/icons-05.png" alt="" />
                   </div>
                   <div className="char_content">
-                    <div className="char_title">Booking Appointments</div>
+                    <div className="char_title">Booking</div>
                   </div>
                 </div>
               </div>
