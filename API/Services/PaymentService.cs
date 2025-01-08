@@ -55,12 +55,12 @@ public class PaymentService : IPaymentService
             CustomerName = payment.CustomerName,
             CustomerEmail = payment.CustomerEmail,
             CustomerPhone = payment.CustomerPhone,
-            UserName = "Demo_fy9c",
-            Password = "Contrust@20182018",
+            UserName = "Demo_fY9c",
+            Password = "Comtrust@20182018",
             channel = "WEB",
         };
 
-        var apiUrl = "https://deme-ipg.ctdev.comtrust.ae:2443";
+        var apiUrl = "https://demo-ipg.ctdev.comtrust.ae:2443/";
         var httpClient = new HttpClient();
         var content = new StringContent(JsonConvert.SerializeObject(paymentRequest), Encoding.UTF8, "application/json");
 
@@ -85,7 +85,7 @@ public class PaymentService : IPaymentService
         }
         else
         {
-            throw new Exception("Payment URL is missing from the response.");
+            throw new Exception($"Payment URL is missing from the response.{response.Content}");
         }
 
         return paymentUrl;
