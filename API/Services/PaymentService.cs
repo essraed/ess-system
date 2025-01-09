@@ -15,11 +15,15 @@ using System.Security.Cryptography.X509Certificates;
 using API.RequestParams;
 using API.Helpers;
 using AutoMapper.QueryableExtensions;
+using System.Net.Http.Headers;
+using API.DTOs.PaymentDto;
+using System.ComponentModel;
 
 public class PaymentService : IPaymentService
 {
     private readonly DataContext _context;
     private readonly IMapper _mapper;
+
 
     public PaymentService(DataContext context, IMapper mapper)
     {
@@ -39,41 +43,51 @@ public class PaymentService : IPaymentService
         payment.TransactionHint = "CPT:Y;VCC:Y;";
         payment.Currency = "AED";
         payment.ReturnUrl = "https://kbc.center/payment/success";
-        payment.CancelUrl = "https://kbc.center/payment/failed";
-
-
-
 
         var paymentRequest = new
         {
-            MerchantName = payment.MerchantId,
-            Amount = payment.TransactionAmount,
-            Currency = payment.Currency,
-            OrderId = payment.OrderId.ToString(),
-            ReturnUrl = payment.ReturnUrl,
-            CancelUrl = payment.CancelUrl,
-            CustomerName = payment.CustomerName,
-            CustomerEmail = payment.CustomerEmail,
-            CustomerPhone = payment.CustomerPhone,
-            UserName = "Demo_fY9c",
-            Password = "Comtrust@20182018",
-            channel = "WEB",
+            Registration = new
+            {
+                Customer = payment.MerchantId,
+                Channel = "Web",
+                Amount = payment.TransactionAmount,
+                Currency = payment.Currency,
+                OrderID = payment.OrderId.ToString().Substring(0, 16),
+                OrderName = payment.OrderName,
+                TransactionHint = payment.TransactionHint,
+                ReturnPath = payment.ReturnUrl,
+                UserName = "Demo_fY9c",
+                Password = "Comtrust@20182018"
+            }
         };
 
         var apiUrl = "https://demo-ipg.ctdev.comtrust.ae:2443/";
-        var httpClient = new HttpClient();
-        var content = new StringContent(JsonConvert.SerializeObject(paymentRequest), Encoding.UTF8, "application/json");
 
-        var response = await httpClient.PostAsync(apiUrl, content);
+        using var httpClient = new HttpClient();
+
+        var jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+
+        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+        var request = new HttpRequestMessage(HttpMethod.Post, apiUrl)
+        {
+            Content = content
+        };
+
+        request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+        var response = await httpClient.SendAsync(request);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Failed to initiate payment with Etisalat.");
+            throw new Exception($"Failed to initiate payment with Etisalat. Status Code: {response.StatusCode}, Reason: {response.ReasonPhrase}, Content: {responseContent}");
         }
 
-        var paymentResponse = await response.Content.ReadAsStringAsync();
-        dynamic result = JsonConvert.DeserializeObject(paymentResponse);
+        dynamic result = JsonConvert.DeserializeObject(responseContent);
+        string paymentUrl = result?.Transaction?.PaymentPortal?.ToString();
 
-        string paymentUrl = result?.PaymentUrl?.ToString();
 
         if (!string.IsNullOrEmpty(paymentUrl))
         {
@@ -82,43 +96,59 @@ public class PaymentService : IPaymentService
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
+
         }
         else
         {
-            throw new Exception($"Payment URL is missing from the response.{response.Content}");
+            throw new Exception($"Payment URL is missing from the response. Content: {responseContent}");
         }
 
         return paymentUrl;
     }
 
-    public async Task PaymentCallback(string orderId, string paymentStatus)
-    {
-        try
-        {
-            var payment = await _context.Payments.FirstOrDefaultAsync(p => p.OrderId.ToString() == orderId);
 
-            if (payment == null)
-            {
-                throw new Exception("Payment not found.");
-            }
+    // public async Task PaymentCallback(PaymentCallbackDto callback)
+    // {
+    //     try
+    //     {
 
-            if (paymentStatus == "SUCCESS")
-            {
-                payment.Status = "Completed";
-            }
-            else
-            {
-                payment.Status = "Failed";
-            }
+    //         var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionId == callback.Transaction.TransactionID);
+    //         if (payment == null)
+    //         {
+    //             throw new Exception("Invalid Transaction ID");
+    //         }
 
-            await _context.SaveChangesAsync();
+    //         if (callback.Transaction.ResponseCode == "0") // Success
+    //         {
+    //             payment.Status = "Completed";
+    //             payment.TransactionStatus = "Success";
+    //             payment.PaymentDate = DateTime.UtcNow;
+    //             _context.Payments.Update(payment);
+    //             await _context.SaveChangesAsync();
+    //             return;
+    //         }
+    //         else if (callback.Transaction.ResponseCode == "51" || callback.Transaction.ResponseCode == "91") // Pending
+    //         {
+    //             payment.Status = "Pending";
+    //             _context.Payments.Update(payment);
+    //             await _context.SaveChangesAsync();
+    //             return ;
+    //         }
+    //         else // Failure
+    //         {
+    //             payment.Status = "Failed";
+    //             payment.TransactionStatus = callback.Transaction.ResponseDescription;
+    //             _context.Payments.Update(payment);
+    //             await _context.SaveChangesAsync();
+    //             return;
+    //         }
 
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"An error occurred: {ex.Message}");
-        }
-    }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         throw new Exception($"An error occurred: {ex.Message}");
+    //     }
+    // }
 
 
     // public async Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams)

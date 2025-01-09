@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.PaymentDto;
 using API.Helpers;
 using API.RequestParams;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,8 @@ namespace API.Interfaces
     public interface IPaymentService
     {
         Task<string> InitiatePayment(PaymentSaveDto paymentDto);
-        Task PaymentCallback( string orderId,  string paymentStatus);
+        
+        // Task PaymentCallback( PaymentCallbackDto callback);
 
         // Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams);
         // Task DeleteServiceAsync(Guid id);
