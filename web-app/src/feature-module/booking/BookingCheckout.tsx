@@ -38,11 +38,15 @@ const BookingCheckout = () => {
       formData.append("CustomerName", bookings[0].customerName ?? "");
       formData.append("CustomerEmail", bookings[0].email ?? "");
       formData.append("CustomerPhone", bookings[0].phone ?? "");
+      formData.append("CustomerEmail", bookings[0].email ?? "");
       const serviceNames = bookings.map((x) => x.serviceName).join(", ");
-      const bookingIds = bookings.map((x) => x.id).join(", ");
+      const bookingIds = bookings.map((x) => x.id).join(" , ");
+
+      // formData.append("ID", bookingIds ?? "");
+
 
       formData.append("OrderName", serviceNames || "");
-      formData.append("OrderId", bookingIds || "");
+      formData.append("OrderId", bookings[0].id || "");
 
       try {
         const result = await paymentStore.initiatePayment(formData);
