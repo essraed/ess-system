@@ -4,6 +4,7 @@ using API.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using API.RequestParams;
+using API.DTOs.PaymentDto;
 
 namespace API.Controllers
 {
@@ -34,19 +35,19 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("payment-callback")]
-        public async Task<IActionResult> PaymentCallback([FromForm] string orderId, [FromForm] string paymentStatus)
-        {
-            try
-            {
-                await _paymentService.PaymentCallback(orderId, paymentStatus);
-                return Ok("Payment Done successfully");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred: {ex.Message}");
-            }
-        }
+        // [HttpPost("payment-callback")]
+        // public async Task<IActionResult> PaymentCallback([FromBody] PaymentCallbackDto callback)
+        // {
+        //     try
+        //     {
+        //         await _paymentService.PaymentCallback(callback);
+        //         return Ok("Payment Done successfully");
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return BadRequest($"An error occurred: {ex.Message}");
+        //     }
+        // }
 
 
         // [HttpGet("getAll")]
