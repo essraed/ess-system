@@ -9,13 +9,9 @@ public class PaymentDto
     public decimal TransactionAmount { get; set; }
     public string? Currency { get; set; }
     public string? Status { get; set; }
-    public string? CustomerName { get; set; }
-    public string? CustomerEmail { get; set; }
-    public string? CustomerPhone { get; set; }
-    public string? OrderId { get; set; }
+    public string? TransactionStatus { get; set; }
+    public string? TransactionID { get; set; }
     public string? OrderName { get; set; }
-
-    public string? BookingCode { get; set; }
-
+    public List<string>? BookingCodes { get; set; }
     public DateTime? CreateDate { get; set; }
 }

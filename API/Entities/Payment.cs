@@ -13,30 +13,13 @@ public class Payment
     [Column(TypeName = "decimal(18,2)")]
     public decimal TransactionAmount { get; set; }
     public string? TransactionHint { get; set; }
-
-    [Required]
+    public string? TransactionID { get; set; }
     public string? Currency { get; set; }
-
-    public string? ReturnUrl { get; set; }
-    public string? CancelUrl { get; set; }
-
-    [StringLength(100)]
-    public string? CustomerName { get; set; }
-
-    [Required]
-    public string? CustomerEmail { get; set; }
     public string? Status { get; set; }
-
+    public string? TransactionStatus { get; set; }
     public string? OrderName { get; set; }
-
-    [Required]
-    public string? CustomerPhone { get; set; }
-
-
-    [ForeignKey(nameof(Booking))]
-    public Guid OrderId { get; set; }
-
-    public Booking? Booking { get; set; }
+    public string? OrderID { get; set; }
+    public ICollection<Booking>? Bookings { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
     public DateTime? CreateDate { get; set; }

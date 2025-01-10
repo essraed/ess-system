@@ -31,7 +31,7 @@ public class PaymentService : IPaymentService
         _mapper = mapper;
     }
 
-    public async Task<string> InitiatePayment(PaymentSaveDto paymentDto)
+    public async Task<string> InitiatePayment(PaymentSaveDto paymentDto, string IDS)
     {
         if (paymentDto == null || paymentDto.TransactionAmount <= 0)
         {
@@ -42,7 +42,7 @@ public class PaymentService : IPaymentService
         payment.MerchantId = "Demo Merchant";
         payment.TransactionHint = "CPT:Y;VCC:Y;";
         payment.Currency = "AED";
-        payment.ReturnUrl = "https://kbc.center/payment/success";
+        payment.OrderID = payment.OrderID = Guid.NewGuid().ToString("N").Substring(0, 16);
 
         var paymentRequest = new
         {
@@ -52,10 +52,10 @@ public class PaymentService : IPaymentService
                 Channel = "Web",
                 Amount = payment.TransactionAmount,
                 Currency = payment.Currency,
-                OrderID = payment.OrderId.ToString().Substring(0, 16),
+                OrderID = payment.OrderID,
                 OrderName = payment.OrderName,
                 TransactionHint = payment.TransactionHint,
-                ReturnPath = payment.ReturnUrl,
+                ReturnPath = "https://kbc.center/payment/success",
                 UserName = "Demo_fY9c",
                 Password = "Comtrust@20182018"
             }
@@ -93,10 +93,22 @@ public class PaymentService : IPaymentService
         {
             payment.Status = "Pending";
             payment.CreateDate = DateTime.UtcNow;
+            payment.TransactionID = result?.Transaction?.TransactionID.ToString();
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
 
+            var bookingIds = IDS.Split(',').Select(Guid.Parse).ToList(); // Assuming IDS is a comma-separated string of GUIDs
+            var bookingsToUpdate = await _context.Bookings
+                .Where(b => bookingIds.Contains(b.Id))
+                .ToListAsync();
+
+            foreach (var booking in bookingsToUpdate)
+            {
+                booking.PaymentId = payment.Id; 
+            }
+
+            await _context.SaveChangesAsync();
         }
         else
         {

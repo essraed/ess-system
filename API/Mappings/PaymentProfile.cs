@@ -11,8 +11,8 @@ namespace API.Mappings
         {
             CreateMap<PaymentSaveDto, Payment>();
             CreateMap<Payment, PaymentDto>()
-            .ForMember(dest => dest.BookingCode, opt =>
-                    opt.MapFrom(src => src.Booking.BookingCode));;
+            .ForMember(dest => dest.BookingCodes, opt =>
+                opt.MapFrom(src => src.Bookings.Select(b => b.BookingCode).ToList()));
         }
     }
 }

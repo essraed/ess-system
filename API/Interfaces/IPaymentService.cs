@@ -9,7 +9,7 @@ namespace API.Interfaces
 {
     public interface IPaymentService
     {
-        Task<string> InitiatePayment(PaymentSaveDto paymentDto);
+        Task<string> InitiatePayment(PaymentSaveDto paymentDto,string IDS);
         
         // Task PaymentCallback( PaymentCallbackDto callback);
 
