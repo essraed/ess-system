@@ -29,11 +29,6 @@ namespace API.Data
                 .Property(x => x.BookingStatus)
                 .HasConversion<string>();
 
-                modelBuilder.Entity<Payment>()
-            .HasOne(p => p.Booking)
-            .WithOne(b => b.Payment)
-            .HasForeignKey<Payment>(p => p.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
 
         }
 

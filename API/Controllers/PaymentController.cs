@@ -21,11 +21,11 @@ namespace API.Controllers
 
         [HttpPost("initiate-payment")]
         [AllowAnonymous]
-        public async Task<IActionResult> InitiatePayment([FromForm] PaymentSaveDto paymentDto)
+        public async Task<IActionResult> InitiatePayment([FromForm] PaymentSaveDto paymentDto,[FromForm] string IDS)
         {
             try
             {
-                string paymentUrl = await _paymentService.InitiatePayment(paymentDto);
+                string paymentUrl = await _paymentService.InitiatePayment(paymentDto,IDS);
                 return Ok(paymentUrl);
             }
             catch (Exception ex)

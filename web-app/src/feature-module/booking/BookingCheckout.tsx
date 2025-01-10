@@ -42,7 +42,7 @@ const BookingCheckout = () => {
       const serviceNames = bookings.map((x) => x.serviceName).join(", ");
       const bookingIds = bookings.map((x) => x.id).join(" , ");
 
-      // formData.append("ID", bookingIds ?? "");
+      formData.append("IDS", bookingIds ?? "");
 
 
       formData.append("OrderName", serviceNames || "");
@@ -52,6 +52,7 @@ const BookingCheckout = () => {
         const result = await paymentStore.initiatePayment(formData);
 
         if (result?.status === "success") {
+          bookings.map((b) => setStatusInProcess(b.id ?? ""));
           window.location.href = result.data as string;
         } else {
           console.log("payment error",result.error);

@@ -63,10 +63,10 @@ namespace API.Entities
 
         public Guid? ServiceOptionId { get; set; }
         public ServiceOption? ServiceOption { get; set; }
+        public Guid? PaymentId { get; set; }
+        public Payment? Payment { get; set; }
 
         public Notification? Notification { get; set; }
-
-        public Payment? Payment { get; set; }
 
         public bool IsDeleted { get; set; }
     }
