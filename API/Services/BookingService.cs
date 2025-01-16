@@ -83,8 +83,8 @@ public class BookingService : IBookingService
     {
         var booking = await _context.Bookings
             .Include(x => x.Service)
-            .Include(X=>X.ServiceOption)
-            .Include(x=>x.Payment)
+            .Include(X => X.ServiceOption)
+            .Include(x => x.Payment)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .FirstOrDefaultAsync(x => x.Id == id);
@@ -126,7 +126,7 @@ public class BookingService : IBookingService
         var bookings = await _context.Bookings
             .Where(b => b.BookingDate.HasValue &&
                         b.BookingDate.Value.Date == date.ToDateTime(TimeOnly.MinValue).Date &&
-                        (b.BookingStatus == BookingStatus.InProcess 
+                        (b.BookingStatus == BookingStatus.InProcess
                         // || b.BookingStatus == BookingStatus.Pending
                         ))
             .ToListAsync();
@@ -183,9 +183,10 @@ public class BookingService : IBookingService
         }
         var booking = _mapper.Map<Booking>(model);
 
-        var bookings=_context.Bookings.Where(b=>b.BookingDate==booking.BookingDate).ToList();
+        var bookings = _context.Bookings.Where(b => b.BookingDate == booking.BookingDate).ToList();
 
-        if(bookings.Count==0){
+        if (bookings.Count == 0)
+        {
             var availableCar = await _context.Cars
             .Where(c => !c.IsDeleted &&
                 !_context.Bookings.Any(b =>
@@ -194,12 +195,13 @@ public class BookingService : IBookingService
                     b.EndBookingDate > booking.BookingDate))
             .FirstOrDefaultAsync();
 
-        if (availableCar == null) throw new Exception("No available cars for the selected time slot.");
+            if (availableCar == null) throw new Exception("No available cars for the selected time slot.");
 
-        booking.CarId = availableCar.Id;
+            booking.CarId = availableCar.Id;
         }
-        else{
-            booking.CarId=bookings[0].CarId;
+        else
+        {
+            booking.CarId = bookings[0].CarId;
         }
         ValidateBookingConditionsAsync(booking);
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
@@ -218,33 +220,38 @@ public class BookingService : IBookingService
             {
                 // Sending Notification
                 await _notificationService.SendNotification(
-                    $"Dear {booking.CustomerName}, your booking (ID: {booking.Id}) is confirmed for {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}.",
+                    $"Booking {booking.Id} for {booking.CustomerName} is confirmed on {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}.",
                     "Booking Confirmation",
                     NotificationType.Reminder,
                     $"Booking/view/{booking.Id}",
-                    booking.EndBookingDate);
+                    booking.BookingDate);
 
                 // Preparing Email Body
-                string _body = $@"
-            <html>
-            <body style='font-family: Arial, sans-serif; line-height: 1.6;'>
-                <p>Dear Admin,</p>
-                <p>We wanted to inform you about the following update:</p>
-                <h3>Booking Confirmation</h3>
-                <p>
-                    <strong>Booking ID:</strong> {booking.BookingCode}<br/>
-                    <strong>Customer Name:</strong> {booking.CustomerName}<br/>
-                    <strong>Booking Date:</strong> {booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}<br/>
-                </p>
-                <p>Thank you for your attention.</p>
-                <p>Best regards,<br/>Your Team</p>
-                <p>
-                    <small>
-                        This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.
-                    </small>
-                </p>
-            </body>
-            </html>";
+                string _body = $@" 
+                    <p>Dear Admin,</p>
+                    <p>We wanted to inform you about the following update:</p>
+                    <h3 style='color: #0056b3;'>Booking Confirmation</h3>
+                    <table style='border-collapse: collapse; width: 100%; margin-top: 10px;'>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Booking ID:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.BookingCode}</td>
+                        </tr>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Customer Name:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.CustomerName}</td>
+                        </tr>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Booking Date:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}</td>
+                        </tr>
+                    </table>
+                    <p style='margin-top: 20px;'>Thank you for your attention.</p>
+                    <p>Best regards,<br/>KBC Team</p>
+                    <p style='margin-top: 30px; font-size: 12px; color: #888;'>
+                        <small>
+                            This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.
+                        </small>
+                    </p>";
 
                 // Sending Email
                 await _emailService.SendEmailAsync(_email, "Booking Confirmation", _body);
@@ -273,6 +280,18 @@ public class BookingService : IBookingService
         if (!result) throw new Exception("Failed to delete the Booking.");
     }
 
+
+
+    public async Task setPaymentType(Guid id, string type)
+    {
+        var booking = await _context.Bookings.FindAsync(id);
+        if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
+
+        booking.PaymentType = type;
+
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) throw new Exception($"Failed to change booking payment type to {type}.");
+    }
 
     // After payment will change to in process.
     public async Task SetBookingStateInProcess(Guid id)

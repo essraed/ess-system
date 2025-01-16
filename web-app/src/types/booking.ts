@@ -47,4 +47,5 @@ export interface BookingDetailsData {
   endBookingDate?: Date | null;
   bookingCode: string;
   paymentStatus:string|null;
+  paymentType:string|null;
 }

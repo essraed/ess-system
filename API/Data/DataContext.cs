@@ -29,6 +29,12 @@ namespace API.Data
                 .Property(x => x.BookingStatus)
                 .HasConversion<string>();
 
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Payment)
+                .WithMany(p => p.Bookings)
+                .HasForeignKey(b => b.PaymentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
         }
 

@@ -21,11 +21,11 @@ namespace API.Controllers
 
         [HttpPost("initiate-payment")]
         [AllowAnonymous]
-        public async Task<IActionResult> InitiatePayment([FromForm] PaymentSaveDto paymentDto,[FromForm] string IDS)
+        public async Task<IActionResult> InitiatePayment([FromForm] PaymentSaveDto paymentDto, [FromForm] string IDS)
         {
             try
             {
-                string paymentUrl = await _paymentService.InitiatePayment(paymentDto,IDS);
+                string paymentUrl = await _paymentService.InitiatePayment(paymentDto, IDS);
                 return Ok(paymentUrl);
             }
             catch (Exception ex)
@@ -35,19 +35,21 @@ namespace API.Controllers
         }
 
 
-        // [HttpPost("payment-callback")]
-        // public async Task<IActionResult> PaymentCallback([FromBody] PaymentCallbackDto callback)
-        // {
-        //     try
-        //     {
-        //         await _paymentService.PaymentCallback(callback);
-        //         return Ok("Payment Done successfully");
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return BadRequest($"An error occurred: {ex.Message}");
-        //     }
-        // }
+        [HttpPost("payment-callback")]
+        [Consumes("application/json")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PaymentCallback([FromBody] PaymentCallbackDto callback)
+        {
+            try
+            {
+                await _paymentService.PaymentCallback(callback);
+                return Ok("Payment Done successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
 
 
         // [HttpGet("getAll")]
@@ -63,8 +65,8 @@ namespace API.Controllers
         // {
         //     try
         //     {
-        //         var service = await _paymentService.GetServiceByIdAsync(id);
-        //         return Ok(service);
+        //         var payment = await _paymentService.GetPaymentByIdAsync(id);
+        //         return Ok(payment);
         //     }
         //     catch (KeyNotFoundException ex)
         //     {

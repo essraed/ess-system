@@ -30,6 +30,7 @@ import { LostData } from "../../types/lost";
 import { LostSchema } from "../../lib/schemas/lostSchema";
 import { ComplaintSchema } from "../../lib/schemas/complaintSchema";
 import { ComplaintData } from "../../types/complaints";
+import { paymentType } from "../../lib/utils";
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -202,7 +203,11 @@ const Bookings = {
   // Dropdown
   dropdownList: () => requests.get<DropdownType[]>("booking/get-all-dropdown"),
 
-  // Updated status methods
+  
+  setPaymentTypeOfBooking: (id: string,type:paymentType) =>
+    requests.put<string>(`booking/${id}/setPaymentType`, type),
+
+// Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
   setStatusCanceled: (id: string) =>

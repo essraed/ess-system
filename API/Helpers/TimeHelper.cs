@@ -2,14 +2,14 @@ namespace API.Helpers
 {
     public class TimeHelper
     {
-        public static DateTime GetCurrentTimeInAbuDhabi()
+        public static DateTime GetCurrentTimeInAbuDhabi(DateTime? dateTime = null)
         {
+            DateTime utcTime = dateTime ?? DateTime.UtcNow;
+
             TimeZoneInfo abuDhabiTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
-
-            DateTime abuDhabiTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, abuDhabiTimeZone);
-
-            return abuDhabiTime;
+            return TimeZoneInfo.ConvertTimeFromUtc(utcTime, abuDhabiTimeZone);
         }
+
 
     }
 }

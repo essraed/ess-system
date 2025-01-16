@@ -108,8 +108,27 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id}/status/in-process")]
+        [HttpPut("{id}/setPaymentType")]
         [AllowAnonymous]
+        public async Task<IActionResult> setPaymentType(Guid id, [FromBody] PaymentType paymentType)
+        {
+            try
+            {
+                await _bookingService.setPaymentType(id, paymentType.Type);
+                return Ok($"Booking Payment Type  set to {paymentType.Type} ");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while updating booking Payment Type : {ex.Message}");
+            }
+        }
+
+
+        [HttpPut("{id}/status/in-process")]
         public async Task<IActionResult> SetBookingStateInProcess(Guid id)
         {
             try
@@ -162,7 +181,7 @@ namespace API.Controllers
                 return BadRequest($"An error occurred while updating booking status: {ex.Message}");
             }
         }
-        
+
         [HttpPut("{id}/status/pending")]
         public async Task<IActionResult> SetBookingStatePending(Guid id)
         {

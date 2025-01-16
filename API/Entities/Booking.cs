@@ -27,6 +27,7 @@ namespace API.Entities
         public double? Longitude { get; set; }
 
         public string? Note { get; set; }
+        public string? PaymentType { get; set; }
         public BookingStatus? BookingStatus { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt}", ApplyFormatInEditMode = true)]

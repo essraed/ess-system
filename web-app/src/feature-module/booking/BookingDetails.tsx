@@ -57,6 +57,9 @@ const BookingDetails = () => {
     endBookingDate,
     paymentStatus,
     createDate,
+    paymentType,
+    updateDate,
+    updatedBy,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -69,260 +72,284 @@ const BookingDetails = () => {
     <>
       <Header />
 
-      { userStore.isAdmin() ? (
-      <div className="booking-details-page">
-        {/* Header */}
-        {userStore.isAdmin() && (
-          <div className="bg-gray-50 py-2 px-4 shadow-sm border-b">
-            <Breadcrumbs title="Booking Details" subtitle="Bookings" />
-          </div>
-        )}
-
-        {/* Content */}
-        <div className="container mx-auto py-4 px-3 sm:px-4">
-          <Card className="shadow-md border rounded-lg p-4 bg-white">
-            {/* Back Button for Admin */}
-            {userStore.isAdmin() && (
-              <div className="mb-3">
-                <BackToButton
-                  label="Back to Booking List"
-                  href={all_routes.bookingDashboard}
-                />
-              </div>
-            )}
-
-            {/* Customer Information */}
-            <div className="mb-4">
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl font-semibold text-gray-800">
-                  Customer Information
-                </h2>
-                {totalPrice && (
-                  <span className="bg-red-100 text-red-600 px-2 py-1 rounded">
-                    {totalPrice} AED
-                  </span>
+      {userStore.isAdmin() ? (
+        <div className="booking-details-page">
+          <div className="custom-container mx-auto py-6 px-4">
+            <div className="border bg-custom-light-blue p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold text-gray-800">
+                  Booking Details
+                </h1>
+                {userStore.isAdmin() && (
+                  <BackToButton
+                    label="Back to Bookings"
+                    href={all_routes.bookingDashboard}
+                  />
                 )}
               </div>
-              <Divider className="mb-2" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {customerName && (
-                  <div>
-                    <p className="font-medium text-gray-700">Name:</p>
-                    <p className="text-gray-600">{customerName}</p>
-                  </div>
-                )}
-                {phone && (
-                  <div>
-                    <p className="font-medium text-gray-700">Phone:</p>
-                    <p className="text-gray-600">{phone}</p>
-                  </div>
-                )}
-                {email && (
-                  <div>
-                    <p className="font-medium text-gray-700">Email:</p>
-                    <p className="text-gray-600">{email}</p>
-                  </div>
-                )}
-                {address && (
-                  <div>
-                    <p className="font-medium text-gray-700">Address:</p>
-                    <p className="text-gray-600">{address}</p>
-                  </div>
-                )}
-              </div>
-            </div>
 
-            {/* Booking Information */}
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                Booking Information
-              </h2>
-              <Divider className="mb-2" />
-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
-                {serviceName && (
-                  <div>
-                    <p className="font-medium text-gray-700">Service:</p>
-                    <p className="text-gray-600">{serviceName}</p>
-                  </div>
-                )}
-                {carName && (
-                  <div>
-                    <p className="font-medium text-gray-700">Car Name:</p>
-                    <p className="text-gray-600">{carName}</p>
-                  </div>
-                )}
-                  <div className="bg-white rounded-md">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">
-                      Payment Status
-                    </h4>
-                    {bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.InProcess,
-                        BookingStatus
-                      ) ||
-                    bookingStatus ===
-                      convertEnumToString(
-                        BookingStatus.Completed,
-                        BookingStatus
-                      ) ? (
-                      paymentStatus ? (
-                        <span className="inline-block px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full">
-                          {paymentStatus}
-                        </span>
-                      ) : (
-                        <span className="inline-block px-3 py-1 text-sm font-medium text-orange-700 bg-orange-100 rounded-full">
-                          Direct Payment
-                        </span>
-                      )
-                    ) : (
-                      <span className="inline-block px-3 py-1 text-sm font-medium text-red-700 bg-red-100 rounded-full">
-                        Still No Payment
-                      </span>
+              {/* Booking Summary */}
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Customer Info */}
+                <div className="p-4 border rounded-lg bg-gray-50">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Customer Information
+                  </h2>
+                  <Divider />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    {customerName && (
+                      <div>
+                        <p className="font-medium">Name:</p>
+                        <p>{customerName}</p>
+                      </div>
                     )}
-                  </div>
-
-                {bookingStatus && (
-                  <div>
-                    <p className="font-medium text-gray-700">Status:</p>
-                    <StatusBadge status={bookingStatus.toString()} />
-                    {userStore.isAdmin() && (
-                      <div className="mt-2 space-x-2">
-                        {bookingStatus ===
-                          convertEnumToString(
-                            BookingStatus.InProcess,
-                            BookingStatus
-                          ) && (
-                          <>
-                            <Link
-                              to=""
-                              onClick={() => setStatusCompleted(id ?? "")}
-                              className="text-blue-600 underline"
-                            >
-                              Set as Completed
-                            </Link>
-                            |
-                            <Link
-                              to=""
-                              onClick={() => setStatusPending(id ?? "")}
-                              className="text-blue-600 underline"
-                            >
-                              Set as Pending
-                            </Link>
-                          </>
-                        )}
-                        {bookingStatus ===
-                          convertEnumToString(
-                            BookingStatus.Canceled,
-                            BookingStatus
-                          ) && (
-                          <Link
-                            to=""
-                            onClick={() => setStatusInProcess(id ?? "")}
-                            className="text-blue-600 underline"
-                          >
-                            Set as In-Progress
-                          </Link>
-                        )}
-                        {bookingStatus ===
-                          convertEnumToString(
-                            BookingStatus.Pending,
-                            BookingStatus
-                          ) && (
-                          <>
-                            <Link
-                              to=""
-                              onClick={() => setStatusCanceled(id ?? "")}
-                              className="text-blue-600 underline"
-                            >
-                              Set as Canceled
-                            </Link>
-                            |
-                            <Link
-                              to=""
-                              onClick={() => setStatusInProcess(id ?? "")}
-                              className="text-blue-600 underline"
-                            >
-                              Set as In-Progress
-                            </Link>
-                          </>
-                        )}
+                    {phone && (
+                      <div>
+                        <p className="font-medium">Phone:</p>
+                        <p>{phone}</p>
+                      </div>
+                    )}
+                    {email && (
+                      <div>
+                        <p className="font-medium">Email:</p>
+                        <p>{email}</p>
+                      </div>
+                    )}
+                    {address && (
+                      <div>
+                        <p className="font-medium">Address:</p>
+                        <p>{address}</p>
                       </div>
                     )}
                   </div>
-                )}
+                </div>
 
-                {bookingDate && (
-                  <div>
-                    <p className="font-medium text-gray-700">Booking Date:</p>
-                    <p className="text-gray-600">
-                      {formatDateTime(bookingDate?.toString())}
-                    </p>
-                  </div>
-                )}
-                {endBookingDate && (
-                  <div>
-                    <p className="font-medium text-gray-700">End Date:</p>
-                    <p className="text-gray-600">
-                      {formatDateTime(endBookingDate?.toString())}
-                    </p>
-                  </div>
-                )}
+                {/* Booking Info */}
+                <div className="p-4 border rounded-lg bg-gray-50">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Booking Information
+                  </h2>
+                  <Divider />
+                  <div className="grid grid-cols-2 gap-3 mt-4">
+                    {serviceName && (
+                      <div>
+                        <p className="font-medium text-gray-800">Service:</p>
+                        <p>{serviceName}</p>
+                      </div>
+                    )}
+                    {carName && (
+                      <div>
+                        <p className="font-medium text-gray-800">Car Name:</p>
+                        <p>{carName}</p>
+                      </div>
+                    )}
+                    {bookingCode && (
+                      <div>
+                        <p className="font-medium text-gray-800">
+                          Booking Code:
+                        </p>
+                        <p>{bookingCode}</p>
+                      </div>
+                    )}
+                    {serviceOptionName && (
+                      <div>
+                        <p className="font-medium text-gray-800">
+                          Service Option:
+                        </p>
+                        <p>{serviceOptionName}</p>
+                      </div>
+                    )}
+                    {serviceOptionFee && (
+                      <div>
+                        <p className="font-medium text-gray-800">
+                          Service Option Fee:
+                        </p>
+                        <p>{serviceOptionFee} AED</p>
+                      </div>
+                    )}
+                    {/* Booking Status */}
+                    {bookingStatus && (
+                      <div className="md:col-span-2">
+                        <p className="font-medium text-gray-800">Status:</p>
+                        <div className="flex items-center space-x-2 mt-2">
+                          <StatusBadge status={bookingStatus.toString()} />
+                        </div>
 
-                {serviceOptionName && (
-                  <div>
-                    <p className="font-medium text-gray-700">Service Option:</p>
-                    <p className="text-gray-600">{serviceOptionName}</p>
-                  </div>
-                )}
-                {serviceOptionFee && (
-                  <div>
-                    <p className="font-medium text-gray-700">Service Fee:</p>
-                    <p className="text-gray-600">{serviceOptionFee} AED</p>
-                  </div>
-                )}
-                {bookingCode && (
-                  <div>
-                    <p className="font-medium text-gray-700">Booking Code:</p>
-                    <p className="text-gray-600">{bookingCode} AED</p>
-                  </div>
-                )}
-                {createDate && (
-                  <div>
-                    <p className="font-medium text-gray-700">
-                      Booking Crete Date:
-                    </p>
-                    <p className="text-gray-600">
-                      {formatDateTime(createDate.toString())}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
+                        {/* Admin Controls for Status Management */}
+                        {userStore.isAdmin() && (
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.InProcess,
+                                BookingStatus
+                              ) && (
+                              <>
+                                <button
+                                  onClick={() => setStatusCompleted(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
+                                >
+                                  Mark as Completed
+                                </button>
+                                <button
+                                  onClick={() => setStatusPending(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                >
+                                  Mark as Pending
+                                </button>
+                              </>
+                            )}
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.Canceled,
+                                BookingStatus
+                              ) && (
+                              <button
+                                onClick={() => setStatusInProcess(id ?? "")}
+                                className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                              >
+                                Mark as In-Progress
+                              </button>
+                            )}
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.Pending,
+                                BookingStatus
+                              ) && (
+                              <>
+                                <button
+                                  onClick={() => setStatusCanceled(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
+                                >
+                                  Mark as Canceled
+                                </button>
+                                <button
+                                  onClick={() => setStatusInProcess(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                >
+                                  Mark as In-Progress
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
 
-            {/* Map Section */}
-            {latitude && longitude && (
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  Location
-                </h2>
-                <Divider className="mb-2" />
-                <div className="h-72 rounded-md overflow-hidden border border-gray-300">
-                  <MapContainer
-                    center={[latitude, longitude]}
-                    zoom={15}
-                    style={{ height: "100%", width: "100%" }}
-                  >
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <Marker position={[latitude, longitude]} icon={customIcon}>
-                      <Popup>{address || "Booking Location"}</Popup>
-                    </Marker>
-                  </MapContainer>
+                    {totalPrice && (
+                      <div>
+                        <p className="font-medium">Total Price:</p>
+                        <p>{totalPrice} AED</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            )}
-          </Card>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* Update Info */}
+                <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Update Information
+                  </h2>
+                  <Divider />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    {bookingDate && (
+                      <div>
+                        <p className="font-medium">Booking Date:</p>
+                        <p>{formatDateTime(bookingDate.toString())}</p>
+                      </div>
+                    )}
+                    {createDate && (
+                      <div>
+                        <p className="font-medium">Create Date:</p>
+                        <p>{formatDateTime(createDate?.toString())}</p>
+                      </div>
+                    )}
+                    {updateDate && (
+                      <div>
+                        <p className="font-medium">Last Updated:</p>
+                        <p>{formatDateTime(updateDate)}</p>
+                      </div>
+                    )}
+                    {updatedBy && (
+                      <div>
+                        <p className="font-medium">Updated By:</p>
+                        <p>{updatedBy}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Payment Info */}
+                <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Payment Details
+                  </h2>
+                  <Divider />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                    {/* Payment Status */}
+                    <div>
+                      <p className="font-medium">Payment Status:</p>
+                      <span
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                          paymentStatus === "Completed"
+                            ? "bg-green-100 text-green-700"
+                            : paymentStatus === "Pending"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {paymentStatus}
+                      </span>
+                    </div>
+
+                    {/* Payment Type */}
+                    <div>
+                      <p className="font-medium">Payment Type:</p>
+                      <span
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                          paymentType
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {paymentType || "Still Not Paid"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Location Info */}
+              {latitude && longitude && (
+                <div className="mt-6">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Booking Location
+                  </h2>
+                  <div className="h-72 rounded-lg overflow-hidden border">
+                    <MapContainer
+                      center={[latitude, longitude]}
+                      zoom={15}
+                      style={{ height: "100%", width: "100%" }}
+                    >
+                      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                      <Marker
+                        position={[latitude, longitude]}
+                        icon={customIcon}
+                      >
+                        <Popup>{address || "Booking Location"}</Popup>
+                      </Marker>
+                    </MapContainer>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>):<BookingCheckout/>}
+      ) : (
+        <BookingCheckout />
+      )}
+
       <Footer />
     </>
   );

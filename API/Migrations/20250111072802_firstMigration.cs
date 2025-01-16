@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class firstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +49,48 @@ namespace API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnquiryType = table.Column<bool>(type: "bit", nullable: false),
+                    LicenseType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ejari = table.Column<bool>(type: "bit", nullable: true),
+                    LocalAgent = table.Column<bool>(type: "bit", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MerchantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TransactionHint = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,6 +265,72 @@ namespace API.Migrations
                     table.ForeignKey(
                         name: "FK_Categories_AspNetUsers_CreatedById",
                         column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Complaints",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    IsComplaint = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Complaints", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Complaints_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Complaints_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Losts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LostDepartment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    LostDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Losts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Losts_AspNetUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Losts_AspNetUsers_UpdatedById",
+                        column: x => x.UpdatedById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -420,6 +529,7 @@ namespace API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookingCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -438,6 +548,7 @@ namespace API.Migrations
                     UpdatedById = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ServiceOptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -464,6 +575,12 @@ namespace API.Migrations
                         column: x => x.NotificationId,
                         principalTable: "Notifications",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Bookings_ServiceOptions_ServiceOptionId",
                         column: x => x.ServiceOptionId,
@@ -541,6 +658,11 @@ namespace API.Migrations
                 column: "NotificationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookings_PaymentId",
+                table: "Bookings",
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bookings_ServiceId",
                 table: "Bookings",
                 column: "ServiceId");
@@ -566,6 +688,16 @@ namespace API.Migrations
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Complaints_CreatedById",
+                table: "Complaints",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Complaints_UpdatedById",
+                table: "Complaints",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Documents_AuthorityId",
                 table: "Documents",
                 column: "AuthorityId");
@@ -583,9 +715,7 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_FileEntities_CategoryId",
                 table: "FileEntities",
-                column: "CategoryId",
-                unique: true,
-                filter: "[CategoryId] IS NOT NULL");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FileEntities_CreatedById",
@@ -595,13 +725,21 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_FileEntities_ServiceId",
                 table: "FileEntities",
-                column: "ServiceId",
-                unique: true,
-                filter: "[ServiceId] IS NOT NULL");
+                column: "ServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FileEntities_UpdatedById",
                 table: "FileEntities",
+                column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Losts_CreatedById",
+                table: "Losts",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Losts_UpdatedById",
+                table: "Losts",
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
@@ -662,10 +800,19 @@ namespace API.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
+                name: "Complaints");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
+
+            migrationBuilder.DropTable(
                 name: "Documents");
 
             migrationBuilder.DropTable(
                 name: "FileEntities");
+
+            migrationBuilder.DropTable(
+                name: "Losts");
 
             migrationBuilder.DropTable(
                 name: "WorkingTimes");
@@ -678,6 +825,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "ServiceOptions");

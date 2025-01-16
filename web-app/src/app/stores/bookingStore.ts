@@ -8,7 +8,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
-import { convertEnumToString, formatDateTime } from "../../lib/utils";
+import { convertEnumToString, formatDateTime, paymentType } from "../../lib/utils";
 
 export default class BookingStore {
   bookings: BookingData[] | null | undefined = null;
@@ -231,6 +231,17 @@ export default class BookingStore {
   };
 
   // Update Booking Status
+  setPaymentTypeOfBooking = async (id: string,type:paymentType): Promise<ActionResult<string>> => {
+    try {
+      await agent.Bookings.setPaymentTypeOfBooking(id,type);
+      await this.getBooking(id);
+      return { status: "success", data: `Booking Payment Type set to ${type}` };
+    } catch (error) {
+      console.error("Error updating booking Payment Type: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+  
   setStatusInProcess = async (id: string): Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.setStatusInProcess(id);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250106080101_complaint")]
-    partial class complaint
+    [Migration("20250113075456_PaymentTypeToBooking")]
+    partial class PaymentTypeToBooking
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,6 +180,12 @@ namespace API.Migrations
                     b.Property<Guid?>("NotificationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -206,6 +212,8 @@ namespace API.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("NotificationId");
+
+                    b.HasIndex("PaymentId");
 
                     b.HasIndex("ServiceId");
 
@@ -833,38 +841,19 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CancelUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CustomerPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MerchantId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("OrderName")
+                    b.Property<string>("OrderID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReturnUrl")
+                    b.Property<string>("OrderName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
@@ -876,10 +865,13 @@ namespace API.Migrations
                     b.Property<string>("TransactionHint")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("TransactionID")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.Property<string>("TransactionStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Payments");
                 });
@@ -913,6 +905,11 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("NotificationId");
 
+                    b.HasOne("Payment", "Payment")
+                        .WithMany("Bookings")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
@@ -930,6 +927,8 @@ namespace API.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Notification");
+
+                    b.Navigation("Payment");
 
                     b.Navigation("Service");
 
@@ -1141,17 +1140,6 @@ namespace API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Payment", b =>
-                {
-                    b.HasOne("API.Entities.Booking", "Booking")
-                        .WithOne("Payment")
-                        .HasForeignKey("Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-                });
-
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Navigation("Documents");
@@ -1160,11 +1148,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.Authority", b =>
                 {
                     b.Navigation("Documents");
-                });
-
-            modelBuilder.Entity("API.Entities.Booking", b =>
-                {
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("API.Entities.Car", b =>
@@ -1189,6 +1172,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.ServiceOption", b =>
                 {
                     b.Navigation("bookings");
+                });
+
+            modelBuilder.Entity("Payment", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }
