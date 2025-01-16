@@ -54,7 +54,9 @@ public class PaymentService : IPaymentService
                 Amount = payment.TransactionAmount,
                 Currency = payment.Currency,
                 OrderID = payment.OrderID,
-                OrderName = payment.OrderName?.Substring(0,20),
+                OrderName = !string.IsNullOrEmpty(payment.OrderName) && payment.OrderName.Length > 20
+                ? payment.OrderName.Substring(0, 20)
+                : payment.OrderName,
                 TransactionHint = payment.TransactionHint,
                 ReturnPath = "https://kbc.center/api/payment/payment-callback",
                 UserName = "Demo_fY9c",
@@ -106,7 +108,7 @@ public class PaymentService : IPaymentService
 
             foreach (var booking in bookingsToUpdate)
             {
-                booking.PaymentId = payment.Id; 
+                booking.PaymentId = payment.Id;
             }
 
             await _context.SaveChangesAsync();
@@ -145,7 +147,7 @@ public class PaymentService : IPaymentService
                 payment.Status = "Pending";
                 _context.Payments.Update(payment);
                 await _context.SaveChangesAsync();
-                return ;
+                return;
             }
             else // Failure
             {
