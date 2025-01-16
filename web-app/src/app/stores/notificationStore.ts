@@ -156,7 +156,7 @@ export default class NotificationStore {
     const params = new URLSearchParams();
 
     if (this.takeCount) params.append("count", this.takeCount.toString());
-    if (this.isRead) params.append("isRead", this.isRead.toString());
+    // if (this.isRead) params.append("isRead", this.isRead);
     if (this.fromDate) params.append("from", this.fromDate);
     if (this.toDate) params.append("to", this.toDate);
     params.append("pageNumber", this.pagingParams.pageNumber.toString());
@@ -172,7 +172,7 @@ export default class NotificationStore {
     this.takeCount = count;
   };
 
-  setIsReadParam = (isRead: boolean) => {
+  setIsReadParam = (isRead: boolean|null) => {
     this.isRead = String(isRead);
   };
 

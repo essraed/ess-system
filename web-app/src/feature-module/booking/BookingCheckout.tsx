@@ -4,6 +4,7 @@ import { useStore } from "../../app/stores/store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { formatDateTime, paymentType } from "../../lib/utils";
 
 const BookingCheckout = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const BookingCheckout = () => {
 
   const [paymentType, setPaymentType] = useState("");
   const [error, setError] = useState("");
+
+  const [flag,setFlag]=useState<boolean>(false);
   const [bookings, setBookings] = useState<any[]>([]);
 
   const onConfirmClick = () => {
@@ -24,8 +27,22 @@ const BookingCheckout = () => {
     handleConfirmBooking();
   };
   const handleConfirmBooking = async () => {
+    const type: paymentType = { type: paymentType };
+
     if (paymentType === "Direct") {
-      bookings.map((b) => setStatusInProcess(b.id ?? ""));
+      try {
+        // Set payment type for all bookings
+        await Promise.all(
+          bookings.map((b) =>
+            bookingStore.setPaymentTypeOfBooking(b.id ?? "", type)
+          )
+        );
+        setFlag(true);
+        toast.success("Booking payment type set to Direct");
+      } catch (err) {
+        setError("Failed to set payment type.");
+        toast.error("Error updating payment type.");
+      }
     } else if (paymentType === "Online") {
       const formData = new FormData();
 
@@ -34,29 +51,25 @@ const BookingCheckout = () => {
         0
       );
       formData.append("TransactionAmount", totalAmount.toString());
-
-      formData.append("CustomerName", bookings[0].customerName ?? "");
-      formData.append("CustomerEmail", bookings[0].email ?? "");
-      formData.append("CustomerPhone", bookings[0].phone ?? "");
-      formData.append("CustomerEmail", bookings[0].email ?? "");
       const serviceNames = bookings.map((x) => x.serviceName).join(", ");
       const bookingIds = bookings.map((x) => x.id).join(" , ");
 
       formData.append("IDS", bookingIds ?? "");
 
-
       formData.append("OrderName", serviceNames || "");
-      formData.append("OrderId", bookings[0].id || "");
+    
 
       try {
         const result = await paymentStore.initiatePayment(formData);
 
         if (result?.status === "success") {
-          bookings.map((b) => setStatusInProcess(b.id ?? ""));
+          bookings.map((b) =>
+            bookingStore.setPaymentTypeOfBooking(b.id ?? "", type)
+          ); // here should change the payment Status
           window.location.href = result.data as string;
         } else {
-          console.log("payment error",result.error);
-          console.log("payment Result",result);
+          console.log("payment error", result.error);
+          console.log("payment Result", result);
           toast.error("Payment initiation failed!");
         }
       } catch (error) {
@@ -83,7 +96,9 @@ const BookingCheckout = () => {
       }
     };
     fetchAllBookings();
-  }, [isSession, getBooking]);
+  }, [isSession, getBooking,flag]);
+
+ 
 
   if (loadingInitial || bookings.length === 0) {
     return <LoadingSpinner />;
@@ -99,7 +114,7 @@ const BookingCheckout = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Customer Information */}
           <div className="lg:col-span-7">
-            <div className="bg-white  p-6 border border-gray-300">
+            <div className="bg-white p-6 border border-gray-300 h-full">
               <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
                 Customer Information
               </h3>
@@ -116,12 +131,15 @@ const BookingCheckout = () => {
                 <p>
                   <strong>Address:</strong> {bookings[0]?.address}
                 </p>
+                <p>
+                  <strong>Booking time:</strong> {formatDateTime(bookings[0]?.bookingDate.toString())}
+                </p>
               </div>
             </div>
           </div>
 
           {/* Right Column - Services Summary */}
-          <div className="lg:col-span-5 border border-gray-300">
+          <div className="lg:col-span-5 border border-gray-300 h-full">
             <div className="bg-white  p-6">
               <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
                 Services Summary
@@ -163,39 +181,55 @@ const BookingCheckout = () => {
         {/* Payment Options */}
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 lg:col-span-5"></div>
-          <div className="col-span-12 lg:col-start-8 lg:col-span-5 bg-white  p-6 mt-6 border border-gray-300">
+          <div className="col-span-12 lg:col-start-8 lg:col-span-5 bg-white p-6 mt-6 border border-gray-300">
             <h3 className="text-left lg:text-right text-xl font-bold mb-4 text-gray-800 border-b pb-2">
               Payment Method
             </h3>
-            <div className="flex flex-col items-start lg:items-end space-y-3">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="paymentType"
-                  value="Direct"
-                  checked={paymentType === "Direct"}
-                  onChange={(e) => setPaymentType(e.target.value)}
-                  className="mr-2"
-                />
-                Direct Payment
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="paymentType"
-                  value="Online"
-                  checked={paymentType === "Online"}
-                  onChange={(e) => setPaymentType(e.target.value)}
-                  className="mr-2"
-                />
-                Online Payment
-              </label>
-            </div>
+
+            {/* Show radio buttons if paymentType is not selected, otherwise show the selected payment type */}
+            {!bookings[0].paymentType ? (
+              <div className="flex flex-col items-start lg:items-end space-y-3">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="paymentType"
+                    value="Direct"
+                    checked={paymentType === "Direct"}
+                    onChange={(e) => setPaymentType(e.target.value)}
+                    className="mr-2"
+                  />
+                  Direct Payment
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="paymentType"
+                    value="Online"
+                    checked={paymentType === "Online"}
+                    onChange={(e) => setPaymentType(e.target.value)}
+                    className="mr-2"
+                  />
+                  Online Payment
+                </label>
+              </div>
+            ) : (
+              <div className="text-gray-600">
+                <p>
+                  You have already selected the payment method:{" "}
+                  <strong>{bookings[0].paymentType}</strong>
+                </p>
+                <p className="text-sm">
+                  If you want to change it, please contact support.
+                </p>
+              </div>
+            )}
+
             {error && <p className="text-red-600 mt-2">{error}</p>}
           </div>
         </div>
 
         {/* Buttons */}
+        {!bookings[0].paymentType &&(
         <div className="flex justify-center gap-4 mt-6">
           <button
             onClick={() => navigate("/services")}
@@ -209,7 +243,7 @@ const BookingCheckout = () => {
           >
             Confirm Booking
           </button>
-        </div>
+        </div>)}
       </div>
     </>
   );

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241130082033_AddContactModel")]
-    partial class AddContactModel
+    [Migration("20250111072802_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,6 +135,10 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookingCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("BookingDate")
                         .HasColumnType("datetime2");
 
@@ -176,6 +180,9 @@ namespace API.Migrations
                     b.Property<Guid?>("NotificationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -202,6 +209,8 @@ namespace API.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("NotificationId");
+
+                    b.HasIndex("PaymentId");
 
                     b.HasIndex("ServiceId");
 
@@ -277,6 +286,62 @@ namespace API.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("API.Entities.Complaint", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsComplaint")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Complaints");
+                });
+
             modelBuilder.Entity("API.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
@@ -286,13 +351,22 @@ namespace API.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("Ejari")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBussinesSetup")
+                    b.Property<bool>("EnquiryType")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LicenseType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("LocalAgent")
                         .HasColumnType("bit");
 
                     b.Property<string>("Message")
@@ -396,19 +470,71 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId")
-                        .IsUnique()
-                        .HasFilter("[CategoryId] IS NOT NULL");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatedById");
 
-                    b.HasIndex("ServiceId")
-                        .IsUnique()
-                        .HasFilter("[ServiceId] IS NOT NULL");
+                    b.HasIndex("ServiceId");
 
                     b.HasIndex("UpdatedById");
 
                     b.ToTable("FileEntities");
+                });
+
+            modelBuilder.Entity("API.Entities.Lost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LostDepartment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Losts");
                 });
 
             modelBuilder.Entity("API.Entities.Notification", b =>
@@ -706,6 +832,47 @@ namespace API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MerchantId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TransactionAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TransactionHint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("API.Entities.Authority", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
@@ -735,6 +902,11 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("NotificationId");
 
+                    b.HasOne("Payment", "Payment")
+                        .WithMany("Bookings")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
@@ -752,6 +924,8 @@ namespace API.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Notification");
+
+                    b.Navigation("Payment");
 
                     b.Navigation("Service");
 
@@ -776,6 +950,21 @@ namespace API.Migrations
                         .HasForeignKey("CreatedById");
 
                     b.Navigation("CreatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.Complaint", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("API.Entities.Document", b =>
@@ -804,16 +993,16 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.FileEntity", b =>
                 {
                     b.HasOne("API.Entities.Category", "Category")
-                        .WithOne("FileEntity")
-                        .HasForeignKey("API.Entities.FileEntity", "CategoryId");
+                        .WithMany("FileEntities")
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
                     b.HasOne("API.Entities.Service", "Service")
-                        .WithOne("FileEntity")
-                        .HasForeignKey("API.Entities.FileEntity", "ServiceId");
+                        .WithMany("FileEntities")
+                        .HasForeignKey("ServiceId");
 
                     b.HasOne("API.Entities.AppUser", "UpdatedBy")
                         .WithMany()
@@ -824,6 +1013,21 @@ namespace API.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Service");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("API.Entities.Lost", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("UpdatedBy");
                 });
@@ -950,14 +1154,14 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Category", b =>
                 {
-                    b.Navigation("FileEntity");
+                    b.Navigation("FileEntities");
 
                     b.Navigation("Services");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
                 {
-                    b.Navigation("FileEntity");
+                    b.Navigation("FileEntities");
 
                     b.Navigation("ServiceOptions");
                 });
@@ -965,6 +1169,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Entities.ServiceOption", b =>
                 {
                     b.Navigation("bookings");
+                });
+
+            modelBuilder.Entity("Payment", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

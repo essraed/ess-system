@@ -23,7 +23,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<PagedList<LostDto>>> GetAllLostItems([FromQuery] LostParams lostParams)
         {
             var lostItems = await _lostService.GetAllLostItemsAsync(lostParams);
@@ -31,7 +30,6 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<ActionResult<LostDto>> GetLostItemById(Guid id)
         {
             try
@@ -46,7 +44,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
 
         public async Task<ActionResult<LostDto>> AddLostItem([FromBody] LostSaveDto lostSaveDto)
         {
@@ -66,7 +63,6 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [AllowAnonymous]
 
         public async Task<IActionResult> DeleteLostItem(Guid id)
         {
@@ -86,7 +82,6 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/in-process")]
-        [AllowAnonymous]
         public async Task<IActionResult> SetLostStateInProcess(Guid id)
         {
             try

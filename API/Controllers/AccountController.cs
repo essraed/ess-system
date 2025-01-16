@@ -58,7 +58,7 @@ namespace API.Controllers
                 return BadRequest("Email Taken");
             }
 
-            var user = new AppUser
+            var user = new AppUser  
             {
                 DisplayName = model.DisplayName,
                 Email = model.Email,

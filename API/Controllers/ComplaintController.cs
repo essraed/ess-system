@@ -23,7 +23,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<PagedList<ComplaintDto>>> GetAllComplaintItems([FromQuery] ComplaintParams complaintParams)
         {
             var complaintItems = await _complaintService.GetAllComplaintItemsAsync(complaintParams);
@@ -31,7 +30,6 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<ActionResult<ComplaintDto>> GetComplaintItemById(Guid id)
         {
             try
@@ -46,7 +44,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
 
         public async Task<ActionResult<ComplaintDto>> AddComplaintItem([FromBody] ComplaintSaveDto complaintSaveDto)
         {
@@ -66,7 +63,6 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [AllowAnonymous]
 
         public async Task<IActionResult> DeleteComplaintItem(Guid id)
         {
@@ -86,7 +82,6 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/in-process")]
-        [AllowAnonymous]
         public async Task<IActionResult> SetComplaintStateInProcess(Guid id)
         {
             try

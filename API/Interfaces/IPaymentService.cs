@@ -9,12 +9,12 @@ namespace API.Interfaces
 {
     public interface IPaymentService
     {
-        Task<string> InitiatePayment(PaymentSaveDto paymentDto,string IDS);
-        
-        // Task PaymentCallback( PaymentCallbackDto callback);
+        Task<string> InitiatePayment(PaymentSaveDto paymentDto, string IDS);
+
+        Task PaymentCallback(PaymentCallbackDto callback);
 
         // Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams);
-        // Task DeleteServiceAsync(Guid id);
+        // Task<PaymentDto> GetPaymentByIdAsync(Guid id);
 
         // Task<ServiceDto> GetServiceByIdAsync(Guid id)
     }

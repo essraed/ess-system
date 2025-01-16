@@ -94,3 +94,7 @@ export function separateCamelCase(str: string): string {
 export function convertEnumToString<T>(value: number, enumType: T) {
   return enumType[value as unknown as keyof typeof enumType];
 }
+
+export interface paymentType{
+  type:string;
+}

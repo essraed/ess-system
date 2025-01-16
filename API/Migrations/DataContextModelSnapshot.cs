@@ -180,6 +180,9 @@ namespace API.Migrations
                     b.Property<Guid?>("PaymentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("PaymentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -901,7 +904,8 @@ namespace API.Migrations
 
                     b.HasOne("Payment", "Payment")
                         .WithMany("Bookings")
-                        .HasForeignKey("PaymentId");
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("API.Entities.Service", "Service")
                         .WithMany()

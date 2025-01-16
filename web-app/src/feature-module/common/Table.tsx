@@ -31,6 +31,7 @@ const Table = ({
 }: Props) => {
   const action = (rowData: any) => {
     const { id } = rowData;
+    const {moreDetailsUrl}=rowData;
 
     return (
       <div className="dropdown dropdown-action">
@@ -89,7 +90,7 @@ const Table = ({
                 <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer me-1"></i> Edit
               </Link>
             )}
-          {(routeUrl === all_routes.bookingDashboard || routeUrl === all_routes.lostDashboard || routeUrl === all_routes.ComplaintDashboard) && (
+          {( routeUrl === all_routes.lostDashboard || routeUrl === all_routes.ComplaintDashboard) && (
             <Link
               className="dropdown-item"
               to="#"
@@ -100,7 +101,7 @@ const Table = ({
               <i className="feather icon-check-circle text-green-500 font-bold me-1"></i> Set as Cmoplete
             </Link>
           )}
-          {routeUrl === all_routes.bookingDashboard && (
+          {/* {routeUrl === all_routes.bookingDashboard && (
             <Link
               className="dropdown-item"
               to="#"
@@ -110,7 +111,7 @@ const Table = ({
             >
               <i className="feather icon-trash-2 me-1"></i> Cancel booking
             </Link>
-          )}
+          )} */}
           {(routeUrl === all_routes.lostDashboard || routeUrl === all_routes.ComplaintDashboard) && (
             <Link
               className="dropdown-item"
@@ -120,6 +121,14 @@ const Table = ({
               onClick={() => confirmDialog(id)}
             >
               <i className="feather icon-loader text-orange-500 font-bold me-1"></i> Set as InProcess
+            </Link>
+          )}
+          {routeUrl === all_routes.notificationDashboard && (
+            <Link
+              className="dropdown-item"
+              to={`/listings/${moreDetailsUrl}`}
+            >
+              <i className="feather icon-loader text-orange-500 font-bold me-1"></i> Booking Details
             </Link>
           )}
         </div>

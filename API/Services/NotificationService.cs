@@ -32,16 +32,17 @@ namespace API.Services
         public async Task<PagedList<NotificationDto>> GetAll(NotificationParams param)
         {
             var query = _context.Notifications
-                    .OrderBy(x => x.UpdateDate.HasValue ? x.UpdateDate : x.CreateDate)
+                    .OrderByDescending(x => x.CreateDate.HasValue ? x.CreateDate : x.UpdateDate)
                     .AsNoTracking()
                     .AsQueryable();
 
             if (param.IsRead != null)
             {
-                query = query.Where(x => x.IsRead == param.IsRead);
+                bool isRead = param.IsRead == "true" ? true : false;
+                query = query.Where(x => x.IsRead == isRead);//after this  
 
                 // end notification
-                if (param.IsRead == false)
+                if (isRead == false)
                 {
                     var currentTime = TimeHelper.GetCurrentTimeInAbuDhabi();
 
@@ -77,8 +78,14 @@ namespace API.Services
              param.PageSize);
         }
 
+
+
         public async Task SendNotification(string message, string title, NotificationType type, string? url, DateTime? endNotificationTime)
         {
+            if (endNotificationTime.HasValue)
+            {
+                endNotificationTime = endNotificationTime.Value.AddHours(2).AddMinutes(30);
+            }
             var notification = new Notification
             {
                 Title = title,

@@ -9,6 +9,8 @@ import { COMPANY_PHONE_NUMBER } from "../../environment";
 
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
+import NotificationsDropdown from "./NotificationsDropdown";
+import { Navbar } from "@nextui-org/react";
 
 const Header = () => {
   const routes = all_routes;
@@ -72,8 +74,8 @@ const Header = () => {
             <div
               className={
                 isSession
-                  ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container"
-                  : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1"
+                  ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container flex-row"
+                  : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1 flex"
               }
             >
               <ul className="flex flex-wrap justify-end items-center bookings-container ">
@@ -178,6 +180,7 @@ const Header = () => {
                   {/* handleClick */} <i className="fas fa-times" />
                 </Link>
               </div>
+              <div className="lg:flex justify-between">
               <ul className="main-nav">
                 <li
                   className={
@@ -465,13 +468,23 @@ const Header = () => {
                     {t("Complaints & Suggestions")}
                   </Link>
                 </li>
-                {/* <li className="login-link">
-                  <Link to={routes.register}>{t("Sign Up")}</Link>
-                </li>
-                <li className="login-link">
-                  <Link to={routes.login}>{t("Sign In")}</Link>
-                </li> */}
               </ul>
+              <ul className="hidden lg:block">
+              {isAdmin() && (
+                  <li
+                    className={
+                      location.pathname === routes.notificationDropdown ? "active w-0 h-0" : " w-0 h-0"
+                    }
+                  >
+                    <Navbar className="text-slate-300 flex  ">
+                      {/* Other Navbar Items */}
+                      <NotificationsDropdown />
+                    </Navbar>
+                  </li>
+                )}
+              </ul>
+              </div>
+             
             </div>
           </div>
           {/* <AnimatedCursor color='8, 113, 128' innerStyle={{

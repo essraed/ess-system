@@ -29,11 +29,12 @@ import ContactDashboard from "../contacts/ContactDashboard";
 import ContactForm from "../contacts/ContactForm";
 import BusinessSetup from "../contacts/BusinessSetup";
 import PaymentSuccess from "../payment/PaymentSuccess";
-import PaymentFailed from "../payment/PaymentFailed";
+// import PaymentFailed from "../payment/PaymentFailed";
 import LostForm from "../losts/LostForm";
 import LostDashboard from "../losts/LostDashboard";
 import ComplaintForm from "../complaints/ComplaintForm";
 import ComplaintDashboard from "../complaints/ComplaintDashboard";
+import NotificationsDropdown from "../common/NotificationsDropdown";
 
 
 const routes = all_routes;
@@ -96,13 +97,17 @@ export const publicRoutes = [
     path: routes.paymentSuccess,
     element: <PaymentSuccess />,
   },
-  {
-    path: routes.paymentFailed,
-    element: <PaymentFailed />,
-  },
+  // {
+  //   path: routes.paymentFailed,
+  //   element: <PaymentFailed />,
+  // },
   {
     path: routes.bookingDetails,
     element: <BookingDetails />,
+  },
+  {
+    path: routes.notificationDropdown,
+    element: <NotificationsDropdown />,
   },
 ];
 
@@ -167,6 +172,7 @@ export const listingroutes = [
     path: routes.notificationDashboard,
     element: <NotificationDashboard />,
   },
+
   // WorkingTime
   {
     path: routes.WorkingTimeDashboard,

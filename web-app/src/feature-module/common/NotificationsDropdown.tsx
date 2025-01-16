@@ -31,8 +31,8 @@ const NotificationsDropdown = () => {
   } = useStore();
 
   async function handleReadedToggle(e: React.MouseEvent, id: string) {
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation();
+    // e.preventDefault();
     const result = await ReadToggle(id);
 
     if (result.status === "success") {
@@ -44,7 +44,7 @@ const NotificationsDropdown = () => {
 
   const updateNotifications = async () => {
     await setIsReadParam(false);
-    await setCountParam(7);
+    await setCountParam(9);
     await loadNotifications();
   };
 
@@ -80,13 +80,13 @@ const NotificationsDropdown = () => {
           <DropdownMenu
             className="w-80"
             aria-label="Notifications"
-            closeOnSelect={false}
+            closeOnSelect={false} 
           >
             <DropdownSection title={`${unreadCount} Unread`}>
-              {notifications?.map((item, index) => (
+              {notifications?.slice(0, 5).map((item, index) => ( 
                 <DropdownItem
                   onClick={(e) => {
-                    handleReadedToggle(e, item.id);
+                    // handleReadedToggle(e, item.id);
                     if (item.moreDetailsUrl) {
                       navigate(`/listings/${item.moreDetailsUrl}`);
                     }
@@ -127,11 +127,10 @@ const NotificationsDropdown = () => {
                 <Divider />
               </DropdownItem>
               <DropdownItem key={""}>
-                {notifications.length > 7 && (
+                {notifications.length > 5 && (
                   <Link
-                    to="#"
+                    to="/listings/notifications"
                     className="flex items-center align-middle"
-                    onClick={() => navigate("/notifications")}
                   >
                     View All
                   </Link>

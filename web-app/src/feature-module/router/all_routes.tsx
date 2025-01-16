@@ -91,6 +91,7 @@ export const all_routes = {
   //Notifications
 
   notificationDashboard:"/listings/notifications",
+  notificationDropdown:"/notification",
   //WorkingTimes
 
   WorkingTimeDashboard:"/listings/WorkingTimeDashboard",

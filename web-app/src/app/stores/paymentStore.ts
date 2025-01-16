@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
+import { PaginationData, PagingParams } from "../../types/pagination";
 
 class PaymentStore {
   payments = [];
@@ -8,20 +9,25 @@ class PaymentStore {
   status = "";
   error = null;
   loading = false;
+  pagination: PaginationData | null = null;
+  pagingParams = new PagingParams();
+  searchTerm: string = "";
+  fromDate: string | null = null;
+  toDate: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   // Initiate Payment
-  initiatePayment = async (paymentData:FormData) => {
+  initiatePayment = async (paymentData: FormData) => {
     this.loading = true;
     try {
       const response = await agent.Payment.initiate(paymentData);
       return { status: "success", data: response };
-    } catch (error:any) {
+    } catch (error: any) {
       runInAction(() => {
-        this.error = error.message ;
+        this.error = error.message;
         this.paymentUrl = null;
         this.status = "Failed";
       });
@@ -32,13 +38,13 @@ class PaymentStore {
   };
 
   // Handle Payment Callback
-  handlePaymentCallback = async (orderId:string, paymentStatus:string) => {
+  handlePaymentCallback = async (orderId: string, paymentStatus: string) => {
     this.loading = true;
 
     const formData = new FormData();
 
-    formData.append("orderId",orderId);
-    formData.append("paymentStatus",paymentStatus);
+    formData.append("orderId", orderId);
+    formData.append("paymentStatus", paymentStatus);
     try {
       await agent.Payment.callback(formData);
       runInAction(() => {
@@ -50,7 +56,7 @@ class PaymentStore {
         this.error = null;
       });
       return { status: "success", data: "Payment processed successfully" };
-    } catch (error:any) {
+    } catch (error: any) {
       runInAction(() => {
         this.error = error.message || "Failed to handle payment callback";
         this.status = "Failed";
@@ -61,26 +67,26 @@ class PaymentStore {
     }
   };
 
-//   // Load Payment by ID
-//   getPaymentById = async (id) => {
-//     this.loading = true;
-//     try {
-//       const payment = await agent.Payment.getById(id);
-//       runInAction(() => {
-//         this.currentPayment = {
-//           ...payment,
-//           createDate: formatDateTime(payment.createDate),
-//         };
-//         this.error = null;
-//       });
-//     } catch (error:any) {
-//       runInAction(() => {
-//         this.error = error.message || "Failed to load payment details";
-//       });
-//     } finally {
-//       this.loading = false;
-//     }
-//   };
+  //   // Load Payment by ID
+  //   getPaymentById = async (id) => {
+  //     this.loading = true;
+  //     try {
+  //       const payment = await agent.Payment.getById(id);
+  //       runInAction(() => {
+  //         this.currentPayment = {
+  //           ...payment,
+  //           createDate: formatDateTime(payment.createDate),
+  //         };
+  //         this.error = null;
+  //       });
+  //     } catch (error:any) {
+  //       runInAction(() => {
+  //         this.error = error.message || "Failed to load payment details";
+  //       });
+  //     } finally {
+  //       this.loading = false;
+  //     }
+  //   };
 
   // Clear Payment State
   clearPayment = () => {
@@ -88,6 +94,23 @@ class PaymentStore {
     this.status = "";
     this.error = null;
     this.loading = false;
+  };
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  setPagination = (pagination: PaginationData) => {
+    this.pagination = pagination;
+  };
+
+  setSearchTerm = (term: string) => {
+    this.searchTerm = term;
+  };
+
+  setDateFilter = (from: string | null, to: string | null) => {
+    this.fromDate = from;
+    this.toDate = to;
   };
 }
 

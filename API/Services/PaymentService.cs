@@ -25,6 +25,7 @@ public class PaymentService : IPaymentService
     private readonly IMapper _mapper;
 
 
+
     public PaymentService(DataContext context, IMapper mapper)
     {
         _context = context;
@@ -42,7 +43,7 @@ public class PaymentService : IPaymentService
         payment.MerchantId = "Demo Merchant";
         payment.TransactionHint = "CPT:Y;VCC:Y;";
         payment.Currency = "AED";
-        payment.OrderID = payment.OrderID = Guid.NewGuid().ToString("N").Substring(0, 16);
+        payment.OrderID = Guid.NewGuid().ToString("N").Substring(0, 16);
 
         var paymentRequest = new
         {
@@ -53,9 +54,9 @@ public class PaymentService : IPaymentService
                 Amount = payment.TransactionAmount,
                 Currency = payment.Currency,
                 OrderID = payment.OrderID,
-                OrderName = payment.OrderName,
+                OrderName = payment.OrderName?.Substring(0,20),
                 TransactionHint = payment.TransactionHint,
-                ReturnPath = "https://kbc.center/payment/success",
+                ReturnPath = "https://kbc.center/api/payment/payment-callback",
                 UserName = "Demo_fY9c",
                 Password = "Comtrust@20182018"
             }
@@ -92,7 +93,7 @@ public class PaymentService : IPaymentService
         if (!string.IsNullOrEmpty(paymentUrl))
         {
             payment.Status = "Pending";
-            payment.CreateDate = DateTime.UtcNow;
+            payment.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
             payment.TransactionID = result?.Transaction?.TransactionID.ToString();
 
             _context.Payments.Add(payment);
@@ -119,55 +120,54 @@ public class PaymentService : IPaymentService
     }
 
 
-    // public async Task PaymentCallback(PaymentCallbackDto callback)
-    // {
-    //     try
-    //     {
+    public async Task PaymentCallback(PaymentCallbackDto callback)
+    {
+        try
+        {
 
-    //         var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionId == callback.Transaction.TransactionID);
-    //         if (payment == null)
-    //         {
-    //             throw new Exception("Invalid Transaction ID");
-    //         }
+            var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
+            if (payment == null)
+            {
+                throw new Exception("Invalid Transaction ID");
+            }
 
-    //         if (callback.Transaction.ResponseCode == "0") // Success
-    //         {
-    //             payment.Status = "Completed";
-    //             payment.TransactionStatus = "Success";
-    //             payment.PaymentDate = DateTime.UtcNow;
-    //             _context.Payments.Update(payment);
-    //             await _context.SaveChangesAsync();
-    //             return;
-    //         }
-    //         else if (callback.Transaction.ResponseCode == "51" || callback.Transaction.ResponseCode == "91") // Pending
-    //         {
-    //             payment.Status = "Pending";
-    //             _context.Payments.Update(payment);
-    //             await _context.SaveChangesAsync();
-    //             return ;
-    //         }
-    //         else // Failure
-    //         {
-    //             payment.Status = "Failed";
-    //             payment.TransactionStatus = callback.Transaction.ResponseDescription;
-    //             _context.Payments.Update(payment);
-    //             await _context.SaveChangesAsync();
-    //             return;
-    //         }
+            if (callback.Transaction.ResponseCode == "0") // Success
+            {
+                payment.Status = "Completed";
+                payment.TransactionStatus = "Success";
+                payment.CreateDate = DateTime.UtcNow;
+                _context.Payments.Update(payment);
+                await _context.SaveChangesAsync();
+                return;
+            }
+            else if (callback.Transaction.ResponseCode == "51" || callback.Transaction.ResponseCode == "91") // Pending
+            {
+                payment.Status = "Pending";
+                _context.Payments.Update(payment);
+                await _context.SaveChangesAsync();
+                return ;
+            }
+            else // Failure
+            {
+                payment.Status = "Failed";
+                payment.TransactionStatus = callback.Transaction.ResponseDescription;
+                _context.Payments.Update(payment);
+                await _context.SaveChangesAsync();
+                return;
+            }
 
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         throw new Exception($"An error occurred: {ex.Message}");
-    //     }
-    // }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"An error occurred: {ex.Message}");
+        }
+    }
 
 
     // public async Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams)
     // {
     //     var query = _context.Payments
-    //         .Where(x => !x.IsDeleted)
-    //         .Include(x => x.Booking)
+    //         .Include(x => x.Bookings)
     //         .AsNoTracking()
     //         .AsQueryable();
 
@@ -195,22 +195,18 @@ public class PaymentService : IPaymentService
     // }
 
 
-    // public async Task<ServiceDto> GetServiceByIdAsync(Guid id)
+    // public async Task<PaymentDto> GetPaymentByIdAsync(Guid id)
     // {
-    //     var service = await _context.Services
-    //         .Include(x => x.CreatedBy)
-    //         .Include(x => x.UpdatedBy)
-    //         .Include(x => x.ServiceOptions)
-    //         .Include(x => x.Category)
-    //         .Include(x => x.FileEntity)
+    //     var payment = await _context.Payments
+    //         .Include(x => x.Bookings)
     //         .FirstOrDefaultAsync(x => x.Id == id);
 
-    //     if (service == null)
+    //     if (payment == null)
     //     {
-    //         throw new KeyNotFoundException($"Service with id {id} not found.");
+    //         throw new KeyNotFoundException($"payment with id {id} not found.");
     //     }
 
-    //     return _mapper.Map<ServiceDto>(service);
+    //     return _mapper.Map<PaymentDto>(payment);
     // }
 
     // public async Task DeleteServiceAsync(Guid id)
