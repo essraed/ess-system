@@ -36,14 +36,14 @@ namespace API.Controllers
 
 
         [HttpPost("payment-callback")]
-        [Consumes("application/json")]
         [AllowAnonymous]
-        public async Task<IActionResult> PaymentCallback([FromBody] PaymentCallbackDto callback)
+        public async Task<IActionResult> PaymentCallback([FromForm] PaymentCallbackDto callback)
         {
             try
             {
                 await _paymentService.PaymentCallback(callback);
-                return Ok("Payment Done successfully");
+                return Redirect("https://kbc.center");
+                // return Ok("Payment Done successfully");
             }
             catch (Exception ex)
             {

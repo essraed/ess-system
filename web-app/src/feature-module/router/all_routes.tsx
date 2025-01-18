@@ -110,7 +110,7 @@ export const all_routes = {
 
   //Payments
   paymentSuccess:"/payment/success",
-  paymentFailed:"/payment/fal",
+  // paymentFailed:"/payment/fal",
 
   
 

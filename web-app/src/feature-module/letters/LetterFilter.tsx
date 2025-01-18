@@ -57,9 +57,12 @@ const LetterFilter = ({ pageSize }: Props) => {
     loadDocuments();
   };
 
-  useEffect(() => {
-    handleFilter();
-  }, [fromDate, toDate, userId, authorityId]);
+useEffect(() => {
+    const timeout = setTimeout(() => {
+        handleFilter();
+    }, 300);
+    return () => clearTimeout(timeout); 
+}, [fromDate, toDate,userId,authorityId]);
 
   useEffect(() => {
     loadUsers();
