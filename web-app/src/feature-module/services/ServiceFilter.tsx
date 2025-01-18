@@ -56,9 +56,12 @@ const ServiceFilter = ({ pageSize }: Props) => {
     loadServices();
   };
 
-  useEffect(() => {
-    handleFilter();
-  }, [fromDate, toDate, userId,categoryId]);
+ useEffect(() => {
+     const timeout = setTimeout(() => {
+         handleFilter();
+     }, 300);
+     return () => clearTimeout(timeout); 
+ }, [fromDate, toDate,userId,categoryId]);
 
   useEffect(() => {
     loadUsers();

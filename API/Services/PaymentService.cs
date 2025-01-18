@@ -126,7 +126,7 @@ public class PaymentService : IPaymentService
     {
         try
         {
-
+            
             var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
             if (payment == null)
             {
@@ -137,7 +137,6 @@ public class PaymentService : IPaymentService
             {
                 payment.Status = "Completed";
                 payment.TransactionStatus = "Success";
-                payment.CreateDate = DateTime.UtcNow;
                 _context.Payments.Update(payment);
                 await _context.SaveChangesAsync();
                 return;

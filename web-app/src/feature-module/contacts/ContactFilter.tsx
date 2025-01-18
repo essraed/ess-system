@@ -45,7 +45,7 @@ useEffect(() => {
     const timeout = setTimeout(() => {
         handleFilter();
     }, 300);
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timeout); 
 }, [fromDate, toDate, enquiryType]);
   
   useEffect(() => {

@@ -39,9 +39,12 @@ const NotificationFilter = () => {
     setToDate(endDate);
   }, [startDate, endDate]);
 
-  useEffect(() => {
-    handleFilter();
-  }, [fromDate, toDate]);
+useEffect(() => {
+    const timeout = setTimeout(() => {
+        handleFilter();
+    }, 300);
+    return () => clearTimeout(timeout); 
+}, [fromDate, toDate]);
 
   useEffect(() => {
     loadUsers();

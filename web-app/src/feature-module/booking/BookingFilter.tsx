@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
@@ -35,11 +35,11 @@ const BookingFilter = ({ pageSize }: Props) => {
   const [toDate, setToDate] = useState<string | null>(null);
   const { t } = useTranslation();
 
-  const handleFilter = () => {
+  const handleFilter = useCallback(() => {
     setDateFilter(fromDate, toDate);
-    setPagingParams(new PagingParams(1, pageSize)); // Reset to first page when searching
+    setPagingParams(new PagingParams(1, pageSize)); // Reset to first page
     loadBookings();
-  };
+  }, [fromDate, toDate, setDateFilter, setPagingParams, loadBookings, pageSize]);
 
   useEffect(() => {
     setFromDate(startDate);
@@ -55,10 +55,11 @@ const BookingFilter = ({ pageSize }: Props) => {
     setServiceFilter(service);
     loadBookings();
   };
-
   useEffect(() => {
-    handleFilter();
-  }, [fromDate, toDate, bookingStatus, serviceId]);
+    if (fromDate || toDate || bookingStatus || serviceId) {
+      handleFilter();
+    }
+  }, [fromDate, toDate, bookingStatus, serviceId, handleFilter]);
 
   useEffect(() => {
     loadServicesDropdown();
