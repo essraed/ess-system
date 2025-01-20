@@ -37,7 +37,13 @@ const BookingForm = ({
   IsAtHome,
 }: Props) => {
   const {
-    bookingStore: { getAvailableSlots, availableSlots, addBooking,getCurrentSessionBookings},
+    bookingStore: {
+      getAvailableSlots,
+      availableSlots,
+      addBooking,
+      getCurrentSessionBookings,
+    },
+    serviceStore: { getService, currentService },
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -90,6 +96,10 @@ const BookingForm = ({
   useEffect(() => {
     fetchAvailableSlots();
   }, [getAvailableSlots, date]);
+
+  useEffect(() => {
+    if (serviceId) getService(serviceId);
+  }, [serviceId]);
 
   const items = (availableSlots ?? []).map((item) => ({ label: item }));
 
@@ -217,7 +227,6 @@ const BookingForm = ({
             )}
           </InputMask>
 
-
           {/* Email */}
           <Input
             radius="sm"
@@ -228,6 +237,8 @@ const BookingForm = ({
             isInvalid={!!errors.email}
             errorMessage={errors.email?.message}
           />
+
+          {/* <FileForm label="" entityId={bo.id} uploadImage={uploadImage} /> */}
 
           {/* Address */}
           <Input

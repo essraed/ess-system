@@ -17,6 +17,7 @@ export interface ServiceData {
   categoryId?: string;
   categoryName?: string;
   serviceOptions?: ServiceOptionData[];
+  isRequiredFiles?:boolean|null;
 }
 
 export interface ServiceOptionData {

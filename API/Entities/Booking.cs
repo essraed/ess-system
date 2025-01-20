@@ -68,7 +68,7 @@ namespace API.Entities
         public Payment? Payment { get; set; }
 
         public Notification? Notification { get; set; }
-
+        public ICollection<FileEntity>? FileEntities { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

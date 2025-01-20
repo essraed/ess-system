@@ -32,6 +32,7 @@ namespace API.DTOs
         public string? UpdatedBy { get; set; }
         public Guid? ServiceId { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? BookingId { get; set; }
     }
 
 }

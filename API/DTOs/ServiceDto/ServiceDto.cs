@@ -18,6 +18,8 @@ namespace API.DTOs.ServiceDto
         public string? UpdatedBy { get; set; }
         public string? CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        public bool isRequiredFiles { get; set; }
+
 
         // related tables
         public ICollection<ServiceOptionDto>? ServiceOptions { get; set; }

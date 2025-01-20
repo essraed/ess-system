@@ -14,6 +14,8 @@ namespace API.DTOs.ServiceDto
         [Required]
         public decimal Price { get; set; }
         public decimal? PriceVIP { get; set; }
+        public bool isRequiredFiles { get; set; } = false;
+
 
         public string? ServiceVipName { get; set; }
 

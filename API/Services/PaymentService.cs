@@ -58,7 +58,7 @@ public class PaymentService : IPaymentService
                 ? payment.OrderName.Substring(0, 20)
                 : payment.OrderName,
                 TransactionHint = payment.TransactionHint,
-                ReturnPath = "https://kbc.center/api/payment/payment-callback",
+                ReturnPath = "http://localhost:5000/api/payment/payment-callback",
                 UserName = "Demo_fY9c",
                 Password = "Comtrust@20182018"
             }
@@ -126,43 +126,75 @@ public class PaymentService : IPaymentService
     {
         try
         {
-            
+            var finalizationRequest = new FinalizationRequest
+            {
+                Finalization = new Finalization
+                {
+                    Customer = "Demo Merchant",
+                    TransactionID = callback.Transaction.TransactionID,
+                    UserName = "Demo_fY9c",
+                    Password = "Comtrust@20182018"
+                }
+            };
+
+            var apiUrl = "https://demo-ipg.ctdev.comtrust.ae:2443/";
+
+            using var httpClient = new HttpClient();
+
+            var jsonPayload = JsonConvert.SerializeObject(finalizationRequest);
+
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, apiUrl)
+            {
+                Content = content
+            };
+
+            request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await httpClient.SendAsync(request);
+
+            // Ensure the response is successful
+            response.EnsureSuccessStatusCode();
+
+            // Deserialize the response into PaymentCallbackDto
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var paymentCallbackResponse = JsonConvert.DeserializeObject<PaymentCallbackDto>(responseContent);
+
+            // Retrieve the payment record based on the TransactionID
             var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
             if (payment == null)
             {
                 throw new Exception("Invalid Transaction ID");
             }
 
-            if (callback.Transaction.ResponseCode == "0") // Success
+            // Handle the callback response based on the ResponseCode
+            if (paymentCallbackResponse?.Transaction?.ResponseCode == "0") // Success
             {
                 payment.Status = "Completed";
                 payment.TransactionStatus = "Success";
-                _context.Payments.Update(payment);
-                await _context.SaveChangesAsync();
-                return;
             }
-            else if (callback.Transaction.ResponseCode == "51" || callback.Transaction.ResponseCode == "91") // Pending
+            else if (paymentCallbackResponse?.Transaction?.ResponseCode == "51" || paymentCallbackResponse.Transaction.ResponseCode == "91") // Pending
             {
                 payment.Status = "Pending";
-                _context.Payments.Update(payment);
-                await _context.SaveChangesAsync();
-                return;
             }
             else // Failure
             {
                 payment.Status = "Failed";
-                payment.TransactionStatus = callback.Transaction.ResponseDescription;
-                _context.Payments.Update(payment);
-                await _context.SaveChangesAsync();
-                return;
+                payment.TransactionStatus = paymentCallbackResponse.Transaction.ResponseDescription;
             }
 
+            // Update the payment record and save changes
+            _context.Payments.Update(payment);
+            await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {
+            // Log the error and rethrow the exception
             throw new Exception($"An error occurred: {ex.Message}");
         }
     }
+
 
 
     // public async Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams)
