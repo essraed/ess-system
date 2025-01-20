@@ -41,6 +41,7 @@ namespace API.Entities
         public AppUser? UpdatedBy { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+        public bool isRequiredFiles { get; set; } = false;
 
 
         // related tables

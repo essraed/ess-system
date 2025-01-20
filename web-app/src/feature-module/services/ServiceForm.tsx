@@ -1,4 +1,3 @@
-
 import { Input } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -8,7 +7,6 @@ import { observer } from "mobx-react-lite";
 
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-
 
 import { Dropdown } from "primereact/dropdown";
 import { ServiceData } from "../../types/service";
@@ -66,7 +64,8 @@ const ServiceForm = ({ service, id }: Props) => {
     };
 
     // Handle adding or updating service
-    if (id) { // update
+    if (id) {
+      // update
       const result = await updateService(id, submissionData);
       if (result.status === "success") {
         toast.success("Service updated successfully");
@@ -82,7 +81,7 @@ const ServiceForm = ({ service, id }: Props) => {
         toast.error("Error: " + result.error);
       }
     }
-    navigate(all_routes.serviceDashboard)
+    navigate(all_routes.serviceDashboard);
   };
 
   // Handle removing an option from the list
@@ -144,6 +143,27 @@ const ServiceForm = ({ service, id }: Props) => {
             placeholder={t("Search a Category")}
           />
 
+          {/* Required Files Checkbox */}
+          <div className="my-3">
+            <div className="flex items-center space-x-2">
+              <input
+                id="requiredFiles"
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-600"
+                {...register("isRequiredFiles")}
+                defaultChecked={!!service?.isRequiredFiles}
+              />
+              <label htmlFor="requiredFiles" className="text-sm text-gray-700">
+                {t("Required Files?")}
+              </label>
+            </div>
+            {errors.isRequiredFiles && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.isRequiredFiles.message as string}
+              </p>
+            )}
+          </div>
+
           {/* Service Options and Add/Remove Logic */}
           <div className="my-3">
             <h5 className="mb-2">{t("Service Options")}</h5>
@@ -193,8 +213,7 @@ const ServiceForm = ({ service, id }: Props) => {
             </button>
           </div>
 
-          <button
-            type="submit" className="btn btn-primary mt-3">
+          <button type="submit" className="btn btn-primary mt-3">
             {id ? t("Update Service") : t("Submit")}
           </button>
         </form>

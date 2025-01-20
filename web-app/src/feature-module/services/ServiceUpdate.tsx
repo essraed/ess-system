@@ -30,7 +30,7 @@ const ServiceUpdate = () => {
   if (!currentService) return <LoadingSpinner />;
   return (
     <>
-      <Card className="mt-0 mb-20 container">
+      <Card className="mt-5 mb-20 custom-container">
         <CardHeader className="flex justify-between gap-3 flex-wrap">
 
           <div>

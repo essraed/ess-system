@@ -14,8 +14,9 @@ const BookingCheckout = () => {
 
   const [paymentType, setPaymentType] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [flag,setFlag]=useState<boolean>(false);
+  const [flag, setFlag] = useState<boolean>(false);
   const [bookings, setBookings] = useState<any[]>([]);
 
   const onConfirmClick = () => {
@@ -44,6 +45,7 @@ const BookingCheckout = () => {
         toast.error("Error updating payment type.");
       }
     } else if (paymentType === "Online") {
+      setIsLoading(true);
       const formData = new FormData();
 
       const totalAmount = bookings.reduce(
@@ -57,7 +59,6 @@ const BookingCheckout = () => {
       formData.append("IDS", bookingIds ?? "");
 
       formData.append("OrderName", serviceNames || "");
-    
 
       try {
         const result = await paymentStore.initiatePayment(formData);
@@ -96,9 +97,7 @@ const BookingCheckout = () => {
       }
     };
     fetchAllBookings();
-  }, [isSession, getBooking,flag]);
-
- 
+  }, [isSession, getBooking, flag,isLoading]);
 
   if (loadingInitial || bookings.length === 0) {
     return <LoadingSpinner />;
@@ -110,6 +109,7 @@ const BookingCheckout = () => {
 
   return (
     <>
+      {isLoading && <LoadingSpinner />}
       <div className="custom-container mx-auto px-4 py-8  min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Customer Information */}
@@ -132,7 +132,8 @@ const BookingCheckout = () => {
                   <strong>Address:</strong> {bookings[0]?.address}
                 </p>
                 <p>
-                  <strong>Booking time:</strong> {formatDateTime(bookings[0]?.bookingDate.toString())}
+                  <strong>Booking time:</strong>{" "}
+                  {formatDateTime(bookings[0]?.bookingDate.toString())}
                 </p>
               </div>
             </div>
@@ -229,21 +230,22 @@ const BookingCheckout = () => {
         </div>
 
         {/* Buttons */}
-        {!bookings[0].paymentType &&(
-        <div className="flex justify-center gap-4 mt-6">
-          <button
-            onClick={() => navigate("/services")}
-            className="w-1/2 lg:w-1/6 bg-gray-300 text-gray-800  py-2 font-semibold hover:bg-gray-400"
-          >
-            Add More
-          </button>
-          <button
-            onClick={onConfirmClick}
-            className="w-1/2 lg:w-1/6 bg-blue-600 text-white  py-2 font-semibold hover:bg-blue-700"
-          >
-            Confirm Booking
-          </button>
-        </div>)}
+        {!bookings[0].paymentType && (
+          <div className="flex justify-center gap-4 mt-6">
+            <button
+              onClick={() => navigate("/services")}
+              className="w-1/2 lg:w-1/6 bg-gray-300 text-gray-800  py-2 font-semibold hover:bg-gray-400"
+            >
+              Add More
+            </button>
+            <button
+              onClick={onConfirmClick}
+              className="w-1/2 lg:w-1/6 bg-blue-600 text-white  py-2 font-semibold hover:bg-blue-700"
+            >
+              Confirm Booking
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

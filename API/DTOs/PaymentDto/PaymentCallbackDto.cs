@@ -57,4 +57,19 @@ namespace API.DTOs.PaymentDto
 
     }
 
+
+
+    public class FinalizationRequest
+    {
+        public Finalization Finalization { get; set; }
+    }
+
+    public class Finalization
+    {
+        public string Customer { get; set; }
+        public string TransactionID { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
 }

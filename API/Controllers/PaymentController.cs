@@ -37,17 +37,32 @@ namespace API.Controllers
 
         [HttpPost("payment-callback")]
         [AllowAnonymous]
-        public async Task<IActionResult> PaymentCallback([FromForm] PaymentCallbackDto callback)
+        public async Task<IActionResult> PaymentCallback()
         {
             try
             {
+                var form = await Request.ReadFormAsync();
+
+                var transaction = new Transaction
+                {
+                    TransactionID = form["TransactionID"]
+                };
+
+                var callback = new PaymentCallbackDto
+                {
+                    Transaction = transaction
+                };
+
                 await _paymentService.PaymentCallback(callback);
                 return Redirect("https://kbc.center");
-                // return Ok("Payment Done successfully");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest($"Invalid request: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
             }
         }
 

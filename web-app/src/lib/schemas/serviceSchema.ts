@@ -9,6 +9,7 @@ export const serviceSchema = z.object({
     rate:z.number().optional(),
     serviceVipName: z.string().optional(),
     serviceOptions: z.array(serviceOptionSchema).optional(),
+    isRequiredFiles:z.boolean().optional(),
   });
   
   export type ServiceSchema = z.infer<typeof serviceSchema>;
