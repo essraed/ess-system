@@ -41,6 +41,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<ContactDto>> AddContact(ContactSaveDto model)
         {
             try

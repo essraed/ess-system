@@ -24,12 +24,15 @@ public class PaymentService : IPaymentService
     private readonly DataContext _context;
     private readonly IMapper _mapper;
 
+    private readonly IEmailService _email;
 
 
-    public PaymentService(DataContext context, IMapper mapper)
+
+    public PaymentService(DataContext context, IMapper mapper, IEmailService email)
     {
         _context = context;
         _mapper = mapper;
+        _email = email;
     }
 
     public async Task<string> InitiatePayment(PaymentSaveDto paymentDto, string IDS)
@@ -122,7 +125,7 @@ public class PaymentService : IPaymentService
     }
 
 
-    public async Task PaymentCallback(PaymentCallbackDto callback)
+    public async Task<string> PaymentCallback(PaymentCallbackDto callback)
     {
         try
         {
@@ -162,38 +165,83 @@ public class PaymentService : IPaymentService
             var paymentCallbackResponse = JsonConvert.DeserializeObject<PaymentCallbackDto>(responseContent);
 
             // Retrieve the payment record based on the TransactionID
-            var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
+            var payment = await _context.Payments.Include(x => x.Bookings).FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
             if (payment == null)
             {
                 throw new Exception("Invalid Transaction ID");
             }
 
+            var firstBooking = payment?.Bookings?.FirstOrDefault();
+            string toEmail = firstBooking!.Email;
+            string subject = "";
+            string message = "";
+
             // Handle the callback response based on the ResponseCode
-            if (paymentCallbackResponse?.Transaction?.ResponseCode == "0") // Success
+            if (paymentCallbackResponse?.Transaction?.ResponseCode == "0")
             {
-                payment.Status = "Completed";
+                payment!.Status = "Completed";
                 payment.TransactionStatus = "Success";
+                subject = "Payment Successful - Booking Confirmation";
+                message = $@"
+                        <h1>Payment Successful</h1>
+                        <p>Dear {firstBooking?.CustomerName},</p>
+                        <p>Your payment has been successfully processed. Here are the details of your transaction:</p>
+                        <ul>
+                            <li><strong>Transaction ID:</strong> {payment.TransactionID}</li>
+                            <li><strong>Status:</strong> {payment.Status}</li>
+                        </ul>
+                        <p>Thank you for choosing us!</p>
+            ";
             }
-            else if (paymentCallbackResponse?.Transaction?.ResponseCode == "51" || paymentCallbackResponse.Transaction.ResponseCode == "91") // Pending
+            else if (paymentCallbackResponse?.Transaction?.ResponseCode == "51" || paymentCallbackResponse?.Transaction?.ResponseCode == "91") // Pending
             {
-                payment.Status = "Pending";
+                payment!.Status = "Pending";
+                subject = "Payment Pending - Booking Update";
+                message = $@"
+                        <h1>Payment Pending</h1>
+                        <p>Dear {firstBooking?.CustomerName},</p>
+                        <p>Your payment is currently pending. Please wait while we process your transaction. Here are the details:</p>
+                        <ul>
+                            <li><strong>Transaction ID:</strong> {payment.TransactionID}</li>
+                            <li><strong>Status:</strong> {payment.Status}</li>
+                        </ul>
+                        <p>If you have any questions, feel free to contact us.</p>
+            ";
             }
             else // Failure
             {
-                payment.Status = "Failed";
-                payment.TransactionStatus = paymentCallbackResponse.Transaction.ResponseDescription;
+                payment!.Status = "Failed";
+                payment.TransactionStatus = paymentCallbackResponse?.Transaction?.ResponseDescription;
+                subject = "Payment Failed - Booking Update";
+                message = $@"
+                        <h1>Payment Failed</h1>
+                        <p>Dear {firstBooking?.CustomerName},</p>
+                        <p>We regret to inform you that your payment could not be processed. Here are the details:</p>
+                        <ul>
+                            <li><strong>Transaction ID:</strong> {payment.TransactionID}</li>
+                            <li><strong>Status:</strong> {payment.Status}</li>
+                            <li><strong>Reason:</strong> {payment.TransactionStatus}</li>
+                        </ul>
+                        <p>Please try again or contact us for assistance.</p>
+            ";
             }
 
-            // Update the payment record and save changes
+            if (!string.IsNullOrEmpty(toEmail) && !string.IsNullOrEmpty(subject) && !string.IsNullOrEmpty(message))
+            {
+                await _email.SendEmailAsync(toEmail, subject, message);
+            }
+
             _context.Payments.Update(payment);
             await _context.SaveChangesAsync();
+
+            return $"status={payment.Status}&TransactionID={payment.TransactionID}";
         }
         catch (Exception ex)
         {
-            // Log the error and rethrow the exception
             throw new Exception($"An error occurred: {ex.Message}");
         }
     }
+
 
 
 

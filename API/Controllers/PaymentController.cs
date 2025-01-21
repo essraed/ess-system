@@ -53,8 +53,8 @@ namespace API.Controllers
                     Transaction = transaction
                 };
 
-                await _paymentService.PaymentCallback(callback);
-                return Redirect("https://kbc.center");
+                var status=await _paymentService.PaymentCallback(callback);
+                return Redirect($"http://localhost:3000/payment/status?{status}");
             }
             catch (InvalidOperationException ex)
             {
