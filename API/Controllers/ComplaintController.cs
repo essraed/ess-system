@@ -44,7 +44,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-
+        [AllowAnonymous]
         public async Task<ActionResult<ComplaintDto>> AddComplaintItem([FromBody] ComplaintSaveDto complaintSaveDto)
         {
             try

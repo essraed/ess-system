@@ -44,7 +44,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-
+        [AllowAnonymous]
         public async Task<ActionResult<LostDto>> AddLostItem([FromBody] LostSaveDto lostSaveDto)
         {
             try

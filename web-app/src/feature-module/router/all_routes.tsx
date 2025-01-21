@@ -109,7 +109,7 @@ export const all_routes = {
   ComplaintsDetails: "/listings/Complaints/view/:id",
 
   //Payments
-  paymentSuccess:"/payment/success",
+  paymentSuccess:"/payment/status",
   // paymentFailed:"/payment/fal",
 
   
