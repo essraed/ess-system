@@ -15,6 +15,7 @@ const CategoryDetails = ({ modalId }: Props) => {
 
   const {
     categoryStore: { currentCategory },
+    userStore:{isAdmin}
   } = useStore();
 
   // if (!currentCategory) return <p>loading .....</p>;
@@ -45,7 +46,7 @@ const CategoryDetails = ({ modalId }: Props) => {
                       <p className="text-gray-600">{currentCategory?.name}</p>
                     </div>
                   )}
-                  {currentCategory?.createDate && (
+                  {currentCategory?.createDate && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Create Date:</p>
                       <p className="text-gray-600">
@@ -53,7 +54,7 @@ const CategoryDetails = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentCategory?.createdBy && (
+                  {currentCategory?.createdBy && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Created By:</p>
                       <p className="text-gray-600">{currentCategory.createdBy}</p>

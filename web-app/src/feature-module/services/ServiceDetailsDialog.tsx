@@ -14,6 +14,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
   const { t } = useTranslation();
   const {
     serviceStore: { currentService },
+    userStore:{isAdmin},
   } = useStore();
 
 
@@ -88,7 +89,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       <p className="text-gray-600">{currentService?.price} {t('AED')}</p>
                     </div>
                   )}
-                  {currentService?.createDate && (
+                  {currentService?.createDate && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Create Date:</p>
                       <p className="text-gray-600">
@@ -96,7 +97,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.updateDate && (
+                  {currentService?.updateDate &&  isAdmin() &&(
                     <div>
                       <p className="font-medium text-gray-700">Update Date:</p>
                       <p className="text-gray-600">
@@ -104,7 +105,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.createdBy && (
+                  {currentService?.createdBy &&  isAdmin() &&(
                     <div>
                       <p className="font-medium text-gray-700">Created By:</p>
                       <p className="text-gray-600">
@@ -112,7 +113,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.updatedBy && (
+                  {currentService?.updatedBy &&  isAdmin() &&(
                     <div>
                       <p className="font-medium text-gray-700">Updated By:</p>
                       <p className="text-gray-600">

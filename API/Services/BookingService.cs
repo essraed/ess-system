@@ -345,6 +345,20 @@ public class BookingService : IBookingService
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'Completed'.");
     }
+    public async Task SetThePaymentIdForBooking(Guid id,string IDS)
+    {
+       var bookingIds = IDS.Split(',').Select(Guid.Parse).ToList(); // Assuming IDS is a comma-separated string of GUIDs
+            var bookingsToUpdate = await _context.Bookings
+                .Where(b => bookingIds.Contains(b.Id))
+                .ToListAsync();
+
+            foreach (var booking in bookingsToUpdate)
+            {
+                booking.PaymentId = id;
+            }
+
+            await _context.SaveChangesAsync();
+    }
 
     private string GetCurrentUserId()
     {
@@ -381,4 +395,6 @@ public class BookingService : IBookingService
         const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Readable set
         return new string(Enumerable.Range(1, length).Select(_ => chars[_random.Next(chars.Length)]).ToArray());
     }
+
+    
 }

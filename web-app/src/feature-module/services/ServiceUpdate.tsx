@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 import { useTranslation } from "react-i18next";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
@@ -12,12 +12,15 @@ import ServiceForm from "./ServiceForm";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
 import LoadingSpinner from "../common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const ServiceUpdate = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     serviceStore: { getService, currentService },
+    userStore,
   } = useStore();
 
   useEffect(() => {
@@ -26,6 +29,13 @@ const ServiceUpdate = () => {
       getService(id); // Fetch the existing service if we have an id
     }
   }, [getService, id]);
+
+  useEffect(() => {
+    if (!userStore.isAdmin()) {
+      navigate("/login");
+      toast.error("Unauthorized");
+    } 
+  }, [userStore.token]);
 
   if (!currentService) return <LoadingSpinner />;
   return (

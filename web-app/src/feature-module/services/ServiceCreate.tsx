@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { observer } from "mobx-react-lite";
 import ServiceForm from "./ServiceForm";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
+import { useStore } from "../../app/stores/store";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ServiceCreate = () => {
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const{userStore}=useStore();
+
+  useEffect(() => {
+    if (!userStore.isAdmin()) {
+      navigate("/login");
+      toast.error("Unauthorized");
+    } 
+  }, [userStore.token]);
 
   return (
     <>

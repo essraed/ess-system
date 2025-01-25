@@ -1,5 +1,6 @@
 import LostDashboard from "../losts/LostDashboard";
 import LostDetails from "../losts/LostDetails";
+import UserDashboard from "../users/UserDashboard";
 
 export const all_routes = {
   // home routes
@@ -73,7 +74,6 @@ export const all_routes = {
   categoryDashboard:"/listings/categories",
   categoryDetails: "/listings/categories/view/:id",
   categoryEdit: "/listings/categories/edit/:id",
-  categoryCreate: "/listings/categories/add",
   //Services
   serviceDashboard:"/listings/services",
   serviceList:"/services/:id",
@@ -113,7 +113,8 @@ export const all_routes = {
   // paymentFailed:"/payment/fal",
 
   
-
+  //Losts
+  UserDashboard:"/listings/Users",
 
 
 

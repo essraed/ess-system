@@ -109,7 +109,7 @@ const BookingCheckout = () => {
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}
+      {isLoading ? <LoadingSpinner />:(
       <div className="custom-container mx-auto px-4 py-8  min-h-screen">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Customer Information */}
@@ -246,7 +246,7 @@ const BookingCheckout = () => {
             </button>
           </div>
         )}
-      </div>
+      </div>)}
     </>
   );
 };

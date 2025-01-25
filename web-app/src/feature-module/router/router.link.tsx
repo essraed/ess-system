@@ -35,6 +35,7 @@ import LostDashboard from "../losts/LostDashboard";
 import ComplaintForm from "../complaints/ComplaintForm";
 import ComplaintDashboard from "../complaints/ComplaintDashboard";
 import NotificationsDropdown from "../common/NotificationsDropdown";
+import UserDashboard from "../users/UserDashboard";
 
 
 const routes = all_routes;
@@ -145,10 +146,6 @@ export const listingroutes = [
     path: routes.categoryDashboard,
     element: <CategoryDashboard />,
   },
-  {
-    path: routes.categoryCreate,
-    element: <CategoryForm />,
-  },
   // Service
   {
     path: routes.serviceDashboard,
@@ -192,6 +189,10 @@ export const listingroutes = [
   {
     path: routes.ComplaintDashboard,
     element: <ComplaintDashboard />,
+  },
+  {
+    path: routes.UserDashboard,
+    element: <UserDashboard />,
   },
   
 ];

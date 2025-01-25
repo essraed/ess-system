@@ -24,5 +24,7 @@ namespace API.Interfaces
         Task SetBookingStatePending(Guid id);
 
         Task setPaymentType(Guid id,string type);
+
+        Task SetThePaymentIdForBooking(Guid id,string IDS);
     }
 }
