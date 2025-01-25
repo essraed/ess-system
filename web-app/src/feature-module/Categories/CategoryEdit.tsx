@@ -25,6 +25,7 @@ const LetterEdit = () => {
       brief,
       aiGeneratedResult
     },
+    userStore,
   } = useStore();
 
   const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
@@ -44,6 +45,13 @@ const LetterEdit = () => {
       }
     }, 1000);
   }, [getDocument, id]);
+
+  useEffect(() => {
+    if (!userStore.isAdmin()) {
+      navigate("/login");
+      toast.error("Unauthorized");
+    } 
+  }, [userStore.token]);
 
   const handleSaveDocument = async () => {
     const result = await updateDocument(id!, aiGeneratedResult as string);

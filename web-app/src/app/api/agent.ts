@@ -220,8 +220,10 @@ const Bookings = {
 
 const Account = {
   current: () => requests.get<User>("account"),
-  getUsersIdAndName: () =>
-    requests.get<UserIdAndName[]>("account/getUsersIdAndName"),
+  getUsersIdAndName: (params:URLSearchParams) =>
+    axios
+  .get<PagedResponse<UserIdAndName[]>>("account/getUsersIdAndName", { params })
+  .then(responseBody),
   login: (user: LoginSchema) => requests.post<User>("account/login", user),
   register: (user: RegisterSchema) =>
     requests.post<User>("account/register", user),

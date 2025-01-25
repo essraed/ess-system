@@ -8,5 +8,7 @@ export interface User {
 
 export interface UserIdAndName {
     id: string;
+    username: string;
     displayName: string;
+    email:string;
 }

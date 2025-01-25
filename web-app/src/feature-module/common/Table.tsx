@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { separateCamelCase } from "../../lib/utils";
 import { all_routes } from "../router/all_routes";
 import StatusBadge from "./StatusBadge";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 type Props = {
   data: any[];
@@ -32,6 +34,7 @@ const Table = ({
   const action = (rowData: any) => {
     const { id } = rowData;
     const {moreDetailsUrl}=rowData;
+    const{userStore:{isAdmin}}=useStore()
 
     return (
       <div className="dropdown dropdown-action">
@@ -69,7 +72,7 @@ const Table = ({
             </Link>
           )}
 
-          <Link
+          {isAdmin()&&(<Link
             className="dropdown-item"
             to="#"
             onClick={() => confirmDialog(id)}
@@ -77,7 +80,7 @@ const Table = ({
             data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
           >
             <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer me-1"></i> Delete
-          </Link>
+          </Link>)}
           {routeUrl !== all_routes.authorityDashboard &&
             routeUrl !== all_routes.categoryDashboard &&
             routeUrl !== all_routes.carDashboard &&
@@ -85,7 +88,8 @@ const Table = ({
             routeUrl !== all_routes.contactDashboard &&
             routeUrl !== all_routes.lostDashboard &&                           
             routeUrl !== all_routes.ComplaintDashboard &&                           
-            routeUrl !== all_routes.bookingDashboard && (
+            routeUrl !== all_routes.bookingDashboard &&
+            isAdmin()&& (
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
                 <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer me-1"></i> Edit
               </Link>
@@ -183,4 +187,4 @@ const Table = ({
   );
 };
 
-export default Table;
+export default observer(Table);

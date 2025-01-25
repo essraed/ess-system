@@ -128,7 +128,7 @@ public class ServiceService : IServiceService
                    if (i < fileEntitiesList.Count &&
                         int.TryParse(model.number, out var num) &&
                         num > 0 &&
-                        service.FileEntities?.Count >= num)
+                        service?.FileEntities?.Count >= num)
                     {
 
                         var updatedFile = await _fileService.UpdateFileAsync(
@@ -159,7 +159,7 @@ public class ServiceService : IServiceService
                             CreatedById = GetCurrentUserId()
                         };
 
-                        service.FileEntities.Add(newFileEntity);
+                        service?.FileEntities?.Add(newFileEntity);
 
                     }
 

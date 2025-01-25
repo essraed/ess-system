@@ -6,25 +6,30 @@ import { ActionResult } from "../../types";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import agent from "../api/agent";
 import { RegisterSchema } from "../../lib/schemas/registerSchema";
+import { PaginationData, PagingParams } from "../../types/pagination";
 
 export default class UserStore {
   user: User | null = null;
   error: ZodIssue[] | string | null = null;
   token: string | undefined | null = getToken();
   appLoaded: boolean = false;
-  language: string = 'en';
+  language: string = "en";
+
+  pagination: PaginationData | null = null;
+  pagingParams = new PagingParams();
+  searchTerm: string = "";
 
   usersIdName: UserIdAndName[] | undefined = [];
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
 
     reaction(
       () => this.token,
-      token => {
-        return saveToken(token)
+      (token) => {
+        return saveToken(token);
       }
-    )
+    );
   }
 
   get isLoggedIn() {
@@ -41,26 +46,24 @@ export default class UserStore {
         this.user = user;
       });
 
-      return { status: 'success', data: 'Logged in' }
-
+      return { status: "success", data: "Logged in" };
     } catch (error) {
-      return { status: 'error', error: error as string }
+      return { status: "error", error: error as string };
     }
-  }
+  };
 
   getUser = async () => {
     try {
       const user = await agent.Account.current();
 
       // reslove Mobx strict mode
-      runInAction(() => this.user = user);
+      runInAction(() => (this.user = user));
 
-      return { status: 'success', data: 'We have got current user' }
-
+      return { status: "success", data: "We have got current user" };
     } catch (error) {
-      return { status: 'error', error: error as string }
+      return { status: "error", error: error as string };
     }
-  }
+  };
 
   register = async (creds: RegisterSchema): Promise<ActionResult<string>> => {
     try {
@@ -69,13 +72,12 @@ export default class UserStore {
       // reslove Mobx strict mode
       runInAction(() => {
         this.setToken(user.token);
-        this.user = user
+        this.user = user;
       });
 
-      return { status: 'success', data: 'Sign up' };
-
+      return { status: "success", data: "User Created Succesfully " };
     } catch (error) {
-      return { status: 'error', error: error as string };
+      return { status: "error", error: error as string };
     }
   };
 
@@ -83,43 +85,71 @@ export default class UserStore {
     runInAction(() => {
       this.setToken(null);
       this.user = null;
-    })
-  }
+    });
+  };
 
   setAppLoaded = async () => {
     this.appLoaded = true;
-  }
+  };
 
   setLanguage = async (lang: string) => {
     this.language = lang;
-  }
+  };
 
   setServerError(error: ZodIssue[] | string) {
     this.error = error;
   }
 
   setToken = async (token: string | null | undefined) => {
-    await saveToken(token)
-    runInAction(() => this.token = token)
+    await saveToken(token);
+    runInAction(() => (this.token = token));
+  };
+
+  get axiosParams() {
+    const params = new URLSearchParams();
+    params.append("pageNumber", this.pagingParams.pageNumber.toString());
+    params.append("pageSize", this.pagingParams.pageSize.toString());
+    if (this.searchTerm) params.append("searchTerm", this.searchTerm);
+    return params;
   }
 
   loadUsers = async () => {
-    const users = await agent.Account.getUsersIdAndName();
-    runInAction(() => {
-      this.usersIdName = users;
-    });
-  }
+    try{
+      const result = await agent.Account.getUsersIdAndName(this.axiosParams);
+      runInAction(() => {
+        this.usersIdName = result.data;
+      });
+    }
+    catch(error)
+    {
+      console.error("error loading users ",error                     );
+    }
+    
+  };
 
   hasRole = (role: string): boolean => {
-    return this.user?.roles && Array.isArray(this.user.roles) ? this.user.roles.includes(role) : false;
-  };  
-
+    return this.user?.roles && Array.isArray(this.user.roles)
+      ? this.user.roles.includes(role)
+      : false;
+  };
 
   isAdmin = () => {
-    return this.hasRole('ADMIN')
-  }
+    return this.hasRole("ADMIN");
+  };
 
   isUser = (): boolean => {
-    return this.hasRole('USER');
-  }
+    return this.hasRole("USER");
+  };
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  setPagination = (pagination: PaginationData) => {
+    this.pagination = pagination;
+  };
+
+  setSearchTerm = (term: string) => {
+    this.searchTerm = term;
+  };
 }

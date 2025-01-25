@@ -26,13 +26,14 @@ public class PaymentService : IPaymentService
 
     private readonly IEmailService _email;
 
+    private readonly IBookingService _booking;
 
-
-    public PaymentService(DataContext context, IMapper mapper, IEmailService email)
+    public PaymentService(DataContext context, IMapper mapper, IEmailService email, IBookingService bookingService)
     {
         _context = context;
         _mapper = mapper;
         _email = email;
+        _booking = bookingService;
     }
 
     public async Task<string> InitiatePayment(PaymentSaveDto paymentDto, string IDS)
@@ -104,17 +105,9 @@ public class PaymentService : IPaymentService
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
 
-            var bookingIds = IDS.Split(',').Select(Guid.Parse).ToList(); // Assuming IDS is a comma-separated string of GUIDs
-            var bookingsToUpdate = await _context.Bookings
-                .Where(b => bookingIds.Contains(b.Id))
-                .ToListAsync();
 
-            foreach (var booking in bookingsToUpdate)
-            {
-                booking.PaymentId = payment.Id;
-            }
-
-            await _context.SaveChangesAsync();
+            // this it should be in the booking servicedepend on single Responsible principle     
+            await _booking.SetThePaymentIdForBooking(payment.Id, IDS);
         }
         else
         {
@@ -134,7 +127,7 @@ public class PaymentService : IPaymentService
                 Finalization = new Finalization
                 {
                     Customer = "Demo Merchant",
-                    TransactionID = callback.Transaction.TransactionID,
+                    TransactionID = callback?.Transaction?.TransactionID ?? "",
                     UserName = "Demo_fY9c",
                     Password = "Comtrust@20182018"
                 }
@@ -165,7 +158,7 @@ public class PaymentService : IPaymentService
             var paymentCallbackResponse = JsonConvert.DeserializeObject<PaymentCallbackDto>(responseContent);
 
             // Retrieve the payment record based on the TransactionID
-            var payment = await _context.Payments.Include(x => x.Bookings).FirstOrDefaultAsync(p => p.TransactionID == callback.Transaction.TransactionID);
+            var payment = await _context.Payments.Include(x => x.Bookings).FirstOrDefaultAsync(p => p.TransactionID == callback!.Transaction!.TransactionID);
             if (payment == null)
             {
                 throw new Exception("Invalid Transaction ID");

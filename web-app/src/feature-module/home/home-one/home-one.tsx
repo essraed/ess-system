@@ -76,14 +76,17 @@ const HomeOne = () => {
               <div className="col-md-5 offset-md-7">
                 <div className="video-wrapper">
                   <video
-                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0" 
+                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
                     style={{ opacity: 0.8 }}
                     controls
                     muted
-                    loop 
+                    loop
                     autoPlay
                   >
-                    <source src="/assets/videos/ALL SERVICE VIDEO.mp4" type="video/mp4" />
+                    <source
+                      src="/assets/videos/ALL SERVICE VIDEO.mp4"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -347,7 +350,8 @@ const HomeOne = () => {
                 </div>
                 <div
                   className="col-lg-3 col-md-6 col-12 d-flex"
-                  data-aos="fade-down">
+                  data-aos="fade-down"
+                >
                   <div className="count-group flex-fill">
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
@@ -363,7 +367,8 @@ const HomeOne = () => {
                             className="counterUp"
                             end={625000}
                             duration={3}
-                            separator=","/>
+                            separator=","
+                          />
                           K+
                           <br />
                         </h4>
@@ -374,7 +379,8 @@ const HomeOne = () => {
                 </div>
                 <div
                   className="col-lg-3 col-md-6 col-12 d-flex"
-                  data-aos="fade-down">
+                  data-aos="fade-down"
+                >
                   <div className="count-group flex-fill">
                     <div className="customer-count d-flex align-items-center">
                       <div className="count-img">
@@ -390,7 +396,8 @@ const HomeOne = () => {
                             className="counterUp"
                             end={200000}
                             duration={3}
-                            separator=","/>
+                            separator=","
+                          />
                           K+
                           <br />
                         </h4>
@@ -432,26 +439,31 @@ const HomeOne = () => {
               </h2>
             </div>{" "}
             {/* Heading title*/}
-            <Accordion>
+            <Accordion
+              style={{ backgroundColor: "transparent", border: "none" }}
+            >
               <AccordionItem>
                 <AccordionItemHeading>
-                  <AccordionItemButton>
+                  <AccordionItemButton
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                  >
                     {t("Karama Medical Fitness Center Medical Timing")}
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    {t("Monday - Thursday 7:00 AM -10:00 PM")}
+                    {t("Monday - Friday 7:00 AM -10:00 PM")}
                     <br></br>
-                    {t("Friday 7:00 AM - 08:00 PM")}
                     <br></br>
-                    {t("Saturday - Sunday 8:00 AM - 08:00 PM")}
+                    {t("Sunday 8:00 AM - 08:00 PM")}
                   </p>
                 </AccordionItemPanel>
               </AccordionItem>
               <AccordionItem>
                 <AccordionItemHeading>
-                  <AccordionItemButton>
+                  <AccordionItemButton
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                  >
                     {t("How to check visa medical report online?")}
                   </AccordionItemButton>
                 </AccordionItemHeading>
@@ -459,6 +471,43 @@ const HomeOne = () => {
                   <p>
                     {t(
                       "Dubai visa medical report can be tracked and downloaded from DHA mobile application."
+                    )}
+                  </p>
+                </AccordionItemPanel>
+              </AccordionItem>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                  >
+                    {t(
+                      "What are the different types of Tourist or visit visas available?"
+                    )}
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>
+                    {t(
+                      "A tourist visa is available for 30 and 60 days and a sponsored family visit visa for 30 and 90 days."
+                    )}
+                  </p>
+                </AccordionItemPanel>
+              </AccordionItem>
+
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton
+                    style={{ backgroundColor: "transparent", border: "none" }}
+                  >
+                    {t(
+                      "Can I travel without applying for the visa stamping application?"
+                    )}
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>
+                    {t(
+                      "No, the applicant must complete the visa stamping application for he/she to travel."
                     )}
                   </p>
                 </AccordionItemPanel>

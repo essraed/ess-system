@@ -37,7 +37,7 @@ const SignUp = () => {
       toast.success(result.data);
       navigate("/");
     } else {
-      setSummaryErrors(handleErrors(result.error));
+      toast.error("Error: " + result.error);
     }
   };
 

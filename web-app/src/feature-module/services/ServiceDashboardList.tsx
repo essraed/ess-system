@@ -106,15 +106,17 @@ const ServiceDashboardList = () => {
               handleReset={handleReset}
             >
               {/* Add Category Form as a child */}
-              <Link
-                to={all_routes.serviceCreate}
-                className="flex items-center gap-2 btn btn-primary w-full sm:w-auto text-center"
-              >
-                Add Service
-                <span className="ml-2">
-                  <i className="fe feather icon-add" aria-hidden="true" />
-                </span>
-              </Link>
+              {userStore.isAdmin() && (
+                <Link
+                  to={all_routes.serviceCreate}
+                  className="flex items-center gap-2 btn btn-primary w-full sm:w-auto text-center"
+                >
+                  Add Service
+                  <span className="ml-2">
+                    <i className="fe feather icon-add" aria-hidden="true" />
+                  </span>
+                </Link>
+              )}
             </TableFilterBar>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">

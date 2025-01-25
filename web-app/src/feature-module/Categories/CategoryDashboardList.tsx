@@ -100,14 +100,13 @@ const CategoryDashboardList = () => {
               pagination={pagination}
               pageSize={pageSize}
               handlePageSizeChange={handlePageSizeChange}
-
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               handleSearch={handleSearch}
               handleReset={handleReset}
             >
               {/* Add Category Form as a child */}
-              <CategoryForm />
+              {userStore.isAdmin() && <CategoryForm />}
             </TableFilterBar>
 
             {/* Table */}
@@ -117,7 +116,12 @@ const CategoryDashboardList = () => {
                   getViewId={getViewId}
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "pictureUrl", "description", "fileEntities"]}
+                  exceptColumns={[
+                    "id",
+                    "pictureUrl",
+                    "description",
+                    "fileEntities",
+                  ]}
                   data={categories}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

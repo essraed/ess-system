@@ -9,6 +9,9 @@ using API.Helpers;
 using API.DTOs;
 using API.Entities;
 using AutoMapper;
+using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
+using API.RequestParams;
+using AutoMapper.QueryableExtensions;
 
 namespace API.Controllers
 {
@@ -58,7 +61,7 @@ namespace API.Controllers
                 return BadRequest("Email Taken");
             }
 
-            var user = new AppUser  
+            var user = new AppUser
             {
                 DisplayName = model.DisplayName,
                 Email = model.Email,
@@ -70,10 +73,12 @@ namespace API.Controllers
             if (result.Succeeded)
             {
                 // add user to 'User' role by default.
-                if (!string.IsNullOrEmpty(model.Role)) {
+                if (!string.IsNullOrEmpty(model.Role))
+                {
                     await _userManager.AddToRoleAsync(user, model.Role);
                 }
-                else {
+                else
+                {
                     await _userManager.AddToRoleAsync(user, RolesNames.USER);
                 }
                 var roles = await _userManager.GetRolesAsync(user!);
@@ -108,19 +113,25 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("getUsersIdAndName")]
-        public async Task<ActionResult<List<UserIdAndNameDto>>> GetUsersIdAndName()
+        public async Task<ActionResult<PagedList<UserIdAndNameDto>>> GetUsersIdAndName([FromQuery] UserParams userParams)
         {
-            var users = await _userManager.Users.ToListAsync();
+            var query = _userManager.Users.AsNoTracking().AsQueryable();
 
-            if (users is null || !users.Any())
+            if (!string.IsNullOrWhiteSpace(userParams.SearchTerm))
             {
-                return BadRequest("No users found.");
+                var searchTerm = userParams.SearchTerm.Trim().ToLower();
+                query = query.Where(x =>
+                    x.UserName!.ToLower().Contains(searchTerm) ||
+                    (!string.IsNullOrEmpty(x.Email) && x.Email.ToLower().Contains(searchTerm)) ||
+                    (!string.IsNullOrEmpty(x.DisplayName) && x.DisplayName.ToLower().Contains(searchTerm)));
             }
 
-            var userIdAndNameList = _mapper.Map<List<UserIdAndNameDto>>(users);
-
-            return Ok(userIdAndNameList);
+            return await PagedList<UserIdAndNameDto>.CreateAsync(
+                query.ProjectTo<UserIdAndNameDto>(_mapper.ConfigurationProvider),
+                userParams.PageNumber,
+                userParams.PageSize);
         }
+
 
         private async Task<ActionResult<UserDto>> CreateUserObject(AppUser user, IList<string>? roles)
         {

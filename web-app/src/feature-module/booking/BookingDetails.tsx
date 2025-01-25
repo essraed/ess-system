@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { Card, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BookingStatus } from "../../types/booking";
 import BackToButton from "../common/BackToButton";
 import { all_routes } from "../router/all_routes";
-import Breadcrumbs from "../common/breadcrumbs";
 import StatusBadge from "../common/StatusBadge";
 import Header from "../common/header";
 import Footer from "../common/footer";
@@ -72,7 +71,7 @@ const BookingDetails = () => {
     <>
       <Header />
 
-      {userStore.isAdmin() ? (
+      {userStore.isLoggedIn ? (
         <div className="booking-details-page">
           <div className="custom-container mx-auto py-6 px-4">
             <div className="border bg-custom-light-blue p-6">
@@ -265,13 +264,13 @@ const BookingDetails = () => {
                         <p>{formatDateTime(createDate?.toString())}</p>
                       </div>
                     )}
-                    {updateDate && (
+                    {updateDate && userStore.isAdmin() && (
                       <div>
                         <p className="font-medium">Last Updated:</p>
                         <p>{formatDateTime(updateDate)}</p>
                       </div>
                     )}
-                    {updatedBy && (
+                    {updatedBy && userStore.isAdmin() && (
                       <div>
                         <p className="font-medium">Updated By:</p>
                         <p>{updatedBy}</p>
