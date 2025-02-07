@@ -43,7 +43,7 @@ const BookingForm = ({
       addBooking,
       getCurrentSessionBookings,
     },
-    serviceStore: { getService, currentService },
+    serviceStore: { getService },
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();

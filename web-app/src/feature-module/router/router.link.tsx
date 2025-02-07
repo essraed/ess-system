@@ -14,7 +14,6 @@ import LetterFormIndex from "../letters/create/LetterFormIndex";
 import AuthorityDashboard from "../authorities/AuthorityDashboard";
 import BookingDetails from "../booking/BookingDetails";
 import CategoryDashboard from "../Categories/CategoryDashboard";
-import CategoryForm from "../Categories/CategoryForm";
 import BookingDashboard from "../booking/BookingDashboard";
 import CarDashboard from "../cars/CarDashboard";
 import NotificationDashboard from "../notifications/NotificationDashboard";
@@ -36,6 +35,7 @@ import ComplaintForm from "../complaints/ComplaintForm";
 import ComplaintDashboard from "../complaints/ComplaintDashboard";
 import NotificationsDropdown from "../common/NotificationsDropdown";
 import UserDashboard from "../users/UserDashboard";
+import UserUpdate from "../users/UserUpdate";
 
 
 const routes = all_routes;
@@ -193,6 +193,10 @@ export const listingroutes = [
   {
     path: routes.UserDashboard,
     element: <UserDashboard />,
+  },
+  {
+    path: routes.UserEdit,
+    element: <UserUpdate />,
   },
   
 ];

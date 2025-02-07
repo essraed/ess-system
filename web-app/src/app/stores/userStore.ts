@@ -5,7 +5,10 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { ActionResult } from "../../types";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import agent from "../api/agent";
-import { RegisterSchema } from "../../lib/schemas/registerSchema";
+import {
+  RegisterForUpdateSchema,
+  RegisterSchema,
+} from "../../lib/schemas/registerSchema";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 export default class UserStore {
@@ -20,6 +23,7 @@ export default class UserStore {
   searchTerm: string = "";
 
   usersIdName: UserIdAndName[] | undefined = [];
+  editUser: UserIdAndName | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -67,17 +71,56 @@ export default class UserStore {
 
   register = async (creds: RegisterSchema): Promise<ActionResult<string>> => {
     try {
-      const user = await agent.Account.register(creds);
+      await agent.Account.register(creds);
 
       // reslove Mobx strict mode
-      runInAction(() => {
-        this.setToken(user.token);
-        this.user = user;
-      });
+      // runInAction(() => {
+      //   this.setToken(user.token);
+      //   this.user = user;
+      // });
 
       return { status: "success", data: "User Created Succesfully " };
     } catch (error) {
       return { status: "error", error: error as string };
+    }
+  };
+
+  deleteUser = async (id: string): Promise<ActionResult<string>> => {
+    try {
+      await agent.Account.delete(id);
+      runInAction(() => {
+        this.usersIdName =
+          this.usersIdName?.filter((s) => s.id !== id) || undefined;
+      });
+      return { status: "success", data: "User deleted successfully" };
+    } catch (error) {
+      console.error("Error deleting User:", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
+  updateUser = async (
+    id: string,
+    data: RegisterForUpdateSchema
+  ): Promise<ActionResult<string>> => {
+    try {
+      await agent.Account.update(id, data);
+      await this.loadUsers();
+      return { status: "success", data: "User updated successfully" };
+    } catch (error) {
+      console.error("Error updating user: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
+  getUSer = async (id: string) => {
+    try {
+      const result = await agent.Account.getById(id);
+      runInAction(() => {
+        this.editUser = result;
+      });
+    } catch (error) {
+      console.error("Error loading service:", error);
     }
   };
 
@@ -114,17 +157,14 @@ export default class UserStore {
   }
 
   loadUsers = async () => {
-    try{
+    try {
       const result = await agent.Account.getUsersIdAndName(this.axiosParams);
       runInAction(() => {
         this.usersIdName = result.data;
       });
+    } catch (error) {
+      console.error("error loading users ", error);
     }
-    catch(error)
-    {
-      console.error("error loading users ",error                     );
-    }
-    
   };
 
   hasRole = (role: string): boolean => {

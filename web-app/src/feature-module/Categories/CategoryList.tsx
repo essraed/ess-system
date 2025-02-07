@@ -31,7 +31,6 @@ const CategoryList = () => {
                         category={category}
                       />
                     ))}
-               
               </div>
             </div>
           </div>

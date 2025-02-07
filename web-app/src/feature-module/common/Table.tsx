@@ -29,12 +29,14 @@ const Table = ({
   setSelectedId,
   routeUrl,
   dialogFlags,
-  getViewId
+  getViewId,
 }: Props) => {
   const action = (rowData: any) => {
     const { id } = rowData;
-    const {moreDetailsUrl}=rowData;
-    const{userStore:{isAdmin}}=useStore()
+    const { moreDetailsUrl } = rowData;
+    const {
+      userStore: { isAdmin },
+    } = useStore();
 
     return (
       <div className="dropdown dropdown-action">
@@ -61,40 +63,47 @@ const Table = ({
               data-bs-toggle="modal"
               data-bs-target={`#${routeUrl}`}
             >
-              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i> View
+              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
+              View
             </Link>
           )}
 
           {(routeUrl === all_routes.letterDashboard ||
             routeUrl === all_routes.bookingDashboard) && (
             <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
-              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i> View
+              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
+              View
             </Link>
           )}
 
-          {isAdmin()&&(<Link
-            className="dropdown-item"
-            to="#"
-            onClick={() => confirmDialog(id)}
-            data-bs-toggle="modal"
-            data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
-          >
-            <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer me-1"></i> Delete
-          </Link>)}
+          {isAdmin() && (
+            <Link
+              className="dropdown-item"
+              to="#"
+              onClick={() => confirmDialog(id)}
+              data-bs-toggle="modal"
+              data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
+            >
+              <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer me-1"></i>{" "}
+              Delete
+            </Link>
+          )}
           {routeUrl !== all_routes.authorityDashboard &&
             routeUrl !== all_routes.categoryDashboard &&
             routeUrl !== all_routes.carDashboard &&
             routeUrl !== all_routes.notificationDashboard &&
             routeUrl !== all_routes.contactDashboard &&
-            routeUrl !== all_routes.lostDashboard &&                           
-            routeUrl !== all_routes.ComplaintDashboard &&                           
+            routeUrl !== all_routes.lostDashboard &&
+            routeUrl !== all_routes.ComplaintDashboard &&
             routeUrl !== all_routes.bookingDashboard &&
-            isAdmin()&& (
+            isAdmin() && (
               <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
-                <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer me-1"></i> Edit
+                <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer me-1"></i>{" "}
+                Edit
               </Link>
             )}
-          {( routeUrl === all_routes.lostDashboard || routeUrl === all_routes.ComplaintDashboard) && (
+          {(routeUrl === all_routes.lostDashboard ||
+            routeUrl === all_routes.ComplaintDashboard) && (
             <Link
               className="dropdown-item"
               to="#"
@@ -102,7 +111,8 @@ const Table = ({
               data-bs-toggle="modal"
               data-bs-target={`#${dialogFlags.completeDialog}`}
             >
-              <i className="feather icon-check-circle text-green-500 font-bold me-1"></i> Set as Cmoplete
+              <i className="feather icon-check-circle text-green-500 font-bold me-1"></i>{" "}
+              Set as Cmoplete
             </Link>
           )}
           {/* {routeUrl === all_routes.bookingDashboard && (
@@ -116,7 +126,8 @@ const Table = ({
               <i className="feather icon-trash-2 me-1"></i> Cancel booking
             </Link>
           )} */}
-          {(routeUrl === all_routes.lostDashboard || routeUrl === all_routes.ComplaintDashboard) && (
+          {(routeUrl === all_routes.lostDashboard ||
+            routeUrl === all_routes.ComplaintDashboard) && (
             <Link
               className="dropdown-item"
               to="#"
@@ -124,15 +135,14 @@ const Table = ({
               data-bs-target={`#${dialogFlags.inProocess}`}
               onClick={() => confirmDialog(id)}
             >
-              <i className="feather icon-loader text-orange-500 font-bold me-1"></i> Set as InProcess
+              <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
+              Set as InProcess
             </Link>
           )}
           {routeUrl === all_routes.notificationDashboard && (
-            <Link
-              className="dropdown-item"
-              to={`/listings/${moreDetailsUrl}`}
-            >
-              <i className="feather icon-loader text-orange-500 font-bold me-1"></i> Booking Details
+            <Link className="dropdown-item" to={`/listings/${moreDetailsUrl}`}>
+              <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
+              Booking Details
             </Link>
           )}
         </div>
@@ -181,8 +191,8 @@ const Table = ({
       {status && <Column field="status" header="Status" body={status} />}
 
       {routeUrl !== all_routes.WorkingTimeDashboard && (
-        <Column field="action" header="Action" body={action} />
-      )}
+          <Column field="action" header="Action" body={action} />
+        )}
     </DataTable>
   );
 };

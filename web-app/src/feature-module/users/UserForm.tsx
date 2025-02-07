@@ -2,7 +2,7 @@ import React from "react";
 import { useStore } from "../../app/stores/store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Select } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import toast from "react-hot-toast";
 import { observer } from "mobx-react-lite";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -17,7 +17,7 @@ const UserForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onTouched",
@@ -28,6 +28,7 @@ const UserForm = () => {
 
     if (result.status === "success") {
       toast.success(result.data);
+      userStore.loadUsers();
     } else {
       toast.error("Error: " + result.error);
     }

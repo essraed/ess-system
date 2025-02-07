@@ -1,11 +1,8 @@
-import LostDashboard from "../losts/LostDashboard";
-import LostDetails from "../losts/LostDetails";
-import UserDashboard from "../users/UserDashboard";
+
 
 export const all_routes = {
   // home routes
   homeOne: "/",
-
 
   // auth routes
   register: "/authentication/register",
@@ -46,12 +43,10 @@ export const all_routes = {
   // BookingUpcomingCalendar: "/user/booking-upcoming-calendar",
   // BookingCalendar: "/user/bookings-calendar",
 
-
   // // blog routes
   // blogList: "/blog/blog-list",
   // blogGrid: "/blog/blog-grid",
   // blogDetails: "/blog/blog-details",
-
 
   // letters
   letterDashboard: "/listings/letters",
@@ -69,64 +64,61 @@ export const all_routes = {
   bookingDashboard: "/listings/booking",
   bookingEdit: "/listings/booking/edit/:id",
   bookingCreate: "/listings/booking/add",
-  
+
   //Categoriea
-  categoryDashboard:"/listings/categories",
+  categoryDashboard: "/listings/categories",
   categoryDetails: "/listings/categories/view/:id",
   categoryEdit: "/listings/categories/edit/:id",
   //Services
-  serviceDashboard:"/listings/services",
-  serviceList:"/services/:id",
-  allServices:"/services",
+  serviceDashboard: "/listings/services",
+  serviceList: "/services/:name/:id",
+  allServices: "/services",
   ServiceDetails: "/listings/services/view/:id",
   serviceEdit: "/listings/services/edit/:id",
   serviceCreate: "/listings/services/add",
   //Cars
 
-  carDashboard:"/listings/cars",
+  carDashboard: "/listings/cars",
   carDetails: "/listings/cars/view/:id",
   carEdit: "/listings/cars/edit/:id",
   carCreate: "/listings/cars/add",
 
   //Notifications
 
-  notificationDashboard:"/listings/notifications",
-  notificationDropdown:"/notification",
+  notificationDashboard: "/listings/notifications",
+  notificationDropdown: "/notification",
   //WorkingTimes
 
-  WorkingTimeDashboard:"/listings/WorkingTimeDashboard",
+  WorkingTimeDashboard: "/listings/WorkingTimeDashboard",
 
   //Contacts
-  contactDashboard:"/listings/contacts",
+  contactDashboard: "/listings/contacts",
   contactDetails: "/listings/contacts/view/:id",
 
   //Losts
-  lostDashboard:"/listings/Losts",
+  lostDashboard: "/listings/Losts",
   lostDetails: "/listings/losts/view/:id",
 
   //Losts
-  ComplaintDashboard:"/listings/Complaints",
+  ComplaintDashboard: "/listings/Complaints",
   ComplaintsDetails: "/listings/Complaints/view/:id",
 
   //Payments
-  paymentSuccess:"/payment/status",
+  paymentSuccess: "/payment/status",
   // paymentFailed:"/payment/fal",
 
-  
   //Losts
-  UserDashboard:"/listings/Users",
+  UserDashboard: "/listings/users",
+  UserEdit: "/listings/users/edit/:id",
 
-
-
-// shini
-
+  // shini
 
   // pages routes
   aboutUs: "/aboutus/aboutus",
   contactUs: "/contact",
-  businessSetup:"/businessSetup",
-  Losts:"/Losts",
-  Complaints:"/Complaints",
+  businessSetup: "/businessSetup",
+  Losts: "/Losts",
+  Complaints: "/Complaints",
 
-  admin:"/admin"
+  admin: "/admin",
 };

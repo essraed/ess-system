@@ -12,6 +12,7 @@ import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
 import UserForm from "./UserForm";
+import ConfirmDialog from "../common/ConfirmDialog";
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const UserList = () => {
       setPagingParams,
       pagination,
       setSearchTerm,
+      deleteUser
     },
     userStore,
   } = useStore();
@@ -49,29 +51,28 @@ const UserList = () => {
     loadUsers(); // Reload documents after resetting filters
   };
 
-  // const handleDelete = async () => {
-  //   if (deleteId) {
-  //     const result = await deleteCar(deleteId);
-  //     if (result.status === "success") {
-  //       toast.success(result.data);
-  //       navigate(all_routes.letterDashboard);
-  //     } else {
-  //       handleErrors(result.error);
-  //     }
-  //     loadCars(); // Reload documents after deletion
-  //     navigate(location.pathname, { replace: true });
-  //   }
-  // };
+  const handleDelete = async () => {
+    if (deleteId) {
+      const result = await deleteUser(deleteId);
+      if (result.status === "success") {
+        toast.success(result.data);
+        navigate(all_routes.UserDashboard);
+      } else {
+        toast.error(result.error.toString());
+      }
+      loadUsers();
+      navigate(location.pathname, { replace: true });
+    }
+  };
 
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
-    loadUsers(); // Reload documents with new page size
+    loadUsers(); 
   };
 
   useEffect(() => {
     if (!userStore.isAdmin()) {
-      // clearCars();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
@@ -103,7 +104,7 @@ const UserList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id"]}
+                  exceptColumns={["id","password"]}
                   data={usersIdName ?? []}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
@@ -120,13 +121,11 @@ const UserList = () => {
           </div>
         </div>
       </div>
-      {/* <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
-        title={t("Confirm Delete")}
-        description={`${t("Are you sure you want to delete this")} ${t(
-          "car"
-        )}${t("?")}`}
-      /> */}
+        title="Confirm Delete"
+        description="Are you sure you want to delete this user?"
+      />
     </div>
   );
 };

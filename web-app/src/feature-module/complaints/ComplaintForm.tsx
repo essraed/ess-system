@@ -24,7 +24,6 @@ const ComplaintForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    control,
     setValue,
   } = useForm<ComplaintSchema>({
     resolver: zodResolver(complaintSchema),

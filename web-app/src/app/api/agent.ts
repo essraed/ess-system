@@ -7,7 +7,7 @@ import { CategorySchema } from "../../lib/schemas/categorySchema";
 import { BusinessSchema } from "../../lib/schemas/businessSchema";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import { NotificationSchema } from "../../lib/schemas/notificationSchema";
-import { RegisterSchema } from "../../lib/schemas/registerSchema";
+import { RegisterForUpdateSchema, RegisterSchema } from "../../lib/schemas/registerSchema";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { UserPromptSchema } from "../../lib/schemas/UserPromptSchema";
 import { WorkingTimeSchema } from "../../lib/schemas/workingTimeSchema ";
@@ -92,7 +92,8 @@ const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: object) =>
     axios.post<T>(url, body).then(responseBody),
-  put: <T>(url: string, body: object) => axios.put<T>(url, body).then(responseBody),
+  put: <T>(url: string, body: object) =>
+    axios.put<T>(url, body).then(responseBody),
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
@@ -105,9 +106,12 @@ const Cars = {
 };
 const Contacts = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<ContactData[]>>("contacts", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<ContactData[]>>("contacts", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<ContactData>(`contacts/${id}`),
-  create: (contact: ContactSchema|BusinessSchema) => requests.post<ContactData>("contacts", contact),
+  create: (contact: ContactSchema | BusinessSchema) =>
+    requests.post<ContactData>("contacts", contact),
   delete: (id: string) => requests.del<string>(`contacts/${id}`),
 };
 const Losts = {
@@ -123,9 +127,12 @@ const Losts = {
 };
 const Complaints = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<ComplaintData[]>>("complaint", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<ComplaintData[]>>("complaint", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<ComplaintData>(`complaint/${id}`),
-  create: (complaint: ComplaintSchema) => requests.post<ComplaintData>("complaint", complaint),
+  create: (complaint: ComplaintSchema) =>
+    requests.post<ComplaintData>("complaint", complaint),
   delete: (id: string) => requests.del<string>(`complaint/${id}`),
   setStatusInProcess: (id: string) =>
     requests.put<string>(`complaint/${id}/status/in-process`, {}),
@@ -145,9 +152,7 @@ const Categories = {
     requests.post<CategoryData>("categories", formData),
   delete: (id: string) => requests.del<string>(`categories/${id}`),
   uploadImage: (formData: FormData) =>
-    axios
-      .post<string>("categories/upload-image", formData)
-      .then(responseBody),
+    axios.post<string>("categories/upload-image", formData).then(responseBody),
 };
 
 const Services = {
@@ -161,9 +166,7 @@ const Services = {
     requests.post<ServiceData>("services/create-service", formData),
 
   uploadImage: (formData: FormData) =>
-    axios
-      .post<string>("services/upload-image", formData)
-      .then(responseBody),
+    axios.post<string>("services/upload-image", formData).then(responseBody),
   update: (id: string, service: ServiceSchema) =>
     requests.put<string>(`services/${id}`, service),
   delete: (id: string) => requests.del<string>(`services/${id}`),
@@ -180,11 +183,10 @@ const WorkingTime = {
   },
 };
 
-
-const Payment= {
-  initiate: (data:FormData) => requests.post("payment/initiate-payment", data),
-  callback: (data:FormData) => requests.post("payment/payment-callback", data),
-  getById: (id:string) => requests.get(`payment/${id}`),
+const Payment = {
+  initiate: (data: FormData) => requests.post("payment/initiate-payment", data),
+  callback: (data: FormData) => requests.post("payment/payment-callback", data),
+  getById: (id: string) => requests.get(`payment/${id}`),
 };
 // Helper function to ensure the time is in the correct format (HH:mm)
 
@@ -203,11 +205,10 @@ const Bookings = {
   // Dropdown
   dropdownList: () => requests.get<DropdownType[]>("booking/get-all-dropdown"),
 
-  
-  setPaymentTypeOfBooking: (id: string,type:paymentType) =>
+  setPaymentTypeOfBooking: (id: string, type: paymentType) =>
     requests.put<string>(`booking/${id}/setPaymentType`, type),
 
-// Updated status methods
+  // Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
   setStatusCanceled: (id: string) =>
@@ -220,13 +221,20 @@ const Bookings = {
 
 const Account = {
   current: () => requests.get<User>("account"),
-  getUsersIdAndName: (params:URLSearchParams) =>
+  getUsersIdAndName: (params: URLSearchParams) =>
     axios
-  .get<PagedResponse<UserIdAndName[]>>("account/getUsersIdAndName", { params })
-  .then(responseBody),
+      .get<
+        PagedResponse<UserIdAndName[]>
+      >("account/getUsersIdAndName", { params })
+      .then(responseBody),
   login: (user: LoginSchema) => requests.post<User>("account/login", user),
   register: (user: RegisterSchema) =>
     requests.post<User>("account/register", user),
+  delete: (id: string) => requests.del(`account/${id}`),
+  update: (id: string, userDto: RegisterForUpdateSchema) =>
+    requests.put<string>(`account/${id}`, userDto),
+  getById:(id:string)=>requests.get<UserIdAndName>(`account/GetUserById/${id}`),
+
 };
 
 const AiHelper = {
@@ -278,8 +286,6 @@ const Notifications = {
 //     axios
 //       .post<FileResponseData>("files/uploadFile", formData, {})
 //       .then(responseBody),
-
-
 
 //   updateFile: (id: string, formData: FormData) =>
 //     axios
