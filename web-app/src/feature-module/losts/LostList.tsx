@@ -13,7 +13,6 @@ import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
 import LostDetails from "./LostDetails";
-import { Console } from "console";
 
 const LostList = () => {
   const { t } = useTranslation();

@@ -23,7 +23,6 @@ const LostForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    control,
     setValue, // Destructure setValue from useForm
   } = useForm<LostSchema>({
     resolver: zodResolver(lostSchema),

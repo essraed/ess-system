@@ -53,7 +53,6 @@ const BookingDetails = () => {
     serviceOptionFee,
     bookingStatus,
     bookingDate,
-    endBookingDate,
     paymentStatus,
     createDate,
     paymentType,

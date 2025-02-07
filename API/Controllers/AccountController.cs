@@ -12,6 +12,7 @@ using AutoMapper;
 using AspNetCore.ReportingServices.ReportProcessing.ReportObjectModel;
 using API.RequestParams;
 using AutoMapper.QueryableExtensions;
+using Org.BouncyCastle.Asn1.UA;
 
 namespace API.Controllers
 {
@@ -38,7 +39,7 @@ namespace API.Controllers
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
 
-            if (user is null) return BadRequest("Invalid Email or password");
+            if (user is null || !user.Active) return BadRequest("Invalid Email or password");
 
             var result = await _userManager.CheckPasswordAsync(user, model.Password);
 
@@ -51,7 +52,7 @@ namespace API.Controllers
             return BadRequest("Invalid Email or password");
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles ="ADMIN")]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> RegisterWithEmailAsync(RegisterDto model)
         {
@@ -89,6 +90,72 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+
+        [Authorize(Roles ="ADMIN")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UserIdAndNameDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString() ?? "");
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            // Update other user properties
+            user.Email = userDto.Email;
+            user.DisplayName = userDto.DisplayName!;
+
+            IdentityResult result;
+
+            // Handle password update if provided
+            if (!string.IsNullOrWhiteSpace(userDto.Password))
+            {
+                // Remove the old password and add the new one
+                await _userManager.RemovePasswordAsync(user);
+                result = await _userManager.AddPasswordAsync(user, userDto.Password);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+
+            // Save changes to other user properties
+            result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok("User updated successfully");
+            }
+
+            return BadRequest(result.Errors);
+        }
+
+
+        [Authorize(Roles ="ADMIN")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeactivateUser(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return NotFound("User Not Found");
+            }
+
+            user.Active = false;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok("User Deleted Successfully");
+            }
+
+            return BadRequest(result.Errors);
+        }
+
+
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
@@ -111,7 +178,7 @@ namespace API.Controllers
             };
         }
 
-        [Authorize]
+        [Authorize(Roles ="ADMIN")]
         [HttpGet("getUsersIdAndName")]
         public async Task<ActionResult<PagedList<UserIdAndNameDto>>> GetUsersIdAndName([FromQuery] UserParams userParams)
         {
@@ -126,12 +193,30 @@ namespace API.Controllers
                     (!string.IsNullOrEmpty(x.DisplayName) && x.DisplayName.ToLower().Contains(searchTerm)));
             }
 
+            query = query.Where(x => x.Active == true);
+
             return await PagedList<UserIdAndNameDto>.CreateAsync(
                 query.ProjectTo<UserIdAndNameDto>(_mapper.ConfigurationProvider),
                 userParams.PageNumber,
                 userParams.PageSize);
         }
 
+
+        [Authorize(Roles ="ADMIN")]
+        [HttpGet("GetUserById/{id}")]
+        public async Task<ActionResult<UserIdAndNameDto>> GetUSerById(Guid id)
+        {
+
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+            {
+                return NotFound("User Not Found");
+            }
+
+            return _mapper.Map<UserIdAndNameDto>(user);
+
+        }
 
         private async Task<ActionResult<UserDto>> CreateUserObject(AppUser user, IList<string>? roles)
         {

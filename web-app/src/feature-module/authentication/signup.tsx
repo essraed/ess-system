@@ -11,7 +11,6 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import handleErrors from "../../lib/utils";
 import { Button, Input } from "@nextui-org/react";
 import { observer } from "mobx-react-lite";
 

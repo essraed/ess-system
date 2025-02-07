@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";

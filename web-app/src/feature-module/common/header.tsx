@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
@@ -39,6 +39,7 @@ const Header = () => {
     setBookingServicesSubmenu(false);
   };
 
+  const navigate = useNavigate();
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
@@ -211,33 +212,34 @@ const Header = () => {
                         bookingServicesSubmenu ? "d-block" : "d-none"
                       }`}
                     >
-                      {categories?.map((item, index) => (
-                        <li
-                          key={index}
-                          className={
-                            locationPathname === `/services/${item.id}`
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={`/services/${item.id}`}
-                            onClick={() =>
-                              setLocationPathname(`/services/${item.id}`)
+                      {categories?.map((item, index) => {
+                        const servicePath = `/services/${item.name.replace(/\s+/g, "-")}/${item.id}`;
+
+                        return (
+                          <li
+                            key={index}
+                            className={
+                              locationPathname === servicePath ? "active" : ""
                             }
                           >
-                            {item.name}
-                          </Link>
-                        </li>
-                      ))}
+                            <Link
+                              to={servicePath}
+                              onClick={() => setLocationPathname(servicePath)}
+                            >
+                              {item.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+
                       <li
                         className={
                           locationPathname === `/services` ? "active" : ""
                         }
                       >
                         <Link
-                          to={`/services`}
-                          onClick={() => setLocationPathname(`/services`)}
+                          to="/services"
+                          onClick={() => setLocationPathname("/services")}
                         >
                           All Services
                         </Link>

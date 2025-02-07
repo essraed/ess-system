@@ -11,7 +11,6 @@ import { dialogFlags } from "../../constants/constants";
 import ConfirmDialog from "../common/ConfirmDialog";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
-import { nullable } from "zod";
 
 const NotificationList = () => {
   // const { t } = useTranslation();

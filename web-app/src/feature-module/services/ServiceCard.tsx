@@ -1,5 +1,4 @@
 
-import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";

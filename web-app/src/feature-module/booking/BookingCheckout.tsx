@@ -9,7 +9,7 @@ import { formatDateTime, paymentType } from "../../lib/utils";
 const BookingCheckout = () => {
   const navigate = useNavigate();
   const { bookingStore, paymentStore } = useStore();
-  const { getBooking, loadingInitial, isSession, setStatusInProcess } =
+  const { getBooking, loadingInitial, isSession } =
     bookingStore;
 
   const [paymentType, setPaymentType] = useState("");
@@ -69,8 +69,6 @@ const BookingCheckout = () => {
           ); // here should change the payment Status
           window.location.href = result.data as string;
         } else {
-          console.log("payment error", result.error);
-          console.log("payment Result", result);
           toast.error("Payment initiation failed!");
         }
       } catch (error) {
