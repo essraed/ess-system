@@ -63,6 +63,17 @@ export default class BookingStore {
       return { status: "error", error: error as string };
     }
   };
+
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+    try {
+      await agent.Bookings.uploadImage(formData);
+      return { status: "success", data: "Documents Uploaded Successfully" };
+    } catch (error) {
+      console.error("Error uploading Documents: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
   
   
   setSessionData = (sessionId: string, data: string[]) => {

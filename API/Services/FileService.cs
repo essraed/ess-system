@@ -28,7 +28,7 @@ namespace API.Services
 
         // Save files & images into server
         // Save files & images into server
-        public async Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false)
+        public async Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false, string? bookingCode = null)
         {
             string uploadPath = Path.Combine(_environment.WebRootPath, directory);
 
@@ -37,7 +37,18 @@ namespace API.Services
                 Directory.CreateDirectory(uploadPath);
             }
 
-            string uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            string uniqueFileName;
+
+            if (!string.IsNullOrEmpty(bookingCode))
+            {
+                uniqueFileName = $"{bookingCode}_{DateTime.UtcNow:yyyyMMddHHmmssfff}{Path.GetExtension(file.FileName)}";
+            }
+            else
+            {
+                uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            }
+
+
             string filePath = Path.Combine(uploadPath, uniqueFileName);
 
             if (isImage && !file.ContentType.StartsWith("image/"))
@@ -60,7 +71,7 @@ namespace API.Services
         }
 
         // Save files & Images into server & db.
-        public async Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false)
+        public async Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false, string? bookingCode = null)
         {
             const long maxFileSize = 10 * 1024 * 1024;
             string filePath;
@@ -70,7 +81,7 @@ namespace API.Services
                 if (isImage)
                 {
                     // Compress the image
-                    filePath = await CompressAndSaveImageAsync(file, directory);
+                    filePath = await CompressAndSaveImageAsync(file, directory, bookingCode);
                 }
                 else
                 {
@@ -79,7 +90,7 @@ namespace API.Services
             }
             else
             {
-                filePath = await SaveFileAsync(file, directory, isImage);
+                filePath = await SaveFileAsync(file, directory, isImage, bookingCode);
             }
             var fileEntity = new FileEntity
             {
@@ -136,20 +147,19 @@ namespace API.Services
             if (fileEntity == null) throw new Exception("File not found.");
 
             DeleteFileOrImage(fileEntity.FilePath);
-            
-            const long maxFileSize = 10 * 1024 * 1024;
+
+            const long maxFileSize = 20 * 1024 * 1024;
             string filePath;
 
             if (newFile.Length > maxFileSize)
             {
                 if (isImage)
                 {
-                    // Compress the image
                     filePath = await CompressAndSaveImageAsync(newFile, directory);
                 }
                 else
                 {
-                    throw new Exception("File size exceeds the allowed limit of 10MB for non-image files.");
+                    throw new Exception("File size exceeds the allowed limit of 20MB for non-image files.");
                 }
             }
             else
@@ -222,7 +232,7 @@ namespace API.Services
         }
 
 
-        private async Task<string> CompressAndSaveImageAsync(IFormFile file, string directory)
+        private async Task<string> CompressAndSaveImageAsync(IFormFile file, string directory, string? bookingCode = null)
         {
             string uploadPath = Path.Combine(_environment.WebRootPath, directory);
             if (!Directory.Exists(uploadPath))
@@ -230,7 +240,15 @@ namespace API.Services
                 Directory.CreateDirectory(uploadPath);
             }
 
-            string uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            string uniqueFileName;
+            if (!string.IsNullOrEmpty(bookingCode))
+            {
+                uniqueFileName = $"{bookingCode}_{DateTime.UtcNow:yyyyMMddHHmmssfff}{Path.GetExtension(file.FileName)}";
+            }
+            else
+            {
+                uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            }
             string filePath = Path.Combine(uploadPath, uniqueFileName);
 
             using (var stream = file.OpenReadStream())

@@ -1,3 +1,5 @@
+import { FileResponseData } from "./filesTypes";
+
 export enum BookingStatus {
   Pending = 0,
   InProcess = 1,
@@ -48,4 +50,6 @@ export interface BookingDetailsData {
   bookingCode: string;
   paymentStatus:string|null;
   paymentType:string|null;
+  fileEntities?:FileResponseData[];
+  serviceId:string;
 }

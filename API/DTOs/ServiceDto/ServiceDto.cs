@@ -19,7 +19,7 @@ namespace API.DTOs.ServiceDto
         public string? CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public bool isRequiredFiles { get; set; }
-
+        public List<string>? RequiredFiles { get; set; }
 
         // related tables
         public ICollection<ServiceOptionDto>? ServiceOptions { get; set; }

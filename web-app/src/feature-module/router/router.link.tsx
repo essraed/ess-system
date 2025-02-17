@@ -36,6 +36,7 @@ import ComplaintDashboard from "../complaints/ComplaintDashboard";
 import NotificationsDropdown from "../common/NotificationsDropdown";
 import UserDashboard from "../users/UserDashboard";
 import UserUpdate from "../users/UserUpdate";
+import BookingDocument from "../booking/BookingDocument";
 
 
 const routes = all_routes;
@@ -93,6 +94,10 @@ export const publicRoutes = [
   {
     path: routes.bookingDetails,
     element: <BookingDetails />,
+  },
+  {
+    path: routes.bookingDocument,
+    element: <BookingDocument />,
   },
   {
     path: routes.paymentSuccess,

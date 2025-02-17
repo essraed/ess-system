@@ -14,7 +14,7 @@ namespace API.Entities
 
         [Required]
         public string Description { get; set; } = default!;
-        
+
         public float? Rate { get; set; }
 
         [Required]
@@ -42,8 +42,7 @@ namespace API.Entities
 
         public bool IsDeleted { get; set; } = false;
         public bool isRequiredFiles { get; set; } = false;
-
-
+        public List<string>? RequiredFiles { get; set; }
         // related tables
 
         public Guid? CategoryId { get; set; }

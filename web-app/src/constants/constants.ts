@@ -34,6 +34,12 @@ export const pageSizeOptions = [
   { name: "30" },
 ];
 
+export const fileOptions = [
+  { label: "ID Proof", value: "idProof" },
+  { label: "Address Proof", value: "addressProof" },
+  { label: "Photo", value: "photo" },
+];
+
 export const lostDepartments = [
   { value: "Medical DHA - AREA 6", label: "Medical DHA - AREA 6" },
   { value: "Medical DHA - AREA 7", label: "Medical DHA - AREA 7" },

@@ -14,9 +14,8 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
   const { t } = useTranslation();
   const {
     serviceStore: { currentService },
-    userStore:{isAdmin},
+    userStore: { isAdmin },
   } = useStore();
-
 
   return (
     <div
@@ -77,7 +76,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                         <p className="font-medium text-gray-700">Price:</p>
                       </div>
                       <p className="text-gray-600">
-                        {currentService?.priceVIP} {t('AED')} 
+                        {currentService?.priceVIP} {t("AED")}
                       </p>
                     </div>
                   )}
@@ -86,7 +85,9 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       <p className="font-medium text-gray-700">
                         Service Price:
                       </p>
-                      <p className="text-gray-600">{currentService?.price} {t('AED')}</p>
+                      <p className="text-gray-600">
+                        {currentService?.price} {t("AED")}
+                      </p>
                     </div>
                   )}
                   {currentService?.createDate && isAdmin() && (
@@ -97,7 +98,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.updateDate &&  isAdmin() &&(
+                  {currentService?.updateDate && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Update Date:</p>
                       <p className="text-gray-600">
@@ -105,7 +106,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.createdBy &&  isAdmin() &&(
+                  {currentService?.createdBy && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Created By:</p>
                       <p className="text-gray-600">
@@ -113,7 +114,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.updatedBy &&  isAdmin() &&(
+                  {currentService?.updatedBy && isAdmin() && (
                     <div>
                       <p className="font-medium text-gray-700">Updated By:</p>
                       <p className="text-gray-600">
@@ -129,6 +130,19 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
+                  {currentService?.requiredFiles &&
+                    currentService.requiredFiles.length > 0 && (
+                      <div>
+                        <p className="font-medium text-gray-700">
+                          Required Files:
+                        </p>
+                        <ul className="text-gray-600">
+                          {currentService.requiredFiles.map((file, index) => (
+                            <li key={index}>{file}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                 </div>
 
                 {/* Divider between sections */}
@@ -167,7 +181,7 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                               {option.description || "N/A"}
                             </td>
                             <td className="py-2 px-4 text-gray-600">
-                              {option.additionalFee.toFixed(2)} {t('AED')}
+                              {option.additionalFee.toFixed(2)} {t("AED")}
                             </td>
                           </tr>
                         ))}

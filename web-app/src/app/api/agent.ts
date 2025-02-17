@@ -201,6 +201,8 @@ const Bookings = {
   create: (booking: BookingSchema) =>
     requests.post<BookingData>("booking", booking),
   delete: (id: string) => requests.del<string>(`booking/${id}`),
+  uploadImage: (formData: FormData) =>
+    axios.post<string>("booking/upload-image", formData).then(responseBody),
 
   // Dropdown
   dropdownList: () => requests.get<DropdownType[]>("booking/get-all-dropdown"),
