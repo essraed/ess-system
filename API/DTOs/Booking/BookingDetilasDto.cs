@@ -11,7 +11,7 @@ namespace API.DTOs
         public required string BookingCode { get; set; }
 
         public string? PaymentStatus { get; set; }
-        
+
         public string? PaymentType { get; set; }
 
         public string Phone { get; set; } = default!;
@@ -29,6 +29,8 @@ namespace API.DTOs
         public string? Note { get; set; }
 
         public string ServiceName { get; set; } = default!;
+
+        public Guid? ServiceId { get; set; }
 
         public string? CarName { get; set; }
 
@@ -49,5 +51,8 @@ namespace API.DTOs
         public DateTime? BookingDate { get; set; }
 
         public DateTime? EndBookingDate { get; set; }
+
+        public ICollection<FileResponseDto>? FileEntities { get; set; }
+
     }
 }

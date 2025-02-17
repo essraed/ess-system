@@ -61,6 +61,7 @@ export const all_routes = {
 
   // booging
   bookingDetails: "/listings/booking/view/:id",
+  bookingDocument: "/listings/booking/upload/:id",
   bookingDashboard: "/listings/booking",
   bookingEdit: "/listings/booking/edit/:id",
   bookingCreate: "/listings/booking/add",

@@ -7,9 +7,9 @@ namespace API.Interfaces
     public interface IFileService
     {
 
-        Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false);
+        Task<string> SaveFileAsync(IFormFile file, string directory, bool isImage = false ,string? bookingCode = null);
 
-        Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false);
+        Task<FileResponseDto> SaveFileEntityAsync(IFormFile file, string directory, bool isImage = false,  string? bookingCode = null);
 
         Task<List<FileResponseDto>> SaveFilesAsync(IList<IFormFile> files, string directory);
         Task<List<FileResponseDto>> SaveImagesAsync(IList<IFormFile> images, string directory);

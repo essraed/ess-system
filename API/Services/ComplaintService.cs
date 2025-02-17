@@ -170,8 +170,8 @@ public class ComplaintService : ICompalintService
                     </p>";
 
 
-                // string coordinatorEmail = "it@ess.ae";
-                // await _emailService.SendEmailAsync(coordinatorEmail, "New Complaint Item Report", coordinatorBody);
+                string coordinatorEmail = "it@ess.ae";
+                await _emailService.SendEmailAsync(coordinatorEmail, "New Complaint Item Report", coordinatorBody);
             }
             catch (Exception ex)
             {

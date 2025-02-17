@@ -26,5 +26,7 @@ namespace API.Interfaces
         Task setPaymentType(Guid id,string type);
 
         Task SetThePaymentIdForBooking(Guid id,string IDS);
+
+        Task<string> UploadImage(FileUploadNewDto model);
     }
 }

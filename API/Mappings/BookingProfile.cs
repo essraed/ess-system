@@ -33,6 +33,8 @@ namespace API.Mappings
             CreateMap<Booking, BookingDetilasDto>()
                 .ForMember(dest => dest.ServiceName, opt =>
                     opt.MapFrom(src => src.Service!.Name))
+                .ForMember(dest => dest.ServiceId, opt =>
+                    opt.MapFrom(src => src.Service!.Id))
                 .ForMember(dest => dest.CreatedBy, opt =>
                     opt.MapFrom(src => src.CreatedBy != null ? src.CreatedBy.DisplayName : null))
                 .ForMember(dest => dest.UpdatedBy, opt =>

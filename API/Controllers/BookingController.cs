@@ -199,5 +199,20 @@ namespace API.Controllers
                 return BadRequest($"An error occurred while updating booking status: {ex.Message}");
             }
         }
+
+
+        [HttpPost("upload-image")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadNewDto model)
+        {
+            try
+            {
+                return Ok(await _bookingService.UploadImage(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading Document: {ex.Message}");
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ const BookingForm = ({
       addBooking,
       getCurrentSessionBookings,
     },
-    serviceStore: { getService },
+    serviceStore: { getService,currentService },
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -83,6 +83,9 @@ const BookingForm = ({
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
       getCurrentSessionBookings();
+      if(currentService?.isRequiredFiles)
+        navigate(`/listings/booking/upload/${result.data}`);
+      else
       navigate(`/listings/booking/view/${result.data}`);
     } else {
       toast.error(`${t("Error")}: ${result.error}`);
@@ -98,8 +101,11 @@ const BookingForm = ({
   }, [getAvailableSlots, date]);
 
   useEffect(() => {
-    if (serviceId) getService(serviceId);
-  }, [serviceId]);
+    if (serviceId && currentService?.id !== serviceId) {
+        getService(serviceId);
+    }
+}, [serviceId, currentService]);
+
 
   const items = (availableSlots ?? []).map((item) => ({ label: item }));
 

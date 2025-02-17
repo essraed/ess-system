@@ -45,6 +45,7 @@ const BookingSecondForm = ({
       getBooking,
       currentBooking,
     },
+    serviceStore: { getService,currentService },
   } = useStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -86,7 +87,9 @@ const BookingSecondForm = ({
     const result = await addBooking(data);
     if (result.status === "success") {
       toast.success(t("Booking added successfully"));
-      navigate(`/listings/booking/view/${result.data}`);
+      if (currentService?.isRequiredFiles)
+        navigate(`/listings/booking/upload/${result.data}`);
+      else navigate(`/listings/booking/view/${result.data}`);
     } else {
       toast.error(`${t("Error")}: ${result.error}`);
     }
@@ -145,7 +148,7 @@ const BookingSecondForm = ({
     }
   }, [reuseData]);
   useEffect(() => {
-    if (reuseDate&& currentBooking) {
+    if (reuseDate && currentBooking) {
       const bookingDate = new Date(currentBooking.bookingDate || "");
       setDate(bookingDate);
       setValue("bookingDate", bookingDate.toISOString().split("T")[0]);
@@ -157,7 +160,14 @@ const BookingSecondForm = ({
     }
   }, [reuseDate]);
 
-  const items = (availableSlots ?? []).map((item) => ({ label: item }))
+  useEffect(() => {
+    if (serviceId && currentService?.id !== serviceId) {
+        getService(serviceId);
+    }
+}, [serviceId, currentService]);
+
+
+  const items = (availableSlots ?? []).map((item) => ({ label: item }));
 
   const customIcon = new L.Icon({
     iconUrl: "/location-pin.png",

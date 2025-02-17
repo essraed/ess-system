@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, observable, runInAction } from "mobx";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 import { ActionResult } from "../../types";
@@ -133,13 +133,13 @@ export default class ServiceStore {
     }
   };
 
-  // Load Single Service By ID
   getService = async (id: string) => {
-    let service: ServiceData | null = null;
     try {
       const result = await agent.Services.getById(id);
+
+      // Run in action to update state
       runInAction(() => {
-        service = {
+        this.currentService = {
           ...result,
           createDate: result.createDate
             ? formatDateTime(result.createDate?.toString())
@@ -149,10 +149,13 @@ export default class ServiceStore {
             : "No Set",
           updatedBy: result.updatedBy ? result.updatedBy : "No Set",
         };
-        this.currentService = service;
       });
+
+      // Return the updated currentService after it's set in state
+      return this.currentService;
     } catch (error) {
       console.error("Error loading service:", error);
+      return null; // Return null on error, just like in getBooking
     }
   };
 

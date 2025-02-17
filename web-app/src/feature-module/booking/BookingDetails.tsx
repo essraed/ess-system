@@ -14,6 +14,7 @@ import StatusBadge from "../common/StatusBadge";
 import Header from "../common/header";
 import Footer from "../common/footer";
 import BookingCheckout from "./BookingCheckout";
+import { IMAGE_SERVER_PATH } from "../../environment";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -58,6 +59,8 @@ const BookingDetails = () => {
     paymentType,
     updateDate,
     updatedBy,
+    fileEntities,
+    serviceId,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -317,6 +320,35 @@ const BookingDetails = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Uploaded Files */}
+              {fileEntities && fileEntities.length > 0 && (
+                <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                    Uploaded Files
+                  </h2>
+                  <Divider />
+                  <div className="grid gap-3 mt-4">
+                    {fileEntities.map((file) => (
+                      <div
+                        key={file.id}
+                        className="flex items-center justify-between p-3 bg-white border "
+                      >
+                        <p className="text-gray-800 truncate">
+                          {file.fileName}
+                        </p>
+                        <a
+                          href={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                          download={file.fileName}
+                          className="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                        >
+                          Download
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Location Info */}
               {latitude && longitude && (

@@ -164,8 +164,8 @@ public class LostService : ILostService
                         </small>
                     </p>";
 
-                // string coordinatorEmail = "it@ess.ae"; 
-                // await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
+                string coordinatorEmail = "it@ess.ae"; 
+                await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
             }
             catch (Exception ex)
             {

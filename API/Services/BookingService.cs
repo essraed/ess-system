@@ -17,6 +17,8 @@ public class BookingService : IBookingService
     private readonly IWorkingTimeService _workingTimeService;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly INotificationService _notificationService;
+    private readonly IFileService _fileService;
+
     private readonly IEmailService _emailService;
     private readonly Random _random = new Random();
 
@@ -24,7 +26,7 @@ public class BookingService : IBookingService
     private string _subject = "Your Notification";
 
     public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
-        IWorkingTimeService workingTimeService, INotificationService notificationService, IEmailService emailService)
+        IWorkingTimeService workingTimeService, INotificationService notificationService, IEmailService emailService, IFileService fileService)
     {
         _emailService = emailService;
         _mapper = mapper;
@@ -32,6 +34,7 @@ public class BookingService : IBookingService
         _notificationService = notificationService;
         _workingTimeService = workingTimeService;
         _httpContextAccessor = httpContextAccessor;
+        _fileService = fileService;
     }
 
     public async Task<PagedList<BookingDto>> GetAllBookingsAsync([FromQuery] BookingParams bookingParams)
@@ -87,6 +90,7 @@ public class BookingService : IBookingService
             .Include(x => x.Payment)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
+            .Include(x=>x.FileEntities)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (booking == null)
@@ -254,7 +258,7 @@ public class BookingService : IBookingService
                     </p>";
 
                 // Sending Email
-                await _emailService.SendEmailAsync(_email, "Booking Confirmation", _body);
+                await _emailService.SendEmailAsync(booking.Email, "Booking Confirmation", _body);
             }
             catch (Exception ex)
             {
@@ -345,19 +349,19 @@ public class BookingService : IBookingService
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'Completed'.");
     }
-    public async Task SetThePaymentIdForBooking(Guid id,string IDS)
+    public async Task SetThePaymentIdForBooking(Guid id, string IDS)
     {
-       var bookingIds = IDS.Split(',').Select(Guid.Parse).ToList(); // Assuming IDS is a comma-separated string of GUIDs
-            var bookingsToUpdate = await _context.Bookings
-                .Where(b => bookingIds.Contains(b.Id))
-                .ToListAsync();
+        var bookingIds = IDS.Split(',').Select(Guid.Parse).ToList(); // Assuming IDS is a comma-separated string of GUIDs
+        var bookingsToUpdate = await _context.Bookings
+            .Where(b => bookingIds.Contains(b.Id))
+            .ToListAsync();
 
-            foreach (var booking in bookingsToUpdate)
-            {
-                booking.PaymentId = id;
-            }
+        foreach (var booking in bookingsToUpdate)
+        {
+            booking.PaymentId = id;
+        }
 
-            await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
     }
 
     private string GetCurrentUserId()
@@ -382,6 +386,50 @@ public class BookingService : IBookingService
         }
     }
 
+    public async Task<string> UploadImage(FileUploadNewDto model)
+    {
+        var service = await _context.Bookings
+            .Include(x => x.FileEntities)
+            .FirstOrDefaultAsync(x => x.Id == model.EntityId);
+
+        if (service == null) return null!;
+
+
+        foreach (var file in model.Files)
+        {
+
+            bool isImage = file.ContentType.StartsWith("image/");
+            string fileDirectory = isImage ? "seed/image/" : "seed/files/";
+            var createdFile = await _fileService.SaveFileEntityAsync(file,fileDirectory,isImage,service?.BookingCode);
+
+            var newFileEntity = new FileEntity
+            {
+                Id = createdFile.Id,
+                FileName = createdFile.FileName ?? "",
+                FilePath = createdFile.FilePath ?? "",
+                ContentType = createdFile.ContentType ?? "",
+                Size = createdFile.Size,
+                BookingId = model.EntityId,
+                CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                CreatedById = GetCurrentUserId()
+            };
+
+            var trackedEntity = _context.ChangeTracker.Entries<FileEntity>()
+                .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
+
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
+            }
+
+            service?.FileEntities?.Add(newFileEntity);
+        }
+
+        await _context.SaveChangesAsync();
+
+        return service?.FileEntities?.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
+    }
+
     private string GenerateBookingCode()
     {
         string prefix = "BK";
@@ -396,5 +444,5 @@ public class BookingService : IBookingService
         return new string(Enumerable.Range(1, length).Select(_ => chars[_random.Next(chars.Length)]).ToArray());
     }
 
-    
+
 }
