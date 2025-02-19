@@ -90,7 +90,7 @@ public class BookingService : IBookingService
             .Include(x => x.Payment)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
-            .Include(x=>x.FileEntities)
+            .Include(x => x.FileEntities)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (booking == null)
@@ -259,6 +259,39 @@ public class BookingService : IBookingService
 
                 // Sending Email
                 await _emailService.SendEmailAsync(booking.Email, "Booking Confirmation", _body);
+                string _coordinatorBody = $@"
+                    <p>Dear Admin,</p>
+                    <p>We wanted to inform you about a new booking confirmation. Please review the details below:</p>
+                    <h3 style='color: #0056b3;'>Booking Confirmation Details</h3>
+                    <table style='border-collapse: collapse; width: 100%; margin-top: 10px;'>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Booking ID:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.BookingCode}</td>
+                        </tr>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Customer Name:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.CustomerName}</td>
+                        </tr>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Booking Date:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.BookingDate?.ToString("dd-MM-yyyy hh:mm tt")}</td>
+                        </tr>
+                        <tr>
+                            <td style='font-weight: bold; padding: 8px; border: 1px solid #ddd;'>Customer Email:</td>
+                            <td style='padding: 8px; border: 1px solid #ddd;'>{booking.Email}</td>
+                        </tr>
+                    </table>
+                    <p style='margin-top: 20px;'>Please ensure that the customer receives their booking confirmation and all the necessary follow-up actions are completed.</p>
+                    <p>Best regards,<br/>KBC Team</p>
+                    <p style='margin-top: 30px; font-size: 12px; color: #888;'>
+                        <small>
+                            This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.
+                        </small>
+                    </p>";
+
+                string coordinatorEmail = "inquiry@ess.ae";
+                await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", _coordinatorBody);
+
             }
             catch (Exception ex)
             {
@@ -400,7 +433,7 @@ public class BookingService : IBookingService
 
             bool isImage = file.ContentType.StartsWith("image/");
             string fileDirectory = isImage ? "seed/image/" : "seed/files/";
-            var createdFile = await _fileService.SaveFileEntityAsync(file,fileDirectory,isImage,service?.BookingCode);
+            var createdFile = await _fileService.SaveFileEntityAsync(file, fileDirectory, isImage, service?.BookingCode);
 
             var newFileEntity = new FileEntity
             {

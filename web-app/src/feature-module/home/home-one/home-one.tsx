@@ -68,7 +68,7 @@ const HomeOne = () => {
           </div>
         </div>
       </div>
-      <section className="banner-section banner-slider">
+      <section className="banner-section banner-slider hidden md:block ">
         <div className="container-fluid">
           <div className="home-banner">
             <div className="row align-items-center">
@@ -106,7 +106,7 @@ const HomeOne = () => {
         notification
         notificationSound
       />
-      <section className="section-top">
+      <section className="section-top hidden md:block">
         <div className="characteristics">
           <div className="custom-container">
             <div className="row">
@@ -282,7 +282,7 @@ const HomeOne = () => {
         </div>
       </section>
 
-      <section className="section facts-number">
+      <section className="section facts-number hidden md:block">
         <div id="Services" className="homesection servicessection saa viewon">
           <div className="custom-container">
             {/* Heading title*/}
@@ -412,7 +412,7 @@ const HomeOne = () => {
         </div>
       </section>
 
-      <section className="section-GoldenVisa">
+      <section className="section-GoldenVisa hidden md:block">
         <div className="wantToWork-area wantToWork-area2 w-padding2">
           <div className="custom-container">
             <div className="row align-items-center justify-content-between">
@@ -523,7 +523,7 @@ const HomeOne = () => {
       {/* /Pricing Plan */}
       <>
         {/* Blog Section */}
-        <section className="blog-section news-section pt-5">
+        <section className="blog-section news-section pt-5 hidden md:block">
           <div id="Services" className="homesection servicessection saa viewon">
             <div className="custom-container">
               {/* Heading title*/}

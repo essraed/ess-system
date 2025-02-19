@@ -106,7 +106,8 @@ namespace API.Services
                 <p>Please review and respond accordingly.</p>
                 <p>Best regards,<br/>KBC Notification System</p>";
 
-            await _emailService.SendEmailAsync("raf-se@hotmail.com", coordinatorSubject, coordinatorBody);
+                string coordinatorEmail = "inquiry@ess.ae";
+            await _emailService.SendEmailAsync(coordinatorEmail, coordinatorSubject, coordinatorBody);
 
             // Send email to the customer
             string customerSubject = model.EnquiryType ? "Thank you for your business enquiry" : "Thank you for contacting us";
@@ -119,7 +120,7 @@ namespace API.Services
                     <strong>Date Submitted:</strong> {contact.CreateDate:dd-MM-yyyy hh:mm tt}<br/>
                 </p>
                 <p>We will be in touch shortly.</p>
-                <p>Best regards,<br/>The [Your Company] Team</p>";
+                <p>Best regards,<br/>The KBC Team</p>";
 
             await _emailService.SendEmailAsync(contact.Email, customerSubject, customerBody);
 
