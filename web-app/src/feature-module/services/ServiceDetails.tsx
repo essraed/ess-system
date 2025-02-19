@@ -35,12 +35,12 @@ const ListingDetails = () => {
 
       {/* Detail Page Head */}
       <section className="product-detail-head py-3">
-        <div className="custom-container mx-auto bg-slate-100 p-3 lg:p-4 rounded-lg">
+        <div className="custom-container mx-auto bg-slate-100 p-0.5 lg:p-4 rounded-lg">
           {/* Header Section */}
           <div className="flex lg:flex gap-20">
             {/* Service Info */}
             <div className="detail-headings lg:flex-1">
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-sm md:text-lg font-semibold text-gray-800">
                 {`${currentService.categoryName || "Category"} >> ${currentService.name}`}
               </h2>
             </div>

@@ -58,95 +58,111 @@ const Header = () => {
     <>
       <header className="header">
         <div className="custom-container ">
-          <div className="flex flex-wrap items-center justify-between">
+          <div className="flex flex-nowrap items-center justify-start md:justify-between">
             {/* Logo Section */}
-            <div className="w-1/2 mr-24 md:w-1/4 md:mr-0">
+            <div className="w-full md:w-1/4 flex">
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
                   lazyLoad={true}
                   src="assets/img/ESSLogo.png"
-                  className="img-fluid "
+                  className="img-fluid w-2/3"
                   alt="Logo"
                 />
               </Link>
             </div>
+            <div className="flex">
+              <div
+                className={
+                  isSession
+                    ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container flex-row hidden md:block"
+                    : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1 flex-row hidden md:block"
+                }
+              >
+                <div className="w-full md:w-full flex justify-start  md:mb-0 hidden md:block">
+                  <Link to={routes.homeOne} className="navbar-brand logo">
+                    <ImageWithBasePath
+                      lazyLoad={true}
+                      src="assets/img/tasheel_tawjeeh.png"
+                      className="img-fluid"
+                      alt="Logo"
+                    />
+                  </Link>
+                </div>
+              </div>
 
-            {/* Navbar Items Section */}
-            <div
-              className={
-                isSession
-                  ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container flex-row"
-                  : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1 flex-row"
-              }
-            >
-              <ul className="flex flex-wrap justify-end items-center bookings-container ">
-                {/* <li className="nav-item px-2">
-                      <LanguageSelector />
-                    </li>
-                    <li>|</li> */}
-
-                {!isLoggedIn && (
-                  <li className=" nav-item pr-4 hidden md:block">
-                    <Link
-                      className="flex items-center font-semibold"
-                      to="https://api.whatsapp.com/send?phone=97143426666"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <i className="fab fa-whatsapp pe-2"></i>
-                      <div className="addr-info">{COMPANY_PHONE_NUMBER}</div>
-                    </Link>
-                  </li>
-                )}
-                {isSession && !isLoggedIn && (
-                  <li className=" hidden md:block">|</li>
-                )}
-
-                {isSession && !isLoggedIn && (
-                  <>
-                    <li className="nav-item px-3 ">
+              {/* Navbar Items Section */}
+              <div
+                className={
+                  isSession
+                    ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container flex-row"
+                    : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1 flex-row"
+                }
+              >
+                <ul className="flex flex-nowrap justify-end items-center bookings-container space-x-4 md:space-x-3">
+                  {/* Apply Now Button - for mobile and desktop */}
+                  {!isLoggedIn && (
+                    <li className="nav-item mr-12 md:pr-0 pr-0 md:pr-4 w-full sm:w-auto">
                       <Link
-                        className="nav-link header-login hover:scale-105 transition-all duration-200 flex items-center "
-                        to={`/listings/booking/view/${isSession[0]}`}
+                        to="/apply"
+                        className="viewlink btn btn-light justify-content-center w-full sm:w-auto text-center hidden md:block"
                       >
-                        <span className="relative inline-block">
-                          <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
-                          <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                            {isSession.length}
+                        Apply Now
+                        <i className="pr-2 feather icon-arrow-left ms-2 hidden md:block"></i>
+                      </Link>
+                    </li>
+                  )}
+
+                  {/* Session Related Links */}
+                  {isSession && !isLoggedIn && (
+                    <li className="hidden md:block">|</li>
+                  )}
+
+                  {isSession && !isLoggedIn && (
+                    <>
+                      <li className="nav-item px-3">
+                        <Link
+                          className="nav-link header-login hover:scale-105 transition-all duration-200 flex items-center"
+                          to={`/listings/booking/view/${isSession[0]}`}
+                        >
+                          <span className="relative inline-block">
+                            <i className="fas fa-calendar-alt text-2xl md:text-3xl text-gray-800 hover:text-blue-500"></i>
+                            <span className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                              {isSession.length}
+                            </span>
                           </span>
-                        </span>
-                      </Link>
-                    </li>
-                  </>
-                )}
+                        </Link>
+                      </li>
+                    </>
+                  )}
 
-                {/* Authentication Links */}
-                {isLoggedIn ? (
-                  <>
-                    <li className="nav-item">
-                      <Link
-                        className="nav-link header-login px-3 py-2 hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-200 ease-in-out flex items-center"
-                        to="#"
-                        onClick={logout}
-                      >
-                        <span className="mx-2">
-                          <i className="fa-regular fa-user text-lg" />
-                        </span>
-                        <span className="font-semibold">{t("Logout")}</span>
-                      </Link>
-                    </li>
-                    <li className="text-gray-500 ">|</li>
-                    <li className="nav-item px-3 py-2  hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-100 ease-in-out">
-                      <Link
-                        className="nav-link header-login text-gray-700 font-medium "
-                        to="#"
-                      >
-                        {user?.username}
-                      </Link>
-                    </li>
-                  </>
-                ) : null}
-              </ul>
+                  {/* Authentication Links */}
+                  {isLoggedIn ? (
+                    <>
+                      <li className="nav-item">
+                        <Link
+                          className="nav-link header-login px-3 py-2 hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-200 ease-in-out flex items-center"
+                          to="#"
+                          onClick={logout}
+                        >
+                          <span className="mx-2">
+                            <i className="fa-regular fa-user text-lg" />
+                          </span>
+                          <span className="font-semibold">{t("Logout")}</span>
+                        </Link>
+                      </li>
+                      <li className="text-gray-500 hidden md:block">|</li>
+                      <li className="nav-item px-3 py-2 hover:text-blue-600 hover:bg-gray-200 rounded-lg transition-all duration-100 ease-in-out">
+                        <Link
+                          className="nav-link header-login text-gray-700 font-medium"
+                          to="#"
+                        >
+                          {user?.username}
+                        </Link>
+                      </li>
+                    </>
+                  ) : null}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

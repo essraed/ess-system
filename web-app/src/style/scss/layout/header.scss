@@ -7,6 +7,13 @@
     margin: 20px 0;
 }
 
+.bg-color{
+    background-color: #0f8992;
+    @include respond-below(custom991) {
+        background-color:transparent;
+    }
+}
+
 .header {
     background: $__white;
     position: sticky;
@@ -17,6 +24,10 @@
     width: 100%;
     z-index: 999;
     @extend %animation-effect;
+
+    // @include respond-below(custom991)  {
+    //     box-shadow: 0 3px 10px #26262633;
+    // }
 
     &.fixed {
         background-color: $__white;
@@ -67,6 +78,7 @@
                     line-height: 50px;
                     font-weight: normal;
                     font-size: 15px;
+
                     @include respond-below(custom991) {
                         font-size: $__font__size__14;
                     }
@@ -216,23 +228,23 @@
 
     @media (max-width: 768px) {
         .bookings-container {
-          order: -1;
-          width: 12%; 
-          display: flex;
-          justify-content: center;
+            order: -1;
+            width: 12%;
+            display: flex;
+            justify-content: center;
         }
-      
+
         .bookings-container1 {
-          order: -1;
-          display: flex;
-          justify-content: center;
+            order: -1;
+            display: flex;
+            justify-content: center;
         }
-      
+
         .bookings-container .nav-item {
-          justify-content: end; 
+            justify-content: end;
         }
-      }
-      
+    }
+
 
 
     .main-menu-wrapper {
@@ -1189,20 +1201,21 @@
 }
 
 .video-wrapper {
-    max-width: 100%;      /* Ensure the video wrapper does not exceed container width */
-    padding: 1rem;  
-    position: absolute;  
+    max-width: 100%;
+    /* Ensure the video wrapper does not exceed container width */
+    padding: 1rem;
+    position: absolute;
     top: 15%;
 
     @include respond-below(custom991) {
-        top: 10%; 
+        top: 10%;
     }
 
     @include respond-below(custom575) {
-     
-            top: 0;
-            height: 150px;
-            right: 0;
-        
+
+        top: 0;
+        height: 150px;
+        right: 0;
+
     }
-  }
+}
