@@ -37,7 +37,12 @@ namespace API.DTOs
         public string? CreatedBy { get; set; }
 
         public string? UpdatedBy { get; set; }
+        public int? AdultsNumber { get; set; }
+        public int? ChildrenNumber { get; set; }
+        public string? EntryType { get; set; }
+        public string? Duration { get; set; }
 
+        public string? ProcessTime { get; set; }
         public DateTime? CreateDate { get; set; }
 
         public DateTime? UpdateDate { get; set; }
@@ -53,6 +58,6 @@ namespace API.DTOs
         public DateTime? EndBookingDate { get; set; }
 
         public ICollection<FileResponseDto>? FileEntities { get; set; }
-
+        public string? NationalityName { get; set; }
     }
 }

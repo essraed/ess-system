@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { all_routes } from "../router/all_routes";
 import ImageWithBasePath from "../../core/data/img/ImageWithBasePath";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import { COMPANY_PHONE_NUMBER } from "../../environment";
 
 import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +38,6 @@ const Header = () => {
     setBookingServicesSubmenu(false);
   };
 
-  const navigate = useNavigate();
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {

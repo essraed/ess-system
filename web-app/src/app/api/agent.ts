@@ -31,6 +31,8 @@ import { LostSchema } from "../../lib/schemas/lostSchema";
 import { ComplaintSchema } from "../../lib/schemas/complaintSchema";
 import { ComplaintData } from "../../types/complaints";
 import { paymentType } from "../../lib/utils";
+import { NationalityData } from "../../types/nationality";
+import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -198,7 +200,7 @@ const Bookings = {
   getById: (id: string) => requests.get<BookingDetailsData>(`booking/${id}`),
   getAvailableSlots: (date: string) =>
     requests.get<string[]>(`booking/available-slots/${date}`),
-  create: (booking: BookingSchema) =>
+  create: (booking: BookingSchema|DocumentBookingSchema) =>
     requests.post<BookingData>("booking", booking),
   delete: (id: string) => requests.del<string>(`booking/${id}`),
   uploadImage: (formData: FormData) =>
@@ -282,6 +284,10 @@ const Notifications = {
     requests.post<NotificationData>("notification", notification),
   delete: (id: string) => requests.del<string>(`notification/${id}`),
 };
+const Nationality = {
+  getAll: () => requests.get<NationalityData[]>("nationality"),
+  getById: (id: string) => requests.get<NationalityData>(`nationality/${id}`),
+};
 
 // const Files = {
 //   uploadFile: (formData: FormData) =>
@@ -321,6 +327,7 @@ const agent = {
   Payment,
   Losts,
   Complaints,
+  Nationality,
 };
 
 export default agent;

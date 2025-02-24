@@ -13,7 +13,12 @@ namespace API.DTOs
 
         [Required]
         public string Email { get; set; } = default!;
-        
+        public int? AdultsNumber { get; set; }
+        public int? ChildrenNumber { get; set; }
+        public string? EntryType { get; set; }
+        public string? Duration { get; set; }
+
+        public string? ProcessTime { get; set; }
         public string? Address { get; set; }
 
         public double? Latitude { get; set; }
@@ -23,15 +28,16 @@ namespace API.DTOs
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? TotalPrice { get; set; }
 
-        public DateOnly BookingDate { get; set; }
+        public DateOnly? BookingDate { get; set; }
         public string? BookingTime { get; set; }
-        
+
         public DateOnly? EndBookingDate { get; set; }
         public string? EndBookingTime { get; set; }
 
 
         // relate tables
-        public Guid? ServiceId { get; set; }
+        public Guid? ServiceId { get; set; } 
+        public Guid? NationalityId { get; set; } 
 
         public Guid? ServiceOptionId { get; set; }
     }

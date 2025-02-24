@@ -8,15 +8,21 @@ namespace API.Mappings
     {
         public BookingProfile()
         {
-            // Mapping for saving a booking
             CreateMap<BookingSaveDto, Booking>()
                 .ForMember(dest => dest.BookingDate, opt =>
-                    opt.MapFrom(src => src.BookingDate.ToDateTime(TimeOnly.Parse(src.BookingTime))))
+                    opt.MapFrom(src =>
+                        src.BookingDate.HasValue && !string.IsNullOrEmpty(src.BookingTime)
+                            ? src.BookingDate.Value.ToDateTime(TimeOnly.Parse(src.BookingTime)) // Combine date and time
+                            : DateTime.Now)) // Default to current date and time if BookingDate is null
                 .ForMember(dest => dest.EndBookingDate, opt =>
                     opt.MapFrom(src =>
                         src.EndBookingDate.HasValue && !string.IsNullOrEmpty(src.EndBookingTime)
-                            ? src.EndBookingDate.Value.ToDateTime(TimeOnly.Parse(src.EndBookingTime))
-                            : src.BookingDate.ToDateTime(TimeOnly.Parse(src.BookingTime)).AddHours(2)));
+                            ? src.EndBookingDate.Value.ToDateTime(TimeOnly.Parse(src.EndBookingTime)) // Combine date and time for EndBookingDate
+                            : (src.BookingDate.HasValue && !string.IsNullOrEmpty(src.BookingTime)
+                                ? src.BookingDate.Value.ToDateTime(TimeOnly.Parse(src.BookingTime)).AddHours(2) // Add 2 hours if no EndBookingDate
+                                : DateTime.Now))); // Default to current date and time if both are null
+
+
 
             // Mapping from Booking to BookingDto
             CreateMap<Booking, BookingDto>()
@@ -26,6 +32,8 @@ namespace API.Mappings
                     opt.MapFrom(src => src.CreatedBy != null ? src.CreatedBy.DisplayName : null))
                 .ForMember(dest => dest.UpdatedBy, opt =>
                     opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null))
+                .ForMember(dest => dest.NationalityName, opt =>
+                    opt.MapFrom(src => src.Nationality != null ? src.Nationality.Name : null))
                     .ForMember(dest => dest.PaymentStatus, opt =>
                     opt.MapFrom(src => src.Payment!.Status));
 
@@ -43,6 +51,8 @@ namespace API.Mappings
                     opt.MapFrom(src => src.ServiceOption != null ? src.ServiceOption.Name : null))
                 .ForMember(dest => dest.ServiceOptionFee, opt =>
                     opt.MapFrom(src => src.ServiceOption!.AdditionalFee))
+                    .ForMember(dest => dest.NationalityName, opt =>
+                    opt.MapFrom(src => src.Nationality != null ? src.Nationality.Name : null))
                 .ForMember(dest => dest.PaymentStatus, opt =>
                     opt.MapFrom(src => src.Payment!.Status));
         }

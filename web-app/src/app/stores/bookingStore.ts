@@ -9,6 +9,7 @@ import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
 import { convertEnumToString, formatDateTime, paymentType } from "../../lib/utils";
+import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 
 export default class BookingStore {
   bookings: BookingData[] | null | undefined = null;
@@ -33,7 +34,7 @@ export default class BookingStore {
 
   // Add Booking
   addBooking = async (
-    booking: BookingSchema
+    booking: BookingSchema|DocumentBookingSchema
   ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Bookings.create(booking);

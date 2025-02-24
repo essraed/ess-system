@@ -68,13 +68,13 @@ const HomeOne = () => {
           </div>
         </div>
       </div>
-      <section className="banner-section banner-slider hidden md:block ">
+      <section className="banner-section banner-slider ">
         <div className="container-fluid">
           <div className="home-banner">
             <div className="row align-items-center">
               {/* Video on the Right Side */}
               <div className="col-md-5 offset-md-7">
-                <div className="video-wrapper">
+                <div className="video-wrapper hidden md:block">
                   <video
                     className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
                     style={{ opacity: 0.8 }}
@@ -106,8 +106,8 @@ const HomeOne = () => {
         notification
         notificationSound
       />
-      <section className="section-top hidden md:block">
-        <div className="characteristics">
+      <section className="section-top ">
+        <div className="characteristics hidden md:block">
           <div className="custom-container">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-6 char_col">

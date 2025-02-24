@@ -8,6 +8,11 @@ namespace API.DTOs.ServiceDto
         public string Description { get; set; } = default!;
         public float? Rate { get; set; }
         public decimal? Price { get; set; }
+        public decimal? ChildPrice { get; set; }
+
+        public decimal? ExpressPrice { get; set; }
+
+        public decimal? RegularPrice { get; set; }
         public decimal? PriceVIP { get; set; }
         public string? ServiceVipName { get; set; }
         public decimal? TotalPrice { get; set; }

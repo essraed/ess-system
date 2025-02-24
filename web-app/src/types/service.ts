@@ -5,6 +5,9 @@ export interface ServiceData {
   name: string;
   description: string;
   price: string;
+  childPrice?: string|null;
+  expressPrice?: string|null;
+  regularPrice?: string|null;
   rate: number;
   priceVIP?: string;
   serviceVipName?: string;

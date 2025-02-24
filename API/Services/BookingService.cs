@@ -185,29 +185,37 @@ public class BookingService : IBookingService
         {
             throw new KeyNotFoundException($"Service with id {model.ServiceId} not found.");
         }
+
         var booking = _mapper.Map<Booking>(model);
 
-        var bookings = _context.Bookings.Where(b => b.BookingDate == booking.BookingDate).ToList();
-
-        if (bookings.Count == 0)
+        if (service?.isRequiredFiles==false)
         {
-            var availableCar = await _context.Cars
-            .Where(c => !c.IsDeleted &&
-                !_context.Bookings.Any(b =>
-                    b.CarId == c.Id &&
-                    b.BookingDate < booking.EndBookingDate &&
-                    b.EndBookingDate > booking.BookingDate))
-            .FirstOrDefaultAsync();
+            var bookings = _context.Bookings.Where(b => b.BookingDate == booking.BookingDate).ToList();
 
-            if (availableCar == null) throw new Exception("No available cars for the selected time slot.");
+            if (bookings.Count == 0)
+            {
+                var availableCar = await _context.Cars
+                .Where(c => !c.IsDeleted &&
+                    !_context.Bookings.Any(b =>
+                        b.CarId == c.Id &&
+                        b.BookingDate < booking.EndBookingDate &&
+                        b.EndBookingDate > booking.BookingDate))
+                .FirstOrDefaultAsync();
 
-            booking.CarId = availableCar.Id;
+                if (availableCar == null) throw new Exception("No available cars for the selected time slot.");
+
+                booking.CarId = availableCar.Id;
+            }
+            else
+            {
+                booking.CarId = bookings[0].CarId;
+            }
+            ValidateBookingConditionsAsync(booking);
         }
-        else
-        {
-            booking.CarId = bookings[0].CarId;
-        }
-        ValidateBookingConditionsAsync(booking);
+
+
+
+
         booking.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         booking.CreatedById = GetCurrentUserId();
         booking.BookingStatus = BookingStatus.Pending;
@@ -290,7 +298,7 @@ public class BookingService : IBookingService
                     </p>";
 
                 string coordinatorEmail = "inquiry@ess.ae";
-                await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", _coordinatorBody);
+                await _emailService.SendEmailAsync(coordinatorEmail, "New Booking Report", _coordinatorBody);
 
             }
             catch (Exception ex)

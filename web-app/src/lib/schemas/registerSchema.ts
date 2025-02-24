@@ -10,7 +10,7 @@ export const registerSchema = z.object({
   password: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
-//   role: z.string().nonempty({ message: "Role is required." }),
+  role: z.enum(["USER","MARKETUSER","ADMIN"]).default("USER"),
 });
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
@@ -27,7 +27,7 @@ export const registerForUpdateSchema = z.object({
   password: z
   .string()
   .optional(),
-//   role: z.string().nonempty({ message: "Role is required." }),
+  // role: z.enum(["USER","MARKETUSER","ADMIN"]).default("USER"),
 });
 
 export type RegisterForUpdateSchema = z.infer<typeof registerForUpdateSchema>;

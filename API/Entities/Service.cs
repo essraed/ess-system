@@ -21,6 +21,12 @@ namespace API.Entities
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
+        public decimal? ChildPrice { get; set; }
+
+        public decimal? ExpressPrice { get; set; }
+
+        public decimal? RegularPrice { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? PriceVIP { get; set; }
         public string? ServiceVipName { get; set; }

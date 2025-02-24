@@ -18,12 +18,17 @@ export interface BookingData {
   carName?: string | null;
   createdBy?: string | null;
   updatedBy?: string | null;
-  createDate?: string,
-  updateDate?: string | null,
+  createDate?: string;
+  updateDate?: string | null;
   bookingStatus?: BookingStatus;
   bookingDate?: string | null;
   isVIP?: boolean;
   bookingCode: string;
+  adultsNumber: number | null;
+  childrenNumber: number | null;
+  entryType: string | null;
+  duration: string | null;  
+  processTime: string | null; 
 }
 
 export interface BookingDetailsData {
@@ -34,22 +39,22 @@ export interface BookingDetailsData {
   address?: string | null;
   latitude?: number | null;
   longitude?: number | null;
-  totalPrice?: number | null |undefined;
+  totalPrice?: number | null | undefined;
   note?: string | null;
   serviceName: string;
   carName?: string | null;
   createdBy?: string | null;
   updatedBy?: string | null;
-  createDate?: string | null,
-  updateDate?: string | null,
+  createDate?: string | null;
+  updateDate?: string | null;
   serviceOptionName?: string | null;
   serviceOptionFee?: number | null;
   bookingStatus?: BookingStatus;
   bookingDate?: Date | null;
   endBookingDate?: Date | null;
   bookingCode: string;
-  paymentStatus:string|null;
-  paymentType:string|null;
-  fileEntities?:FileResponseData[];
-  serviceId:string;
+  paymentStatus: string | null;
+  paymentType: string | null;
+  fileEntities?: FileResponseData[];
+  serviceId: string;
 }

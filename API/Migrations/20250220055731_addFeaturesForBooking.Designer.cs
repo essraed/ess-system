@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250220055731_addFeaturesForBooking")]
+    partial class addFeaturesForBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,9 +205,6 @@ namespace API.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProcessTime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ServiceId")
@@ -572,20 +572,11 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("MultiplePriceWithMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MultiplePriceWithTwoMonth")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SinglePriceWithMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SinglePriceWithTwoMonth")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -649,9 +640,6 @@ namespace API.Migrations
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("ChildPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -661,9 +649,6 @@ namespace API.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("ExpressPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -680,9 +665,6 @@ namespace API.Migrations
 
                     b.Property<float?>("Rate")
                         .HasColumnType("real");
-
-                    b.Property<decimal?>("RegularPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RequiredFiles")
                         .HasColumnType("nvarchar(max)");

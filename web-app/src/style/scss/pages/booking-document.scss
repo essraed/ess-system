@@ -1,0 +1,62 @@
+.entry {
+    // #0f8992
+    background: #0f8992;
+    border-color: #0f8992;
+
+    color: white;
+    border-radius: 0px;
+
+}
+
+/* Apply small font size to the dropdown on mobile */
+@media (max-width: 639px) {
+    .custom-dropdown .p-dropdown-label {
+        font-size: 0.75rem !important;
+        /* Apply small font to placeholder */
+    }
+
+    .custom-dropdown .p-dropdown-item {
+        font-size: 0.75rem !important;
+        /* Apply small font to dropdown items */
+    }
+}
+
+/* Apply larger font size for larger screens */
+@media (min-width: 640px) {
+    .custom-dropdown .p-dropdown-label {
+        font-size: 1.125rem !important;
+        /* Apply larger font to placeholder */
+    }
+
+    .custom-dropdown .p-dropdown-item {
+        font-size: 1.125rem !important;
+        /* Apply larger font to dropdown items */
+    }
+}
+
+/* Apply smaller font size to the Select input on mobile */
+@media (max-width: 639px) {
+    .custom-select .react-select__control {
+        font-size: 0.70rem !important;
+        /* Smaller font for the select control (placeholder) */
+    }
+
+    .custom-select .react-select__option {
+        font-size: 0.70rem !important;
+        /* Smaller font for the options */
+    }
+}
+
+/* Apply larger font size for larger screens */
+@media (min-width: 640px) {
+    .custom-select .react-select__control {
+        font-size: 1rem !important;
+        /* Larger font for the select control */
+    }
+
+    .custom-select .react-select__option {
+        font-size: 1rem !important;
+        /* Larger font for the options */
+    }
+}
+
