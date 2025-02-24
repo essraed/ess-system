@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250221053809_Blog")]
+    partial class Blog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +168,6 @@ namespace API.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AdultsNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("BookingCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -181,9 +181,6 @@ namespace API.Migrations
                     b.Property<Guid?>("CarId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("ChildrenNumber")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -194,17 +191,12 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Duration")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndBookingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EntryType")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -214,9 +206,6 @@ namespace API.Migrations
 
                     b.Property<double?>("Longitude")
                         .HasColumnType("float");
-
-                    b.Property<Guid?>("NationalityId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -232,9 +221,6 @@ namespace API.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProcessTime")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ServiceId")
@@ -257,10 +243,6 @@ namespace API.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("NationalityId")
-                        .IsUnique()
-                        .HasFilter("[NationalityId] IS NOT NULL");
 
                     b.HasIndex("NotificationId");
 
@@ -596,33 +578,6 @@ namespace API.Migrations
                     b.ToTable("Losts");
                 });
 
-            modelBuilder.Entity("API.Entities.Nationality", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("MultiplePriceWithMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MultiplePriceWithTwoMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("SinglePriceWithMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SinglePriceWithTwoMonth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Nationalities");
-                });
-
             modelBuilder.Entity("API.Entities.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -679,9 +634,6 @@ namespace API.Migrations
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("ChildPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -691,9 +643,6 @@ namespace API.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("ExpressPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -710,9 +659,6 @@ namespace API.Migrations
 
                     b.Property<float?>("Rate")
                         .HasColumnType("real");
-
-                    b.Property<decimal?>("RegularPrice")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RequiredFiles")
                         .HasColumnType("nvarchar(max)");
@@ -1008,10 +954,6 @@ namespace API.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("API.Entities.Nationality", "Nationality")
-                        .WithOne("booking")
-                        .HasForeignKey("API.Entities.Booking", "NationalityId");
-
                     b.HasOne("API.Entities.Notification", "Notification")
                         .WithMany()
                         .HasForeignKey("NotificationId");
@@ -1036,8 +978,6 @@ namespace API.Migrations
                     b.Navigation("Car");
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("Nationality");
 
                     b.Navigation("Notification");
 
@@ -1284,11 +1224,6 @@ namespace API.Migrations
                     b.Navigation("FileEntities");
 
                     b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("API.Entities.Nationality", b =>
-                {
-                    b.Navigation("booking");
                 });
 
             modelBuilder.Entity("API.Entities.Service", b =>
