@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.Interfaces;
 using API.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,12 +18,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
+    
         public async Task<IActionResult> GetAllCars([FromQuery] CarParams carParams)
         {
             return Ok(await _carsService.GetAllCarsAsync(carParams));
         }
 
         [HttpGet("{id}")]
+ 
         public async Task<IActionResult> Get(Guid id)
         {
             try

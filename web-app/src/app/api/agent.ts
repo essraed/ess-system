@@ -33,6 +33,9 @@ import { ComplaintData } from "../../types/complaints";
 import { paymentType } from "../../lib/utils";
 import { NationalityData } from "../../types/nationality";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
+import { BlogDetailsData } from "../../types/blog";
+import { BlogSchema } from "../../lib/schemas/BlogSchema";
+
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -106,6 +109,15 @@ const Cars = {
   create: (car: CarSchema) => requests.post<CarData>("cars", car),
   delete: (id: string) => requests.del<string>(`cars/${id}`),
 };
+
+const Blogs = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<BlogDetailsData[]>>("blog", { params }).then(responseBody),
+  getById: (id: string) => requests.get<BlogDetailsData>(`blog/${id}`),
+  create: (blog: BlogSchema) => requests.post<BlogDetailsData>("blog", blog),
+  delete: (id: string) => requests.del<string>(`blog/${id}`),
+};
+
 const Contacts = {
   getAll: (params: URLSearchParams) =>
     axios
@@ -141,6 +153,10 @@ const Complaints = {
   setStatusCompleted: (id: string) =>
     requests.put<string>(`complaint/${id}/status/completed`, {}),
 };
+
+
+
+
 
 const Categories = {
   getAll: (params: URLSearchParams) =>
@@ -222,6 +238,9 @@ const Bookings = {
   setStatusPending: (id: string) =>
     requests.put<string>(`booking/${id}/status/pending`, {}),
 };
+
+
+
 
 const Account = {
   current: () => requests.get<User>("account"),
@@ -328,6 +347,7 @@ const agent = {
   Losts,
   Complaints,
   Nationality,
+  Blogs,
 };
 
 export default agent;

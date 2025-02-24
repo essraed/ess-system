@@ -62,7 +62,7 @@ public class PaymentService : IPaymentService
                 ? payment.OrderName.Substring(0, 20)
                 : payment.OrderName,
                 TransactionHint = payment.TransactionHint,
-                ReturnPath = "http://localhost:5000/api/payment/payment-callback",
+                ReturnPath = "https://kbc.center/api/payment/payment-callback",
                 UserName = "Demo_fY9c",
                 Password = "Comtrust@20182018"
             }
