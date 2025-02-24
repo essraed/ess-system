@@ -8,7 +8,10 @@ import { observer } from "mobx-react-lite";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { registerSchema, RegisterSchema } from "../../lib/schemas/registerSchema";
+import {
+  registerSchema,
+  RegisterSchema,
+} from "../../lib/schemas/registerSchema";
 
 const UserForm = () => {
   const { userStore } = useStore();
@@ -21,9 +24,13 @@ const UserForm = () => {
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onTouched",
+    defaultValues:{
+      role:"USER",
+    }
   });
 
   const onSubmit = async (data: RegisterSchema) => {
+    console.log("UserData",data);
     const result = await userStore.register(data);
 
     if (result.status === "success") {
@@ -92,16 +99,24 @@ const UserForm = () => {
                     isInvalid={!!errors.password}
                     errorMessage={errors.password?.message}
                   />
-                  {/* <Select
-                    label="Role"
-                    defaultValue=""
-                    {...register("role")}
-                    isInvalid={!!errors.role}
-                    errorMessage={errors.role?.message}
-                  >
-                    <Select.Option value="admin">Admin</Select.Option>
-                    <Select.Option value="user">User</Select.Option>
-                  </Select> */}
+                  <div>
+                    <label className="block text-sm md:text-lg font-semibold mb-2">
+                      Role
+                    </label>
+                    <select
+                      {...register("role")}
+                      className="w-full bg-gray-100 border-2 text-sm md:text-lg border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="USER">User</option>
+                      <option value="MARKETUSER">Market User</option>
+                      <option value="ADMIN">Admin</option>
+                    </select>
+                    {errors.role && (
+                      <span className="text-red-500 text-sm">
+                        {errors.role.message}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <Button
                   className="mt-4 btn btn-primary"

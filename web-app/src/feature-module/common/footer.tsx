@@ -42,7 +42,7 @@ const Footer = () => {
       {/* Footer */}
       <footer className="footer">
         {/* Footer Top */}
-        <div className="footer-top aos" data-aos="fade-down">
+        <div className="footer-top aos hidden md:block" data-aos="fade-down">
           <div className="container">
             <div className="row">
               <div className="col-lg-7">

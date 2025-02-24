@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { PaginationData, PagingParams } from "../../types/pagination";
 
 import { ActionResult } from "../../types";

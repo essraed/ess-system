@@ -60,7 +60,6 @@ const BookingDetails = () => {
     updateDate,
     updatedBy,
     fileEntities,
-    serviceId,
   } = currentBooking;
 
   const customIcon = new L.Icon({

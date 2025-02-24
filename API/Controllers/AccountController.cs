@@ -74,13 +74,21 @@ namespace API.Controllers
             if (result.Succeeded)
             {
                 // add user to 'User' role by default.
-                if (!string.IsNullOrEmpty(model.Role))
-                {
-                    await _userManager.AddToRoleAsync(user, model.Role);
-                }
-                else
+                // if (!string.IsNullOrEmpty(model.Role))
+                // {
+                //     await _userManager.AddToRoleAsync(user, model.Role);
+                // }
+                if(model.Role==RolesNames.USER)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.USER);
+                }
+                else if(model.Role==RolesNames.MARKETUSER)
+                {
+                    await _userManager.AddToRoleAsync(user, RolesNames.MARKETUSER);
+                }
+                else if(model.Role==RolesNames.ADMIN)
+                {
+                    await _userManager.AddToRoleAsync(user, RolesNames.ADMIN);
                 }
                 var roles = await _userManager.GetRolesAsync(user!);
 

@@ -52,6 +52,9 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(PaymentProfile).Assembly);
             services.AddAutoMapper(typeof(LostProfile).Assembly);
             services.AddAutoMapper(typeof(ComplaintProfile).Assembly);
+            services.AddAutoMapper(typeof(LostProfile).Assembly);
+            services.AddAutoMapper(typeof(ComplaintProfile).Assembly);
+            services.AddAutoMapper(typeof(NationalityProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -81,6 +84,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
             services.AddScoped(typeof(ILostService), typeof(LostService));
             services.AddScoped(typeof(ICompalintService), typeof(ComplaintService));
+            services.AddScoped(typeof(INationalityService), typeof(NationalityService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             // Report services

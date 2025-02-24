@@ -37,7 +37,10 @@ const ServiceForm = ({ service, id }: Props) => {
   } = useForm<ServiceSchema>({
     resolver: zodResolver(serviceSchema),
     mode: "onTouched",
-    defaultValues: { serviceOptions: service?.serviceOptions ?? [], requiredFiles: service?.requiredFiles ?? [] },
+    defaultValues: {
+      serviceOptions: service?.serviceOptions ?? [],
+      requiredFiles: service?.requiredFiles ?? [],
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -123,6 +126,40 @@ const ServiceForm = ({ service, id }: Props) => {
           isInvalid={!!errors.price}
           errorMessage={errors.price?.message as string}
         />
+        {isRequiredFiles && (
+          <>
+            <Input
+              className="my-3"
+              label={t("Child Price")}
+              variant="bordered"
+              type="number"
+              {...register("childPrice", { valueAsNumber: true })}
+              defaultValue={service?.childPrice || ""}
+              isInvalid={!!errors.childPrice}
+              errorMessage={errors.childPrice?.message as string}
+            />
+            <Input
+              className="my-3"
+              label={t(" Express Price")}
+              variant="bordered"
+              type="number"
+              {...register("expressPrice", { valueAsNumber: true })}
+              defaultValue={service?.expressPrice || ""}
+              isInvalid={!!errors.expressPrice}
+              errorMessage={errors.expressPrice?.message as string}
+            />
+            <Input
+              className="my-3"
+              label={t(" Regular Price")}
+              variant="bordered"
+              type="number"
+              {...register("regularPrice", { valueAsNumber: true })}
+              defaultValue={service?.regularPrice || ""}
+              isInvalid={!!errors.regularPrice}
+              errorMessage={errors.regularPrice?.message as string}
+            />
+          </>
+        )}
 
         {/* Existing fields */}
         <Dropdown
@@ -181,10 +218,7 @@ const ServiceForm = ({ service, id }: Props) => {
         <div className="my-3">
           <h5 className="mb-2">{t("Service Options")}</h5>
           {fields.map((item, index) => (
-            <div
-              key={item.id}
-              className="d-flex align-items-center gap-2 mb-2"
-            >
+            <div key={item.id} className="d-flex align-items-center gap-2 mb-2">
               <Input
                 {...register(`serviceOptions.${index}.name`)}
                 className="flex-1"

@@ -11,6 +11,11 @@ namespace API.DTOs.ServiceDto
         public string Description { get; set; } = default!;
         [Required]
         public decimal Price { get; set; }
+        public decimal? ChildPrice { get; set; }
+
+        public decimal? ExpressPrice { get; set; }
+
+        public decimal? RegularPrice { get; set; }
         public decimal? PriceVIP { get; set; }
         public bool isRequiredFiles { get; set; } = false;
         public string? ServiceVipName { get; set; }

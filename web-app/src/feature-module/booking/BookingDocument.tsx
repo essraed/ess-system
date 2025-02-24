@@ -3,13 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { useDropzone } from "react-dropzone";
 import { observer } from "mobx-react-lite";
-import { runInAction } from "mobx";
 import { allowedImageExtension } from "../../constants/constants";
-import { BookingDetailsData } from "../../types/booking";
 import { ServiceData } from "../../types/service";
 import Footer from "../common/footer";
 import Header from "../common/header";
-import { refresh } from "aos";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 const BookingDocument = () => {
@@ -23,7 +20,7 @@ const BookingDocument = () => {
 
   const {
     bookingStore: { uploadImage, getBooking, currentBooking },
-    serviceStore: { getService, currentService },
+    serviceStore: { getService },
   } = useStore();
 
   if (!id) {

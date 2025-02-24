@@ -16,7 +16,11 @@ namespace API.DTOs
         public string Email { get; set; } = default!;
 
         public string? Address { get; set; }
-
+        public int? AdultsNumber { get; set; }
+        public int? ChildrenNumber { get; set; }
+        public string? EntryType { get; set; }
+        public string? Duration { get; set; }
+        public string? ProcessTime { get; set; }
         public decimal? TotalPrice { get; set; }
 
         public string ServiceName { get; set; } = default!;
@@ -28,11 +32,13 @@ namespace API.DTOs
         public string? UpdatedBy { get; set; }
 
         public DateTime? CreateDate { get; set; }
-        
+
         public DateTime? UpdateDate { get; set; }
 
         public BookingStatus? BookingStatus { get; set; }
 
         public DateTime? BookingDate { get; set; }
+
+        public string? NationalityName {get;set;}
     }
 }

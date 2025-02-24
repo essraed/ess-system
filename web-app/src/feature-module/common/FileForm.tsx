@@ -3,7 +3,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
   useDisclosure,
   Input,
@@ -111,7 +110,7 @@ const FileForm = ({ label, entityId, uploadImage, onUploadComplete }: Props) => 
         className="p-6"
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="text-lg font-semibold text-gray-800">
                 Upload Document

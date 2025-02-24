@@ -16,9 +16,13 @@ namespace API.Entities
 
         [Required]
         public string Phone { get; set; } = default!;
+        public string? Email { get; set; }
 
-        [Required]
-        public string Email { get; set; } = default!;
+        public int? AdultsNumber { get; set; }
+        public int? ChildrenNumber { get; set; }
+        public string? ProcessTime { get; set; }
+        public string? EntryType { get; set; }
+        public string? Duration { get; set; }
 
         public string? Address { get; set; }
 
@@ -61,6 +65,8 @@ namespace API.Entities
 
         public Guid? ServiceId { get; set; }
         public Service? Service { get; set; }
+        public Guid? NationalityId { get; set; }
+        public Nationality? Nationality { get; set; }
 
         public Guid? ServiceOptionId { get; set; }
         public ServiceOption? ServiceOption { get; set; }

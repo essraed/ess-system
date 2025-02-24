@@ -12,6 +12,7 @@ import ContactStore from "./contactStore";
 import PaymentStore from "./paymentStore";
 import LostStore from "./lostStore";
 import ComplaintStore from "./complaintStore";
+import NationalityStore from "./nationalityStore";
 
 interface Store {
   userStore: UserStore;
@@ -27,6 +28,7 @@ interface Store {
   paymentStore: PaymentStore;
   lostStore: LostStore;
   complaintStore:ComplaintStore;
+  nationalityStore:NationalityStore;
 }
 
 export const store: Store = {
@@ -43,6 +45,7 @@ export const store: Store = {
   paymentStore: new PaymentStore(),
   lostStore: new LostStore(),
   complaintStore:new ComplaintStore(),
+  nationalityStore:new NationalityStore(),
 };
 
 export const StoreContext = createContext(store);

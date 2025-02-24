@@ -18,7 +18,7 @@ const routes = all_routes;
 const SignUp = () => {
   const { userStore } = useStore();
   const navigate = useNavigate();
-  const [summaryErrors, setSummaryErrors] = useState<string[] | null>(null);
+  const [summaryErrors] = useState<string[] | null>(null);
 
   const {
     register,
