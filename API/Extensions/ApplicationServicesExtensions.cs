@@ -45,6 +45,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(DocumentProfile).Assembly);
             services.AddAutoMapper(typeof(AuthorityProfile).Assembly);
             services.AddAutoMapper(typeof(CarProfile).Assembly);
+            services.AddAutoMapper(typeof(BlogProfile).Assembly);
             services.AddAutoMapper(typeof(BookingProfile).Assembly);
             services.AddAutoMapper(typeof(ServicesProfile).Assembly);
             services.AddAutoMapper(typeof(WorkingTimesProfile).Assembly);
@@ -68,6 +69,7 @@ namespace API.Extensions
             services.AddScoped(typeof(IDocumentService), typeof(DocumentService));
             services.AddScoped(typeof(IChatGptService), typeof(ChatGptService));
             services.AddScoped(typeof(ICarService), typeof(CarService));
+            services.AddScoped(typeof(IBlogService), typeof(BlogService));
             services.AddScoped(typeof(IFileService), typeof(FileService));
             services.AddScoped(typeof(IAuthorityService), typeof(AuthorityService));
             services.AddScoped(typeof(IServiceService), typeof(ServiceService));

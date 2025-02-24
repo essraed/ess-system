@@ -41,6 +41,7 @@ namespace API.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<Authority> Authorities { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Category> Categories { get; set; }

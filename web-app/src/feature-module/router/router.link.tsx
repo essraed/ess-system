@@ -37,6 +37,7 @@ import NotificationsDropdown from "../common/NotificationsDropdown";
 import UserDashboard from "../users/UserDashboard";
 import UserUpdate from "../users/UserUpdate";
 import BookingDocument from "../booking/BookingDocument";
+import BlogDashboard from "../blog/BlogDashboard";
 
 
 const routes = all_routes;
@@ -169,6 +170,11 @@ export const listingroutes = [
     path: routes.carDashboard,
     element: <CarDashboard />,
   },
+    // Blog
+    {
+      path: routes.blogDashboard,
+      element: <BlogDashboard />,
+    },
   // Notification
   {
     path: routes.notificationDashboard,

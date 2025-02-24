@@ -452,6 +452,25 @@ const Header = () => {
                             {t("Complaint List")}
                           </Link>
                         </li>
+                        
+                        <li
+                          className={
+                            locationPathname === routes.blogDashboard
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link
+                            to={routes.blogDashboard}
+                            onClick={() =>
+                              setLocationPathname(routes.blogDashboard)
+                            }
+                          >
+                            {t("Blog List")}
+                          </Link>
+                        </li>
+
+
                         {isAdmin() && (
                           <li
                             className={
