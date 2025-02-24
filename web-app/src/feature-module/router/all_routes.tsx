@@ -84,6 +84,12 @@ export const all_routes = {
   carEdit: "/listings/cars/edit/:id",
   carCreate: "/listings/cars/add",
 
+    //Blogs
+    blogDashboard: "/listings/blogs",
+    blogDetails: "/listings/blogs/view/:id",
+    blogEdit: "/listings/blogs/edit/:id",
+    blogCreate: "/listings/blogs/add",
+
   //Notifications
 
   notificationDashboard: "/listings/notifications",

@@ -12,12 +12,14 @@ import ContactStore from "./contactStore";
 import PaymentStore from "./paymentStore";
 import LostStore from "./lostStore";
 import ComplaintStore from "./complaintStore";
+import BlogStore from "./blogStore";
 
 interface Store {
   userStore: UserStore;
   documentStore: DocumentStore;
   authorityStore: AuthorityStore;
   carStore: CarStore;
+  blogStore: BlogStore;
   categoryStore: CategoryStore;
   serviceStore: ServiceStore;
   workingTimeStore: WorkingTimeStore;
@@ -34,6 +36,7 @@ export const store: Store = {
   documentStore: new DocumentStore(),
   authorityStore: new AuthorityStore(),
   carStore: new CarStore(),
+  blogStore:new BlogStore(),
   categoryStore: new CategoryStore(),
   serviceStore: new ServiceStore(),
   workingTimeStore: new WorkingTimeStore(),
