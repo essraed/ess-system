@@ -35,10 +35,10 @@ export const pageSizeOptions = [
 ];
 
 export const fileOptions = [
-  { label: "Copy Of Passport", value: "idProof" },
-  { label: "Passport Size Photo", value: "addressProof" },
-  { label: "Copy Of Passport & UAE Residency Of a Relative", value: "photo" },
-  { label: "Fly Tickets & Hotel Booking" , value: "photo" },
+  { label: "Copy Of Passport", value: "Copy Of Passport" },
+  { label: "Passport Size Photo", value: "Passport Size Photo" },
+  { label: "Copy Of Passport & UAE Residency Of a Relative", value: "Copy Of Passport & UAE Residency Of a Relative" },
+  { label: "Fly Tickets & Hotel Booking" , value: "Fly Tickets & Hotel Booking" },
 ];
 
 export const lostDepartments = [

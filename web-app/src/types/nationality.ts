@@ -4,6 +4,9 @@ export interface NationalityData {
     name: string;
     singlePriceWithMonth: string;
     singlePriceWithTwoMonth?: string;
+    singlePriceWithTwoMonthForChild?: string;
     multiplePriceWithMonth?: string;
+    multiplePriceWithMonthForChild?: string;
     multiplePriceWithTwoMonth?: string;
+    multiplePriceWithTwoMonthForChild?: string;
 }

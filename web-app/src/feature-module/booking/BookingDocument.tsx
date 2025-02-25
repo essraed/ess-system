@@ -109,7 +109,7 @@ const BookingDocument = () => {
       <Header />
       <div className="flex flex-col items-center justify-center bg-gray-50 lg:py-5 w-fu">
         <div className="bg-white p-8 w-full max-w-4xl text-center border border-y-pink-100">
-          <h2 className="text-3xl font-bold text-blue-600 mb-4">
+          <h2 className="text-large md:text-3xl font-bold text-blue-600 mb-4">
             Upload Booking Documents
           </h2>
           <p className="text-gray-700 text-md mb-6">
@@ -125,7 +125,7 @@ const BookingDocument = () => {
               {service.requiredFiles.map((fileName, index) => (
                 <div
                   key={index}
-                  className="flex flex-wrap md:flex-nowrap items-center justify-between bg-white p-4 border border-gray-200"
+                  className="flex flex-wrap md:flex-nowrap items-center justify-between bg-white p-2 border border-gray-200"
                 >
                   {/* File Name */}
                   <p className="text-gray-700 text-md font-semibold w-full md:w-1/4 text-center md:text-left">
@@ -135,11 +135,11 @@ const BookingDocument = () => {
                   {/* Upload Box */}
                   <div
                     {...getRootProps()}
-                    className="flex-1 border-2 border-dashed border-gray-400 p-4 cursor-pointer hover:border-blue-500 transition-all rounded-lg flex items-center justify-center text-center"
+                    className="flex-1 border-2 border-dashed border-gray-400 p-2 cursor-pointer hover:border-blue-500 transition-all rounded-lg flex items-center justify-center text-center"
                   >
                     <input {...getInputProps()} />
                     <p className="text-gray-500 text-sm">
-                      Drag & drop {fileName} here, or click to select
+                      Drag & drop {fileName} here
                     </p>
                   </div>
 
@@ -185,7 +185,8 @@ const BookingDocument = () => {
           <div className="flex justify-center mt-6">
             <button
               onClick={handleFileSubmit}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition-all"
+              className="bg-blue-600 text-white px-2 py-1 rounded-lg text-sm d:text-lg hover:bg-blue-700 transition-all"
+
             >
               Submit Documents
             </button>
