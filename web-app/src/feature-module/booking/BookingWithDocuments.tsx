@@ -15,6 +15,7 @@ import { NationalityData } from "../../types/nationality";
 import Select from "react-select";
 import { Dropdown } from "primereact/dropdown";
 import { separateCamelCase } from "../../lib/utils";
+import { number } from "zod";
 
 type Props = {
   service: ServiceData;
@@ -94,29 +95,40 @@ const DocumentBookingForm = ({ service }: Props) => {
 
       if (entryType === "single" && duration === "30 days") {
         nationalityPrice =
-          Number(selectedNationality.singlePriceWithMonth) || 0;
+          Number(selectedNationality.singlePriceWithMonth) * Number(adults) +
+            Number(selectedNationality.singlePriceWithMonth) *
+              Number(children) || 0;
       } else if (entryType === "single" && duration === "60 days") {
         nationalityPrice =
-          Number(selectedNationality.singlePriceWithTwoMonth) || 0;
+          Number(selectedNationality.singlePriceWithTwoMonth) * Number(adults) +
+          Number(selectedNationality.singlePriceWithTwoMonthForChild) * Number(children) || 0;
       } else if (entryType === "multiple" && duration === "30 days") {
         nationalityPrice =
-          Number(selectedNationality.multiplePriceWithMonth) || 0;
+          Number(selectedNationality.multiplePriceWithMonth) * Number(adults) +
+          Number(selectedNationality.multiplePriceWithMonthForChild) * Number(children) || 0;
       } else if (entryType === "multiple" && duration === "60 days") {
         nationalityPrice =
-          Number(selectedNationality.multiplePriceWithTwoMonth) || 0;
+          Number(selectedNationality.multiplePriceWithTwoMonth) *
+            Number(adults) +
+            Number(selectedNationality.multiplePriceWithTwoMonthForChild) * Number(children) || 0;
       }
 
       // Calculate prices for adults, children, and process time
-      const adultsPrice = Number(adults) * (Number(service?.price) || 0);
-      const childrenPrice =
-        Number(children) * (Number(service?.childPrice) || 0);
+
       const processTimePrice =
         processTime === "Express - 1~2 working days"
           ? Number(service?.expressPrice) || 0
           : Number(service?.regularPrice) || 0;
+      const adultsPrice =
+        Number(adults) * Number(service?.price) +
+          Number(adults) * processTimePrice || 0;
+      const childrenPrice =
+        Number(children) *
+          (Number(service?.childPrice) + Number(children) * processTimePrice) ||
+        0;
 
-      const total =
-        nationalityPrice + adultsPrice + childrenPrice + processTimePrice;
+      const total = nationalityPrice + adultsPrice + childrenPrice;
+
       setTotalPrice(total);
       setValue("totalPrice", total);
     } // Update the total price in the form
@@ -126,7 +138,6 @@ const DocumentBookingForm = ({ service }: Props) => {
     data.totalPrice = totalPrice;
     data.serviceId = service.id;
     data.nationalityId = selectedNationality?.id;
-
 
     // Submit booking logic here
     const result = await addBooking(data);
@@ -281,13 +292,12 @@ const DocumentBookingForm = ({ service }: Props) => {
                       }}
                       placeholder={t("Select Process Time")}
                       className="w-full bg-gray-100 border-2 border-gray-300 h-9 focus:outline-none focus:ring-2 focus:ring-blue-500 custom-dropdown"
-                     
                     />
                   )}
                 />
               </div>
             </div>
-                  
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm md:text-lg font-semibold mb-2">
