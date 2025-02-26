@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import CountUp from "react-countup";
 import "slick-carousel/slick/slick.css";
@@ -25,9 +25,23 @@ import {
 import { useTranslation } from "react-i18next";
 
 const HomeOne = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const { t } = useTranslation();
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      // Check if the device is mobile (width less than or equal to 768px)
+      const isMobile = window.innerWidth <= 768;
+
+      if (isMobile) {
+        videoRef.current.removeAttribute("autoplay"); // Remove autoplay on mobile
+      } else {
+        videoRef.current.setAttribute("autoplay", "true"); // Add autoplay on larger screens
+      }
+    }
   }, []);
   return (
     <>
@@ -76,12 +90,12 @@ const HomeOne = () => {
               <div className="col-md-5 offset-md-7">
                 <div className="video-wrapper hidden md:block">
                   <video
-                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0 hidden md:block"
+                    ref={videoRef}
+                    className="h-full lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
                     style={{ opacity: 0.8 }}
                     controls
                     muted
                     loop
-                    autoPlay
                   >
                     <source
                       src="/assets/videos/ALL SERVICE VIDEO.mp4"
