@@ -76,7 +76,7 @@ const HomeOne = () => {
               <div className="col-md-5 offset-md-7">
                 <div className="video-wrapper hidden md:block">
                   <video
-                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0"
+                    className="h-[100%] lg:h-[350px] max-h-[500px] w-full lg:w-full p-2 lg:p-0 hidden md:block"
                     style={{ opacity: 0.8 }}
                     controls
                     muted
