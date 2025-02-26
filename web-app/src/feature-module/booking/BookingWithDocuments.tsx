@@ -163,6 +163,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                   errorMessage={errors.customerName?.message}
                   size="sm"
                   className="text-medium md:text-lg"
+                  autoFocus
                 />
               </div>
 

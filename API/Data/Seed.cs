@@ -94,12 +94,39 @@ namespace API.Data
                     }
                 }
 
+                if (!context.Nationalities.Any())
+                {
+                    var filePath = Path.Combine(_environment.WebRootPath, "seed", "nationalityData.json");
+
+                    if (File.Exists(filePath))
+                    {
+                        var jsonData = await File.ReadAllTextAsync(filePath);
+                        var nationalities = JsonConvert.DeserializeObject<List<Nationality>>(jsonData);
+
+                        if (nationalities != null)
+                        {
+                            foreach (var nationality in nationalities)
+                            {
+                                nationality.Id = Guid.NewGuid(); 
+                                await context.Nationalities.AddAsync(nationality);
+                            }
+
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException($"The file '{filePath}' was not found.");
+                    }
+                }
+
+
                 if (!context.WorkingTimes.Any())
                 {
                     var workingTimes = new List<WorkingTime>();
 
                     var startTime = new TimeOnly(7, 0);
-                    var endTime = new TimeOnly(22, 0); 
+                    var endTime = new TimeOnly(22, 0);
 
                     foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
                     {
@@ -110,7 +137,7 @@ namespace API.Data
                             ToTime = endTime,
                             IsActive = true,
                             CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
-                            CreatedById = null 
+                            CreatedById = null
                         });
                     }
 
