@@ -20,6 +20,7 @@ namespace API.DTOs
         public int? ChildrenNumber { get; set; }
         public string? EntryType { get; set; }
         public string? Duration { get; set; }
+        public string? Reason { get; set; }
         public string? ProcessTime { get; set; }
         public decimal? TotalPrice { get; set; }
 
@@ -39,6 +40,6 @@ namespace API.DTOs
 
         public DateTime? BookingDate { get; set; }
 
-        public string? NationalityName {get;set;}
+        public string? NationalityName { get; set; }
     }
 }

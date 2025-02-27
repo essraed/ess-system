@@ -30,7 +30,7 @@ import { LostData } from "../../types/lost";
 import { LostSchema } from "../../lib/schemas/lostSchema";
 import { ComplaintSchema } from "../../lib/schemas/complaintSchema";
 import { ComplaintData } from "../../types/complaints";
-import { paymentType } from "../../lib/utils";
+import { CanceledReason, paymentType } from "../../lib/utils";
 import { NationalityData } from "../../types/nationality";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 import { BlogDetailsData } from "../../types/blog";
@@ -231,8 +231,8 @@ const Bookings = {
   // Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
-  setStatusCanceled: (id: string) =>
-    requests.put<string>(`booking/${id}/status/canceled`, {}),
+  setStatusCanceled: (id: string,reason:CanceledReason) =>
+    requests.put<string>(`booking/${id}/status/canceled`, reason),
   setStatusCompleted: (id: string) =>
     requests.put<string>(`booking/${id}/status/completed`, {}),
   setStatusPending: (id: string) =>

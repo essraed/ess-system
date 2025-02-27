@@ -15,6 +15,7 @@ export interface BookingData {
   address?: string | null;
   totalPrice?: string;
   serviceName: string;
+  reason: string;
   carName?: string | null;
   createdBy?: string | null;
   updatedBy?: string | null;
@@ -25,6 +26,7 @@ export interface BookingData {
   isVIP?: boolean;
   bookingCode: string;
   adultsNumber: number | null;
+  nationalityName:string|null;
   childrenNumber: number | null;
   entryType: string | null;
   duration: string | null;  
@@ -57,4 +59,11 @@ export interface BookingDetailsData {
   paymentType: string | null;
   fileEntities?: FileResponseData[];
   serviceId: string;
+  adultsNumber: number | null;
+  childrenNumber: number | null;
+  entryType: string | null;
+  duration: string | null;  
+  processTime: string | null; 
+  reason: string;
+  nationalityName:string|null;
 }
