@@ -14,7 +14,7 @@ const ContactDetails = ({ modalId }: Props) => {
     contactStore: { currentContact },
   } = useStore();
 
-  if (!currentContact) return <LoadingSpinner/>;
+  // if (!currentContact) return <LoadingSpinner/>;
 
   return (
     <div
@@ -39,7 +39,7 @@ const ContactDetails = ({ modalId }: Props) => {
                 {/* Contact Details */}
                 <div className="mt-4 grid grid-cols-2 gap-6">
                   {/* Render fields conditionally */}
-                  {currentContact.name && (
+                  {currentContact?.name && (
                     <div>
                       <p className="font-medium text-gray-700">Name:</p>
                       <p className="text-gray-600 break-words">
@@ -47,7 +47,7 @@ const ContactDetails = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentContact.phone && (
+                  {currentContact?.phone && (
                     <div>
                       <p className="font-medium text-gray-700">Phone:</p>
                       <p className="text-gray-600 break-words">
@@ -55,7 +55,7 @@ const ContactDetails = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentContact.email && (
+                  {currentContact?.email && (
                     <div>
                       <p className="font-medium text-gray-700">Email:</p>
                       <p className="text-gray-600 break-words">
@@ -63,17 +63,17 @@ const ContactDetails = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentContact.enquiryType !== null && (
+                  {currentContact?.enquiryType !== null && (
                     <div>
                       <p className="font-medium text-gray-700">Enquiry Type:</p>
                       <p className="text-gray-600 break-words">
-                        {currentContact.enquiryType
+                        {currentContact?.enquiryType
                           ? "Business Setup"
                           : "General Enquiry"}
                       </p>
                     </div>
                   )}
-                  {currentContact.licenseType && (
+                  {currentContact?.licenseType && (
                     <div>
                       <p className="font-medium text-gray-700">License Type:</p>
                       <p className="text-gray-600 break-words">
@@ -82,25 +82,25 @@ const ContactDetails = ({ modalId }: Props) => {
                     </div>
                   )}
 
-                  {currentContact.ejari !== null && (
+                  {currentContact?.ejari !== null && (
                     <div>
                       <p className="font-medium text-gray-700">Ejari:</p>
                       <p className="text-gray-600 break-words">
-                        {currentContact.ejari === true ? "Yes" : "No"}
+                        {currentContact?.ejari === true ? "Yes" : "No"}
                       </p>
                     </div>
                   )}
 
-                  {currentContact.localAgent !== null && (
+                  {currentContact?.localAgent !== null && (
                     <div>
                       <p className="font-medium text-gray-700">Local Agent:</p>
                       <p className="text-gray-600 break-words">
-                        {currentContact.localAgent === true ? "Yes" : "No"}
+                        {currentContact?.localAgent === true ? "Yes" : "No"}
                       </p>
                     </div>
                   )}
 
-                  {currentContact.createDate && (
+                  {currentContact?.createDate && (
                     <div>
                       <p className="font-medium text-gray-700">Create Date:</p>
                       <p className="text-gray-600 break-words">
@@ -108,7 +108,7 @@ const ContactDetails = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentContact.message && (
+                  {currentContact?.message && (
                     <div className="col-span-2">
                       <p className="font-medium text-gray-700">Message:</p>
                       <div className="text-gray-600 break-words max-h-48 overflow-auto">

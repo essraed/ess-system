@@ -147,11 +147,11 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/canceled")]
-        public async Task<IActionResult> SetBookingStateCanceled(Guid id)
+        public async Task<IActionResult> SetBookingStateCanceled(Guid id,CanceledReason reason)
         {
             try
             {
-                await _bookingService.SetBookingStateCanceled(id);
+                await _bookingService.SetBookingStateCanceled(id,reason);
                 return Ok("Booking status set to 'Canceled'.");
             }
             catch (KeyNotFoundException ex)

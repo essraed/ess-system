@@ -98,3 +98,6 @@ export function convertEnumToString<T>(value: number, enumType: T) {
 export interface paymentType{
   type:string;
 }
+export interface CanceledReason{
+  reason:string;
+}

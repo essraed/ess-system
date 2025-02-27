@@ -18,7 +18,7 @@ namespace API.Interfaces
 
         Task SetBookingStateInProcess(Guid id);
 
-        Task SetBookingStateCanceled(Guid id);
+        Task SetBookingStateCanceled(Guid id,CanceledReason reason);
 
         Task SetBookingStateCompleted(Guid id);
         Task SetBookingStatePending(Guid id);

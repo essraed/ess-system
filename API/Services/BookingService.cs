@@ -351,13 +351,14 @@ public class BookingService : IBookingService
         var result = await _context.SaveChangesAsync() > 0;
         if (!result) throw new Exception("Failed to change booking status to 'InProcess'.");
     }
-    public async Task SetBookingStateCanceled(Guid id)
+    public async Task SetBookingStateCanceled(Guid id,CanceledReason reason)
     {
         var booking = await _context.Bookings.FindAsync(id);
         if (booking == null) throw new KeyNotFoundException($"Booking with id {id} not found.");
 
         booking.BookingStatus = BookingStatus.Canceled;
         booking.UpdatedById = GetCurrentUserId();
+        booking.Reason=reason.Reason;
         booking.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         var result = await _context.SaveChangesAsync() > 0;

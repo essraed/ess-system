@@ -75,7 +75,7 @@ const BookingList = () => {
   };
   const handleCancel = async () => {
     if (selectedId) {
-      await setStatusCanceled(selectedId);
+      // await setStatusCanceled(selectedId);
       loadBookings();
       navigate(location.pathname, { replace: true });
     }
@@ -127,6 +127,14 @@ const BookingList = () => {
                     "createdBy",
                     "updatedBy",
                     "paymentStatus",
+                    "reason",
+                    "adultsNumber",
+                    "childrenNumber",
+                    "duration",
+                    "processTime", 
+                    "carName", 
+                    "nationalityName",
+                    "entryType" 
                   ]}
                   data={bookings}
                   pageSize={pageSize}

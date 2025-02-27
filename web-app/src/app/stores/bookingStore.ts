@@ -8,7 +8,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
-import { convertEnumToString, formatDateTime, paymentType } from "../../lib/utils";
+import { CanceledReason, convertEnumToString, formatDateTime, paymentType } from "../../lib/utils";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 
 export default class BookingStore {
@@ -265,9 +265,9 @@ export default class BookingStore {
     }
   };
 
-  setStatusCanceled = async (id: string): Promise<ActionResult<string>> => {
+  setStatusCanceled = async (id: string,reason:CanceledReason): Promise<ActionResult<string>> => {
     try {
-      await agent.Bookings.setStatusCanceled(id);
+      await agent.Bookings.setStatusCanceled(id,reason);
       await this.getBooking(id);
       return { status: "success", data: "Booking status set to 'Canceled'." };
     } catch (error) {

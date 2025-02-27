@@ -67,7 +67,6 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                     </div>
                   )}
-                  {currentService?.priceVIP && (
                     <div>
                       <div className="flex flex-row gap-1">
                         <span>
@@ -76,10 +75,10 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                         <p className="font-medium text-gray-700">Price:</p>
                       </div>
                       <p className="text-gray-600">
-                        {currentService?.priceVIP} {t("AED")}
+                        {currentService?.priceVIP??"0"} {t("AED")}
                       </p>
                     </div>
-                  )}
+
                   {currentService?.price && (
                     <div>
                       <p className="font-medium text-gray-700">
@@ -87,6 +86,36 @@ const ServiceDetailsDialog = ({ modalId }: Props) => {
                       </p>
                       <p className="text-gray-600">
                         {currentService?.price} {t("AED")}
+                      </p>
+                    </div>
+                  )}
+                  {currentService?.childPrice && (
+                    <div>
+                      <p className="font-medium text-gray-700">
+                        Child Price:
+                      </p>
+                      <p className="text-gray-600">
+                        {currentService?.childPrice} {t("AED")}
+                      </p>
+                    </div>
+                  )}
+                  {currentService?.expressPrice && (
+                    <div>
+                      <p className="font-medium text-gray-700">
+                        Express Price:
+                      </p>
+                      <p className="text-gray-600">
+                        {currentService?.expressPrice} {t("AED")}
+                      </p>
+                    </div>
+                  )}
+                  {currentService?.regularPrice && (
+                    <div>
+                      <p className="font-medium text-gray-700">
+                        Regular Price:
+                      </p>
+                      <p className="text-gray-600">
+                        {currentService?.regularPrice} {t("AED")}
                       </p>
                     </div>
                   )}

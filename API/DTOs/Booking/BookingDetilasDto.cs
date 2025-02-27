@@ -40,6 +40,7 @@ namespace API.DTOs
         public int? AdultsNumber { get; set; }
         public int? ChildrenNumber { get; set; }
         public string? EntryType { get; set; }
+        public string? Reason { get; set; }
         public string? Duration { get; set; }
 
         public string? ProcessTime { get; set; }

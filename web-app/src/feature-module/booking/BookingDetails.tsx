@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Divider } from "@nextui-org/react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { convertEnumToString, formatDateTime } from "../../lib/utils";
+import {
+  CanceledReason,
+  convertEnumToString,
+  formatDateTime,
+} from "../../lib/utils";
 import { useParams } from "react-router-dom";
 import { BookingStatus } from "../../types/booking";
 import BackToButton from "../common/BackToButton";
@@ -28,6 +32,18 @@ const BookingDetails = () => {
     setStatusInProcess,
     setStatusPending,
   } = bookingStore;
+
+  const [canceledReason, setCanceledReason] = useState<string>("");
+  const [showReasonInput, setShowReasonInput] = useState(false);
+
+  const handleCancelWithReason = () => {
+    const reason: CanceledReason = { reason: canceledReason };
+    if (canceledReason.trim()) {
+      setStatusCanceled(id ?? "", reason);
+    } else {
+      alert("Please provide a reason for the cancellation.");
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -60,6 +76,13 @@ const BookingDetails = () => {
     updateDate,
     updatedBy,
     fileEntities,
+    adultsNumber,
+    childrenNumber,
+    duration,
+    processTime,
+    nationalityName,
+    reason,
+    entryType,
   } = currentBooking;
 
   const customIcon = new L.Icon({
@@ -73,7 +96,7 @@ const BookingDetails = () => {
       <Header />
 
       {userStore.isLoggedIn ? (
-        <div className="booking-details-page">
+        <div className="booking-details-page w-full ">
           <div className="custom-container mx-auto py-6 px-4">
             <div className="border bg-custom-light-blue p-6">
               <div className="flex justify-between items-center mb-6">
@@ -115,10 +138,44 @@ const BookingDetails = () => {
                         <p>{email}</p>
                       </div>
                     )}
-                    {address && (
+                    {adultsNumber && (
                       <div>
-                        <p className="font-medium">Address:</p>
-                        <p>{address}</p>
+                        <p className="font-medium">Adults Number:</p>
+                        <p>{adultsNumber}</p>
+                      </div>
+                    )}
+
+                    {childrenNumber || (childrenNumber === 0 && processTime) ? (
+                      <div>
+                        <p className="font-medium">Children Number:</p>
+                        <p>{childrenNumber ?? "0"}</p>
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+
+                    {duration && (
+                      <div>
+                        <p className="font-medium">Duration:</p>
+                        <p>{duration}</p>
+                      </div>
+                    )}
+                    {processTime && (
+                      <div>
+                        <p className="font-medium">Process Time:</p>
+                        <p>{processTime}</p>
+                      </div>
+                    )}
+                    {entryType && (
+                      <div>
+                        <p className="font-medium">Entry Type:</p>
+                        <p>{entryType}</p>
+                      </div>
+                    )}
+                    {nationalityName && (
+                      <div>
+                        <p className="font-medium">Nationality Name:</p>
+                        <p>{nationalityName}</p>
                       </div>
                     )}
                   </div>
@@ -216,18 +273,50 @@ const BookingDetails = () => {
                                 BookingStatus
                               ) && (
                               <>
-                                <button
-                                  onClick={() => setStatusCanceled(id ?? "")}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
-                                >
-                                  Mark as Canceled
-                                </button>
-                                <button
-                                  onClick={() => setStatusInProcess(id ?? "")}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
-                                >
-                                  Mark as In-Progress
-                                </button>
+                                <div className="flex flex-col">
+                                  <button
+                                    onClick={() => setShowReasonInput(true)}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
+                                  >
+                                    Mark as Canceled
+                                  </button>
+
+                                  {/* Step 2: Show input field when cancellation reason is empty */}
+                                  {showReasonInput && (
+                                    <div className="pt-2">
+                                      <textarea
+                                        value={canceledReason}
+                                        onChange={(e) =>
+                                          setCanceledReason(e.target.value)
+                                        }
+                                        className="w-full p-2 border border-gray-300 rounded-lg"
+                                        placeholder="Please provide a reason for cancellation..."
+                                      />
+                                      <div className="mt-2">
+                                        <button
+                                          onClick={handleCancelWithReason}
+                                          className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                        >
+                                          Submit Reason and Cancel
+                                        </button>
+                                        <button
+                                          onClick={() =>
+                                            setShowReasonInput(false)
+                                          } // Optionally hide the input without canceling
+                                          className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <button
+                                    onClick={() => setStatusInProcess(id ?? "")}
+                                    className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                  >
+                                    Mark as In-Progress
+                                  </button>
+                                </div>
                               </>
                             )}
                           </div>
@@ -275,6 +364,12 @@ const BookingDetails = () => {
                       <div>
                         <p className="font-medium">Updated By:</p>
                         <p>{updatedBy}</p>
+                      </div>
+                    )}
+                    {reason && (
+                      <div>
+                        <p className="font-medium">Reason Of Cancelling:</p>
+                        <p>{reason}</p>
                       </div>
                     )}
                   </div>
@@ -331,7 +426,7 @@ const BookingDetails = () => {
                     {fileEntities.map((file) => (
                       <div
                         key={file.id}
-                        className="flex items-center justify-between p-3 bg-white border "
+                        className="flex items-center justify-between p-3 bg-white border w-2/3 md:w-full"
                       >
                         <p className="text-gray-800 truncate">
                           {file.fileName}
