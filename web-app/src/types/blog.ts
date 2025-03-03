@@ -6,4 +6,5 @@ export interface BlogDetailsData {
   blogcontent: string;
   createdBy?: string | null;
   createDate?: string,
+  updateDate?: string,
 }

@@ -19,6 +19,8 @@ import Header from "../common/header";
 import Footer from "../common/footer";
 import BookingCheckout from "./BookingCheckout";
 import { IMAGE_SERVER_PATH } from "../../environment";
+import ClientForm from "../clients/ClientForm";
+import ClientsTable from "../clients/ClientsTable";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -35,6 +37,7 @@ const BookingDetails = () => {
 
   const [canceledReason, setCanceledReason] = useState<string>("");
   const [showReasonInput, setShowReasonInput] = useState(false);
+  const [flag, setFlag] = useState<boolean>(false);
 
   const handleCancelWithReason = () => {
     const reason: CanceledReason = { reason: canceledReason };
@@ -49,13 +52,15 @@ const BookingDetails = () => {
     if (id) {
       getBooking(id); // Fetch booking details using the ID
     }
-  }, [id, getBooking]);
+    if (flag) setFlag(false);
+  }, [id, getBooking, flag]);
 
   if (loadingInitial || !currentBooking) {
     return <p className="text-gray-600">Loading booking details...</p>;
   }
 
   const {
+    clients,
     customerName,
     phone,
     email,
@@ -144,7 +149,6 @@ const BookingDetails = () => {
                         <p>{adultsNumber}</p>
                       </div>
                     )}
-
                     {childrenNumber || (childrenNumber === 0 && processTime) ? (
                       <div>
                         <p className="font-medium">Children Number:</p>
@@ -153,7 +157,6 @@ const BookingDetails = () => {
                     ) : (
                       <p></p>
                     )}
-
                     {duration && (
                       <div>
                         <p className="font-medium">Duration:</p>
@@ -179,6 +182,17 @@ const BookingDetails = () => {
                       </div>
                     )}
                   </div>
+
+                  <Divider className="mt-2" />
+                  {adultsNumber && !clients && (
+                    <div className="w-full mt-3">
+                      <ClientForm
+                        key={`${adultsNumber}-${childrenNumber}`} // Use quantity as part of the key to force re-render
+                        quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)} // Use nullish coalescing to default null/undefined to 0
+                        id={id}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Booking Info */}
@@ -208,6 +222,44 @@ const BookingDetails = () => {
                         <p>{bookingCode}</p>
                       </div>
                     )}
+
+                    {/* Payment Status */}
+                    <div>
+                      <p className="font-medium">Payment Status:</p>
+                      <span
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                          paymentStatus === "Completed"
+                            ? "bg-green-100 text-green-700"
+                            : paymentStatus === "Pending"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {paymentStatus}
+                      </span>
+                    </div>
+
+                    {/* Payment Type */}
+                    <div>
+                      <p className="font-medium">Payment Type:</p>
+                      <span
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                          paymentType
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-100 text-gray-700"
+                        }`}
+                      >
+                        {paymentType || "Still Not Paid"}
+                      </span>
+                    </div>
+
+                    {bookingDate && (
+                      <div>
+                        <p className="font-medium ">Booking Date:</p>
+                        <p>{formatDateTime(bookingDate.toString())}</p>
+                      </div>
+                    )}
+
                     {serviceOptionName && (
                       <div>
                         <p className="font-medium text-gray-800">
@@ -224,11 +276,12 @@ const BookingDetails = () => {
                         <p>{serviceOptionFee} AED</p>
                       </div>
                     )}
+
                     {/* Booking Status */}
                     {bookingStatus && (
                       <div className="md:col-span-2">
                         <p className="font-medium text-gray-800">Status:</p>
-                        <div className="flex items-center space-x-2 mt-2">
+                        <div className="flex justify-between items-center space-x-2 mt-2">
                           <StatusBadge status={bookingStatus.toString()} />
                         </div>
 
@@ -245,13 +298,13 @@ const BookingDetails = () => {
                                   onClick={() => setStatusCompleted(id ?? "")}
                                   className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
                                 >
-                                  Mark as Completed
+                                  Completed
                                 </button>
                                 <button
                                   onClick={() => setStatusPending(id ?? "")}
                                   className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
                                 >
-                                  Mark as Pending
+                                  Pending
                                 </button>
                               </>
                             )}
@@ -264,7 +317,7 @@ const BookingDetails = () => {
                                 onClick={() => setStatusInProcess(id ?? "")}
                                 className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
                               >
-                                Mark as In-Progress
+                                In-Progress
                               </button>
                             )}
                             {bookingStatus ===
@@ -278,7 +331,7 @@ const BookingDetails = () => {
                                     onClick={() => setShowReasonInput(true)}
                                     className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
                                   >
-                                    Mark as Canceled
+                                    Canceled
                                   </button>
 
                                   {/* Step 2: Show input field when cancellation reason is empty */}
@@ -314,7 +367,7 @@ const BookingDetails = () => {
                                     onClick={() => setStatusInProcess(id ?? "")}
                                     className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
                                   >
-                                    Mark as In-Progress
+                                    In-Progress
                                   </button>
                                 </div>
                               </>
@@ -334,86 +387,48 @@ const BookingDetails = () => {
                 </div>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                {/* Update Info */}
-                <div className="mt-6 p-4 border rounded-lg bg-gray-50">
-                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                    Update Information
-                  </h2>
-                  <Divider />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                    {bookingDate && (
-                      <div>
-                        <p className="font-medium">Booking Date:</p>
-                        <p>{formatDateTime(bookingDate.toString())}</p>
-                      </div>
-                    )}
-                    {createDate && (
-                      <div>
-                        <p className="font-medium">Create Date:</p>
-                        <p>{formatDateTime(createDate?.toString())}</p>
-                      </div>
-                    )}
-                    {updateDate && userStore.isAdmin() && (
-                      <div>
-                        <p className="font-medium">Last Updated:</p>
-                        <p>{formatDateTime(updateDate)}</p>
-                      </div>
-                    )}
-                    {updatedBy && userStore.isAdmin() && (
-                      <div>
-                        <p className="font-medium">Updated By:</p>
-                        <p>{updatedBy}</p>
-                      </div>
-                    )}
-                    {reason && (
-                      <div>
-                        <p className="font-medium">Reason Of Cancelling:</p>
-                        <p>{reason}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Payment Info */}
-                <div className="mt-6 p-4 border rounded-lg bg-gray-50">
-                  <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                    Payment Details
-                  </h2>
-                  <Divider />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                    {/* Payment Status */}
-                    <div>
-                      <p className="font-medium">Payment Status:</p>
-                      <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentStatus === "Completed"
-                            ? "bg-green-100 text-green-700"
-                            : paymentStatus === "Pending"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {paymentStatus}
-                      </span>
-                    </div>
-
-                    {/* Payment Type */}
-                    <div>
-                      <p className="font-medium">Payment Type:</p>
-                      <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentType
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-gray-100 text-gray-700"
-                        }`}
-                      >
-                        {paymentType || "Still Not Paid"}
-                      </span>
+              {userStore.isAdmin && (
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+                    <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                      Update Information
+                    </h2>
+                    <Divider />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                      {bookingDate && (
+                        <div>
+                          <p className="font-medium">Booking Date:</p>
+                          <p>{formatDateTime(bookingDate.toString())}</p>
+                        </div>
+                      )}
+                      {createDate && (
+                        <div>
+                          <p className="font-medium">Create Date:</p>
+                          <p>{formatDateTime(createDate?.toString())}</p>
+                        </div>
+                      )}
+                      {updateDate && userStore.isAdmin() && (
+                        <div>
+                          <p className="font-medium">Last Updated:</p>
+                          <p>{formatDateTime(updateDate)}</p>
+                        </div>
+                      )}
+                      {updatedBy && userStore.isAdmin() && (
+                        <div>
+                          <p className="font-medium">Updated By:</p>
+                          <p>{updatedBy}</p>
+                        </div>
+                      )}
+                      {reason && (
+                        <div>
+                          <p className="font-medium">Reason Of Cancelling:</p>
+                          <p>{reason}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Uploaded Files */}
               {fileEntities && fileEntities.length > 0 && (
@@ -442,6 +457,16 @@ const BookingDetails = () => {
                     ))}
                   </div>
                 </div>
+              )}
+
+              {clients!.length! > 0 && (
+                <>
+                  <Divider />
+                  <div className="mt-2">
+                    <ClientsTable clients={clients} setFlag={setFlag} />{" "}
+                    {/* Passing clients as prop */}
+                  </div>
+                </>
               )}
 
               {/* Location Info */}

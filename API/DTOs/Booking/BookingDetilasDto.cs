@@ -1,3 +1,4 @@
+using API.DTOs.Clients;
 using API.Helpers;
 
 namespace API.DTOs
@@ -60,5 +61,6 @@ namespace API.DTOs
 
         public ICollection<FileResponseDto>? FileEntities { get; set; }
         public string? NationalityName { get; set; }
+        public ICollection<ClientDto>? Clients { get; set; }
     }
 }

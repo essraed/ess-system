@@ -1,3 +1,4 @@
+using API.DTOs.Clients;
 using API.Helpers;
 
 namespace API.DTOs
@@ -41,5 +42,6 @@ namespace API.DTOs
         public DateTime? BookingDate { get; set; }
 
         public string? NationalityName { get; set; }
+     
     }
 }

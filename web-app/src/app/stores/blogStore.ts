@@ -26,9 +26,9 @@ export default class BlogStore {
     try {
       await agent.Blogs.delete(id);
       runInAction(() => {
-        this.blogs = this.blogs?.filter((c) => c.id !== id) || null; // Filter out deleted car
+        this.blogs = this.blogs?.filter((c) => c.id !== id) || null; 
       });
-      return { status: "success", data: "Blog deleted successfully" };
+      return { status: "success", data: "Blog deleted successfully"};
     } catch (error) {
       console.error("Error deleting Blog: ", error);
       return { status: "error", error: error as string };
@@ -58,7 +58,8 @@ export default class BlogStore {
             blogs.push({
               ...item,
               createDate: formatDateTime(item.createDate),
-              createdBy: item.createdBy ? item.createdBy : 'No set'
+              createdBy: item.createdBy ? item.createdBy : 'No set',
+              updateDate: formatDateTime(item.createDate)??"No Set"
             });
           });
 

@@ -1,3 +1,4 @@
+import { ClientData } from "./client";
 import { FileResponseData } from "./filesTypes";
 
 export enum BookingStatus {
@@ -66,4 +67,5 @@ export interface BookingDetailsData {
   processTime: string | null; 
   reason: string;
   nationalityName:string|null;
+  clients:ClientData[]|null;
 }

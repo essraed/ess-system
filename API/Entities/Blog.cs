@@ -16,6 +16,8 @@ namespace API.Entities
         public DateTime? UpdateDate { get; set; }
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy { get; set; }
+        
+        public bool IsDeleted { get; set; } = false;
 
     }
 }
