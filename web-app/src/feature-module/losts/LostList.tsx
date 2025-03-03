@@ -139,7 +139,6 @@ const LostList = () => {
                     "phone",
                     "Email",
                     "updatedBy"
-                    
                   ]}
                   data={lostItems!}
                   pageSize={pageSize}

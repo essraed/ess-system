@@ -147,6 +147,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/canceled")]
+        [AllowAnonymous]
         public async Task<IActionResult> SetBookingStateCanceled(Guid id,CanceledReason reason)
         {
             try

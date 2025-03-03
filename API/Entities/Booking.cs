@@ -76,6 +76,7 @@ namespace API.Entities
 
         public Notification? Notification { get; set; }
         public ICollection<FileEntity>? FileEntities { get; set; }
+        public ICollection<Client>? Clients { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

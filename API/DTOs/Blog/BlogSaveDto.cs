@@ -10,7 +10,6 @@ namespace API.DTOs
         public string BlogContent { get; set; } = default!;
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public string? CreatedBy { get; set; }
 
     }
 }

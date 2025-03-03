@@ -91,6 +91,7 @@ public class BookingService : IBookingService
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.FileEntities)
+            .Include(x=>x.Clients)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (booking == null)

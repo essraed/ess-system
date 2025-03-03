@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Helpers
 {
-    public enum LostStatus
+    public enum ClientStatus
     {
         Pending,    // New
         InProcess, // After payment will change to in process.
-        Completed    // Done
+        Accepted,
+        Rejected    // Done
     }
 }

@@ -31,125 +31,138 @@ const Table = ({
   dialogFlags,
   getViewId,
 }: Props) => {
-  const action = (rowData: any) => {
+  const {
+    userStore: { isAdmin },
+  } = useStore();
+
+  // Action functions for icons in individual columns
+  const viewAction = (rowData: any) => {
     const { id } = rowData;
     const { moreDetailsUrl } = rowData;
-    const {
-      userStore: { isAdmin },
-    } = useStore();
 
     return (
-      <div className="dropdown dropdown-action">
-        <Link
-          to="#"
-          className="dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i className="fas fa-ellipsis-vertical me-1"></i>
-        </Link>
-        <div className="dropdown-menu dropdown-menu-end">
-          {(routeUrl === all_routes.categoryDashboard ||
-            routeUrl === all_routes.serviceDashboard ||
-            routeUrl === all_routes.lostDashboard ||
-            routeUrl === all_routes.ComplaintDashboard ||
-            routeUrl === all_routes.contactDashboard) && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              onClick={() => {
-                if (getViewId) getViewId(id);
-              }}
-              data-bs-toggle="modal"
-              data-bs-target={`#${routeUrl}`}
-            >
-              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
-              View
-            </Link>
-          )}
+      <>
+        {/* Modal View Action */}
+        {(routeUrl === all_routes.categoryDashboard ||
+          routeUrl === all_routes.serviceDashboard ||
+          routeUrl === all_routes.lostDashboard ||
+          routeUrl === all_routes.ComplaintDashboard ||
+          routeUrl === all_routes.contactDashboard) && (
+          <Link
+            to="#"
+            onClick={() => {
+              if (getViewId) getViewId(id);
+            }}
+            data-bs-toggle="modal"
+            data-bs-target={`#${routeUrl}`}
+          >
+            <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer"></i>
+          </Link>
+        )}
 
-          {(routeUrl === all_routes.letterDashboard ||
-            routeUrl === all_routes.bookingDashboard) && (
-            <Link className="dropdown-item" to={`${routeUrl}/view/${id}`}>
-              <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
-              View
-            </Link>
-          )}
-
-          {isAdmin() && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              onClick={() => confirmDialog(id)}
-              data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
-            >
-              <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer me-1"></i>{" "}
-              Delete
-            </Link>
-          )}
-          {routeUrl !== all_routes.authorityDashboard &&
-            routeUrl !== all_routes.categoryDashboard &&
-            routeUrl !== all_routes.carDashboard &&
-            routeUrl !== all_routes.notificationDashboard &&
-            routeUrl !== all_routes.contactDashboard &&
-            routeUrl !== all_routes.lostDashboard &&
-            routeUrl !== all_routes.ComplaintDashboard &&
-            routeUrl !== all_routes.bookingDashboard &&
-            isAdmin() && (
-              <Link className="dropdown-item" to={`${routeUrl}/edit/${id}`}>
-                <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer me-1"></i>{" "}
-                Edit
-              </Link>
-            )}
-          {(routeUrl === all_routes.lostDashboard ||
-            routeUrl === all_routes.ComplaintDashboard) && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              onClick={() => confirmDialog(id)}
-              data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.completeDialog}`}
-            >
-              <i className="feather icon-check-circle text-green-500 font-bold me-1"></i>{" "}
-              Set as Cmoplete
-            </Link>
-          )}
-          {/* {routeUrl === all_routes.bookingDashboard && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              onClick={() => confirmDialog(id)}
-              data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.cancelDialog}`}
-            >
-              <i className="feather icon-trash-2 me-1"></i> Cancel booking
-            </Link>
-          )} */}
-          {(routeUrl === all_routes.lostDashboard ||
-            routeUrl === all_routes.ComplaintDashboard) && (
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target={`#${dialogFlags.inProocess}`}
-              onClick={() => confirmDialog(id)}
-            >
-              <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
-              Set as InProcess
-            </Link>
-          )}
-          {routeUrl === all_routes.notificationDashboard && (
-            <Link className="dropdown-item" to={`/listings/${moreDetailsUrl}`}>
-              <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
-              Booking Details
-            </Link>
-          )}
-        </div>
-      </div>
+        {/* URL View Action */}
+        {(routeUrl === all_routes.letterDashboard ||
+          routeUrl === all_routes.bookingDashboard) && (
+          <Link to={`${routeUrl}/view/${id}`}>
+            <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
+          </Link>
+        )}
+      </>
     );
   };
 
+  const editAction = (rowData: any) => {
+    const { id } = rowData;
+
+    return (
+      // Edit action based on conditions
+      routeUrl !== all_routes.authorityDashboard &&
+      routeUrl !== all_routes.bookingDashboard &&
+      routeUrl !== all_routes.categoryDashboard &&
+      routeUrl !== all_routes.carDashboard &&
+      routeUrl !== all_routes.notificationDashboard &&
+      routeUrl !== all_routes.contactDashboard &&
+      routeUrl !== all_routes.lostDashboard &&
+      routeUrl !== all_routes.ComplaintDashboard &&
+      isAdmin() && (
+        <Link to={`${routeUrl}/edit/${id}`}>
+          <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer"></i>
+        </Link>
+      )
+    );
+  };
+
+  const deleteAction = (rowData: any) => {
+    const { id } = rowData;
+
+    return (
+      // Delete action based on conditions
+      isAdmin() && (
+        <Link
+          to="#"
+          onClick={() => confirmDialog(id)}
+          data-bs-toggle="modal"
+          data-bs-target={`#${dialogFlags.deleteDialog ?? "delete_dialog"}`}
+        >
+          <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer"></i>
+        </Link>
+      )
+    );
+  };
+
+  const completeAction = (rowData: any) => {
+    const { id } = rowData;
+
+    return (
+      // Complete action only for Lost and Complaint dashboards
+      (routeUrl === all_routes.lostDashboard ||
+        routeUrl === all_routes.ComplaintDashboard) && (
+        <Link
+          to="#"
+          onClick={() => confirmDialog(id)}
+          data-bs-toggle="modal"
+          data-bs-target={`#${dialogFlags.completeDialog}`}
+        >
+          <i className="feather icon-check-circle text-green-500 font-bold"></i>
+        </Link>
+      )
+    );
+  };
+
+  const processAction = (rowData: any) => {
+    const { id } = rowData;
+
+    return (
+      // In Process action only for Lost and Complaint dashboards
+      (routeUrl === all_routes.lostDashboard ||
+        routeUrl === all_routes.ComplaintDashboard) && (
+        <Link
+          to="#"
+          onClick={() => confirmDialog(id)}
+          data-bs-toggle="modal"
+          data-bs-target={`#${dialogFlags.inProocess}`}
+        >
+          <i className="feather icon-loader text-orange-500 font-bold"></i>
+        </Link>
+      )
+    );
+  };
+  const bookingdetailsAction = (rowData: any) => {
+    const { id } = rowData;
+    const { moreDetailsUrl } = rowData;
+
+    return (
+      // In Process action only for Lost and Complaint dashboards
+
+      routeUrl === all_routes.notificationDashboard && (
+        <Link to={`/listings/${moreDetailsUrl}`}>
+          <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
+        </Link>
+      )
+    );
+  };
+
+  // Confirm dialog function
   const confirmDialog = (id: string) => {
     if (setSelectedId) setSelectedId(id);
   };
@@ -190,9 +203,42 @@ const Table = ({
 
       {status && <Column field="status" header="Status" body={status} />}
 
-      {routeUrl !== all_routes.WorkingTimeDashboard && (
-          <Column field="action" header="Action" body={action} />
-        )}
+      {/* Conditionally render the View, Edit, Delete, etc. columns based on routeUrl */}
+      {(routeUrl === all_routes.categoryDashboard ||
+        routeUrl === all_routes.serviceDashboard ||
+        routeUrl === all_routes.lostDashboard ||
+        routeUrl === all_routes.ComplaintDashboard ||
+        routeUrl === all_routes.bookingDashboard) && (
+        <Column header="View" body={viewAction} />
+      )}
+
+      {routeUrl !== all_routes.authorityDashboard &&
+        routeUrl !== all_routes.categoryDashboard &&
+        routeUrl !== all_routes.bookingDashboard &&
+        routeUrl !== all_routes.carDashboard &&
+        routeUrl !== all_routes.notificationDashboard &&
+        routeUrl !== all_routes.contactDashboard &&
+        routeUrl !== all_routes.lostDashboard &&
+        routeUrl !== all_routes.WorkingTimeDashboard &&
+        routeUrl !== all_routes.ComplaintDashboard &&
+        routeUrl !== all_routes.blogDashboard &&
+        isAdmin() && <Column header="Edit" body={editAction} />}
+
+      {routeUrl !== all_routes.WorkingTimeDashboard && isAdmin() && (
+        <Column header="Delete" body={deleteAction} />
+      )}
+
+      {(routeUrl === all_routes.lostDashboard ||
+        routeUrl === all_routes.ComplaintDashboard) && (
+        <Column header="Complete" body={completeAction} />
+      )}
+      {(routeUrl === all_routes.lostDashboard ||
+        routeUrl === all_routes.ComplaintDashboard) && (
+        <Column header="In Process" body={processAction} />
+      )}
+      {routeUrl === all_routes.notificationDashboard && isAdmin() && (
+        <Column header="Booking Details" body={bookingdetailsAction} />
+      )}
     </DataTable>
   );
 };

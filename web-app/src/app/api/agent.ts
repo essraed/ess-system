@@ -35,6 +35,8 @@ import { NationalityData } from "../../types/nationality";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 import { BlogDetailsData } from "../../types/blog";
 import { BlogSchema } from "../../lib/schemas/BlogSchema";
+import { ClientData } from "../../types/client";
+import { ClientSchema } from "../../lib/schemas/clientScema";
 
 
 axios.defaults.baseURL = PUBLIC_API_URL;
@@ -154,6 +156,20 @@ const Complaints = {
     requests.put<string>(`complaint/${id}/status/completed`, {}),
 };
 
+
+const Clients = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<ClientData[]>>("client", { params }).then(responseBody),
+  getById: (id: string) => requests.get<ClientData>(`client/${id}`),
+  create: (client: { name: string; passportNumber: string; bookingId?: string | undefined; }) => requests.post<ClientData>("client", client),
+  delete: (id: string) => requests.del<string>(`client/${id}`),
+  setStatusInProcess: (id: string) =>
+    requests.put<string>(`client/${id}/status/in-process`, {}),
+  setStatusRejected: (id: string) =>
+    requests.put<string>(`client/${id}/status/rejected`, {}),
+  setStatusAccepted: (id: string) =>
+    requests.put<string>(`client/${id}/status/accepted`, {}),
+};
 
 
 
@@ -348,6 +364,7 @@ const agent = {
   Complaints,
   Nationality,
   Blogs,
+  Clients,
 };
 
 export default agent;

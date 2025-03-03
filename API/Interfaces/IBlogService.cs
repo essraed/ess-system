@@ -8,7 +8,7 @@ namespace API.Interfaces
     {
         Task<PagedList<BlogDetailsDto>> GetAllBlogsAsync(BlogParams blogParams);
         Task<BlogDetailsDto> GetBlogByIdAsync(Guid id);
-        Task<BlogDetailsDto> AddBlogAsync(BlogDetailsDto model);
+        Task<BlogDetailsDto> AddBlogAsync(BlogSaveDto model);
         Task DeleteBlogAsync(Guid id);
     }
 }

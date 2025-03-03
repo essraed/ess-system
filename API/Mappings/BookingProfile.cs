@@ -55,6 +55,7 @@ namespace API.Mappings
                     opt.MapFrom(src => src.Nationality != null ? src.Nationality.Name : null))
                 .ForMember(dest => dest.PaymentStatus, opt =>
                     opt.MapFrom(src => src.Payment!.Status));
+                
         }
     }
 }
