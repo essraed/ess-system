@@ -101,4 +101,9 @@ public class BlogService : IBlogService
             .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
                 ?? null!;
     }
+
+    public Task<BlogDetailsDto> AddBlogAsync(BlogSaveDto model)
+    {
+        throw new NotImplementedException();
+    }
 }

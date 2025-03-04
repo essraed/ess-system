@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250303092438_Events")]
+    partial class Events
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,9 +148,6 @@ namespace API.Migrations
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -344,52 +344,6 @@ namespace API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("API.Entities.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BookingId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassportNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("Clients");
-                });
-
             modelBuilder.Entity("API.Entities.Complaint", b =>
                 {
                     b.Property<Guid>("Id")
@@ -574,9 +528,6 @@ namespace API.Migrations
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -612,8 +563,6 @@ namespace API.Migrations
                     b.HasIndex("BookingId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ClientId");
 
                     b.HasIndex("CreatedById");
 
@@ -1161,27 +1110,6 @@ namespace API.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("API.Entities.Client", b =>
-                {
-                    b.HasOne("API.Entities.Booking", "Booking")
-                        .WithMany("Clients")
-                        .HasForeignKey("BookingId");
-
-                    b.HasOne("API.Entities.AppUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("API.Entities.AppUser", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
-                });
-
             modelBuilder.Entity("API.Entities.Complaint", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
@@ -1230,10 +1158,6 @@ namespace API.Migrations
                         .WithMany("FileEntities")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("API.Entities.Client", "Client")
-                        .WithMany("FileEntities")
-                        .HasForeignKey("ClientId");
-
                     b.HasOne("API.Entities.AppUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -1249,8 +1173,6 @@ namespace API.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Client");
 
                     b.Navigation("CreatedBy");
 
@@ -1391,8 +1313,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Entities.Booking", b =>
                 {
-                    b.Navigation("Clients");
-
                     b.Navigation("FileEntities");
                 });
 
@@ -1406,11 +1326,6 @@ namespace API.Migrations
                     b.Navigation("FileEntities");
 
                     b.Navigation("Services");
-                });
-
-            modelBuilder.Entity("API.Entities.Client", b =>
-                {
-                    b.Navigation("FileEntities");
                 });
 
             modelBuilder.Entity("API.Entities.Nationality", b =>
