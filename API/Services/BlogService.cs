@@ -66,7 +66,7 @@ public class BlogService : IBlogService
             throw new Exception("Blog already exists.");
         }
 
-        var blog = _mapper.Map<Blog>(model);    
+        var blog = _mapper.Map<Blog>(model);
 
         blog.CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
         blog.CreatedById = GetCurrentUserId();
@@ -86,7 +86,7 @@ public class BlogService : IBlogService
         {
             throw new KeyNotFoundException($"Blog with id {id} not found.");
         }
-        blog.IsDeleted=true;
+        blog.IsDeleted = true;
         var result = await _context.SaveChangesAsync() > 0;
 
         if (!result)
@@ -102,8 +102,4 @@ public class BlogService : IBlogService
                 ?? null!;
     }
 
-    public Task<BlogDetailsDto> AddBlogAsync(BlogSaveDto model)
-    {
-        throw new NotImplementedException();
-    }
 }

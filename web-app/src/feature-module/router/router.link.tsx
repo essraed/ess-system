@@ -70,7 +70,7 @@ export const publicRoutes = [
   },
   {
     path: routes.aboutUs,
-    element: <AboutUs />
+    element: <AboutUs />,
   },
   {
     path: routes.contactUs,
@@ -175,16 +175,16 @@ export const listingroutes = [
     path: routes.carDashboard,
     element: <CarDashboard />,
   },
-    // Blog
-    {
-      path: routes.blogDashboard,
-      element: <BlogDashboard />,
-    },
-        // Blog
-        {
-          path: routes.eventDashboard,
-          element: <EventDashboard />,
-        },
+  // Blog
+  {
+    path: routes.blogDashboard,
+    element: <BlogDashboard />,
+  },
+  // Blog
+  {
+    path: routes.EventDashboard,
+    element: <EventDashboard />,
+  },
   // Notification
   {
     path: routes.notificationDashboard,
@@ -206,7 +206,7 @@ export const listingroutes = [
     path: routes.lostDashboard,
     element: <LostDashboard />,
   },
-  
+
   {
     path: routes.ComplaintDashboard,
     element: <ComplaintDashboard />,
@@ -219,7 +219,6 @@ export const listingroutes = [
     path: routes.UserEdit,
     element: <UserUpdate />,
   },
-  
 ];
 
 export const authenticationRoute = [

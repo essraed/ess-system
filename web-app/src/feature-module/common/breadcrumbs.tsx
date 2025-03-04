@@ -31,6 +31,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname === routes.allServices ||
     location.pathname===routes.businessSetup||
     location.pathname===routes.Complaints||
+    location.pathname===routes.EventDashboard||
     location.pathname===routes.ComplaintDashboard||
     location.pathname===routes.UserDashboard||
     location.pathname.startsWith(routes.contactDetails.slice(0, -3)) 

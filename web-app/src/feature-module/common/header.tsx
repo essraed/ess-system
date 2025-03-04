@@ -467,6 +467,22 @@ const Header = () => {
                             {t("Blog List")}
                           </Link>
                         </li>
+                        <li
+                          className={
+                            locationPathname === routes.EventDashboard
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link
+                            to={routes.EventDashboard}
+                            onClick={() =>
+                              setLocationPathname(routes.EventDashboard)
+                            }
+                          >
+                            {t("Event List")}
+                          </Link>
+                        </li>
 
 
                         {isAdmin() && (

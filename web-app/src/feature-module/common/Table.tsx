@@ -96,7 +96,6 @@ const Table = ({
     const { id } = rowData;
 
     return (
-      // Delete action based on conditions
       isAdmin() && (
         <Link
           to="#"
@@ -196,6 +195,9 @@ const Table = ({
                 if (key === "isComplaint") {
                   return rowData[key] ? "Complaint" : "Suggestion";
                 }
+                if (key === "isComing") {
+                  return rowData[key] ? "Yes" : "No";
+                }
                 return rowData[key];
               }}
             />
@@ -224,9 +226,9 @@ const Table = ({
         routeUrl !== all_routes.blogDashboard &&
         isAdmin() && <Column header="Edit" body={editAction} />}
 
-      {routeUrl !== all_routes.WorkingTimeDashboard && isAdmin() && (
-        <Column header="Delete" body={deleteAction} />
-      )}
+      {routeUrl !== all_routes.WorkingTimeDashboard &&
+        routeUrl === all_routes.EventDashboard &&
+        isAdmin() && <Column header="Delete" body={deleteAction} />}
 
       {(routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (

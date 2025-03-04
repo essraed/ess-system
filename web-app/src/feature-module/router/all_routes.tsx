@@ -92,11 +92,6 @@ export const all_routes = {
     blogCreate: "/listings/blogs/add",
 
 
-
-    //Events
-    eventDashboard: "/listings/event",
-    eventDetails: "/listings/event/view/:id",
-
   //Notifications
 
   notificationDashboard: "/listings/notifications",
@@ -116,6 +111,9 @@ export const all_routes = {
   //Losts
   ComplaintDashboard: "/listings/Complaints",
   ComplaintsDetails: "/listings/Complaints/view/:id",
+
+  //Event
+  EventDashboard: "/listings/Events",
 
   //Payments
   paymentSuccess: "/payment/status",
