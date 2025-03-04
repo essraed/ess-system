@@ -9,9 +9,10 @@ import { clientSchema, ClientSchema } from "../../lib/schemas/clientScema";
 interface ClientFormProps {
   quantity: number;
   id: string | undefined;
+  setaddClientFlag: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ClientForm: React.FC<ClientFormProps> = ({ quantity, id }) => {
+const ClientForm: React.FC<ClientFormProps> = ({ quantity, id,setaddClientFlag }) => {
   const { clientStore: { addClient } } = useStore();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm<ClientSchema>({
@@ -44,6 +45,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ quantity, id }) => {
         toast.error(`Error with ${client.name}: ${result.error}`);
       }
     }
+    setaddClientFlag(true);
   };
   
 

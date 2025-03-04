@@ -38,6 +38,7 @@ const BookingDetails = () => {
   const [canceledReason, setCanceledReason] = useState<string>("");
   const [showReasonInput, setShowReasonInput] = useState(false);
   const [flag, setFlag] = useState<boolean>(false);
+  const [addClientFlag, setaddClientFlag] = useState<boolean>(false);
 
   const handleCancelWithReason = () => {
     const reason: CanceledReason = { reason: canceledReason };
@@ -53,7 +54,8 @@ const BookingDetails = () => {
       getBooking(id); // Fetch booking details using the ID
     }
     if (flag) setFlag(false);
-  }, [id, getBooking, flag]);
+    if (addClientFlag) setaddClientFlag(false);
+  }, [id, getBooking, flag,addClientFlag]);
 
   if (loadingInitial || !currentBooking) {
     return <p className="text-gray-600">Loading booking details...</p>;
@@ -184,12 +186,13 @@ const BookingDetails = () => {
                   </div>
 
                   <Divider className="mt-2" />
-                  {adultsNumber && !clients && (
+                  {adultsNumber && clients!.length == 0 && (
                     <div className="w-full mt-3">
                       <ClientForm
                         key={`${adultsNumber}-${childrenNumber}`} // Use quantity as part of the key to force re-render
                         quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)} // Use nullish coalescing to default null/undefined to 0
                         id={id}
+                        setaddClientFlag={setaddClientFlag}
                       />
                     </div>
                   )}

@@ -6,7 +6,6 @@ import { convertEnumToString, formatDateTime } from "../../lib/utils";
 import { ClientData, clientStatus } from "../../types/client";
 import { ClientSchema } from "../../lib/schemas/clientScema";
 
-
 export default class ClientStore {
   clientItems: ClientData[] | null | undefined = null;
   currentClientItem: ClientData | null = null;
@@ -24,7 +23,11 @@ export default class ClientStore {
 
   // Add a new client
   // Modify addClient definition to accept a single client instead of ClientSchema
-addClient = async (client: { name: string; passportNumber: string; bookingId?: string | undefined; }): Promise<ActionResult<string>> => {
+  addClient = async (client: {
+    name: string;
+    passportNumber: string;
+    bookingId?: string | undefined;
+  }): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Clients.create(client); // Ensure you send the correct data to your API
       runInAction(() => {
@@ -35,14 +38,13 @@ addClient = async (client: { name: string; passportNumber: string; bookingId?: s
             ]
           : [response];
       });
-  
+
       return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error adding client:", error);
       return { status: "error", error: error as string };
     }
   };
-  
 
   // Delete a client
   deleteClient = async (id: string): Promise<ActionResult<string>> => {
@@ -186,11 +188,9 @@ addClient = async (client: { name: string; passportNumber: string; bookingId?: s
     this.searchTerm = term;
   };
 
-
   setBookingIdParam = (bookingId: string) => {
     this.bookingId = bookingId;
   };
-
 
   // Set date filter
   setDateFilter = (from: string | null, to: string | null) => {
