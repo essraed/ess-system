@@ -38,7 +38,8 @@ import UserDashboard from "../users/UserDashboard";
 import UserUpdate from "../users/UserUpdate";
 import BookingDocument from "../booking/BookingDocument";
 import BlogDashboard from "../blog/BlogDashboard";
-
+import EventDashboard from "../Event/EventDashboard";
+import Event from "../Event/Event";
 
 const routes = all_routes;
 
@@ -78,6 +79,10 @@ export const publicRoutes = [
   {
     path: routes.businessSetup,
     element: <BusinessSetup />,
+  },
+  {
+    path: routes.event,
+    element: <Event />,
   },
   {
     path: routes.Losts,
@@ -175,6 +180,11 @@ export const listingroutes = [
       path: routes.blogDashboard,
       element: <BlogDashboard />,
     },
+        // Blog
+        {
+          path: routes.eventDashboard,
+          element: <EventDashboard />,
+        },
   // Notification
   {
     path: routes.notificationDashboard,

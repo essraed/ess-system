@@ -35,6 +35,8 @@ import { NationalityData } from "../../types/nationality";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 import { BlogDetailsData } from "../../types/blog";
 import { BlogSchema } from "../../lib/schemas/BlogSchema";
+import { EventData } from "../../types/event";
+import { EventSchema } from "../../lib/schemas/EventSchema";
 
 
 axios.defaults.baseURL = PUBLIC_API_URL;
@@ -117,6 +119,15 @@ const Blogs = {
   create: (blog: BlogSchema) => requests.post<BlogDetailsData>("blog", blog),
   delete: (id: string) => requests.del<string>(`blog/${id}`),
 };
+
+
+const Events = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<EventData[]>>("event", { params }).then(responseBody),
+  getById: (id: string) => requests.get<EventData>(`event/${id}`),
+  create: (event: EventSchema) => requests.post<EventData>("event", event),
+};
+
 
 const Contacts = {
   getAll: (params: URLSearchParams) =>
@@ -348,6 +359,7 @@ const agent = {
   Complaints,
   Nationality,
   Blogs,
+  Events,
 };
 
 export default agent;

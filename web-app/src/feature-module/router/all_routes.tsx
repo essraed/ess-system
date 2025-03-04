@@ -1,3 +1,4 @@
+import EventDashboard from "../Event/EventDashboard";
 
 
 export const all_routes = {
@@ -90,6 +91,12 @@ export const all_routes = {
     blogEdit: "/listings/blogs/edit/:id",
     blogCreate: "/listings/blogs/add",
 
+
+
+    //Events
+    eventDashboard: "/listings/event",
+    eventDetails: "/listings/event/view/:id",
+
   //Notifications
 
   notificationDashboard: "/listings/notifications",
@@ -126,6 +133,6 @@ export const all_routes = {
   businessSetup: "/businessSetup",
   Losts: "/Losts",
   Complaints: "/Complaints",
-
   admin: "/admin",
+  event :"/event",
 };

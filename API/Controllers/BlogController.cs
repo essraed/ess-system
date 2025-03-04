@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Interfaces;
 using API.RequestParams;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,35 @@ namespace API.Controllers
             catch (KeyNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] BlogSaveDto model)
+        {
+            try
+            {
+                var blog = await _blogService.AddBlogAsync(model);
+                return Ok(blog);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while creating the Car: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _blogService.DeleteBlogAsync(id);
+                return Ok("Delete completed successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while deleting the Car: {ex.Message}");
             }
         }
 

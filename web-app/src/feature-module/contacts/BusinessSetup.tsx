@@ -21,8 +21,6 @@ import {
 
 const BusinessSetup = () => {
   useTranslation();
-
-
   const {
     contactStore: { addContact },
   } = useStore();
