@@ -523,6 +523,15 @@ const Header = () => {
                       {t("Complaints & Suggestions")}
                     </Link>
                   </li>
+                  <li
+                    className={
+                      location.pathname === routes.event ? "active" : ""
+                    }
+                  >
+                    <Link to={routes.event}>
+                      {t("Event")}
+                    </Link>
+                  </li>
                 </ul>
                 <ul className="hidden lg:block">
                   {isAdmin() && (
