@@ -83,5 +83,34 @@ namespace API.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] BlogSaveDto model)
+        {
+            try
+            {
+                var blog = await _blogService.AddBlogAsync(model);
+                return Ok(blog);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while creating the Car: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _blogService.DeleteBlogAsync(id);
+                return Ok("Delete completed successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while deleting the Car: {ex.Message}");
+            }
+        }
+
+
     }
 }

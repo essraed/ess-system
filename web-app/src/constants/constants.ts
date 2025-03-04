@@ -65,3 +65,23 @@ export const CompalintDepartments = [
   { value: "MAIN RECEPTION", label: "MAIN RECEPTION" },
   { value: "OTHER", label: "OTHER" },
 ];
+
+
+export const EventDepartments = [
+  { value: "AMER RECEPTION", label: "AMER RECEPTION" },
+  { value: "AMER TYPING", label: "AMER TYPING" },
+  { value: "TASHEEL", label: "SELF TASHEEL" },
+  { value: "DED", label: "DED" },
+  { value: "DUBAI COURT", label: "DUBAI COURT" },
+  { value: "IT", label: "IT" },
+  {value : "MARKETING", label: "MARKETING"},
+  { value: "HR", label: "HR" },
+  { value: "DHA", label: "DHA" },
+  { value: "ACCOUNTS", label: "ACCOUNTS" },
+  { value: "CASHIER", label: "CASHIER" },
+  { value: "TYPING", label: "TYPING" },
+  { value: "MAINTAINACE", label: "MAINTAINACE" },
+  { value: "CLEANING", label: "CLEANING" },
+  { value: "CUSTOMER SERVICES", label: "CUSTOMER SERVICES" },
+  { value: "OTHER", label: "OTHER" },
+];

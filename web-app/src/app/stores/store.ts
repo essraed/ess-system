@@ -15,6 +15,8 @@ import ComplaintStore from "./complaintStore";
 import NationalityStore from "./nationalityStore";
 import BlogStore from "./blogStore";
 import ClientStore from "./clientStore";
+import EventStore from "./eventStore";
+
 
 interface Store {
   userStore: UserStore;
@@ -32,7 +34,8 @@ interface Store {
   lostStore: LostStore;
   complaintStore:ComplaintStore;
   nationalityStore:NationalityStore;
-  clientStore:ClientStore
+  clientStore:ClientStore;
+  eventStore:EventStore;
 }
 
 export const store: Store = {
@@ -52,6 +55,7 @@ export const store: Store = {
   complaintStore:new ComplaintStore(),
   nationalityStore:new NationalityStore(),
   clientStore:new ClientStore(),
+  eventStore:new EventStore(),
 };
 
 export const StoreContext = createContext(store);
