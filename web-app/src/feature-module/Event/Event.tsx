@@ -9,6 +9,7 @@ import { eventSchema, EventSchema } from "../../lib/schemas/EventSchema";
 import { EventDepartments } from "../../constants/constants";
 import Header from "../common/header";
 import Footer from "../common/footer";
+import Breadcrumbs from "../common/breadcrumbs";
 
 const Event = () => {
   useTranslation();
@@ -42,7 +43,8 @@ const Event = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <Breadcrumbs title="Event" subtitle="Pages" />
+      <main className="flex-grow container mx-auto px-4 py-10 ">
         <div className="max-w-2xl mx-auto bg-white border border-gray-300 rounded-lg p-8">
           <h2 className="text-3xl font-bold text-center text-black mb-6">
             Confirm Your Participation
