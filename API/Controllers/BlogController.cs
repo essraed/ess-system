@@ -14,7 +14,6 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class BlogController : ControllerBase
     {
-
         private readonly IBlogService _blogService;
 
         public BlogController(IBlogService blogsService)
@@ -44,6 +43,7 @@ namespace API.Controllers
             }
         }
 
+        // Keep only one POST method
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<BlogDetailsDto>> AddBlogAsync([FromBody] BlogSaveDto blogSaveDto)
@@ -55,16 +55,13 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-
                 // Log the full exception details, including inner exception
                 var errorDetails = ex.InnerException?.Message ?? ex.Message;
                 return BadRequest(new { message = errorDetails });
             }
-
         }
 
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> DeleteBlogAsync(Guid id)
         {
             try
@@ -81,36 +78,5 @@ namespace API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] BlogSaveDto model)
-        {
-            try
-            {
-                var blog = await _blogService.AddBlogAsync(model);
-                return Ok(blog);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred while creating the Car: {ex.Message}");
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            try
-            {
-                await _blogService.DeleteBlogAsync(id);
-                return Ok("Delete completed successfully");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred while deleting the Car: {ex.Message}");
-            }
-        }
-
-
     }
 }

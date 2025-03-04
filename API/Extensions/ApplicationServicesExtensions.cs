@@ -7,7 +7,7 @@ using DinkToPdf.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Wkhtmltopdf.NetCore;
 
-namespace API.Extensions 
+namespace API.Extensions
 {
     public static class ApplicationServicesExtensions
     {
@@ -55,6 +55,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(ComplaintProfile).Assembly);
             services.AddAutoMapper(typeof(LostProfile).Assembly);
             services.AddAutoMapper(typeof(ComplaintProfile).Assembly);
+            services.AddAutoMapper(typeof(EventProfile).Assembly);
             services.AddAutoMapper(typeof(NationalityProfile).Assembly);
             services.AddAutoMapper(typeof(ClientProfile).Assembly);
 
@@ -89,11 +90,12 @@ namespace API.Extensions
             services.AddScoped(typeof(ICompalintService), typeof(ComplaintService));
             services.AddScoped(typeof(INationalityService), typeof(NationalityService));
             services.AddScoped(typeof(IClientService), typeof(ClientService));
+            services.AddScoped(typeof(IEventService), typeof(EventService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             // Report services
             services.AddWkhtmltopdf("wkhtmltopdf");
-            
+
             return services;
         }
     }

@@ -62,7 +62,8 @@ export default class EventStore {
 
             data.map((item) => {
               events.push({
-                ...item
+                ...item,
+                createDate: item.createDate ? formatDateTime(item.createDate) : "No set",
               });
             });
 
