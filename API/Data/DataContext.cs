@@ -43,6 +43,7 @@ namespace API.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<EventPRO> EventPROs { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Category> Categories { get; set; }

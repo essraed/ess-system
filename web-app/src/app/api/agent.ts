@@ -40,6 +40,8 @@ import { ClientSchema } from "../../lib/schemas/clientScema";
 import { EventData } from "../../types/event";
 import { EventSchema } from "../../lib/schemas/EventSchema";
 import { FileResponseData } from "../../types/filesTypes";
+import { EventPROData } from "../../types/eventPRO";
+import { EventPROSchema } from "../../lib/schemas/EventPROSchema";
 
 
 
@@ -130,6 +132,13 @@ const Events = {
     axios.get<PagedResponse<EventData[]>>("event", { params }).then(responseBody),
   getById: (id: string) => requests.get<EventData>(`event/${id}`),
   create: (event: EventSchema) => requests.post<EventData>("event", event),
+};
+
+const EventPROs = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<EventPROData[]>>("eventPRO", { params }).then(responseBody),
+  getById: (id: string) => requests.get<EventPROData>(`eventPRO/${id}`),
+  create: (eventPRO: EventPROSchema) => requests.post<EventPROData>("eventPRO", eventPRO),
 };
 
 
@@ -383,6 +392,7 @@ const agent = {
   Blogs,
   Clients,
   Events,
+  EventPROs,
 
 };
 

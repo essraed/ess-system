@@ -58,6 +58,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(EventProfile).Assembly);
             services.AddAutoMapper(typeof(NationalityProfile).Assembly);
             services.AddAutoMapper(typeof(ClientProfile).Assembly);
+            services.AddAutoMapper(typeof(EventPROProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -91,6 +92,7 @@ namespace API.Extensions
             services.AddScoped(typeof(INationalityService), typeof(NationalityService));
             services.AddScoped(typeof(IClientService), typeof(ClientService));
             services.AddScoped(typeof(IEventService), typeof(EventService));
+            services.AddScoped(typeof(IEventPROService), typeof(EventPROService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             // Report services
