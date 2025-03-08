@@ -135,7 +135,6 @@ const BookingList = () => {
                     "carName", 
                     "nationalityName",
                     "entryType",
-                    "bookingStatus", 
                   ]}
                   data={bookings}
                   pageSize={pageSize}
