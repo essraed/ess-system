@@ -29,14 +29,14 @@ namespace API.Extensions
 
             // var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Key"]!));
 
-    // Ensure the JWT key exists before using it
-    var jwtKey = config["JWT:Key"];
-    if (string.IsNullOrEmpty(jwtKey))
-    {
-        throw new ArgumentNullException("JWT:Key", "JWT Key is not configured in the application.");
-    }
+            // Ensure the JWT key exists before using it
+            var jwtKey = config["JWT:Key"];
+            if (string.IsNullOrEmpty(jwtKey))
+            {
+                throw new ArgumentNullException("JWT:Key", "JWT Key is not configured in the application.");
+            }
 
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,28 +51,30 @@ namespace API.Extensions
                     };
                 });
 
-                       services.AddCors(opt =>
-            {
-                opt.AddPolicy("Allow-Origin", policy =>
-                {
-                    policy.AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowAnyOrigin();
-                        // .WithOrigins("http://localhost:3000", "http://localhost:4200");
-                });
-            });
+            // services.AddCors(opt =>
+            // {
+            // opt.AddPolicy("Allow-Origin", policy =>
+            // {
+            // policy.AllowAnyMethod()
+            // .AllowAnyHeader()
+            // .AllowAnyOrigin()
+            // .WithOrigins("http://localhost:3000", "http://localhost:4200");
+            // });
+            // });
 
-//             services.AddCors(options =>
-// {
-//     options.AddPolicy("Allow-Origin", policy =>
-//     {
-//         // Use the actual domain where your React app is hosted (https://kbc.center/)
-//         policy.WithOrigins("https://kbc.center")  // React frontend URL (production)
-//               .AllowAnyHeader()
-//               .AllowAnyMethod()
-//               .AllowCredentials();
-//     });
-// });
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Allow-Origin", policy =>
+    {
+        // Use the actual domain where your React app is hosted (https://kbc.center/)
+                policy.WithOrigins("https://kbc.center")  // React frontend URL (production)
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials();
+            });
+            });
 
 
             return services;

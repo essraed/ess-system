@@ -16,6 +16,7 @@ import NationalityStore from "./nationalityStore";
 import BlogStore from "./blogStore";
 import ClientStore from "./clientStore";
 import EventStore from "./eventStore";
+import EventPROStore from "./eventPROStore";
 
 
 interface Store {
@@ -36,6 +37,8 @@ interface Store {
   nationalityStore:NationalityStore;
   clientStore:ClientStore;
   eventStore:EventStore;
+  eventPROStore:EventPROStore;
+
 }
 
 export const store: Store = {
@@ -56,6 +59,8 @@ export const store: Store = {
   nationalityStore:new NationalityStore(),
   clientStore:new ClientStore(),
   eventStore:new EventStore(),
+  eventPROStore:new EventPROStore(),
+
 };
 
 export const StoreContext = createContext(store);
