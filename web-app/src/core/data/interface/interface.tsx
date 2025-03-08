@@ -11,3 +11,16 @@ export interface ContactUs {
   link: string;
   text: string;
 }
+
+
+export interface FileEntity {
+  id: string;
+  fileName?: string;
+  filePath: string;
+}
+
+export interface FileResponseData {
+  id: string;
+  fileName?: string | undefined;
+  filePath: string;
+}
