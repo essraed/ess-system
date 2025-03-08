@@ -21,6 +21,7 @@ import BookingCheckout from "./BookingCheckout";
 import { IMAGE_SERVER_PATH } from "../../environment";
 import ClientForm from "../clients/ClientForm";
 import ClientsTable from "../clients/ClientsTable";
+import { FileEntity, FileResponseData } from "../../core/data/interface/interface";
 
 const BookingDetails = () => {
   const { id } = useParams();
@@ -55,7 +56,7 @@ const BookingDetails = () => {
     }
     if (flag) setFlag(false);
     if (addClientFlag) setaddClientFlag(false);
-  }, [id, getBooking, flag,addClientFlag]);
+  }, [id, getBooking, flag, addClientFlag]);
 
   if (loadingInitial || !currentBooking) {
     return <p className="text-gray-600">Loading booking details...</p>;
@@ -230,13 +231,12 @@ const BookingDetails = () => {
                     <div>
                       <p className="font-medium">Payment Status:</p>
                       <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentStatus === "Completed"
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${paymentStatus === "Completed"
                             ? "bg-green-100 text-green-700"
                             : paymentStatus === "Pending"
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-red-100 text-red-700"
-                        }`}
+                          }`}
                       >
                         {paymentStatus}
                       </span>
@@ -246,11 +246,10 @@ const BookingDetails = () => {
                     <div>
                       <p className="font-medium">Payment Type:</p>
                       <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentType
+                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${paymentType
                             ? "bg-blue-100 text-blue-700"
                             : "bg-gray-100 text-gray-700"
-                        }`}
+                          }`}
                       >
                         {paymentType || "Still Not Paid"}
                       </span>
@@ -296,85 +295,85 @@ const BookingDetails = () => {
                                 BookingStatus.InProcess,
                                 BookingStatus
                               ) && (
-                              <>
-                                <button
-                                  onClick={() => setStatusCompleted(id ?? "")}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
-                                >
-                                  Completed
-                                </button>
-                                <button
-                                  onClick={() => setStatusPending(id ?? "")}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
-                                >
-                                  Pending
-                                </button>
-                              </>
-                            )}
+                                <>
+                                  <button
+                                    onClick={() => setStatusCompleted(id ?? "")}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
+                                  >
+                                    Completed
+                                  </button>
+                                  <button
+                                    onClick={() => setStatusPending(id ?? "")}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                  >
+                                    Pending
+                                  </button>
+                                </>
+                              )}
                             {bookingStatus ===
                               convertEnumToString(
                                 BookingStatus.Canceled,
                                 BookingStatus
                               ) && (
-                              <button
-                                onClick={() => setStatusInProcess(id ?? "")}
-                                className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
-                              >
-                                In-Progress
-                              </button>
-                            )}
+                                <button
+                                  onClick={() => setStatusInProcess(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                >
+                                  In-Progress
+                                </button>
+                              )}
                             {bookingStatus ===
                               convertEnumToString(
                                 BookingStatus.Pending,
                                 BookingStatus
                               ) && (
-                              <>
-                                <div className="flex flex-col">
-                                  <button
-                                    onClick={() => setShowReasonInput(true)}
-                                    className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
-                                  >
-                                    Canceled
-                                  </button>
+                                <>
+                                  <div className="flex flex-col">
+                                    <button
+                                      onClick={() => setShowReasonInput(true)}
+                                      className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
+                                    >
+                                      Canceled
+                                    </button>
 
-                                  {/* Step 2: Show input field when cancellation reason is empty */}
-                                  {showReasonInput && (
-                                    <div className="pt-2">
-                                      <textarea
-                                        value={canceledReason}
-                                        onChange={(e) =>
-                                          setCanceledReason(e.target.value)
-                                        }
-                                        className="w-full p-2 border border-gray-300 rounded-lg"
-                                        placeholder="Please provide a reason for cancellation..."
-                                      />
-                                      <div className="mt-2">
-                                        <button
-                                          onClick={handleCancelWithReason}
-                                          className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
-                                        >
-                                          Submit Reason and Cancel
-                                        </button>
-                                        <button
-                                          onClick={() =>
-                                            setShowReasonInput(false)
-                                          } // Optionally hide the input without canceling
-                                          className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
-                                        >
-                                          Cancel
-                                        </button>
+                                    {/* Step 2: Show input field when cancellation reason is empty */}
+                                    {showReasonInput && (
+                                      <div className="pt-2">
+                                        <textarea
+                                          value={canceledReason}
+                                          onChange={(e) =>
+                                            setCanceledReason(e.target.value)
+                                          }
+                                          className="w-full p-2 border border-gray-300 rounded-lg"
+                                          placeholder="Please provide a reason for cancellation..."
+                                        />
+                                        <div className="mt-2">
+                                          <button
+                                            onClick={handleCancelWithReason}
+                                            className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                          >
+                                            Submit Reason and Cancel
+                                          </button>
+                                          <button
+                                            onClick={() =>
+                                              setShowReasonInput(false)
+                                            } // Optionally hide the input without canceling
+                                            className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
+                                          >
+                                            Cancel
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  )}
-                                  <button
-                                    onClick={() => setStatusInProcess(id ?? "")}
-                                    className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
-                                  >
-                                    In-Progress
-                                  </button>
-                                </div>
-                              </>
-                            )}
+                                    )}
+                                    <button
+                                      onClick={() => setStatusInProcess(id ?? "")}
+                                      className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                    >
+                                      In-Progress
+                                    </button>
+                                  </div>
+                                </>
+                              )}
                           </div>
                         )}
                       </div>
@@ -432,8 +431,50 @@ const BookingDetails = () => {
                   </div>
                 </div>
               )}
+   {fileEntities && fileEntities.length > 0 && (
+  <div className="mt-6 p-4 border rounded-lg bg-gray-50">
+    <h2 className="text-lg font-semibold text-gray-700 mb-4">Uploaded Files</h2>
+    <Divider />
 
-              {/* Uploaded Files */}
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 mt-1">
+      {fileEntities.map((file) => (
+        <div
+          key={file.id}
+          className="flex flex-col items-center justify-between p-1 bg-white border rounded-lg shadow-md"
+        >
+              <a target="blank" href={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+            download={file.fileName}
+          > 
+          <div className="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer mb-3">
+            {/* Thumbnail or File Icon */}
+            {file?.fileName?.match(/\.(jpg|jpeg|png|gif)$/i) ? (
+              <img
+                src={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                alt={file.fileName}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            ) : (
+              <span className="text-gray-600 text-3xl">📄</span> // Default icon for non-image files
+            )}
+          </div>
+          </a>
+
+          {/* File Name */}
+          <p className="text-gray-800 truncate text-center">{file.fileName}</p>
+
+          {/* Download Link */}
+       
+
+        </div>
+   
+      ))}
+    </div>
+  </div>
+)}
+
+
+              {/* Uploaded Files 
               {fileEntities && fileEntities.length > 0 && (
                 <div className="mt-6 p-4 border rounded-lg bg-gray-50">
                   <h2 className="text-lg font-semibold text-gray-700 mb-4">
@@ -461,7 +502,7 @@ const BookingDetails = () => {
                   </div>
                 </div>
               )}
-
+*/}
               {clients!.length! > 0 && (
                 <>
                   <Divider />

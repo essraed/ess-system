@@ -40,6 +40,8 @@ import BookingDocument from "../booking/BookingDocument";
 import BlogDashboard from "../blog/BlogDashboard";
 import EventDashboard from "../Event/EventDashboard";
 import Event from "../Event/Event";
+import EventPRO from "../EventPRO/EventPRO";
+
 
 const routes = all_routes;
 
@@ -83,6 +85,10 @@ export const publicRoutes = [
   {
     path: routes.event,
     element: <Event />,
+  },
+  {
+    path: routes.eventPRO,
+    element: <EventPRO />,
   },
   {
     path: routes.Losts,
