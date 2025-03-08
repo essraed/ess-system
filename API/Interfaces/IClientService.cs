@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.DTOs.Clients;
 using API.Entities;
 using API.Helpers;
@@ -16,5 +17,8 @@ namespace API.Interfaces
         Task UpdateClientAsync(Guid id, ClientSaveDto clientSaveDto);
         Task DeleteClientAsync(Guid id);
         Task SetClientStatusAsync(Guid id, ClientStatus status);
+        Task UploadImage(FileUploadNewDto model);
+        Task SendEmail(SendEmailRequest request);
+
     }
 }

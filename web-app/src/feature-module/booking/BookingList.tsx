@@ -134,7 +134,8 @@ const BookingList = () => {
                     "processTime", 
                     "carName", 
                     "nationalityName",
-                    "entryType" 
+                    "entryType",
+                    "bookingStatus", 
                   ]}
                   data={bookings}
                   pageSize={pageSize}

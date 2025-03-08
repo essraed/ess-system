@@ -33,6 +33,7 @@ namespace API.DTOs
         public Guid? ServiceId { get; set; }
         public Guid? CategoryId { get; set; }
         public Guid? BookingId { get; set; }
+        public Guid? ClientId { get; set; }
     }
 
 }

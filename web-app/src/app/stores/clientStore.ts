@@ -5,6 +5,7 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { convertEnumToString, formatDateTime } from "../../lib/utils";
 import { ClientData, clientStatus } from "../../types/client";
 import { ClientSchema } from "../../lib/schemas/clientScema";
+import { FileResponseData } from "../../types/filesTypes";
 
 export default class ClientStore {
   clientItems: ClientData[] | null | undefined = null;
@@ -169,6 +170,26 @@ export default class ClientStore {
       return { status: "success", data: "Client status set to 'Rejected'." };
     } catch (error) {
       console.error("Error updating client status: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {
+    try {
+      await agent.Clients.uploadImage(formData);
+      return { status: "success", data: "Documents Uploaded Successfully" };
+    } catch (error) {
+      console.error("Error uploading Documents: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
+  sendEmail = async (body: { email: string, files: FileResponseData[] }): Promise<ActionResult<string>> => {
+    try {
+      const response = await agent.Clients.sendEmail(body); // Send JSON body
+      return { status: "success", data: "Documents Sent Successfully" };
+    } catch (error) {
+      console.error("Error Sending Documents: ", error);
       return { status: "error", error: error as string };
     }
   };

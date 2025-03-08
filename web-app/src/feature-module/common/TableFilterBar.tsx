@@ -92,7 +92,7 @@ const TableFilterBar = ({
                                 variant="bordered"
                                 className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 border rounded-md hover:bg-gray-100 transition"
                             >
-                                Reset <GrPowerReset size={20} />
+                                 <GrPowerReset size={20} />
                             </Button>
 
                             {/* Additional Children */}

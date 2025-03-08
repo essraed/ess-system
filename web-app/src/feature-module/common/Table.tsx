@@ -227,9 +227,8 @@ const Table = ({
         isAdmin() && <Column header="Edit" body={editAction} />}
 
       {routeUrl !== all_routes.WorkingTimeDashboard &&
-        routeUrl === all_routes.EventDashboard &&
         isAdmin() && <Column header="Delete" body={deleteAction} />}
-
+        
       {(routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (
         <Column header="Complete" body={completeAction} />

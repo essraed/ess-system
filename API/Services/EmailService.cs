@@ -16,7 +16,7 @@ namespace API.Services
         private readonly int _smtpPort = 465;
         private readonly string _smtpUsername = "notifications@ess.ae";
         private readonly string _smtpPassword = "notifications@123";
-        
+
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
             var message = new MimeMessage();
@@ -40,6 +40,49 @@ namespace API.Services
             }
 
             return emailSent;
+        }
+
+
+        public async Task<bool> SendEmailWithAttachmentsAsync(string toEmail, string subject, string body, List<string> filePaths)
+        {
+            try
+            {
+                // Create the MimeMessage object
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Notification From Karama Business Center", _smtpUsername));
+                message.To.Add(new MailboxAddress("", toEmail));
+                message.Subject = subject;
+
+                // Create a BodyBuilder for the email body
+                var bodyBuilder = new BodyBuilder
+                {
+                    HtmlBody = body // Use the body as HTML content
+                };
+
+                // Attach files to the email
+                foreach (var filePath in filePaths)
+                {
+                    bodyBuilder.Attachments.Add(filePath);
+                }
+
+                // Set the body of the message to the BodyBuilder content
+                message.Body = bodyBuilder.ToMessageBody();
+
+                // Send the email using your SMTP client (e.g., MailKit)
+                bool emailSent = await SendEmailAsync(message);
+
+                if (!emailSent)
+                {
+                    throw new Exception("Mail failed sending.");
+                }
+
+                return emailSent;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email with attachments: {ex.Message}");
+                return false;
+            }
         }
 
 
