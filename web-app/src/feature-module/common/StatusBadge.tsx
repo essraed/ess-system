@@ -15,21 +15,19 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     [BookingStatus.InProcess]: {
       text: "text-sky-500",
       bg: "bg-sky-500",
-      border: "border-sky-500",
     },
     [BookingStatus.Canceled]: {
       text: "text-slate-500",
       bg: "bg-slate-500",
-      border: "border-slate-500",
     },
     [BookingStatus.Completed]: {
       text: "text-green-500",
       bg: "bg-green-500",
-      border: "border-green-500",
     },
   };
 
-  const statusColor = statusColors[BookingStatus[status as keyof typeof BookingStatus]];
+  const statusColor =
+    statusColors[BookingStatus[status as keyof typeof BookingStatus]];
 
   if (!statusColor) {
     return (
@@ -41,12 +39,10 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   return (
     <div
-      className={`inline-flex items-center gap-2 border-solid border-y-2 ${statusColor.border} rounded-2xl p-2 my-1 ${statusColor.text}`}
+      className={`inline-flex items-center gap-2 rounded-2xl p-2 my-1 ${statusColor.text}`}
     >
       <span className="rounded-full">
-        <div
-          className={`w-2 h-2 ${statusColor.bg} rounded-full`}
-        ></div>
+        <div className={`w-2 h-2 ${statusColor.bg} rounded-full`}></div>
       </span>
       <p>{status}</p>
     </div>

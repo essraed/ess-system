@@ -9,6 +9,20 @@
 }
 
 
+/* In your global CSS file or Tailwind's custom CSS */
+.custom-upload-btn {
+    background-color: #0f8992; 
+    color: white;
+  }
+  
+  .custom-upload-btn:hover,
+  .custom-upload-btn:focus,
+  .custom-upload-btn:active {
+    color: white; /* Same text color */
+  }
+  
+
+
 /* Apply small font size to the dropdown on mobile */
 @media (max-width: 639px) {
     .custom-dropdown .p-dropdown-label {

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.DTOs.Clients;
 using API.Entities;
 using API.Helpers;
@@ -153,5 +154,35 @@ namespace API.Controllers
                 return BadRequest($"An error occurred while updating client status: {ex.Message}");
             }
         }
+
+        [HttpPost("upload-image")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadNewDto model)
+        {
+            try
+            {
+                await _clientService.UploadImage(model);  // Await the Task here
+                return Ok("Files uploaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading the image: {ex.Message}");
+            }
+        }
+        [HttpPost("send-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendEmail([FromBody] SendEmailRequest request)
+        {
+            try
+            {
+                await _clientService.SendEmail(request);
+                return Ok("Documents Sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while sending the documents: {ex.Message}");
+            }
+        }
+
     }
 }

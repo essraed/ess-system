@@ -39,6 +39,7 @@ import { ClientData } from "../../types/client";
 import { ClientSchema } from "../../lib/schemas/clientScema";
 import { EventData } from "../../types/event";
 import { EventSchema } from "../../lib/schemas/EventSchema";
+import { FileResponseData } from "../../types/filesTypes";
 
 
 
@@ -181,6 +182,10 @@ const Clients = {
     requests.put<string>(`client/${id}/status/rejected`, {}),
   setStatusAccepted: (id: string) =>
     requests.put<string>(`client/${id}/status/accepted`, {}),
+  uploadImage: (formData: FormData) =>
+    axios.post<string>("client/upload-image", formData).then(responseBody),
+  sendEmail: (body: { email: string, files: FileResponseData[] }) =>
+    axios.post<string>("client/send-email", body).then(responseBody),
 };
 
 

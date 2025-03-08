@@ -55,7 +55,7 @@ const BookingDetails = () => {
     }
     if (flag) setFlag(false);
     if (addClientFlag) setaddClientFlag(false);
-  }, [id, getBooking, flag,addClientFlag]);
+  }, [id, getBooking, flag, addClientFlag]);
 
   if (loadingInitial || !currentBooking) {
     return <p className="text-gray-600">Loading booking details...</p>;
@@ -439,23 +439,42 @@ const BookingDetails = () => {
                   <h2 className="text-lg font-semibold text-gray-700 mb-4">
                     Uploaded Files
                   </h2>
+
                   <Divider />
-                  <div className="grid gap-3 mt-4">
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 mt-1">
                     {fileEntities.map((file) => (
                       <div
                         key={file.id}
-                        className="flex items-center justify-between p-3 bg-white border w-2/3 md:w-full"
+                        className="flex flex-col items-center justify-between p-1 bg-white border rounded-lg shadow-md"
                       >
-                        <p className="text-gray-800 truncate">
-                          {file.fileName}
-                        </p>
                         <a
+                          target="blank"
                           href={`${IMAGE_SERVER_PATH}/${file.filePath}`}
                           download={file.fileName}
-                          className="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
                         >
-                          Download
+                          <div className="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer mb-3">
+                            {/* Thumbnail or File Icon */}
+
+                            {file?.fileName?.match(/\.(jpg|jpeg|png|gif)$/i) ? (
+                              <img
+                                src={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                                alt={file.fileName}
+                                className="w-full h-full object-cover rounded-lg"
+                              />
+                            ) : (
+                              <span className="text-gray-600 text-3xl">📄</span> // Default icon for non-image files
+                            )}
+                          </div>
                         </a>
+
+                        {/* File Name */}
+
+                        <p className="text-gray-800 truncate text-center">
+                          {file.fileName}
+                        </p>
+
+                        {/* Download Link */}
                       </div>
                     ))}
                   </div>
@@ -466,7 +485,7 @@ const BookingDetails = () => {
                 <>
                   <Divider />
                   <div className="mt-2">
-                    <ClientsTable clients={clients} setFlag={setFlag} />{" "}
+                    <ClientsTable clients={clients} setFlag={setFlag} email={email} status={bookingStatus!}/>{" "}
                     {/* Passing clients as prop */}
                   </div>
                 </>

@@ -96,6 +96,8 @@ const BookingDocument = () => {
     }
   };
 
+  
+
   useEffect(() => {
     if (isUploadComplete) navigate(`/listings/booking/view/${id}`);
   }, [isUploadComplete, id, navigate]);
