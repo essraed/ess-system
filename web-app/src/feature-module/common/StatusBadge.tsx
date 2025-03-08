@@ -10,7 +10,6 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     [BookingStatus.Pending]: {
       text: "text-orange-500",
       bg: "bg-orange-500",
-      border: "border-orange-500",
     },
     [BookingStatus.InProcess]: {
       text: "text-sky-500",
