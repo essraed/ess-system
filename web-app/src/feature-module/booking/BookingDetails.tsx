@@ -189,8 +189,8 @@ const BookingDetails = () => {
                   {adultsNumber && clients!.length == 0 && (
                     <div className="w-full mt-3">
                       <ClientForm
-                        key={`${adultsNumber}-${childrenNumber}`} // Use quantity as part of the key to force re-render
-                        quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)} // Use nullish coalescing to default null/undefined to 0
+                        key={`${adultsNumber}-${childrenNumber}`} 
+                        quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)} 
                         id={id}
                         setaddClientFlag={setaddClientFlag}
                       />

@@ -31,7 +31,7 @@ const ClientsTable = ({ clients, setFlag, email, status }: Props) => {
             client.status === clientStatus.Rejected
         );
         setAllFilesUploaded(allUploaded);
-        console.log("flag", status);
+        console.log("status", status);
       }
     };
 
@@ -72,6 +72,7 @@ const ClientsTable = ({ clients, setFlag, email, status }: Props) => {
 
     // Log for debugging
     console.log("FormData:", formData);
+
 
     try {
       const result = await clientStore.uploadImage(formData);
@@ -259,7 +260,7 @@ const ClientsTable = ({ clients, setFlag, email, status }: Props) => {
       </div>
 
       {/* Show Send Email button when all files are uploaded */}
-      {allFilesUploaded && status === BookingStatus.Completed && (
+      {(allFilesUploaded && (status.toString() !== "Completed")) && (
         <div className="mt-4 text-center">
           <Button
             onClick={handleSendEmail}
