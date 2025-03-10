@@ -466,11 +466,72 @@ const HomeOne = () => {
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    {t("Monday - Friday 7:00 AM -10:00 PM")}
+                    <h4>DHA Medical Fitness Test </h4>
+                    {t("Monday - Friday 07:00 AM - 11:00 PM")}
                     <br></br>
                     <br></br>
-                    {t("Sunday 8:00 AM - 08:00 PM")}
+                    {t("Saturday - 08:00 AM - 11:00 PM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday 08:00 AM - 05:00 PM")}
+                    <br></br>
+                    <br></br>
+                    {t("Note : Saturday and Sunday after 01:00 PM only Visa Renewal is accepted(Xray service not available after 01:00 PM)")}
                   </p>
+                  <p>
+                    <h4>OHC </h4>
+                    {t("Monday - Thursday 07:00 AM - 04:00 PM")}
+                    <br></br>
+                    <br></br>
+                    {t("Friday - 07:00 AM - 11:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Saturday & Sunday - Closed")}
+                    <br></br>
+                    <br></br>
+                    </p>
+                    <p>
+                    <h4>Typing Services </h4>
+                    {t("Monday - Friday 07:00 AM - 12:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Saturday - 08:00 AM - 12:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday 08:00 AM - 05:00 PM")}
+                    <br></br>
+                    <br></br>
+                    </p>
+                    <p>
+                    <h4>DED </h4>
+                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
+                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday - Closed")}
+                    <br></br>
+                    <br></br>
+                    </p>
+                    <p>
+                    <h4>Amer </h4>
+                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
+                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday - Closed")}
+                    <br></br>
+                    <br></br>
+                    </p>
+                    <p>
+                    <h4>Taw-jeeh/Tas-heel </h4>
+                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
+                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday - Closed")}
+                    <br></br>
+                    <br></br>
+                    </p>
                 </AccordionItemPanel>
               </AccordionItem>
               <AccordionItem>
