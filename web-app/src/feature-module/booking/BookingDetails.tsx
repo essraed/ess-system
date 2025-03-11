@@ -189,8 +189,8 @@ const BookingDetails = () => {
                   {adultsNumber && clients!.length == 0 && (
                     <div className="w-full mt-3">
                       <ClientForm
-                        key={`${adultsNumber}-${childrenNumber}`} 
-                        quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)} 
+                        key={`${adultsNumber}-${childrenNumber}`}
+                        quantity={(adultsNumber ?? 0) + (childrenNumber ?? 0)}
                         id={id}
                         setaddClientFlag={setaddClientFlag}
                       />
@@ -198,25 +198,28 @@ const BookingDetails = () => {
                   )}
                 </div>
 
-                {/* Booking Info */}
                 <div className="p-4 border rounded-lg bg-gray-50">
                   <h2 className="text-lg font-semibold text-gray-700 mb-4">
                     Booking Information
                   </h2>
                   <Divider />
-                  <div className="grid grid-cols-2 gap-3 mt-4">
+
+                  {/* Booking details */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                     {serviceName && (
                       <div>
                         <p className="font-medium text-gray-800">Service:</p>
                         <p>{serviceName}</p>
                       </div>
                     )}
+
                     {carName && (
                       <div>
                         <p className="font-medium text-gray-800">Car Name:</p>
                         <p>{carName}</p>
                       </div>
                     )}
+
                     {bookingCode && (
                       <div>
                         <p className="font-medium text-gray-800">
@@ -226,39 +229,41 @@ const BookingDetails = () => {
                       </div>
                     )}
 
-                    {/* Payment Status */}
-                    <div>
-                      <p className="font-medium">Payment Status:</p>
-                      <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentStatus === "Completed"
-                            ? "bg-green-100 text-green-700"
-                            : paymentStatus === "Pending"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {paymentStatus}
-                      </span>
-                    </div>
+                    {paymentStatus && (
+                      <div>
+                        <p className="font-medium">Payment Status:</p>
+                        <span
+                          className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                            paymentStatus === "Completed"
+                              ? "bg-green-100 text-green-700"
+                              : paymentStatus === "Pending"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : "bg-red-100 text-red-700"
+                          }`}
+                        >
+                          {paymentStatus}
+                        </span>
+                      </div>
+                    )}
 
-                    {/* Payment Type */}
-                    <div>
-                      <p className="font-medium">Payment Type:</p>
-                      <span
-                        className={`inline-block px-3 py-1 text-sm font-medium rounded ${
-                          paymentType
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-gray-100 text-gray-700"
-                        }`}
-                      >
-                        {paymentType || "Still Not Paid"}
-                      </span>
-                    </div>
+                    {paymentType && (
+                      <div>
+                        <p className="font-medium">Payment Type:</p>
+                        <span
+                          className={`inline-block px-3 py-1 text-sm font-medium rounded ${
+                            paymentType
+                              ? "bg-blue-100 text-blue-700"
+                              : "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {paymentType || "Still Not Paid"}
+                        </span>
+                      </div>
+                    )}
 
                     {bookingDate && (
                       <div>
-                        <p className="font-medium ">Booking Date:</p>
+                        <p className="font-medium">Booking Date:</p>
                         <p>{formatDateTime(bookingDate.toString())}</p>
                       </div>
                     )}
@@ -271,6 +276,7 @@ const BookingDetails = () => {
                         <p>{serviceOptionName}</p>
                       </div>
                     )}
+
                     {serviceOptionFee && (
                       <div>
                         <p className="font-medium text-gray-800">
@@ -280,7 +286,6 @@ const BookingDetails = () => {
                       </div>
                     )}
 
-                    {/* Booking Status */}
                     {bookingStatus && (
                       <div className="md:col-span-2">
                         <p className="font-medium text-gray-800">Status:</p>
@@ -288,7 +293,6 @@ const BookingDetails = () => {
                           <StatusBadge status={bookingStatus.toString()} />
                         </div>
 
-                        {/* Admin Controls for Status Management */}
                         {userStore.isAdmin() && (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {bookingStatus ===
@@ -311,6 +315,7 @@ const BookingDetails = () => {
                                 </button>
                               </>
                             )}
+
                             {bookingStatus ===
                               convertEnumToString(
                                 BookingStatus.Canceled,
@@ -323,6 +328,7 @@ const BookingDetails = () => {
                                 In-Progress
                               </button>
                             )}
+
                             {bookingStatus ===
                               convertEnumToString(
                                 BookingStatus.Pending,
@@ -337,7 +343,6 @@ const BookingDetails = () => {
                                     Canceled
                                   </button>
 
-                                  {/* Step 2: Show input field when cancellation reason is empty */}
                                   {showReasonInput && (
                                     <div className="pt-2">
                                       <textarea
@@ -358,7 +363,7 @@ const BookingDetails = () => {
                                         <button
                                           onClick={() =>
                                             setShowReasonInput(false)
-                                          } // Optionally hide the input without canceling
+                                          }
                                           className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
                                         >
                                           Cancel
@@ -387,51 +392,44 @@ const BookingDetails = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Admin update section */}
+                  {userStore.isAdmin() && (
+                    <div className=" p-4 rounded-lg bg-gray-50">
+                      <Divider />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+                        {createDate && (
+                          <div>
+                            <p className="font-medium">Create Date:</p>
+                            <p>{formatDateTime(createDate?.toString())}</p>
+                          </div>
+                        )}
+
+                        {updateDate && (
+                          <div>
+                            <p className="font-medium">Last Updated:</p>
+                            <p>{formatDateTime(updateDate)}</p>
+                          </div>
+                        )}
+
+                        {updatedBy && (
+                          <div>
+                            <p className="font-medium">Updated By:</p>
+                            <p>{updatedBy}</p>
+                          </div>
+                        )}
+
+                        {reason && (
+                          <div>
+                            <p className="font-medium">Reason Of Cancelling:</p>
+                            <p>{reason}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {userStore.isAdmin && (
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="mt-6 p-4 border rounded-lg bg-gray-50">
-                    <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                      Update Information
-                    </h2>
-                    <Divider />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                      {bookingDate && (
-                        <div>
-                          <p className="font-medium">Booking Date:</p>
-                          <p>{formatDateTime(bookingDate.toString())}</p>
-                        </div>
-                      )}
-                      {createDate && (
-                        <div>
-                          <p className="font-medium">Create Date:</p>
-                          <p>{formatDateTime(createDate?.toString())}</p>
-                        </div>
-                      )}
-                      {updateDate && userStore.isAdmin() && (
-                        <div>
-                          <p className="font-medium">Last Updated:</p>
-                          <p>{formatDateTime(updateDate)}</p>
-                        </div>
-                      )}
-                      {updatedBy && userStore.isAdmin() && (
-                        <div>
-                          <p className="font-medium">Updated By:</p>
-                          <p>{updatedBy}</p>
-                        </div>
-                      )}
-                      {reason && (
-                        <div>
-                          <p className="font-medium">Reason Of Cancelling:</p>
-                          <p>{reason}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Uploaded Files */}
               {fileEntities && fileEntities.length > 0 && (

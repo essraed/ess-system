@@ -42,7 +42,6 @@ const Table = ({
 
     return (
       <>
-        {/* Modal View Action */}
         {(routeUrl === all_routes.categoryDashboard ||
           routeUrl === all_routes.serviceDashboard ||
           routeUrl === all_routes.lostDashboard ||
@@ -60,9 +59,7 @@ const Table = ({
           </Link>
         )}
 
-        {/* URL View Action */}
-        {(routeUrl === all_routes.letterDashboard ||
-          routeUrl === all_routes.bookingDashboard) && (
+        {routeUrl === all_routes.letterDashboard && (
           <Link to={`${routeUrl}/view/${id}`}>
             <i className="feather icon-eye text-blue-500 hover:text-blue-700 cursor-pointer me-1"></i>{" "}
           </Link>
@@ -75,7 +72,6 @@ const Table = ({
     const { id } = rowData;
 
     return (
-      // Edit action based on conditions
       routeUrl !== all_routes.authorityDashboard &&
       routeUrl !== all_routes.bookingDashboard &&
       routeUrl !== all_routes.categoryDashboard &&
@@ -113,7 +109,6 @@ const Table = ({
     const { id } = rowData;
 
     return (
-      // Complete action only for Lost and Complaint dashboards
       (routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (
         <Link
@@ -132,7 +127,6 @@ const Table = ({
     const { id } = rowData;
 
     return (
-      // In Process action only for Lost and Complaint dashboards
       (routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (
         <Link
@@ -146,13 +140,12 @@ const Table = ({
       )
     );
   };
+
   const bookingdetailsAction = (rowData: any) => {
     const { id } = rowData;
     const { moreDetailsUrl } = rowData;
 
     return (
-      // In Process action only for Lost and Complaint dashboards
-
       routeUrl === all_routes.notificationDashboard && (
         <Link to={`/listings/${moreDetailsUrl}`}>
           <i className="feather icon-loader text-orange-500 font-bold me-1"></i>{" "}
@@ -161,18 +154,18 @@ const Table = ({
     );
   };
 
-  // Confirm dialog function
   const confirmDialog = (id: string) => {
     if (setSelectedId) setSelectedId(id);
   };
 
   return (
     <DataTable
-      className="table datatable"
+      className="table datatable p-datatable-sm" // Small size for DataTable
       value={data}
       rows={pageSize ?? 10}
       rowsPerPageOptions={rowsPerPageOptions}
       currentPageReportTemplate="{first}"
+      tableStyle={{ fontSize: "0.875rem", padding: "4px" }} // Adjust font and padding
     >
       {data &&
         Object.keys(data[0] || {})
@@ -183,6 +176,40 @@ const Table = ({
               field={key}
               header={separateCamelCase(key)}
               body={(rowData: any) => {
+                if (key === "bookingCode") {
+                  return (
+                    <Link
+                      to={`${routeUrl}/view/${rowData.id}`}
+                      className="text-red-500 hover:text-red-700 font-bold"
+                      style={{ textDecoration: "underline" }} // Make it underlined
+                    >
+                      <span
+                       
+                        className="text-red-500 hover:text-black-700 font-bold"
+                        style={{
+                          textDecoration: "underline",
+                          cursor: "pointer",
+                        }} 
+                      >
+                        {rowData[key]}
+                      </span>
+                    </Link>
+                  );
+                }
+                if (key === "customerName") {
+                  return (
+                    <span
+                      onClick={() => {
+                        if (getViewId) getViewId(rowData.id);
+                      }}
+                      className="text-black hover:text-black-700 font-bold"
+                      style={{ textDecoration: "underline", cursor: "pointer" }} // Underline without link
+                    >
+                      {rowData[key]}
+                    </span>
+                  );
+                }
+
                 if (key === "bookingStatus") {
                   return <StatusBadge status={rowData[key]} />;
                 }
@@ -198,8 +225,12 @@ const Table = ({
                 if (key === "isComing") {
                   return rowData[key] ? "Yes" : "No";
                 }
+                if (key === "nationalityName") {
+                  return rowData[key] ? rowData[key]: "No Data";
+                }
                 return rowData[key];
               }}
+              style={{ fontSize: "0.875rem", padding: "8px" }} // Adjust column font size and padding
             />
           ))}
 
@@ -209,8 +240,7 @@ const Table = ({
       {(routeUrl === all_routes.categoryDashboard ||
         routeUrl === all_routes.serviceDashboard ||
         routeUrl === all_routes.lostDashboard ||
-        routeUrl === all_routes.ComplaintDashboard ||
-        routeUrl === all_routes.bookingDashboard) && (
+        routeUrl === all_routes.ComplaintDashboard) && (
         <Column header="View" body={viewAction} />
       )}
 
@@ -226,9 +256,10 @@ const Table = ({
         routeUrl !== all_routes.blogDashboard &&
         isAdmin() && <Column header="Edit" body={editAction} />}
 
-      {routeUrl !== all_routes.WorkingTimeDashboard &&
-        isAdmin() && <Column header="Delete" body={deleteAction} />}
-        
+      {routeUrl !== all_routes.WorkingTimeDashboard && isAdmin() && (
+        <Column header="Delete" body={deleteAction} />
+      )}
+
       {(routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (
         <Column header="Complete" body={completeAction} />

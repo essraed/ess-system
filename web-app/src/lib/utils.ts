@@ -12,7 +12,7 @@ export function capitalize(str: string) {
 }
 
 export function formatDateTime(dateString: string | undefined): string {
-  if (!dateString) return ""
+  if (!dateString) return "";
 
   const date = new Date(dateString);
 
@@ -47,21 +47,20 @@ export function formatTimeOnly(timeString: string | undefined): string {
   });
 }
 
-
 export async function saveToken(token: string | null | undefined) {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === "undefined") return null;
 
   if (token) {
-    Cookies.set('userAuth', token, { expires: 7 });
+    Cookies.set("userAuth", token, { expires: 7 });
   } else {
-    Cookies.remove('userAuth');
+    Cookies.remove("userAuth");
   }
 }
 
 export function getToken() {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === "undefined") return null;
 
-  return Cookies.get('userAuth') || null;
+  return Cookies.get("userAuth") || null;
 }
 
 export default function handleErrors(error: string | ZodIssue[]) {
@@ -79,25 +78,26 @@ export default function handleErrors(error: string | ZodIssue[]) {
   return errors;
 }
 
-
 export function capitalizeFirstLetter(str: string): string {
   if (!str) return ""; // Handle empty string
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-
 export function separateCamelCase(str: string): string {
-  const capitalised = capitalizeFirstLetter(str)
-  return capitalised.replace(/([a-z])([A-Z])/g, '$1 $2');
+  if (str === "customerName") str = "applicantName";
+  if (str === "serviceName") str = "serviceRequested";
+  if (str === "nationalityName") str = "Applicant Nationality";
+  const capitalised = capitalizeFirstLetter(str);
+  return capitalised.replace(/([a-z])([A-Z])/g, "$1 $2");
 }
 
 export function convertEnumToString<T>(value: number, enumType: T) {
   return enumType[value as unknown as keyof typeof enumType];
 }
 
-export interface paymentType{
-  type:string;
+export interface paymentType {
+  type: string;
 }
-export interface CanceledReason{
-  reason:string;
+export interface CanceledReason {
+  reason: string;
 }
