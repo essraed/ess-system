@@ -102,6 +102,13 @@ const ServiceList = () => {
                 <p className="text-gray-600 leading-relaxed">
                   {id?currentCategory?.description :
                     "We are committed to delivering exceptional services with over two decades of experience in the industry. Explore our categories and find what suits your needs."}
+               <ul className="blogcategories-list">
+                <li> {"Copy of Passport"} </li>
+                <li> {"Passport Size Photo"} </li>
+                <li> {"Passport & UAE Residency of a Relative"} </li>
+                <li> {"Flight Tickets & Hotel Booking"} </li>
+                </ul>
+               
                 </p>
               </div>
             </div>
