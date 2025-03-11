@@ -18,7 +18,22 @@
     max-width: 50px;
 }
 
+ul {
+    list-style-type: none;
+  }
 
+  .service-card-price {
+position: absolute;
+top:0;
+right: 0;;
+  }
+
+  .img-fluid {
+    max-width: 70%;
+    height: auto;
+    margin: 0 auto;
+}
+  
 .wantToWork-area.wantToWork-area2 {
     background-image: url(../../../../public/assets/img/GV-03.png);
     background-size: cover;
