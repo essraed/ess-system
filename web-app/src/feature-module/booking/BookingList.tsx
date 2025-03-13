@@ -103,7 +103,7 @@ const BookingList = () => {
     <div className="col-lg-12">
       <div className="row">
         <div className="col-lg-12 d-flex">
-          <div className="card book-card flex-fill mb-0">
+          <div className="card book-card flex-fill mb-0 p-0">
             <TableFilterBar
               pagination={pagination}
               pageSize={pageSize}

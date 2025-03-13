@@ -41,6 +41,7 @@ import BlogDashboard from "../blog/BlogDashboard";
 import EventDashboard from "../Event/EventDashboard";
 import Event from "../Event/Event";
 import EventPRO from "../EventPRO/EventPRO";
+import CategoryList from "../Categories/CategoryList";
 
 
 const routes = all_routes;
@@ -63,6 +64,10 @@ export const publicRoutes = [
     element: <Login />,
   },
   {
+    path: routes.categopries,
+    element: <CategoryList />,
+  },
+  {
     path: routes.serviceList,
     element: <ServiceList />,
   },
@@ -82,14 +87,14 @@ export const publicRoutes = [
     path: routes.businessSetup,
     element: <BusinessSetup />,
   },
-  {
-    path: routes.event,
-    element: <Event />,
-  },
-  {
-    path: routes.eventPRO,
-    element: <EventPRO />,
-  },
+  // {
+  //   path: routes.event,
+  //   element: <Event />,
+  // },
+  // {
+  //   path: routes.eventPRO,
+  //   element: <EventPRO />,
+  // },
   {
     path: routes.Losts,
     element: <LostForm />,

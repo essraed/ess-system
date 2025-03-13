@@ -20,11 +20,11 @@ const CategoryList = () => {
   if (!categories) return <LoadingSpinner />;
 
   return (
-    <section className="section-top">
+    <section className="section-top mb-10 md:mb-0">
       <div id="Services" className="homesection servicessection saa viewon">
         <div className="custom-container">
           <div className="row">
-            <h2 className="section-title">{t("Our Services")}</h2>
+            <h2 className="section-title md:block hidden">{t("Our Services")}</h2>
                     {categories.map((category) => (
                       <CategoryCard
                         key={category.id}

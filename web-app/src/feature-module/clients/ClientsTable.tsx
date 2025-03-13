@@ -7,6 +7,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { allowedImageExtension } from "../../constants/constants";
 import toast from "react-hot-toast";
 import { BookingStatus } from "../../types/booking";
+import { IMAGE_SERVER_PATH } from "../../environment";
 
 type Props = {
   clients: ClientData[] | null;
@@ -169,7 +170,9 @@ const ClientsTable = ({ clients, setFlag, email, status }: Props) => {
                     {client.status === clientStatus.Accepted && (
                       <>
                         {/* File Upload for Accepted Clients */}
-                        {!(client.fileEntities!.length > 0) ? (
+                        {!(
+                          client.fileEntities && client.fileEntities.length > 0
+                        ) ? (
                           <Upload
                             onChange={({ fileList }) =>
                               handleUploadChange(client.id, fileList)
@@ -197,7 +200,22 @@ const ClientsTable = ({ clients, setFlag, email, status }: Props) => {
                                   key={index}
                                   className="text-sm text-gray-700"
                                 >
-                                  {file.fileName}
+                                  {/* Check if the file is a PDF */}
+                                  {file!.fileName!.match(/\.(pdf)$/i) ? (
+                                    <div>
+                                      <p className="files">
+                                        <a
+                                          href={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {`${client.name} Visa `}
+                                        </a>
+                                      </p>
+                                    </div>
+                                  ) : (
+                                    <p>{file.fileName}</p>
+                                  )}
                                 </li>
                               ))}
                             </ul>
