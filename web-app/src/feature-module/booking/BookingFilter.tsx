@@ -103,21 +103,21 @@ const BookingFilter = ({ pageSize }: Props) => {
             {/* Add gap here */}
             {/* From Date Input */}
             <input
-              className="mb-4 border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
+              className="mb-4 border-b-2 text-black border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
               type="date"
               value={fromDate ?? ""}
               onChange={(e) => handleFromDateChange(e)}
             />
             {/* To Date Input */}
             <input
-              className="mb-4 border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
+              className="mb-4 border-b-2 text-black border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
               type="date"
               value={toDate ?? ""}
               onChange={(e) => handleToDateChange(e)}
             />
             {/* Booking Status Dropdown */}
             <select
-              className="mb-4 border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
+              className="mb-4 border-b-2 text-black border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
               value={bookingStatus ?? ""}
               onChange={(e) => handleStatusSelect(e.target.value)}
             >
@@ -132,7 +132,7 @@ const BookingFilter = ({ pageSize }: Props) => {
             </select>
             {/* Service Dropdown */}
             <select
-              className="mb-4 border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
+              className="mb-4 text-black border-b-2 border-gray-300 focus:border-blue-500 focus:outline-none bg-transparent p-2"
               value={serviceId ?? ""}
               onChange={(e) => handleServiceSelect(e.target.value)}
             >

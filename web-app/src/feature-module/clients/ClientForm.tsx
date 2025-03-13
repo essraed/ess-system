@@ -5,6 +5,8 @@ import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { clientSchema, ClientSchema } from "../../lib/schemas/clientScema";
+import { Divide } from "react-feather";
+import { Button, Divider } from "antd";
 
 interface ClientFormProps {
   quantity: number;
@@ -79,18 +81,24 @@ const ClientForm: React.FC<ClientFormProps> = ({ quantity, id,setaddClientFlag }
   ));
 
   return (
+    <div className="p-4 my- w-full border rounded-lg bg-gray-50">
+    <h2 className="text-lg font-semibold text-gray-700 mb-4">
+      Applicants Data
+    </h2>
+    <Divider/>
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
       {clientFields}
 
-      <div className="mt-2">
-        <button
-          type="submit"
-          className="w-full px-4 py-2 bg-blue-500 text-white rounded-sm text-sm hover:bg-blue-600"
+      <div className="mt-2 flex justify-end">
+        <Button
+          htmlType="submit"
+          className="entry"
         >
           Submit Clients
-        </button>
+        </Button>
       </div>
     </form>
+    </div>
   );
 };
 

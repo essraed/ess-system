@@ -165,7 +165,7 @@ const Table = ({
       rows={pageSize ?? 10}
       rowsPerPageOptions={rowsPerPageOptions}
       currentPageReportTemplate="{first}"
-      tableStyle={{ fontSize: "0.875rem", padding: "4px" }} // Adjust font and padding
+      tableStyle={{ fontSize: "0.875rem" }} // Adjust font and padding
     >
       {data &&
         Object.keys(data[0] || {})

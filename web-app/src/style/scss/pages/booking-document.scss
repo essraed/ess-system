@@ -9,18 +9,39 @@
 }
 
 
+.files {
+    color: #0f8992; /* Keeps the original color */
+    font-weight: 600; /* Make it slightly bolder for better visibility */
+    font-size: 16px; /* Add a bit of font size for readability */
+    margin-bottom: 8px; /* Adds some spacing between file links */
+    display: inline-block; /* Make sure the text is inline */
+  }
+  
+  .files a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from .files */
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .files a:hover {
+    color: #004d4d; /* Change color on hover */
+    text-decoration: underline; /* Add an underline on hover for better UX */
+  }
+  
+
 /* In your global CSS file or Tailwind's custom CSS */
 .custom-upload-btn {
-    background-color: #0f8992; 
+    background-color: #0f8992;
     color: white;
-  }
-  
-  .custom-upload-btn:hover,
-  .custom-upload-btn:focus,
-  .custom-upload-btn:active {
-    color: white; /* Same text color */
-  }
-  
+}
+
+.custom-upload-btn:hover,
+.custom-upload-btn:focus,
+.custom-upload-btn:active {
+    color: white;
+    /* Same text color */
+}
+
 
 
 /* Apply small font size to the dropdown on mobile */
@@ -74,4 +95,3 @@
         /* Larger font for the options */
     }
 }
-

@@ -31,7 +31,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname === routes.allServices ||
     location.pathname===routes.businessSetup||
     location.pathname===routes.Complaints||
-    location.pathname===routes.event||
+    // location.pathname===routes.event||
     location.pathname===routes.EventDashboard||
     location.pathname===routes.ComplaintDashboard||
     location.pathname===routes.UserDashboard||
