@@ -8,11 +8,13 @@ import { ServiceData } from "../../types/service";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import LoadingSpinner from "../common/LoadingSpinner";
+import { Button } from "antd";
 
 const BookingDocument = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isUploadComplete, setIsUploadComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: File }>(
     {}
   );
@@ -86,6 +88,7 @@ const BookingDocument = () => {
 
     formData.append("directory", directory);
     formData.append("entityId", currentBooking!.id);
+    setIsLoading(true);
 
     const result = await uploadImage(formData);
 
@@ -95,8 +98,6 @@ const BookingDocument = () => {
       console.error(result.error);
     }
   };
-
-  
 
   useEffect(() => {
     if (isUploadComplete) navigate(`/listings/booking/view/${id}`);
@@ -109,94 +110,117 @@ const BookingDocument = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center bg-gray-50 lg:py-5 w-fu">
-        <div className="bg-white p-8 w-full max-w-4xl text-center border border-y-pink-100">
-          <h2 className="text-large md:text-3xl font-bold text-blue-600 mb-4">
-            Upload Booking Documents
-          </h2>
-          <p className="text-gray-700 text-md mb-6">
-            Please upload the necessary documents
-            {/* <span className="font-semibold text-gray-900">
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="flex flex-col items-center justify-center bg-gray-50 lg:py-5 w-fu">
+          <div className="bg-white p-8 w-full max-w-4xl text-center border border-y-pink-100">
+            <h2 className="text-large md:text-3xl font-bold text-blue-600 mb-4">
+              Upload Booking Documents
+            </h2>
+            <p className="text-gray-700 text-md mb-6">
+              Please upload the necessary documents
+              {/* <span className="font-semibold text-gray-900">
               {" "}
               Booking ID: {id}{" "}
             </span> */}
-          </p>
-
-          {service.requiredFiles.length > 0 ? (
-            <div className="space-y-4">
-              {service.requiredFiles.map((fileName, index) => (
-                <div
-                  key={index}
-                  className="flex flex-wrap md:flex-nowrap items-center justify-between bg-white p-2 border border-gray-200"
-                >
-                  {/* File Name */}
-                  <p className="text-gray-700 text-md font-semibold w-full md:w-1/4 text-center md:text-left">
-                    {fileName}
-                  </p>
-
-                  {/* Upload Box */}
-                  <div
-                    {...getRootProps()}
-                    className="flex-1 border-2 border-dashed border-gray-400 p-2 cursor-pointer hover:border-blue-500 transition-all rounded-lg flex items-center justify-center text-center"
-                  >
-                    <input {...getInputProps()} />
-                    <p className="text-gray-500 text-sm">
-                      Drag & drop {fileName} here
-                    </p>
-                  </div>
-
-                  {/* Uploaded File Info */}
-                  {uploadedFiles[fileName] && (
-                    <p className="text-green-600 text-sm mt-2 md:mt-0 w-full md:w-auto text-center md:text-left">
-                      Uploaded: {uploadedFiles[fileName]?.name}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-600 text-center">
-              No required files for upload
             </p>
-          )}
 
-          {Object.keys(uploadedFiles).length > 0 && (
-            <div className="mt-6 text-left">
-              <h3 className="font-semibold text-gray-600">Uploaded Files:</h3>
-              <ul className="list-disc pl-6">
-                {Object.entries(uploadedFiles).map(
-                  ([fileName, file], index) => (
-                    <li
-                      key={index}
-                      className="flex justify-between items-center text-gray-600"
+            {service.requiredFiles.length > 0 ? (
+              <div className="space-y-4">
+                {service.requiredFiles.map((fileName, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-wrap md:flex-nowrap items-center justify-between bg-white p-2 border border-gray-200"
+                  >
+                    {/* File Name */}
+                    <p className="text-gray-700 text-md font-semibold w-full md:w-1/4 text-center md:text-left">
+                      {fileName}
+                    </p>
+
+                    {/* Upload Box */}
+                    <div
+                      {...getRootProps()}
+                      className="flex-1 border border-gray-200 p-3 sm:p-4 cursor-pointer hover:bg-blue-50 transition-all rounded-lg flex items-center justify-center text-center min-h-[40px] md:min-h-[50px] relative"
                     >
-                      {file.name}
-                      <button
-                        onClick={() => removeFile(fileName)}
-                        className="text-red-500 ml-4 hover:text-red-700 text-sm"
+                      <input {...getInputProps()} />
+
+                      {/* Drag and drop hint icon */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-gray-400 text-xs sm:text-sm flex items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M12 4v16m8-8H4"
+                            />
+                          </svg>
+                          <span>{`Drag & drop ${fileName} here`}</span>
+                        </span>
+                      </div>
+
+                      {/* Background image to indicate drag-and-drop area */}
+                      <div className="absolute inset-0 bg-gray-50 rounded-lg opacity-30"></div>
+                    </div>
+
+                    {/* Uploaded File Info */}
+                    {uploadedFiles[fileName] && (
+                      <p className="text-green-600 text-sm mt-2 md:mt-0 w-full md:w-auto text-center md:text-left">
+                        Uploaded: {uploadedFiles[fileName]?.name}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600 text-center">
+                No required files for upload
+              </p>
+            )}
+
+            {Object.keys(uploadedFiles).length > 0 && (
+              <div className="mt-6 text-left">
+                <h3 className="font-semibold text-gray-600">Uploaded Files:</h3>
+                <ul className="list-disc pl-6">
+                  {Object.entries(uploadedFiles).map(
+                    ([fileName, file], index) => (
+                      <li
+                        key={index}
+                        className="flex justify-between items-center text-gray-600"
                       >
-                        Remove
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
+                        {file.name}
+                        <button
+                          onClick={() => removeFile(fileName)}
+                          className="text-red-500 ml-4 hover:text-red-700 text-sm"
+                        >
+                          Remove
+                        </button>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            )}
+
+            <div className="flex justify-center mt-6">
+              <Button onClick={handleFileSubmit} className="entrys text-sm">
+                Submit Documents
+              </Button>
             </div>
-          )}
-
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={handleFileSubmit}
-              className="bg-blue-600 text-white px-2 py-1 rounded-lg text-sm d:text-lg hover:bg-blue-700 transition-all"
-
-            >
-              Submit Documents
-            </button>
           </div>
         </div>
-      </div>
+      )}
 
-      <Footer />
+      <div className="footerr">
+        <Footer />
+      </div>
     </>
   );
 };

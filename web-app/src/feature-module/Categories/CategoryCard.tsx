@@ -97,7 +97,7 @@ const CategoryCard = ({ category }: Props) => {
               <div className="list-rating">
                 <h3 className="listing-title">
                   <button
-                    onClick={() => navigate(`/listing-details`)}
+                    onClick={() => navigate(`/services/${formattedName}/${category.id}`)}
                     className="btn btn-link p-0 text-decoration-none font-semibold text-large lg:text-xl"
                     style={{ background: "none", border: "none", color: "inherit" }}
                   >
@@ -106,10 +106,10 @@ const CategoryCard = ({ category }: Props) => {
                 </h3>
               </div>
             </div>
-            <div className="view-more-btn text-center">
+            <div className="view-more-btn text-center hidden lg:block">
               <button
                 onClick={() => navigate(`/services/${formattedName}/${category.id}`)}
-                className="btn btn-secondary-new"
+                className="btn btn-secondary-new "
               >
                 {t("View Services")}{" "}
                 <i

@@ -8,7 +8,12 @@ import { PaginationData, PagingParams } from "../../types/pagination";
 import { ActionResult } from "../../types";
 import agent from "../api/agent";
 import { BookingSchema } from "../../lib/schemas/bookingSchema";
-import { CanceledReason, convertEnumToString, formatDateTime, paymentType } from "../../lib/utils";
+import {
+  CanceledReason,
+  convertEnumToString,
+  formatDateTime,
+  paymentType,
+} from "../../lib/utils";
 import { DocumentBookingSchema } from "../../lib/schemas/documentBookingSchema";
 
 export default class BookingStore {
@@ -34,7 +39,7 @@ export default class BookingStore {
 
   // Add Booking
   addBooking = async (
-    booking: BookingSchema|DocumentBookingSchema
+    booking: BookingSchema | DocumentBookingSchema
   ): Promise<ActionResult<string>> => {
     try {
       const response = await agent.Bookings.create(booking);
@@ -43,21 +48,20 @@ export default class BookingStore {
           ? [...this.bookings, response]
           : [response];
       });
-  
+
       const sessionId = this.getSessionId();
-  
+
       const storedSessionData = JSON.parse(
         localStorage.getItem(sessionId) || '{"value": []}'
       );
       const storedBookings: string[] = storedSessionData.value || [];
-  
+
       if (!storedBookings.includes(response.id)) {
         storedBookings.push(response.id);
       }
-  
-  
+
       this.setSessionData(sessionId, storedBookings);
-  
+
       return { status: "success", data: response.id };
     } catch (error) {
       console.error("Error adding booking: ", error);
@@ -65,7 +69,7 @@ export default class BookingStore {
     }
   };
 
-  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.uploadImage(formData);
       return { status: "success", data: "Documents Uploaded Successfully" };
@@ -75,8 +79,6 @@ export default class BookingStore {
     }
   };
 
-  
-  
   setSessionData = (sessionId: string, data: string[]) => {
     const expiryTime = new Date().getTime() + 20 * 60 * 1000; // 20 minutes from now
     const sessionData = {
@@ -103,12 +105,12 @@ export default class BookingStore {
       if (storedSessionData) {
         const parsedSessionData = JSON.parse(storedSessionData);
 
-        const currentSessionBookings = parsedSessionData.value; 
+        const currentSessionBookings = parsedSessionData.value;
         this.isSession = currentSessionBookings;
       }
 
       Object.keys(localStorage)
-        .filter((key) => key !== "sessionId" && key !== "language") 
+        .filter((key) => key !== "sessionId" && key !== "language")
         .forEach((id) => this.removeExpiredSessions(id));
 
       const validSessionIds = Object.keys(localStorage).filter(
@@ -142,7 +144,6 @@ export default class BookingStore {
     }
   };
 
-  
   // Utility method to generate a unique ID (can use a library like UUID)
   generateUniqueId = (): string => {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -218,7 +219,7 @@ export default class BookingStore {
       return this.currentBooking;
     } catch (error) {
       console.error("Error fetching booking: ", error);
-      return null
+      return null;
     }
   };
 
@@ -243,9 +244,12 @@ export default class BookingStore {
   };
 
   // Update Booking Status
-  setPaymentTypeOfBooking = async (id: string,type:paymentType): Promise<ActionResult<string>> => {
+  setPaymentTypeOfBooking = async (
+    id: string,
+    type: paymentType
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Bookings.setPaymentTypeOfBooking(id,type);
+      await agent.Bookings.setPaymentTypeOfBooking(id, type);
       await this.getBooking(id);
       return { status: "success", data: `Booking Payment Type set to ${type}` };
     } catch (error) {
@@ -253,7 +257,7 @@ export default class BookingStore {
       return { status: "error", error: error as string };
     }
   };
-  
+
   setStatusInProcess = async (id: string): Promise<ActionResult<string>> => {
     try {
       await agent.Bookings.setStatusInProcess(id);
@@ -265,9 +269,12 @@ export default class BookingStore {
     }
   };
 
-  setStatusCanceled = async (id: string,reason:CanceledReason): Promise<ActionResult<string>> => {
+  setStatusCanceled = async (
+    id: string,
+    reason: CanceledReason
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Bookings.setStatusCanceled(id,reason);
+      await agent.Bookings.setStatusCanceled(id, reason);
       await this.getBooking(id);
       return { status: "success", data: "Booking status set to 'Canceled'." };
     } catch (error) {

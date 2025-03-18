@@ -64,7 +64,7 @@ export const publicRoutes = [
     element: <Login />,
   },
   {
-    path: routes.categopries,
+    path: routes.categories,
     element: <CategoryList />,
   },
   {

@@ -7,27 +7,57 @@
     border-radius: 0px;
 
 }
+.entrys {
+    // #0f8992
+    background: #0668e9;
+    border-color: #0b66ee;
 
+    color: white;
+    border-radius: 0px;
+
+}
+
+/* Hide the footer by default */
+.footerr {
+    display: none;
+  }
+  
+  /* Show the footer on medium and larger screens (iPads and larger devices) */
+  @media (min-width: 850px) {
+    .footerr {
+      display: block;
+    }
+  }
 
 .files {
-    color: #0f8992; /* Keeps the original color */
-    font-weight: 600; /* Make it slightly bolder for better visibility */
-    font-size: 16px; /* Add a bit of font size for readability */
-    margin-bottom: 8px; /* Adds some spacing between file links */
-    display: inline-block; /* Make sure the text is inline */
-  }
-  
-  .files a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit color from .files */
-    transition: color 0.3s ease, text-decoration 0.3s ease; /* Smooth hover transition */
-  }
-  
-  .files a:hover {
-    color: #004d4d; /* Change color on hover */
-    text-decoration: underline; /* Add an underline on hover for better UX */
-  }
-  
+    color: #0f8992;
+    /* Keeps the original color */
+    font-weight: 600;
+    /* Make it slightly bolder for better visibility */
+    font-size: 16px;
+    /* Add a bit of font size for readability */
+    margin-bottom: 8px;
+    /* Adds some spacing between file links */
+    display: inline-block;
+    /* Make sure the text is inline */
+}
+
+.files a {
+    text-decoration: none;
+    /* Remove underline */
+    color: inherit;
+    /* Inherit color from .files */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+    /* Smooth hover transition */
+}
+
+.files a:hover {
+    color: #004d4d;
+    /* Change color on hover */
+    text-decoration: underline;
+    /* Add an underline on hover for better UX */
+}
+
 
 /* In your global CSS file or Tailwind's custom CSS */
 .custom-upload-btn {
