@@ -134,6 +134,6 @@ export const all_routes = {
   admin: "/admin",
   // event :"/event",
   // eventPRO :"/eventPRO",
-  categopries:"/categories"
+  categories:"/categories"
 
 };

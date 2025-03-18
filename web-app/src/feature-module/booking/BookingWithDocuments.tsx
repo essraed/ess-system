@@ -15,7 +15,7 @@ import { NationalityData } from "../../types/nationality";
 import Select from "react-select";
 import { Dropdown } from "primereact/dropdown";
 import { separateCamelCase } from "../../lib/utils";
-import { number } from "zod";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 type Props = {
   service: ServiceData;
@@ -35,8 +35,8 @@ const DocumentBookingForm = ({ service }: Props) => {
     resolver: zodResolver(documentBookingSchema),
     mode: "onTouched",
     defaultValues: {
-      adultsNumber: 1, // Default value for adults
-      childrenNumber: 0, // Default value for children
+      adultsNumber: 1,
+      childrenNumber: 0,
     },
   });
 
@@ -52,6 +52,7 @@ const DocumentBookingForm = ({ service }: Props) => {
   const [selectedNationality, setSelectedNationality] =
     useState<NationalityData | null>(null);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Load nationalities when the component mounts
   useEffect(() => {
@@ -91,8 +92,6 @@ const DocumentBookingForm = ({ service }: Props) => {
       const processTime = watch("processTime");
       let nationalityPrice = 0;
 
-      // Safely calculate nationality price
-
       if (entryType === "single" && duration === "30 days") {
         nationalityPrice =
           Number(selectedNationality.singlePriceWithMonth) * Number(adults) +
@@ -101,20 +100,22 @@ const DocumentBookingForm = ({ service }: Props) => {
       } else if (entryType === "single" && duration === "60 days") {
         nationalityPrice =
           Number(selectedNationality.singlePriceWithTwoMonth) * Number(adults) +
-          Number(selectedNationality.singlePriceWithTwoMonthForChild) * Number(children) || 0;
+            Number(selectedNationality.singlePriceWithTwoMonthForChild) *
+              Number(children) || 0;
       } else if (entryType === "multiple" && duration === "30 days") {
         nationalityPrice =
           Number(selectedNationality.multiplePriceWithMonth) * Number(adults) +
-          Number(selectedNationality.multiplePriceWithMonthForChild) * Number(children) || 0;
+            Number(selectedNationality.multiplePriceWithMonthForChild) *
+              Number(children) || 0;
       } else if (entryType === "multiple" && duration === "60 days") {
         nationalityPrice =
           Number(selectedNationality.multiplePriceWithTwoMonth) *
             Number(adults) +
-            Number(selectedNationality.multiplePriceWithTwoMonthForChild) * Number(children) || 0;
+            Number(selectedNationality.multiplePriceWithTwoMonthForChild) *
+              Number(children) || 0;
       }
 
       // Calculate prices for adults, children, and process time
-
       const processTimePrice =
         processTime === "Express - 1~2 working days"
           ? Number(service?.expressPrice) || 0
@@ -138,6 +139,7 @@ const DocumentBookingForm = ({ service }: Props) => {
     data.totalPrice = totalPrice;
     data.serviceId = service.id;
     data.nationalityId = selectedNationality?.id;
+    setIsLoading(true);
 
     // Submit booking logic here
     const result = await addBooking(data);
@@ -149,10 +151,12 @@ const DocumentBookingForm = ({ service }: Props) => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <section className="section product-details custom-container">
-      <div className="flex justify-center ">
-        <div className="w-full  bg-white p-8 border border-y-slate-950">
+      <div className="flex justify-center">
+        <div className="w-full bg-white p-8 border border-y-slate-950">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
@@ -162,7 +166,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                   isInvalid={!!errors.customerName}
                   errorMessage={errors.customerName?.message}
                   size="sm"
-                  className="text-medium md:text-lg"
+                  className="text-medium md:text-lg font-sans"
                   autoFocus
                 />
               </div>
@@ -174,7 +178,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                   isInvalid={!!errors.phone}
                   errorMessage={errors.phone?.message}
                   size="sm"
-                  className="text-medium md:text-lg"
+                  className="text-medium md:text-lg font-sans"
                 />
               </div>
 
@@ -185,18 +189,18 @@ const DocumentBookingForm = ({ service }: Props) => {
                   isInvalid={!!errors.email}
                   errorMessage={errors.email?.message}
                   size="sm"
-                  className="text-medium md:text-lg"
+                  className="text-medium md:text-lg font-sans"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Choose Nationality")}
                 </label>
                 <Select
-                  className="w-full "
+                  className="w-full font-sans"
                   options={NationalitiesDropdown?.map((Nationality) => ({
                     label: Nationality.name,
                     value: Nationality.id,
@@ -207,7 +211,7 @@ const DocumentBookingForm = ({ service }: Props) => {
               </div>
 
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Entry Type")}
                 </label>
                 <div className="flex gap-4">
@@ -218,7 +222,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                       watch("entryType") === "single"
                         ? "entry text-sm md:text-lg"
                         : "bg-gray-100 text-sm md:text-lg"
-                    }`}
+                    } font-sans`}
                   >
                     {t("Single")}
                   </button>
@@ -229,7 +233,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                       watch("entryType") === "multiple"
                         ? "entry text-sm md:text-lg"
                         : "bg-gray-100 text-sm md:text-lg"
-                    }`}
+                    } font-sans`}
                   >
                     {t("Multiple")}
                   </button>
@@ -238,7 +242,7 @@ const DocumentBookingForm = ({ service }: Props) => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Duration")}
                 </label>
                 <div className="flex gap-4">
@@ -249,7 +253,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                       watch("duration") === "30 days"
                         ? "entry text-sm md:text-lg"
                         : "bg-gray-100 text-sm md:text-lg"
-                    }`}
+                    } font-sans`}
                   >
                     {t("30 days")}
                   </button>
@@ -260,7 +264,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                       watch("duration") === "60 days"
                         ? "entry text-sm md:text-lg"
                         : "bg-gray-100 text-sm md:text-lg"
-                    }`}
+                    } font-sans`}
                   >
                     {t("60 days")}
                   </button>
@@ -268,7 +272,7 @@ const DocumentBookingForm = ({ service }: Props) => {
               </div>
 
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Process Time")}
                 </label>
                 <Controller
@@ -292,7 +296,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                         calculateTotalPrice();
                       }}
                       placeholder={t("Select Process Time")}
-                      className="w-full bg-gray-100 border-2 border-gray-300 h-9 focus:outline-none focus:ring-2 focus:ring-blue-500 custom-dropdown"
+                      className="w-full bg-gray-100 border-2 border-gray-300 h-9 focus:outline-none focus:ring-2 focus:ring-blue-500 custom-dropdown font-sans"
                     />
                   )}
                 />
@@ -301,7 +305,7 @@ const DocumentBookingForm = ({ service }: Props) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Number of Adults")}
                 </label>
                 <div className="flex items-center gap-2">
@@ -311,14 +315,14 @@ const DocumentBookingForm = ({ service }: Props) => {
                       const value = watch("adultsNumber");
                       if (value > 1) setValue("adultsNumber", value - 1);
                     }}
-                    className="bg-gray-200 p-0.5 px-2"
+                    className="bg-gray-200 p-0.5 px-2 font-sans"
                   >
                     -
                   </button>
                   <input
                     type="number"
                     {...register("adultsNumber")}
-                    className="w-16 h-8 text-center p-2 border-2 border-gray-300 rounded-md"
+                    className="w-16 h-8 text-center p-2 border-2 border-gray-300 rounded-md font-sans"
                     min={1}
                     max={9}
                   />
@@ -328,7 +332,7 @@ const DocumentBookingForm = ({ service }: Props) => {
                       const value = watch("adultsNumber");
                       setValue("adultsNumber", value + 1);
                     }}
-                    className="entry  py-0.5 px-2"
+                    className="entry py-0.5 px-2 font-sans"
                   >
                     +
                   </button>
@@ -336,7 +340,7 @@ const DocumentBookingForm = ({ service }: Props) => {
               </div>
 
               <div>
-                <label className="block text-sm md:text-lg font-semibold mb-2">
+                <label className="block text-sm md:text-lg font-semibold mb-2 font-sans">
                   {t("Number of Children")}
                 </label>
                 <div className="flex items-center gap-2">
@@ -346,14 +350,14 @@ const DocumentBookingForm = ({ service }: Props) => {
                       const value = watch("childrenNumber");
                       if (value > 0) setValue("childrenNumber", value - 1);
                     }}
-                    className="bg-gray-200 p-0.5 px-2"
+                    className="bg-gray-200 p-0.5 px-2 font-sans"
                   >
                     -
                   </button>
                   <input
                     type="number"
                     {...register("childrenNumber")}
-                    className="w-16 h-8 text-center p-2 border-2 border-gray-300 rounded-md"
+                    className="w-16 h-8 text-center p-2 border-2 border-gray-300 rounded-md font-sans"
                     min={0}
                     max={9}
                   />
@@ -363,23 +367,27 @@ const DocumentBookingForm = ({ service }: Props) => {
                       const value = watch("childrenNumber");
                       setValue("childrenNumber", value + 1);
                     }}
-                    className="entry p-0.5 px-2"
+                    className="entry p-0.5 px-2 font-sans"
                   >
                     +
                   </button>
                 </div>
               </div>
             </div>
+            <div className="text-medium md:text-lg font-semibold font-sans">
+              <span>{t("Total Price")}: </span>
+              <span className="text-sm text-red-600">{totalPrice} AED</span>
+            </div>
 
             <div className="mt-6">
-              <h3 className="text-medium md:text-xl font-semibold mb-4 text-gray-800">
+              <h3 className="text-sm md:text-xl font-semibold mb-4 text-gray-800 font-sans">
                 {t("Required Documents")}
               </h3>
               <ul className="list-disc pl-6 space-y-2">
                 {service.requiredFiles?.map((file, index) => (
                   <li
                     key={index}
-                    className="text-sm md:text-xl text-gray-700 flex items-center space-x-2"
+                    className="text-small md:text-xl text-gray-700 flex items-center space-x-2 font-sans"
                   >
                     <span className="flex-shrink-0 text-blue-600">✔</span>
                     <span>{separateCamelCase(file)}</span>
@@ -388,12 +396,11 @@ const DocumentBookingForm = ({ service }: Props) => {
               </ul>
             </div>
 
-            <div className="flex justify-between items-center">
-              <div className="text-medium md:text-lg font-semibold">
-                <span>{t("Total Price")}: </span>
-                <span className="text-medium">{totalPrice} AED</span>
-              </div>
-              <button type="submit" className="entry px-3 md:px-6 py-1">
+            <div className="flex justify-center items-center">
+              <button
+                type="submit"
+                className="entry px-3 md:px-6 py-1 font-sans"
+              >
                 {t("Book Now")}
               </button>
             </div>
