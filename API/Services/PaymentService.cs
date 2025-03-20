@@ -27,6 +27,7 @@ public class PaymentService : IPaymentService
     private readonly IEmailService _email;
 
     private readonly IBookingService _booking;
+    private readonly string _stripeSecretKey;
 
     public PaymentService(DataContext context, IMapper mapper, IEmailService email, IBookingService bookingService)
     {
@@ -235,7 +236,22 @@ public class PaymentService : IPaymentService
         }
     }
 
+    // public async Task<PaymentResult> ProcessGooglePayPayment(GooglePayPaymentData paymentData)
+    // {
+    //     // Example of interacting with Google's payment API to verify the transaction
+    //     var client = _httpClientFactory.CreateClient();
+    //     var response = await client.PostAsJsonAsync("https://payment-gateway.com/google-pay", paymentData);
 
+    //     if (response.IsSuccessStatusCode)
+    //     {
+    //         var paymentResult = await response.Content.ReadAsAsync<PaymentResult>();
+    //         return paymentResult;
+    //     }
+    //     else
+    //     {
+    //         throw new Exception("Failed to process Google Pay payment");
+    //     }
+    // }
 
 
     // public async Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams)
