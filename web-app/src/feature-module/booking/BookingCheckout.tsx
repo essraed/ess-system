@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { formatDateTime, paymentType } from "../../lib/utils";
+import GooglePayButton from "@google-pay/button-react";
 
 const BookingCheckout = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const BookingCheckout = () => {
     setError("");
     handleConfirmBooking();
   };
+
   const handleConfirmBooking = async () => {
     const type: paymentType = { type: paymentType };
 
@@ -56,7 +58,6 @@ const BookingCheckout = () => {
       const bookingIds = bookings.map((x) => x.id).join(" , ");
 
       formData.append("IDS", bookingIds ?? "");
-
       formData.append("OrderName", serviceNames || "");
 
       try {
@@ -104,12 +105,28 @@ const BookingCheckout = () => {
     ? bookings.reduce((sum, x) => sum + (Number(x?.totalPrice) || 0), 0)
     : 0;
 
+  const handleGooglePaySuccess = async (paymentData: any) => {
+    console.log("data to check", paymentData);
+    // // Send payment data to your API for processing (backend)
+    // try {
+    //   const response = await paymentStore.processGooglePayPayment(paymentData);
+    //   if (response?.status === "success") {
+    //     toast.success("Payment successful!");
+    //     await handleConfirmBooking();
+    //   } else {
+    //     toast.error("Payment processing failed.");
+    //   }
+    // } catch (error) {
+    //   toast.error("Error processing payment.");
+    // }
+  };
+
   return (
     <>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <div className="custom-container mx-auto px-4 py-8  min-h-screen">
+        <div className="custom-container mx-auto px-4 py-8 min-h-screen">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Left Column - Customer Information */}
             <div className="lg:col-span-7">
@@ -142,7 +159,7 @@ const BookingCheckout = () => {
 
             {/* Right Column - Services Summary */}
             <div className="lg:col-span-5 border border-gray-300 h-full">
-              <div className="bg-white  p-6">
+              <div className="bg-white p-6">
                 <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">
                   Services Summary
                 </h3>
@@ -191,28 +208,88 @@ const BookingCheckout = () => {
               {/* Show radio buttons if paymentType is not selected, otherwise show the selected payment type */}
               {!bookings[0].paymentType ? (
                 <div className="flex flex-col items-start lg:items-end space-y-3">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="paymentType"
-                      value="Direct"
-                      checked={paymentType === "Direct"}
-                      onChange={(e) => setPaymentType(e.target.value)}
-                      className="mr-2"
-                    />
-                    Direct Payment
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="paymentType"
-                      value="Online"
-                      checked={paymentType === "Online"}
-                      onChange={(e) => setPaymentType(e.target.value)}
-                      className="mr-2"
-                    />
-                    Online Payment
-                  </label>
+                  <div className="flex flex-col lg:flex-col items-center space-y-2 lg:space-y-2 ">
+                    {/* Direct Payment with Cash Icon */}
+                    <label className="flex items-center space-x-2.5  p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 w-full lg:w-auto">
+                      <i className="fas fa-money-bill-wave text-2xl text-green-500"></i>{" "}
+                      {/* Cash icon with green color */}
+                      <input
+                        type="radio"
+                        name="paymentType"
+                        value="Direct"
+                        checked={paymentType === "Direct"}
+                        onChange={(e) => setPaymentType(e.target.value)}
+                        className="mr-2"
+                      />
+                      <span className="text-lg text-gray-800">
+                        Direct Payment
+                      </span>
+                    </label>
+
+                    {/* Online Payment with Etisalat Icon */}
+                    <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 w-full lg:w-auto">
+                      <img
+                        src="/assets/img/etisalatLogo.gif" 
+                        alt="Etisalat"
+                        className="w-8 h-8"
+                      />{" "}
+                      {/* Etisalat icon with blue color */}
+                      <input
+                        type="radio"
+                        name="paymentType"
+                        value="Online"
+                        checked={paymentType === "Online"}
+                        onChange={(e) => setPaymentType(e.target.value)}
+                        className="mr-2"
+                      />
+                      <span className="text-lg text-gray-800">
+                        Online Payment
+                      </span>
+                    </label>
+                    <div className="flex justify-center py-4 px-9 w-full lg:w-auto border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100">
+                      <GooglePayButton
+                        environment="TEST"
+                        buttonColor="white"
+                        buttonType="short"
+                        paymentRequest={{
+                          apiVersion: 2,
+                          apiVersionMinor: 0,
+                          allowedPaymentMethods: [
+                            {
+                              type: "CARD",
+                              parameters: {
+                                allowedAuthMethods: [
+                                  "PAN_ONLY",
+                                  "CRYPTOGRAM_3DS",
+                                ],
+                                allowedCardNetworks: ["MASTERCARD", "VISA"],
+                              },
+                              tokenizationSpecification: {
+                                type: "PAYMENT_GATEWAY",
+                                parameters: {
+                                  gateway: "stripe",
+                                  gatewayMerchantId: "acct_1R4JnrGLiytcHjfv",
+                                },
+                              },
+                            },
+                          ],
+                          merchantInfo: {
+                            merchantId: "Demo Merchant",
+                            merchantName: "Demo Merchant",
+                          },
+                          transactionInfo: {
+                            totalPriceStatus: "FINAL",
+                            totalPriceLabel: "Total",
+                            totalPrice: totalPrice.toString(),
+                            currencyCode: "AED",
+                            countryCode: "AE",
+                          },
+                        }}
+                        onLoadPaymentData={handleGooglePaySuccess}
+                        className="w-full lg:w-auto"
+                      />
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="text-gray-600">
@@ -235,13 +312,13 @@ const BookingCheckout = () => {
             <div className="flex justify-center gap-4 mt-6">
               <button
                 onClick={() => navigate("/services")}
-                className="w-1/2 lg:w-1/6 bg-gray-300 text-gray-800  py-2 font-semibold hover:bg-gray-400"
+                className="w-1/2 lg:w-1/6 bg-gray-300 text-gray-800 py-2 font-semibold hover:bg-gray-400"
               >
                 Add More
               </button>
               <button
                 onClick={onConfirmClick}
-                className="w-1/2 lg:w-1/6 bg-blue-600 text-white  py-2 font-semibold hover:bg-blue-700"
+                className="w-1/2 lg:w-1/6 bg-blue-600 text-white py-2 font-semibold hover:bg-blue-700"
               >
                 Confirm Booking
               </button>

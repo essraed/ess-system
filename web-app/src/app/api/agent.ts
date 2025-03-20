@@ -247,6 +247,7 @@ const Payment = {
   initiate: (data: FormData) => requests.post("payment/initiate-payment", data),
   callback: (data: FormData) => requests.post("payment/payment-callback", data),
   getById: (id: string) => requests.get(`payment/${id}`),
+  processGooglePayPayment: (paymentData: any) => requests.post(`payment/google-pay`,paymentData),
 };
 // Helper function to ensure the time is in the correct format (HH:mm)
 

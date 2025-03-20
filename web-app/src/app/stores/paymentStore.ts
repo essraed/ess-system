@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { PaginationData, PagingParams } from "../../types/pagination";
+import toast from "react-hot-toast";
 
 class PaymentStore {
   payments = [];
@@ -36,6 +37,15 @@ class PaymentStore {
       this.loading = false;
     }
   };
+   processGooglePayPayment=async (paymentData: any)=> {
+    try {
+      const response = await agent.Payment.processGooglePayPayment(paymentData);
+      return response;
+    } catch (error) {
+      toast.error("Error processing payment.");
+      return null;
+    }
+  }
 
   // Handle Payment Callback
   handlePaymentCallback = async (orderId: string, paymentStatus: string) => {

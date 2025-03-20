@@ -16,6 +16,7 @@ import Select from "react-select";
 import { Dropdown } from "primereact/dropdown";
 import { separateCamelCase } from "../../lib/utils";
 import LoadingSpinner from "../common/LoadingSpinner";
+import GooglePayButton from "@google-pay/button-react";
 
 type Props = {
   service: ServiceData;
@@ -395,7 +396,6 @@ const DocumentBookingForm = ({ service }: Props) => {
                 ))}
               </ul>
             </div>
-
             <div className="flex justify-center items-center">
               <button
                 type="submit"

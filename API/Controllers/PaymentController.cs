@@ -53,7 +53,7 @@ namespace API.Controllers
                     Transaction = transaction
                 };
 
-                var status=await _paymentService.PaymentCallback(callback);
+                var status = await _paymentService.PaymentCallback(callback);
                 return Redirect($"https://kbc.center/payment/status?{status}");
             }
             catch (InvalidOperationException ex)
@@ -65,6 +65,27 @@ namespace API.Controllers
                 return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
             }
         }
+
+        // [HttpPost("google-pay")]
+        // public async Task<IActionResult> ProcessGooglePay([FromBody] GooglePayPaymentRequest paymentRequest)
+        // {
+        //     try
+        //     {
+        //         // Call the payment service to process the Google Pay payment
+        //         var result = await _paymentService.ProcessGooglePayPaymentAsync(paymentRequest);
+
+        //         if (result == "success")
+        //         {
+        //             return Ok(new { status = "success" });
+        //         }
+
+        //         return BadRequest(new { status = "failed", message = "Payment failed." });
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return StatusCode(500, new { status = "error", message = ex.Message });
+        //     }
+        // }
 
 
         // [HttpGet("getAll")]
