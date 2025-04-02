@@ -7,6 +7,7 @@
     border-radius: 0px;
 
 }
+
 .entrys {
     // #0f8992
     background: #0668e9;
@@ -20,14 +21,14 @@
 /* Hide the footer by default */
 .footerr {
     display: none;
-  }
-  
-  /* Show the footer on medium and larger screens (iPads and larger devices) */
-  @media (min-width: 850px) {
+}
+
+/* Show the footer on medium and larger screens (iPads and larger devices) */
+@media (min-width: 850px) {
     .footerr {
-      display: block;
+        display: block;
     }
-  }
+}
 
 .files {
     color: #0f8992;
@@ -124,4 +125,44 @@
         font-size: 1rem !important;
         /* Larger font for the options */
     }
+}
+
+
+
+.privacy-policy-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.privacy-policy h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.privacy-policy h3 {
+    margin-top: 20px;
+}
+
+.privacy-policy ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.accept-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.accept-button:hover {
+    background-color: #45a049;
 }

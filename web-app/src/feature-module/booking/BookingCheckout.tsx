@@ -268,13 +268,13 @@ const BookingCheckout = () => {
                                 type: "PAYMENT_GATEWAY",
                                 parameters: {
                                   gateway: "stripe",
-                                  gatewayMerchantId: "acct_1R4JnrGLiytcHjfv",
+                                  gatewayMerchantId: "acct_1R53foLZVH34SsAp",
                                 },
                               },
                             },
                           ],
                           merchantInfo: {
-                            merchantId: "Demo Merchant",
+                            merchantId: "7215-7443-7363",
                             merchantName: "Demo Merchant",
                           },
                           transactionInfo: {

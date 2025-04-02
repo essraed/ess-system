@@ -42,6 +42,7 @@ import EventDashboard from "../Event/EventDashboard";
 import Event from "../Event/Event";
 import EventPRO from "../EventPRO/EventPRO";
 import CategoryList from "../Categories/CategoryList";
+import PrivacyPolicy from "../policy/PrivacyPolicy ";
 
 
 const routes = all_routes;
@@ -248,5 +249,9 @@ export const authenticationRoute = [
   {
     path: routes.resetPassword,
     element: <ResetPassword />,
+  },
+  {
+    path: routes.PrivacyPolicy,
+    element: <PrivacyPolicy />,
   },
 ];
