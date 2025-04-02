@@ -1,4 +1,5 @@
 import EventDashboard from "../Event/EventDashboard";
+import PrivacyPolicy from "../policy/PrivacyPolicy ";
 
 
 export const all_routes = {
@@ -130,6 +131,7 @@ export const all_routes = {
   contactUs: "/contact",
   businessSetup: "/businessSetup",
   Losts: "/Losts",
+  PrivacyPolicy: "/PrivacyPolicy",
   Complaints: "/Complaints",
   admin: "/admin",
   // event :"/event",

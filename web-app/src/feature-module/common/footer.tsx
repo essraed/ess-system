@@ -90,7 +90,7 @@ const Footer = () => {
                       <h5 className="footer-title">{t("Quick links")}</h5>
                       <ul>
                         <li>
-                          <Link to="#">{t("Privacy Policy")}</Link>
+                          <Link to={all_routes.PrivacyPolicy}>{t("Privacy Policy")}</Link>
                         </li>
                         <li>
                           <Link to="#">{t("Faq")}</Link>
