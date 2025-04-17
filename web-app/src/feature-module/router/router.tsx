@@ -26,15 +26,6 @@ const AllRoutes = () => {
 
   const HeaderLayout = () => (
     <>
-     <FloatingWhatsApp
-        phoneNumber="97143426666"
-        accountName="Karama Business Center"
-        avatar="assets/img/logo-small.png"
-        allowEsc
-        allowClickAway
-        notification
-        notificationSound
-      />
       <Outlet />
       <Progress />
     </>

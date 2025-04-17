@@ -27,4 +27,3 @@ export const COMPANY_NAME = "Emirates Secretarial Services";
 // export const SIGNALR_HUB_URL = "https://kbc.center/notificationHub";
 
 // export const IMAGE_SERVER_PATH = "https://kbc.center";
-

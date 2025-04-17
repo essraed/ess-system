@@ -45,7 +45,7 @@ public class PaymentService : IPaymentService
         }
 
         var payment = _mapper.Map<Payment>(paymentDto);
-        payment.MerchantId = "Demo Merchant";
+        payment.MerchantId = "EMIRATESSECRETARIAL";
         payment.TransactionHint = "CPT:Y;VCC:Y;";
         payment.Currency = "AED";
         payment.OrderID = Guid.NewGuid().ToString("N").Substring(0, 16);
@@ -64,12 +64,12 @@ public class PaymentService : IPaymentService
                 : payment.OrderName,
                 TransactionHint = payment.TransactionHint,
                 ReturnPath = "https://kbc.center/api/payment/payment-callback",
-                UserName = "Demo_fY9c",
-                Password = "Comtrust@20182018"
+                UserName = "EMIRATES_HANI",
+                Password = "P@s$w0rD@Dubai2025"
             }
         };
 
-        var apiUrl = "https://demo-ipg.ctdev.comtrust.ae:2443/";
+        var apiUrl = "https://ipg.comtrust.ae:2443/";
 
         using var httpClient = new HttpClient();
 
@@ -127,14 +127,14 @@ public class PaymentService : IPaymentService
             {
                 Finalization = new Finalization
                 {
-                    Customer = "Demo Merchant",
+                    Customer = "EMIRATESSECRETARIAL",
                     TransactionID = callback?.Transaction?.TransactionID ?? "",
-                    UserName = "Demo_fY9c",
-                    Password = "Comtrust@20182018"
+                    UserName = "EMIRATES_HANI",
+                    Password = "P@s$w0rD@Dubai2025"
                 }
             };
 
-            var apiUrl = "https://demo-ipg.ctdev.comtrust.ae:2443/";
+            var apiUrl = "https://ipg.comtrust.ae:2443/";
 
             using var httpClient = new HttpClient();
 
@@ -179,7 +179,7 @@ public class PaymentService : IPaymentService
                 message = $@"
                         <h1>Payment Successful</h1>
                         <p>Dear {firstBooking?.CustomerName},</p>
-                        <p>Your payment has been successfully processed. Here are the details of your transaction:</p>
+                        <p>Your payment has been successfully processed.Here are the details of your transaction:</p>
                         <ul>
                             <li><strong>Transaction ID:</strong> {payment.TransactionID}</li>
                             <li><strong>Status:</strong> {payment.Status}</li>
