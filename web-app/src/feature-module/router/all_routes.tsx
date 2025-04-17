@@ -133,6 +133,7 @@ export const all_routes = {
   Losts: "/Losts",
   PrivacyPolicy: "/PrivacyPolicy",
   Complaints: "/Complaints",
+  PriceDetails:"/PriceDetails",
   admin: "/admin",
   // event :"/event",
   // eventPRO :"/eventPRO",

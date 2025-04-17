@@ -7,9 +7,9 @@
 // export const COMPANY_MAIL = "info@example.com";
 // export const COMPANY_NAME = "Emirates Secretarial Services";
 
-export const PUBLIC_API_URL = "http://localhost:5000/api/";
-export const SIGNALR_HUB_URL = "http://localhost:5000/notificationHub";
-export const IMAGE_SERVER_PATH = "http://localhost:5000";
+// export const PUBLIC_API_URL = "http://localhost:5000/api/";
+// export const SIGNALR_HUB_URL = "http://localhost:5000/notificationHub";
+// export const IMAGE_SERVER_PATH = "http://localhost:5000";
 
 
 export const base_path = "/";
@@ -22,9 +22,9 @@ export const COMPANY_NAME = "Emirates Secretarial Services";
 
 
 
-// export const PUBLIC_API_URL = "https://kbc.center/api/";
+export const PUBLIC_API_URL = "https://kbc.center/api/";
 
-// export const SIGNALR_HUB_URL = "https://kbc.center/notificationHub";
+export const SIGNALR_HUB_URL = "https://kbc.center/notificationHub";
 
-// export const IMAGE_SERVER_PATH = "https://kbc.center";
+export const IMAGE_SERVER_PATH = "https://kbc.center";
 
