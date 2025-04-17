@@ -25,6 +25,38 @@ public class BookingService : IBookingService
     private readonly string _email = "abed@hotmail.com";
     private string _subject = "Your Notification";
 
+
+public async Task<BookingDto?> GetBookingByBookingCodeAsync(string bookingCode)
+{
+    var booking = await _context.Bookings
+        .Include(b => b.Service)
+        .Where(b => b.BookingCode == bookingCode)
+        .Select(b => new BookingDto
+        {
+            Id = b.Id,
+            BookingCode = b.BookingCode,
+            BookingStatus = b.BookingStatus,
+            CustomerName = b.CustomerName,
+            Phone = b.Phone,
+            Address = b.Address,
+            AdultsNumber = b.AdultsNumber,
+            ChildrenNumber = b.ChildrenNumber,
+            EntryType = b.EntryType,
+            Duration = b.Duration,
+            Reason = b.Reason,
+            ProcessTime = b.ProcessTime,
+            TotalPrice = b.TotalPrice,
+            BookingDate = b.BookingDate,
+            CreateDate = b.CreateDate,
+            UpdateDate = b.UpdateDate,
+            ServiceName = b.Service!.Name,
+
+        })
+        .FirstOrDefaultAsync();
+
+    return booking; // This will return null if no booking is found
+}
+
     public BookingService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor,
         IWorkingTimeService workingTimeService, INotificationService notificationService, IEmailService emailService, IFileService fileService)
     {
