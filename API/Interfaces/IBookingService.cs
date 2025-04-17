@@ -7,6 +7,9 @@ namespace API.Interfaces
 {
     public interface IBookingService
     {
+
+        Task<BookingDto?> GetBookingByBookingCodeAsync(string bookingCode); // Allow nullability
+
         Task<PagedList<BookingDto>> GetAllBookingsAsync(BookingParams bookingParams);
 
         Task<BookingDetilasDto> GetBookingByIdAsync(Guid id);
