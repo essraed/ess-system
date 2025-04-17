@@ -43,6 +43,8 @@ import Event from "../Event/Event";
 import EventPRO from "../EventPRO/EventPRO";
 import CategoryList from "../Categories/CategoryList";
 import PrivacyPolicy from "../policy/PrivacyPolicy ";
+import { QRCode } from "antd";
+import QRCodeComponent from "../Prices/QRCodeComponent";
 
 
 const routes = all_routes;
@@ -100,6 +102,7 @@ export const publicRoutes = [
     path: routes.Losts,
     element: <LostForm />,
   },
+
   {
     path: routes.Complaints,
     element: <ComplaintForm />,

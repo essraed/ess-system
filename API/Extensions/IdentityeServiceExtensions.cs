@@ -51,30 +51,30 @@ namespace API.Extensions
                     };
                 });
 
-            services.AddCors(opt =>
+            // services.AddCors(opt =>
+            // {
+            //     opt.AddPolicy("Allow-Origin", policy =>
+            //     {
+            //         policy.AllowAnyMethod()
+            //     .AllowAnyHeader()
+            //     .AllowAnyOrigin()
+            //     .WithOrigins("http://localhost:3000", "http://localhost:4200");
+            //     });
+            // });
+
+
+
+            services.AddCors(options =>
             {
-            opt.AddPolicy("Allow-Origin", policy =>
-            {
-            policy.AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowAnyOrigin()
-            .WithOrigins("http://localhost:3000", "http://localhost:4200");
+                options.AddPolicy("Allow-Origin", policy =>
+    {
+        // Use the actual domain where your React app is hosted (https://kbc.center/)
+        policy.WithOrigins("https://kbc.center", "https://www.kbc.center")  // React frontend URL (production)
+.AllowAnyHeader()
+.AllowAnyMethod()
+.AllowCredentials();
+    });
             });
-            });
-
-
-
-    //         services.AddCors(options =>
-    //         {
-    //             options.AddPolicy("Allow-Origin", policy =>
-    // {
-    //     // Use the actual domain where your React app is hosted (https://kbc.center/)
-    //             policy.WithOrigins("https://kbc.center")  // React frontend URL (production)
-    // .AllowAnyHeader()
-    // .AllowAnyMethod()
-    // .AllowCredentials();
-    //         });
-    //         });
 
 
             return services;
