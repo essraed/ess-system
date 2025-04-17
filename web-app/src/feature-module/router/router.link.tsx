@@ -45,6 +45,8 @@ import CategoryList from "../Categories/CategoryList";
 import PrivacyPolicy from "../policy/PrivacyPolicy ";
 import { QRCode } from "antd";
 import QRCodeComponent from "../Prices/QRCodeComponent";
+import TrackOrder from "../booking/TrackOrder";
+
 
 
 const routes = all_routes;
@@ -54,6 +56,7 @@ export const publicRoutes = [
     path: routes.homeOne,
     element: <HomeOne />,
   },
+  
   {
     path: "/",
     element: <Navigate to="/" />,
@@ -65,6 +68,10 @@ export const publicRoutes = [
   {
     path: routes.admin,
     element: <Login />,
+  },
+  {
+    path: routes.track,
+    element: <TrackOrder />,
   },
   {
     path: routes.categories,

@@ -50,33 +50,33 @@ const HomeOne = () => {
         <div className="float-sm">
           <div className="fl-fl float-fb">
             <i className="fa fa-facebook fa-2x"></i>
-            <a href="" target="_blank">
+            <a href="https://www.facebook.com/karamacenter.ae" target="">
               {" "}
               Like us!
             </a>
           </div>
           <div className="fl-fl float-tw">
             <i className="fa fa-twitter fa-2x"></i>
-            <a href="" target="_blank">
+            <a href="https://x.com/karamacenter_ae" target="">
               Follow us!
             </a>
           </div>
 
           <div className="fl-fl float-ig">
             <i className="fa fa-instagram fa-2x"></i>
-            <a href="" target="_blank">
+            <a href="https://www.instagram.com/karamacenter.ae/" target="">
               Follow us!
             </a>
           </div>
           <div className="fl-fl float-pn">
             <i className="fa fa-linkedin fa-2x"></i>
-            <a href="" target="_blank">
+            <a href="https://www.linkedin.com/company/karamacenter-ae/?viewAsMember=true" >
               Follow us!
             </a>
           </div>
           <div className="fl-fl float-yt">
             <i className="fa fa-youtube fa-2x"></i>
-            <a href="" target="_blank">
+            <a href="https://www.youtube.com/channel/UCkZvVRnR4s2l4QVuWJKCNGQ">
               Follow us!
             </a>
           </div>
@@ -467,23 +467,23 @@ const HomeOne = () => {
                 <AccordionItemPanel>
                   <p>
                     <h4>DHA Medical Fitness Test </h4>
-                    {t("Monday - Friday 07:00 AM - 11:00 PM")}
+                    {t("Monday - Saturday 07:00 AM - 10:00 PM")}
                     <br></br>
                     <br></br>
-                    {t("Saturday - 08:00 AM - 11:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday 08:00 AM - 05:00 PM")}
+            
+                    {t("Sunday 08:00 AM - 08:00 PM")}
                     <br></br>
                     <br></br>
                     {t("Note : Saturday and Sunday after 01:00 PM only Visa Renewal is accepted(Xray service not available after 01:00 PM)")}
                   </p>
                   <p>
                     <h4>OHC </h4>
-                    {t("Monday - Thursday 07:00 AM - 04:00 PM")}
+                    {t("Monday - Thursday 07:30 AM - 08:00 PM")}
                     <br></br>
                     <br></br>
-                    {t("Friday - 07:00 AM - 11:00 AM")}
+                    {t("Friday - 07:30 AM - 11:00 AM")}
+                    <br></br>
+                    {t("Friday - 04:30 AM - 08:00 AM")}
                     <br></br>
                     <br></br>
                     {t("Saturday & Sunday - Closed")}
@@ -491,21 +491,8 @@ const HomeOne = () => {
                     <br></br>
                     </p>
                     <p>
-                    <h4>Typing Services </h4>
-                    {t("Monday - Friday 07:00 AM - 12:00 AM")}
-                    <br></br>
-                    <br></br>
-                    {t("Saturday - 08:00 AM - 12:00 AM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday 08:00 AM - 05:00 PM")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                    <p>
                     <h4>DED </h4>
-                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
-                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
                     <br></br>
                     <br></br>
                     {t("Sunday - Closed")}
@@ -514,8 +501,7 @@ const HomeOne = () => {
                     </p>
                     <p>
                     <h4>Amer </h4>
-                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
-                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    {t("Monday - Saturday 07:00 AM - 10:00 PM")}
                     <br></br>
                     <br></br>
                     {t("Sunday - Closed")}
@@ -523,12 +509,20 @@ const HomeOne = () => {
                     <br></br>
                     </p>
                     <p>
-                    <h4>Taw-jeeh/Tas-heel </h4>
-                    {t("Monday - Saturday 09:00 AM - 05:00 PM")}
-                    {t("Monday - Saturday 08:00 PM - 12:00 AM")}
+                    <h4>Tas-Heel </h4>
+                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
                     <br></br>
                     <br></br>
                     {t("Sunday - Closed")}
+                    <br></br>
+                    <br></br>
+                    </p>
+                    <p>
+                    <h4>Taw-Jeeh </h4>
+                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
+                    <br></br>
+                    <br></br>
+                    {t("Sunday - 09:00 AM - 05:00 PM")}
                     <br></br>
                     <br></br>
                     </p>

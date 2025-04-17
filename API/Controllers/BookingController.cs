@@ -21,6 +21,29 @@ namespace API.Controllers
             _bookingService = bookingService;
         }
 
+
+[HttpGet("TrackOrder/{bookingCode}")]
+[AllowAnonymous]
+public async Task<ActionResult<BookingDto>> TrackOrderByBookingCode(string bookingCode)
+{
+    try
+    {
+        var booking = await _bookingService.GetBookingByBookingCodeAsync(bookingCode);
+        
+        if (booking == null)
+        {
+            return NotFound($"Booking with BookingCode '{bookingCode}' not found.");
+        }
+
+        return Ok(booking);
+    }
+    catch (Exception ex)
+    {
+        return BadRequest($"An error occurred while retrieving the order status: {ex.Message}");
+    }
+}
+
+
         [HttpGet]
         public async Task<ActionResult<PagedList<BookingDto>>> GetAllBookings([FromQuery] BookingParams bookingParams)
         {

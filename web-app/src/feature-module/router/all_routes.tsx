@@ -137,6 +137,7 @@ export const all_routes = {
   admin: "/admin",
   // event :"/event",
   // eventPRO :"/eventPRO",
-  categories:"/categories"
+  categories:"/categories",
+  track: "/booking/TrackOrder"
 
 };

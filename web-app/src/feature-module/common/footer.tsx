@@ -43,11 +43,11 @@ const Footer = () => {
       <footer className="footer">
         {/* Footer Top */}
         <div className="footer-top aos hidden md:block" data-aos="fade-down">
-          <div className="container">
+          <div className="custom-container ">
             <div className="row">
-              <div className="col-lg-7">
+              <div className="col-lg-8">
                 <div className="row">
-                  <div className="col-lg-4 col-md-6">
+                  <div className="col-lg-6 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
                       <h5 className="footer-title">{t("About Company")}</h5>
@@ -70,21 +70,8 @@ const Footer = () => {
                     </div>
                     {/* /Footer Widget */}
                   </div>
-                  <div className="col-lg-4 col-md-6">
-                    {/* Footer Widget */}
-                    <div className="footer-widget footer-menu">
-                      <h5 className="footer-title">{t("Booking Services")}</h5>
-                      <ul>
-                        {categories?.map((item, index) => (
-                          <li key={index}>
-                            <Link to={`/services/${item.id}`}>{item.name}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    {/* /Footer Widget */}
-                  </div>
-                  <div className="col-lg-4 col-md-6">
+
+                  <div className="col-lg-6 col-md-6">
                     {/* Footer Widget */}
                     <div className="footer-widget footer-menu">
                       <h5 className="footer-title">{t("Quick links")}</h5>
@@ -101,7 +88,7 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-5">
+              <div className="col-lg-4">
                 <div className="footer-contact footer-widget">
                   <h5 className="footer-title">{t("Contact Info")}</h5>
                   <div className="footer-contact-info">
