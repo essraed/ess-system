@@ -33,19 +33,12 @@ const AllRoutes = () => {
 
   const PageLayout = () => (
     <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <FloatingWhatsApp
-        phoneNumber="97143426666"
-        accountName="Karama Business Center"
-        avatar="assets/img/logo-small.png"
-        allowEsc
-        allowClickAway
-        notification
-        notificationSound
-      />
       <Outlet />
       <Progress />
       <Footer />
+      </div>
     </>
   );
 

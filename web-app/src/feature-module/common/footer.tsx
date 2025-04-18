@@ -39,8 +39,13 @@ const Footer = () => {
 
   return (
     <>
-      {/* Footer */}
-      <footer className="footer">
+    {/* Main content wrapper with space for footer */}
+    <div className="main-content">
+       {/* Your other page content */}
+     </div>
+
+     {/* Footer */}
+     <footer className="footer">
         {/* Footer Top */}
         <div className="footer-top aos hidden md:block" data-aos="fade-down">
           <div className="custom-container ">
