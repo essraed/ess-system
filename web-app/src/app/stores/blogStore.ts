@@ -39,6 +39,33 @@ export default class BlogStore {
     }
   };
 
+  uploadImage = async (
+    formData: FormData,
+    id?: string
+  ): Promise<ActionResult<string>> => {
+    try {
+      await agent.Blogs.uploadImage(formData);
+      await this.loadBlogs();
+      return { status: "success", data: "blog image uploaded successfully" };
+    } catch (error) {
+      console.error("Error uploading blog: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+  uploadImageForPost = async (
+    formData: FormData,
+    id?: string
+  ): Promise<ActionResult<string>> => {
+    try {
+      await agent.Blogs.uploadImageForPost(formData);
+      await this.loadBlogs();
+      return { status: "success", data: "Post image uploaded successfully" };
+    } catch (error) {
+      console.error("Error uploading Post: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
 
   clearBlogs = () => {
     this.blogs = null;

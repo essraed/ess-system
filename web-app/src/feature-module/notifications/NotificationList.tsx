@@ -59,7 +59,7 @@ const NotificationList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       // clearNotification();
       navigate("/login");
       toast.error("Unauthorized");

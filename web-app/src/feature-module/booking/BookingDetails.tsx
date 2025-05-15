@@ -122,12 +122,12 @@ const BookingDetails = () => {
                 <h1 className="text-2xl font-bold text-gray-800">
                   Booking Details
                 </h1>
-                {userStore.isAdmin() && (
+        
                   <BackToButton
                     label="Back to Bookings"
                     href={all_routes.bookingDashboard}
                   />
-                )}
+             
               </div>
 
               <div className="p-4 border rounded-lg bg-gray-50 w-full">
@@ -304,7 +304,7 @@ const BookingDetails = () => {
                             )}
                           </div>
 
-                          {userStore.isAdmin() && (
+                        
                             <div className="flex space-x-2">
                               {bookingStatus ===
                                 convertEnumToString(
@@ -396,14 +396,14 @@ const BookingDetails = () => {
                                 </div>
                               )}
                             </div>
-                          )}
+                          
                         </div>
                       )}
                     </div>
                   </div>
 
                   {/* Admin Update Section */}
-                  {userStore.isAdmin() && (
+               
                     <div className="space-y-6">
                       <h2 className="text-lg font-semibold text-gray-700 mb-4">
                         Admin Update Section
@@ -447,7 +447,7 @@ const BookingDetails = () => {
                         </Button>
                       </div>
                     </div>
-                  )}
+                 
                 </div>
               </div>
 

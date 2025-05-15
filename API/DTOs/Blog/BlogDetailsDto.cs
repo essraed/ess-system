@@ -10,6 +10,7 @@ namespace API.DTOs
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string? CreatedBy { get; set; }
-
+        public ICollection<FileResponseDto>? FileEntities { get; set; }
+        public ICollection<PostDto>? Posts { get; set; }
     }
 }

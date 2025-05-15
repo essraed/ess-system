@@ -35,6 +35,13 @@ const Breadcrumbs = (props: breadcrumbs) => {
     location.pathname===routes.EventDashboard||
     location.pathname===routes.ComplaintDashboard||
     location.pathname===routes.UserDashboard||
+    location.pathname===routes.OurTeam||
+    location.pathname===routes.PrivacyPolicy||
+    location.pathname===routes.Faq||
+    location.pathname===routes.ReturnPolicy||
+    location.pathname===routes.TermsAndConditions||
+    location.pathname===routes.CookiePolicy||
+    location.pathname===routes.Disclaimer||
     location.pathname.startsWith(routes.contactDetails.slice(0, -3)) 
   ) {
     addButton = (
@@ -42,7 +49,7 @@ const Breadcrumbs = (props: breadcrumbs) => {
         <div className="container">
           <div className="row align-items-center text-center">
             <div className="col-md-12 col-12">
-              <h2 className="breadcrumb-title">{props.title}</h2>
+              <h2 className="breadcrumb-title text-black">{props.title}</h2>
               <nav aria-label="breadcrumb" className="page-breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">

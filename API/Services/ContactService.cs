@@ -29,6 +29,7 @@ namespace API.Services
             var query = _context.Contacts
                 .Where(x => !x.IsDeleted)
                 .AsNoTracking()
+                            .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(contactParams.SearchTerm))

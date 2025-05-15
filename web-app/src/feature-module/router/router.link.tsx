@@ -46,6 +46,14 @@ import PrivacyPolicy from "../policy/PrivacyPolicy ";
 import { QRCode } from "antd";
 import TrackOrder from "../booking/TrackOrder";
 import PriceDetails from "../Prices/PriceDetails";
+import TeamManagement from "../TeamMangement/TeamManagement";
+import BlogViewList from "../blog/BlogViewList";
+import BlogDetails from "../blog/BlogDetails";
+import ReturnPolicy from "../policy/ReturnPolicy";
+import CookiePolicy from "../policy/CookiePolicy";
+import Disclaimer from "../policy/Disclaimer";
+import TermsAndConditions from "../policy/TermsAndConditions";
+import Faq from "../policy/Faq";
 
 
 
@@ -112,6 +120,18 @@ export const publicRoutes = [
   {
     path: routes.PriceDetails,
     element: <PriceDetails />,
+  },
+  {
+    path: routes.OurTeam,
+    element: <TeamManagement />,
+  },
+  // {
+  //   path: routes.blogs,
+  //   element: <BlogViewList />,
+  // },
+  {
+    path: routes.Posts,
+    element: <BlogDetails />,
   },
 
   {
@@ -267,5 +287,25 @@ export const authenticationRoute = [
   {
     path: routes.PrivacyPolicy,
     element: <PrivacyPolicy />,
+  },
+  {
+    path: routes.ReturnPolicy,
+    element: <ReturnPolicy />,
+  },
+  {
+    path: routes.CookiePolicy,
+    element: <CookiePolicy />,
+  },
+  {
+    path: routes.Disclaimer,
+    element: <Disclaimer />,
+  },
+  {
+    path: routes.TermsAndConditions,
+    element: <TermsAndConditions />,
+  },
+  {
+    path: routes.Faq,
+    element: <Faq />,
   },
 ];

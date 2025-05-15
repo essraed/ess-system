@@ -105,14 +105,14 @@ public class PaymentService : IPaymentService
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
-
-
+            
             // this it should be in the booking servicedepend on single Responsible principle     
             await _booking.SetThePaymentIdForBooking(payment.Id, IDS);
         }
         else
         {
             throw new Exception($"Payment URL is missing from the response. Content: {responseContent}");
+            
         }
 
         return paymentUrl;

@@ -77,7 +77,7 @@ const CarList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       clearCars();
       navigate("/login");
       toast.error("Unauthorized");

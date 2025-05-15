@@ -32,7 +32,7 @@ const Table = ({
   getViewId,
 }: Props) => {
   const {
-    userStore: { isAdmin },
+    userStore: { isAdmin ,isMarketUser},
   } = useStore();
 
   // Action functions for icons in individual columns
@@ -92,7 +92,7 @@ const Table = ({
     const { id } = rowData;
 
     return (
-      isAdmin() && (
+      (isAdmin() || isMarketUser()) && (
         <Link
           to="#"
           onClick={() => confirmDialog(id)}

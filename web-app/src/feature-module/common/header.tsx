@@ -41,7 +41,7 @@ const Header = () => {
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
-    userStore: { isAdmin, logout, isLoggedIn, user },
+    userStore: { isAdmin, logout, isLoggedIn, user, isUser, isMarketUser },
     categoryStore: { categories, loadCategories },
     bookingStore: { isSession, getCurrentSessionBookings },
   } = useStore();
@@ -261,7 +261,7 @@ const Header = () => {
                     </ul>
                   </li>
 
-                  {isLoggedIn && (
+                  {(isUser() || isAdmin()) && (
                     <li
                       className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                     >
@@ -434,56 +434,61 @@ const Header = () => {
                             {t("Lost List")}
                           </Link>
                         </li>
-                        <li
-                          className={
-                            locationPathname === routes.ComplaintDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.ComplaintDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.ComplaintDashboard)
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.ComplaintDashboard
+                                ? "active"
+                                : ""
                             }
                           >
-                            {t("Complaint List")}
-                          </Link>
-                        </li>
-                        
-                        <li
-                          className={
-                            locationPathname === routes.blogDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.blogDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.blogDashboard)
-                            }
-                          >
-                            {t("Blog List")}
-                          </Link>
-                        </li>
-                        <li
-                          className={
-                            locationPathname === routes.EventDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.EventDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.EventDashboard)
-                            }
-                          >
-                            {t("Event List")}
-                          </Link>
-                        </li>
+                            <Link
+                              to={routes.ComplaintDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.ComplaintDashboard)
+                              }
+                            >
+                              {t("Complaint List")}
+                            </Link>
+                          </li>
+                        )}
 
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.blogDashboard
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            <Link
+                              to={routes.blogDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.blogDashboard)
+                              }
+                            >
+                              {t("Blog List")}
+                            </Link>
+                          </li>
+                        )}
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.EventDashboard
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            <Link
+                              to={routes.EventDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.EventDashboard)
+                              }
+                            >
+                              {t("Event List")}
+                            </Link>
+                          </li>
+                        )}
 
                         {isAdmin() && (
                           <li
@@ -506,6 +511,39 @@ const Header = () => {
                       </ul>
                     </li>
                   )}
+
+                  {isMarketUser() && (
+                    <li
+                      className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
+                    >
+                      <Link to="#" onClick={toggleDashboardsSubmenu}>
+                        {t("Dashboards")} <i className="fas fa-chevron-down" />
+                      </Link>
+                      <ul
+                        className={`submenu ${
+                          dashboardsSubmenu ? "d-block" : "d-none"
+                        }`}
+                      >
+                        <li
+                          className={
+                            locationPathname === routes.blogDashboard
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link
+                            to={routes.blogDashboard}
+                            onClick={() =>
+                              setLocationPathname(routes.blogDashboard)
+                            }
+                          >
+                            {t("Blog List")}
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  )}
+
                   <li
                     className={
                       location.pathname.includes(routes.businessSetup)
@@ -539,6 +577,20 @@ const Header = () => {
                       {t("Complaints & Suggestions")}
                     </Link>
                   </li>
+                  <li
+                    className={
+                      location.pathname === routes.OurTeam ? "active" : ""
+                    }
+                  >
+                    <Link to={routes.OurTeam}>{t("Our Team")}</Link>
+                  </li>
+                  {/* <li
+                    className={
+                      location.pathname === routes.blogs ? "active" : ""
+                    }
+                  >
+                    <Link to={routes.blogs}>{t("Our Blogs")}</Link>
+                  </li> */}
                 </ul>
                 <ul className="hidden lg:block">
                   {isAdmin() && (

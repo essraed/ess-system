@@ -31,6 +31,7 @@ public class AuthorityService : IAuthorityService
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .AsNoTracking()
+            .OrderByDescending(x => x.CreateDate)
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(authorityParams.SearchTerm))
@@ -43,7 +44,7 @@ public class AuthorityService : IAuthorityService
             authorityParams.PageNumber,
             authorityParams.PageSize);
     }
-    
+
     public async Task<List<DropdownDto>> GetAllDropdownAsync()
     {
         return _mapper.Map<List<DropdownDto>>(await _genericService.GetAllDropdownAsync());

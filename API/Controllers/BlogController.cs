@@ -61,6 +61,31 @@ namespace API.Controllers
             }
         }
 
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadNewDto model)
+        {
+            try
+            {
+                return Ok(await _blogService.UploadImage(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading blog image: {ex.Message}");
+            }
+        }
+        [HttpPost("upload-image-ForPost")]
+        public async Task<IActionResult> UploadImageForPost([FromForm] FileUploadNewDto model)
+        {
+            try
+            {
+                return Ok(await _blogService.UploadImageForPost(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading blog image: {ex.Message}");
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBlogAsync(Guid id)
         {

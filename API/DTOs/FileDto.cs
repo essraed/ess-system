@@ -34,6 +34,9 @@ namespace API.DTOs
         public Guid? CategoryId { get; set; }
         public Guid? BookingId { get; set; }
         public Guid? ClientId { get; set; }
+        public Guid? BlogId { get; set; }
+
+
     }
 
 }

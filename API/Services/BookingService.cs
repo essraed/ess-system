@@ -75,7 +75,9 @@ public async Task<BookingDto?> GetBookingByBookingCodeAsync(string bookingCode)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.Service)
+            .Where(x=>!x.IsDeleted)
             .AsNoTracking()
+            .OrderByDescending(x => x.CreateDate)
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(bookingParams.SearchTerm))

@@ -34,6 +34,10 @@ namespace API.Entities
         public Booking? Booking { get; set; }
         public Guid? ClientId { get; set; }
         public Client? Client { get; set; }
+        public Guid? BlogId { get; set; }
+        public Blog? Blog { get; set; }
+        public Guid? PostId { get; set; }
+        public Post? Post { get; set; }
     }
 
 }

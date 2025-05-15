@@ -50,7 +50,7 @@ const HomeOne = () => {
         <div className="float-sm">
           <div className="fl-fl float-fb">
             <i className="fa fa-facebook fa-2x"></i>
-            <a href="https://www.facebook.com/karamacenter.ae" target="">
+            <a href="https://www.facebook.com/profile.php?id=61575707855912" target="">
               {" "}
               Like us!
             </a>
@@ -70,13 +70,7 @@ const HomeOne = () => {
           </div>
           <div className="fl-fl float-pn">
             <i className="fa fa-linkedin fa-2x"></i>
-            <a href="https://www.linkedin.com/company/karamacenter-ae/?viewAsMember=true" >
-              Follow us!
-            </a>
-          </div>
-          <div className="fl-fl float-yt">
-            <i className="fa fa-youtube fa-2x"></i>
-            <a href="https://www.youtube.com/channel/UCkZvVRnR4s2l4QVuWJKCNGQ">
+            <a href="https://www.linkedin.com/company/karamacenter-ae/" >
               Follow us!
             </a>
           </div>
@@ -98,7 +92,7 @@ const HomeOne = () => {
                     loop
                   >
                     <source
-                      src="/assets/videos/ALL SERVICE VIDEO.mp4"
+                      src="/assets/videos/THEJOURNEYOFALKARAMAMEDICALFITNESSCENTER.mp4"
                       type="video/mp4"
                     />
                     Your browser does not support the video tag.
@@ -645,6 +639,7 @@ const HomeOne = () => {
                         src="assets/img/blog/BestEmployee_2024.jpg"
                         alt="Post Image"
                       />
+                      
                     </div>
                     <div className="blog-content">
                       <h3 className="blog-title">
