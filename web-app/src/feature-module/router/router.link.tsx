@@ -54,6 +54,8 @@ import CookiePolicy from "../policy/CookiePolicy";
 import Disclaimer from "../policy/Disclaimer";
 import TermsAndConditions from "../policy/TermsAndConditions";
 import Faq from "../policy/Faq";
+import FamilyAttachments from "../Prices/FamilyAttachments";
+import FamilyAttachmentsArabic from "../Prices/FamilyAttachmentsArabic";
 
 
 
@@ -120,6 +122,14 @@ export const publicRoutes = [
   {
     path: routes.PriceDetails,
     element: <PriceDetails />,
+  },
+  {
+    path: routes.FamilyAttachments,
+    element: <FamilyAttachments />,
+  },
+  {
+    path: routes.FamilyAttachmentsArabic,
+    element: <FamilyAttachmentsArabic />,
   },
   {
     path: routes.OurTeam,

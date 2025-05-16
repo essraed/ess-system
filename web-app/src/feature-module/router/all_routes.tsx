@@ -139,6 +139,8 @@ export const all_routes = {
   Faq: "/Faq",
   Complaints: "/Complaints",
   PriceDetails:"/Price",
+  FamilyAttachments:"/FamilyAttachments",
+  FamilyAttachmentsArabic:"/FamilyAttachmentsArabic",
   OurTeam:"/TeamManagment",
   admin: "/admin",
   // blogs: "/blogs",
