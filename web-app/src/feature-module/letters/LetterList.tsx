@@ -75,7 +75,7 @@ const LetterList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       clearDocuments();
       navigate("/login");
       toast.error("Unauthorized");

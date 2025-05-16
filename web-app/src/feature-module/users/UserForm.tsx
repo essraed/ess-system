@@ -108,7 +108,7 @@ const UserForm = () => {
                       className="w-full bg-gray-100 border-2 text-sm md:text-lg border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="USER">User</option>
-                      <option value="MARKETUSER">Market User</option>
+                      <option value="MARKET">Market</option>
                       <option value="ADMIN">Admin</option>
                     </select>
                     {errors.role && (

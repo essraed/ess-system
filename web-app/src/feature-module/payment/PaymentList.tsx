@@ -73,7 +73,7 @@ const PaymentList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!userStore.isUser) {
       clearCategories();
       navigate("/login");
       toast.error("Unauthorized");

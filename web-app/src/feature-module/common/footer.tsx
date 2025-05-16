@@ -39,13 +39,11 @@ const Footer = () => {
 
   return (
     <>
-    {/* Main content wrapper with space for footer */}
-    <div className="main-content">
-       {/* Your other page content */}
-     </div>
+      {/* Main content wrapper with space for footer */}
+      <div className="main-content">{/* Your other page content */}</div>
 
-     {/* Footer */}
-     <footer className="footer">
+      {/* Footer */}
+      <footer className="footer">
         {/* Footer Top */}
         <div className="footer-top aos hidden md:block" data-aos="fade-down">
           <div className="custom-container ">
@@ -82,10 +80,24 @@ const Footer = () => {
                       <h5 className="footer-title">{t("Quick links")}</h5>
                       <ul>
                         <li>
-                          <Link to={all_routes.PrivacyPolicy}>{t("Privacy Policy")}</Link>
+                          <Link to={all_routes.PrivacyPolicy}>
+                            {t("Privacy Policy")}
+                          </Link>
                         </li>
                         <li>
-                          <Link to="#">{t("Faq")}</Link>
+                          <Link to={all_routes.Faq}>{t("Faq")}</Link>
+                        </li>
+                        <li>
+                          <Link to={all_routes.ReturnPolicy}>{t("Return Policy")}</Link>
+                        </li>
+                        <li>
+                          <Link to={all_routes.TermsAndConditions}>{t("Terms & Conditions")}</Link>
+                        </li>
+                        <li>
+                          <Link to={all_routes.CookiePolicy}>{t("Cookie Policy")}</Link>
+                        </li>
+                        <li>
+                          <Link to={all_routes.Disclaimer}>{t("Disclaimer")}</Link>
                         </li>
                       </ul>
                     </div>
@@ -113,6 +125,22 @@ const Footer = () => {
                         <Link to="mailto:support@example.com">info@ess.ae</Link>
                       </div>
                     </div>
+                    <div className="footer-address">
+                      <span>
+                        <i className="feather icon-map-pin" />
+                      </span>
+                      <div className="addr-info">
+                        <a
+                          href="https://www.google.com/maps?q=Office+403,+Al+Karama+Business+Center,+Dubai,+UAE"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Building, Al Fajer Residence - 9 19DStreet - opposite
+                          Karama Post Office - Al Karama - Dubai
+                        </a>
+                      </div>
+                    </div>
+
                     <div className="update-form">
                       <form action="#">
                         <span>
@@ -134,22 +162,22 @@ const Footer = () => {
                   <div className="footer-social-widget">
                     <ul className="nav-social">
                       <li>
-                        <Link to="#">
+                        <Link to="https://www.facebook.com/profile.php?id=61575707855912">
                           <i className="fa-brands fa-facebook-f fa-facebook fi-icon" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="#">
+                        <Link to="https://www.instagram.com/karamacenter.ae/">
                           <i className="fab fa-instagram fi-icon" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="#">
+                        <Link to="https://www.tiktok.com/@karamacenter.ae?is_from_webapp=1&sender_device=pc">
                           <i className="fab fa-tiktok fi-icon" />
                         </Link>
                       </li>
                       <li>
-                        <Link to="#">
+                        <Link to="https://www.linkedin.com/company/karamacenter-ae/">
                           <i className="fab fa-linkedin fi-icon" />
                         </Link>
                       </li>
@@ -238,4 +266,4 @@ const Footer = () => {
   );
 };
 
-export default observer (Footer);
+export default observer(Footer);

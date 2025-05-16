@@ -38,6 +38,7 @@ public class ComplaintService : ICompalintService
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .AsNoTracking()
+                        .OrderByDescending(x => x.CreateDate)
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(complaintParams.SearchTerm))

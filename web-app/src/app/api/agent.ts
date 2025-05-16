@@ -123,6 +123,10 @@ const Blogs = {
     axios.get<PagedResponse<BlogDetailsData[]>>("blog", { params }).then(responseBody),
   getById: (id: string) => requests.get<BlogDetailsData>(`blog/${id}`),
   create: (blog: BlogSchema) => requests.post<BlogDetailsData>("blog", blog),
+  uploadImage: (formData: FormData) =>
+    axios.post<string>("blog/upload-image", formData).then(responseBody),
+  uploadImageForPost: (formData: FormData) =>
+    axios.post<string>("blog/upload-image-ForPost", formData).then(responseBody),
   delete: (id: string) => requests.del<string>(`blog/${id}`),
 };
 

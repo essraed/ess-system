@@ -180,6 +180,9 @@ export default class UserStore {
   isUser = (): boolean => {
     return this.hasRole("USER");
   };
+  isMarketUser = (): boolean => {
+    return this.hasRole("MARKET");
+  };
 
   setPagingParams = (pagingParams: PagingParams) => {
     this.pagingParams = pagingParams;

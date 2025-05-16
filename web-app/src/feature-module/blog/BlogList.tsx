@@ -77,7 +77,8 @@ const BlogList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
+      console.log("Hi");
       clearBlogs();
       navigate("/login");
       toast.error("Unauthorized");
@@ -111,7 +112,7 @@ const BlogList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id"]}
+                  exceptColumns={["id","fileEntities","posts","blogContent"]}
                   data={blogs ?? []}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

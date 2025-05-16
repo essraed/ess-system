@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../common/header";
 import Footer from "../common/footer";
+import Breadcrumbs from "../common/breadcrumbs";
 
 const PrivacyPolicy = () => {
   const [accepted, setAccepted] = useState(false);
@@ -11,8 +12,9 @@ const PrivacyPolicy = () => {
   };
 
   return (
-    <>
+    <div className="main-wrapper">
       <Header />
+      <Breadcrumbs title="Privacy Policy" subtitle="Pages" />
 
       <div className="section privacy-section">
         <div className="container">
@@ -169,7 +171,7 @@ const PrivacyPolicy = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

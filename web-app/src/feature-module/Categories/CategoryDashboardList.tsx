@@ -75,7 +75,7 @@ const CategoryDashboardList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       clearCategories();
       navigate("/login");
       toast.error("Unauthorized");

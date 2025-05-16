@@ -4,6 +4,6 @@ namespace API.Helpers
     {
         public static string USER = "USER";
         public static string ADMIN = "ADMIN";
-        public static string MARKETUSER= "MARKETUSER";
+        public static string MARKETUSER= "MARKET";
     }
 }

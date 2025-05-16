@@ -49,43 +49,60 @@ const CategoryCard = ({ category }: Props) => {
             <div className="owl-stage-outer">
               <div className="owl-stage">
                 <div className="owl-item cloned">
-                  <div className="slide-images">
-                    {/* Button for navigation */}
-                    <button
-                      onClick={() => navigate(`/services/${formattedName}/${category.id}`)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    ></button>
+                  <div
+                    className="slide-images"
+                    style={{ position: "relative" }}
+                  >
+                    {/* Overlay button for Visit Visa & Pick & Drop */}
+                    {(category.name === "Visit Visa" ||
+                      category.name === "Pick & Drop") && (
+                      <button
+                        onClick={() =>
+                          window.open("https://uberevisa.com", "_blank")
+                        }
+                        style={{
+                          background: "none",
+                          border: "none",
+                          width: "100%",
+                          height: "100%",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          cursor: "pointer",
+                          zIndex: 10,
+                        }}
+                      />
+                    )}
 
-                    {/* Link for navigation */}
-                    <Link to={`/services/${formattedName}/${category.id}`}>
-                      {category.fileEntities &&
-                      category.fileEntities.length > 0 ? (
-                        <ImageWithBasePath
-                          lazyLoad={true}
-                          src={
-                            category.fileEntities[0]?.filePath ||
-                            "assets/img/Amer Services.png"
-                          }
-                          alt={category.name ?? "Category"}
-                          className="img-fluid"
-                        />
-                      ) : (
-                        <ImageWithBasePath
-                          lazyLoad={true}
-                          src="assets/img/Amer Services.png"
-                          alt={category.name ?? "Category"}
-                          className="img-fluid"
-                        />
+                    {/* Original Link—only used for other categories */}
+                    {category.name !== "Visit Visa" &&
+                      category.name !== "Pick & Drop" && (
+                        <Link to={`/services/${formattedName}/${category.id}`}>
+                          <ImageWithBasePath
+                            lazyLoad
+                            src={
+                              category.fileEntities?.[0]?.filePath ||
+                              "assets/img/Amer Services.png"
+                            }
+                            alt={category.name ?? "Category"}
+                            className="img-fluid"
+                          />
+                        </Link>
                       )}
-                    </Link>
+
+                    {/* Fallback Image for externals so they still see it */}
+                    {(category.name === "Visit Visa" ||
+                      category.name === "Pick & Drop") && (
+                      <ImageWithBasePath
+                        lazyLoad
+                        src={
+                          category.fileEntities?.[0]?.filePath ||
+                          "assets/img/Amer Services.png"
+                        }
+                        alt={category.name ?? "Category"}
+                        className="img-fluid"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -96,27 +113,68 @@ const CategoryCard = ({ category }: Props) => {
             <div className="listing-features d-flex align-items-end justify-content-between">
               <div className="list-rating">
                 <h3 className="listing-title">
-                  <button
-                    onClick={() => navigate(`/services/${formattedName}/${category.id}`)}
-                    className="btn btn-link p-0 text-decoration-none font-semibold text-large lg:text-xl"
-                    style={{ background: "none", border: "none", color: "inherit" }}
-                  >
-                    {category.name ?? "Category Name"}
-                  </button>
+                  {category.name === "Visit Visa" ||
+                  category.name === "Pick & Drop" ? (
+                    <button
+                      onClick={() =>
+                        window.open("https://uberevisa.com", "_blank")
+                      }
+                      className="btn btn-link p-0 text-decoration-none font-semibold text-large lg:text-xl"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "inherit",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {category.name}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        navigate(`/services/${formattedName}/${category.id}`)
+                      }
+                      className="btn btn-link p-0 text-decoration-none font-semibold text-large lg:text-xl"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "inherit",
+                      }}
+                    >
+                      {category.name}
+                    </button>
+                  )}
                 </h3>
               </div>
             </div>
+
             <div className="view-more-btn text-center hidden lg:block">
-              <button
-                onClick={() => navigate(`/services/${formattedName}/${category.id}`)}
-                className="btn btn-secondary-new "
-              >
-                {t("View Services")}{" "}
-                <i
-                  className="fas fa-arrow-right ps-3"
-                  style={{ transform: isRTL ? "rotate(180deg)" : "none" }}
-                ></i>
-              </button>
+              {category.name === "Visit Visa" ||
+              category.name === "Pick & Drop" ? (
+                <button
+                  onClick={() => window.open("https://uberevisa.com", "_blank")}
+                  className="btn btn-secondary-new"
+                >
+                  {t("View Services")}{" "}
+                  <i
+                    className="fas fa-arrow-right ps-3"
+                    style={{ transform: isRTL ? "rotate(180deg)" : "none" }}
+                  />
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    navigate(`/services/${formattedName}/${category.id}`)
+                  }
+                  className="btn btn-secondary-new"
+                >
+                  {t("View Services")}{" "}
+                  <i
+                    className="fas fa-arrow-right ps-3"
+                    style={{ transform: isRTL ? "rotate(180deg)" : "none" }}
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>

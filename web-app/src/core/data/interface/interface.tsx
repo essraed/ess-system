@@ -24,3 +24,19 @@ export interface FileResponseData {
   fileName?: string | undefined;
   filePath: string;
 }
+
+export interface TeamMember {
+  name: string;
+  designation: string;
+  image: string;
+  socialLinks?: SocialLink[];
+}
+
+interface SocialLink {
+  url: string;
+  iconClass: string;
+}
+
+export interface RootState {
+  ourTeam: TeamMember[]; // `our` is an array of team members
+}

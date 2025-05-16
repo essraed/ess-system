@@ -1,171 +1,113 @@
+
 import React, { useState } from "react";
 import Header from "../common/header";
 import Footer from "../common/footer";
-import { Accordion, AccordionItem, AccordionItemButton, AccordionItemPanel } from "react-accessible-accordion";
-import { AccordionItemHeading } from "react-accessible-accordion/dist/types/components/AccordionItemHeading";
-import { t } from "i18next";
+import Breadcrumbs from "../common/breadcrumbs";
 
-const PrivacyPolicy = () => {
-  const [accepted, setAccepted] = useState(false);
+const Faq = () => {
+  const [openIndex, setOpenIndex] = useState(null);
 
-  const handleAccept = () => {
-    setAccepted(true);
-    // You can add more actions here, like saving the acceptance to local storage or sending it to a server
+  const faqs = [
+    {
+      question: "What is Karama Business Center?",
+      answer:
+        "We are a one-stop service center offering government-related services such as medical fitness screening, Amer services, Tasheel services, notary public services, and more.",
+    },
+    {
+      question: "How do I book an appointment?",
+      answer:
+        "You can book an appointment directly through our website's booking form or by calling us at +(971) 4342-6666.",
+    },
+    {
+      question: "What documents do I need for a medical fitness test?",
+      answer:
+        "Typically, you will need your Emirates ID (or application receipt), original passport, and visa documents. For detailed requirements, check our Services page.",
+    },
+    {
+      question: "Do you provide same-day services?",
+      answer:
+        "Yes, we offer express options for certain services including medical tests. Availability depends on service type and timing.",
+    },
+    {
+      question: "What are your opening hours?",
+      answer:
+        "We are open from Monday to Thursday, 7:00 AM to 10:00 PM. Weekend hours may vary.",
+    },
+    {
+      question: "Where are you located?",
+      answer:
+        "We are located next to Karama Post Office, Dubai. Visit the Contact page on our website for directions.",
+    },
+    {
+      question: "How can I follow up on my request or service status?",
+      answer:
+        "Please contact our customer service team by phone or email with your reference number or appointment details.",
+    },
+    {
+      question: "Can I reschedule my appointment?",
+      answer:
+        "Yes, you can reschedule your appointment by contacting our team at least 24 hours before your original appointment time.",
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer:
+        "We accept payments via credit card, debit card, and cash at our center.",
+    },
+    {
+      question: "How early should I arrive for my appointment?",
+      answer:
+        "Please arrive at least 15 minutes before your scheduled time to complete any necessary paperwork.",
+    },
+    {
+      question: "Do you offer corporate or group services?",
+      answer:
+        "Yes, we offer customized packages for businesses, including employee visa and medical processing services. Please contact us for more details.",
+    },
+    {
+      question: "What should I do if I have an urgent service request?",
+      answer: "Please call us directly at +(971) 4342-6666 for urgent matters.",
+    },
+  ];
+
+
+  const toggleFAQ = (index:any) => {
+    setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <>
-      <Header />
-      <div className="privacy-policy-container">
-        <div className="privacy-policy">
-        <section className="section faq-section bg-light-primary">
-        <div id="Services" className="homesection servicessection saa viewon">
-          <div className="custom-container">
-            {/* Heading title*/}
-            <div className="section-heading" data-aos="fade-down">
-              <h2 className="section-title">
-                {t("Frequently Asked Questions")}{" "}
-              </h2>
-            </div>{" "}
-            {/* Heading title*/}
-            <Accordion
-              style={{ backgroundColor: "transparent", border: "none" }}
+    <div className="main-wrapper">
+    <Header/>
+    <Breadcrumbs title="Faq" subtitle="Pages" />
+    <div className="max-w-3xl mx-auto px-4 py-10">
+      <h2 className="text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
+      <div className="space-y-4">
+        {faqs.map((faq, index) => (
+          <div
+            key={index}
+            className="border transition-all duration-300"
+          >
+            <button
+              className="w-full text-left p-3 font-medium text-lg flex justify-between items-center"
+              onClick={() => toggleFAQ(index)}
             >
-              <AccordionItem>
-                <AccordionItemHeading>
-                  <AccordionItemButton
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                  >
-                    {t("Karama Medical Fitness Center Medical Timing")}
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>
-                    <h4>DHA Medical Fitness Test </h4>
-                    {t("Monday - Saturday 07:00 AM - 10:00 PM")}
-                    <br></br>
-                    <br></br>
-            
-                    {t("Sunday 08:00 AM - 08:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Note : Saturday and Sunday after 01:00 PM only Visa Renewal is accepted(Xray service not available after 01:00 PM)")}
-                  </p>
-                  <p>
-                    <h4>OHC </h4>
-                    {t("Monday - Thursday 07:30 AM - 08:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Friday - 07:30 AM - 11:00 AM")}
-                    <br></br>
-                    {t("Friday - 04:30 AM - 08:00 AM")}
-                    <br></br>
-                    <br></br>
-                    {t("Saturday & Sunday - Closed")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                    <p>
-                    <h4>DED </h4>
-                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday - Closed")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                    <p>
-                    <h4>Amer </h4>
-                    {t("Monday - Saturday 07:00 AM - 10:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday - Closed")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                    <p>
-                    <h4>Tas-Heel </h4>
-                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday - Closed")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                    <p>
-                    <h4>Taw-Jeeh </h4>
-                    {t("Monday - Saturday 08:00 AM - 08:00 PM")}
-                    <br></br>
-                    <br></br>
-                    {t("Sunday - 09:00 AM - 05:00 PM")}
-                    <br></br>
-                    <br></br>
-                    </p>
-                </AccordionItemPanel>
-              </AccordionItem>
-              <AccordionItem>
-                <AccordionItemHeading>
-                  <AccordionItemButton
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                  >
-                    {t("How to check visa medical report online?")}
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>
-                    {t(
-                      "Dubai visa medical report can be tracked and downloaded from DHA mobile application."
-                    )}
-                  </p>
-                </AccordionItemPanel>
-              </AccordionItem>
-              <AccordionItem>
-                <AccordionItemHeading>
-                  <AccordionItemButton
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                  >
-                    {t(
-                      "What are the different types of Tourist or visit visas available?"
-                    )}
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>
-                    {t(
-                      "A tourist visa is available for 30 and 60 days and a sponsored family visit visa for 30 and 90 days."
-                    )}
-                  </p>
-                </AccordionItemPanel>
-              </AccordionItem>
-
-              <AccordionItem>
-                <AccordionItemHeading>
-                  <AccordionItemButton
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                  >
-                    {t(
-                      "Can I travel without applying for the visa stamping application?"
-                    )}
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>
-                    {t(
-                      "No, the applicant must complete the visa stamping application for he/she to travel."
-                    )}
-                  </p>
-                </AccordionItemPanel>
-              </AccordionItem>
-            </Accordion>
-            {/* /Heading title */}
+              {faq.question}
+              <span className="text-xl">
+                {openIndex === index ? "−" : "+"}
+              </span>
+            </button>
+            {openIndex === index && (
+              <div className="p-4 pt-0 text-gray-600 transition-all duration-300">
+                {faq.answer}
+              </div>
+            )}
           </div>
-        </div>
-      </section>
-        </div>
+        ))}
       </div>
-      <Footer />
-    </>
+    </div>
+    <Footer/>
+    </div>
+ 
   );
 };
 
-export default PrivacyPolicy;
+export default Faq;

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
@@ -30,9 +29,11 @@ const ServiceCard = ({ service, id }: Props) => {
 
   return (
     <div className="col-lg-3 col-md-6 col-12 px-3 mb-5" data-aos="fade-up">
+      {/* Wrap the entire card in a Link component */}
+      <Link to={`/listings/service-details/${service.id}`} className="max-w-sm bg-white border border-gray-200 rounded-lg hover:shadow-xl transition-shadow duration-300 block">
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg hover:shadow-xl transition-shadow duration-300">
         <div className="flex justify-center items-center"></div>
-        {userStore.isAdmin() && (
+        {/* {userStore.isAdmin() && (
           <div
             className="position-absolute top-0 end-0 mt-2 mr-5"
             style={{ zIndex: 10 }}
@@ -42,8 +43,8 @@ const ServiceCard = ({ service, id }: Props) => {
               uploadImage={(formData) => uploadImage(formData, id)}
             />
           </div>
-        )}
-        <div className="relative overflow-hidden rounded-t-lg">
+        )} */}
+        {/* <div className="relative overflow-hidden rounded-t-lg">
           <Link to={`/listings/service-details/${service.id}`}>
           {service.fileEntities &&
                       service.fileEntities.length > 0 ? (
@@ -66,30 +67,41 @@ const ServiceCard = ({ service, id }: Props) => {
                         />
                       )}
           </Link>
-        </div> 
-        <div className="p-3 flex flex-col gap-2">
-          <div className="flex justify-center items-center">
-            <div className="text-lg font-semibold text-slate-900">
-              <Link to={`/listings/service-details/${service.id}`}>
-                {service.name}
+        </div>  */}
+        <div className="relative p-3 flex flex-col gap-2">
+          {/* Price Box Positioned Absolutely */}
+
+          {/* Service Name */}
+          <div className="p-3 flex flex-col justify-between max-h-40 gap-2 ">
+            {/* Service Name */}
+            <div className="text-center">
+              <div className="text-lg font-semibold text-slate-900 break-words">
+                <Link to={`/listings/service-details/${service.id}`}>
+                  {service.name}
+                </Link>
+              </div>
+            </div>
+
+            <Divider className="border-t-2 border-dashed border-[#1b6f77] my-6" />
+
+
+
+
+            {/* Price at Bottom Center */}
+            <div className="flex justify-center mt-auto">
+              <Link
+                className="text-black text-sm font-semibold"
+                to={`/listings/service-details/${service.id}`}
+              >
+                <div className="bg-white py-2 px-3 text-center">
+                  {service.price
+                    ? `${service.price} ${t("AED")}`
+                    : t("Price Not Available")}
+                </div>
               </Link>
             </div>
           </div>
-          <Divider />
 
-          
-          <div className="flex position-absolute top-0 end-0 mt-2 mr-5">
-            <Link className="w-fit text-black text-sm font-semibold flex justify-between"
-              to={`/listings/service-details/${service.id}`}>
-              <div className="bg-white w-full py-2">
-                {service.price
-                  ? `${service.price} ${t("AED")}`
-                  : t("Price Not Available")}
-                {/* Inside: 1188.90 AED <br/> Outside: 538.90 AED */}
-              </div>
-            </Link>
-            </div>
-            
           {/* <div className="flex justify-between-new items-center">
             <Link
               to={`/listings/service-details/${service.id}`}
@@ -106,6 +118,7 @@ const ServiceCard = ({ service, id }: Props) => {
           </div> */}
         </div>
       </div>
+      </Link>   
     </div>
   );
 };

@@ -31,6 +31,7 @@ public class CarService : ICarService
             .Where(x => !x.IsDeleted)
             .Include(x => x.CreatedBy)
             .AsNoTracking()
+             .OrderByDescending(x => x.CreateDate)
                 .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(carParams.SearchTerm))

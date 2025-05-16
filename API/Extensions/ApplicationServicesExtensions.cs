@@ -58,7 +58,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(EventProfile).Assembly);
             services.AddAutoMapper(typeof(NationalityProfile).Assembly);
             services.AddAutoMapper(typeof(ClientProfile).Assembly);
-            services.AddAutoMapper(typeof(EventPROProfile).Assembly);
+            services.AddAutoMapper(typeof(EventPROProfile).Assembly);         
 
             services.AddHttpClient();
 

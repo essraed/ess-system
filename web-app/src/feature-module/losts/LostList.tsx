@@ -76,7 +76,7 @@ const LostList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       clearLostItems();
       navigate("/login");
       toast.error("Unauthorized");

@@ -62,7 +62,7 @@ const EventList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.token) {
+    if (!(userStore.isUser()||userStore.isAdmin)) {
       clearEvents();
       navigate("/login");
       toast.error("Unauthorized");
