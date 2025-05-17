@@ -16,7 +16,7 @@ const TeamManagement = () => {
     <>
       <Header />
       <div className="main-wrapper my-3">
-        <Breadcrumbs title="Meet our Team" subtitle="Pages" />
+        {/* <Breadcrumbs title="Meet our Team" subtitle="Pages" /> */}
         <section className="our-team-section">
         <div className="custom-container">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

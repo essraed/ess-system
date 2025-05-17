@@ -43,7 +43,7 @@ const LostForm = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <Breadcrumbs title="Losts" subtitle="Pages" />
+      {/* <Breadcrumbs title="Losts" subtitle="Pages" /> */}
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-white border border-gray-300 p-6">
           <h2 className="text-2xl font-bold text-center mb-4">

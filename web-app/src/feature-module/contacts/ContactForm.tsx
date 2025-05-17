@@ -61,7 +61,7 @@ const ContactForm = () => {
   return (
     <div className="main-wrapper">
       <Header />
-      <Breadcrumbs title="Contact us" subtitle="Pages" />
+      {/* <Breadcrumbs title="Contact us" subtitle="Pages" /> */}
       <section className="contact-section">
         <div className="container">
           <div className="contact-info-area">

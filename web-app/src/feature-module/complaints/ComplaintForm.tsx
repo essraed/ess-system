@@ -48,7 +48,7 @@ const ComplaintForm = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <Breadcrumbs title={isComplaint ? "Complaints" : "Suggestions"} subtitle="Pages" />
+      {/* <Breadcrumbs title={isComplaint ? "Complaints" : "Suggestions"} subtitle="Pages" /> */}
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-white border border-gray-300 rounded-lg p-8">
           <h2 className="text-3xl font-bold text-center mb-6">
