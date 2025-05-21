@@ -7,6 +7,26 @@
 @import "primeicons/primeicons.css";
 @import "primereact/resources/primereact.css";
 @import "primereact/resources/themes/lara-light-indigo/theme.css";
+@import "@fontsource/cairo";
+
+
+
+
+@font-face {
+  font-family: 'NeoTech';
+  src: url('../public/assets/fonts/NeoTech.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NeoTech';
+  src: url('../public/assets/fonts/NeoTechItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
 
 @media (min-width: 1200px) {
   .container {

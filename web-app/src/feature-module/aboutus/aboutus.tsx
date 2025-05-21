@@ -4,16 +4,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Aos from "aos";
 import Header from "../common/header";
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import Footer from "../common/footer";
+import { IMAGE_SERVER_PATH } from "../../environment";
 
 const AboutUs = () => {
+  const filePath = `${IMAGE_SERVER_PATH}/seed/files/kbcprofile.pdf`;
   useEffect(() => {
     Aos.init({ duration: 1200, once: true });
   }, []);
   return (
     <>
-
-
       <Header />
 
       {/* About */}
@@ -39,26 +41,58 @@ const AboutUs = () => {
                 <h6>ABOUT OUR COMPANY</h6>
                 <h2>One Stop Government Transactions </h2>
                 <p>
-                Karama Business Center, located in Dubai&#39;s Al Karama district, is one of the city&#39;s largest 
-                centers dedicated to providing quality government services efficiently in a single location. 
-                Since its inception, the center has aimed to align with Dubai&#39;s strategy of delivering prompt and comprehensive services to the public.
+                  Karama Business Center, located in Dubai&#39;s Al Karama
+                  district, is one of the city&#39;s largest centers dedicated
+                  to providing quality government services efficiently in a
+                  single location. Since its inception, the center has aimed to
+                  align with Dubai&#39;s strategy of delivering prompt and
+                  comprehensive services to the public.
                 </p>
                 <p>
-                The center offers a wide range of services, making it a one-stop destination for various governmental and business needs.
+                  The center offers a wide range of services, making it a
+                  one-stop destination for various governmental and business
+                  needs.
                 </p>
                 <div className="row">
                   <div className="col-md-6">
                     <ul>
-                      <li>Facilitating various governmental processes under one roof.</li>
-                      <li>Assisting entrepreneurs and investors in establishing companies in Dubai.</li>
+                      <li>
+                        Facilitating various governmental processes under one
+                        roof.
+                      </li>
+                      <li>
+                        Assisting entrepreneurs and investors in establishing
+                        companies in Dubai.
+                      </li>
                     </ul>
                   </div>
                   <div className="col-md-6">
                     <ul>
-                      <li>Providing Public Relations Officer services to handle documentation and approvals.</li>
-                      <li>Handling medical typing requirements for various purposes.</li>
+                      <li>
+                        Providing Public Relations Officer services to handle
+                        documentation and approvals.
+                      </li>
+                      <li>
+                        Handling medical typing requirements for various
+                        purposes.
+                      </li>
                     </ul>
                   </div>
+                </div>
+                <div
+                  style={{ flex: 1, padding: "40px 20px", textAlign: "center" }}
+                >
+                  <Button
+                    type="primary"
+                    shape="round"
+                    icon={<DownloadOutlined />}
+                    size="large"
+                    href={filePath}
+                    target="_blank"
+                    className="bg-[#0f8992]"
+                  >
+                    Company Profile
+                  </Button>
                 </div>
               </div>
             </div>
@@ -80,7 +114,10 @@ const AboutUs = () => {
           <div className="section-heading" data-aos="fade-down">
             <h2>How It Works</h2>
             <p>
-            At Karama Business Center, our mission and vision are aligned with Dubai&#39;s strategic objectives to provide efficient, high-quality government services.            </p>
+              At Karama Business Center, our mission and vision are aligned with
+              Dubai&#39;s strategic objectives to provide efficient,
+              high-quality government services.{" "}
+            </p>
           </div>
           {/* /Heading title */}
           <div className="services-work">
@@ -97,7 +134,9 @@ const AboutUs = () => {
                   <div className="services-content">
                     <h3>1. Mission</h3>
                     <p>
-                    To be the preferred destination for customers and businessmen, delighting clients in line with the vision of the Government of Dubai.
+                      To be the preferred destination for customers and
+                      businessmen, delighting clients in line with the vision of
+                      the Government of Dubai.
                     </p>
                   </div>
                 </div>
@@ -114,8 +153,9 @@ const AboutUs = () => {
                   <div className="services-content">
                     <h3>2. Vision</h3>
                     <p>
-                    To save customers&#39; time and effort by providing all necessary smart services in one place.
-                    <br></br>
+                      To save customers&#39; time and effort by providing all
+                      necessary smart services in one place.
+                      <br></br>
                     </p>
                   </div>
                 </div>
@@ -132,7 +172,9 @@ const AboutUs = () => {
                   <div className="services-content">
                     <h3>3. Goals</h3>
                     <p>
-                    Offer top-tier services to both public and private sectors through a qualified and trained staff utilizing the latest electronic and intelligent systems.
+                      Offer top-tier services to both public and private sectors
+                      through a qualified and trained staff utilizing the latest
+                      electronic and intelligent systems.
                     </p>
                   </div>
                 </div>

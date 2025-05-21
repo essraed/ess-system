@@ -10,6 +10,7 @@ import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationsDropdown from "./NotificationsDropdown";
 import { Navbar } from "@nextui-org/react";
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Header = () => {
   const routes = all_routes;
@@ -62,7 +63,7 @@ const Header = () => {
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
                   lazyLoad={true}
-                  src="assets/img/ESSLogo.png"
+                  src="assets/img/ESSLogo1.png"
                   className="img-fluid w-2/3"
                   alt="Logo"
                 />
@@ -75,18 +76,7 @@ const Header = () => {
                     ? "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container flex-row hidden md:block"
                     : "w-full md:w-3/4 flex flex-wrap justify-end items-center space-x-4 bookings-container1 flex-row hidden md:block"
                 }
-              >
-                <div className="w-full md:w-full flex justify-start  md:mb-0 hidden md:block">
-                  <Link to={routes.homeOne} className="navbar-brand logo">
-                    <ImageWithBasePath
-                      lazyLoad={true}
-                      src="assets/img/tasheel_tawjeeh.png"
-                      className="img-fluid"
-                      alt="Logo"
-                    />
-                  </Link>
-                </div>
-              </div>
+              ></div>
 
               {/* Navbar Items Section */}
               <div
@@ -97,24 +87,22 @@ const Header = () => {
                 }
               >
                 <ul className="flex flex-nowrap justify-end items-center bookings-container space-x-4 md:space-x-3">
-                  {/* Apply Now Button - for mobile and desktop */}
-                  {!isLoggedIn && (
-                    <li className="nav-item mr-12 md:pr-0 pr-0 md:pr-4 w-full sm:w-auto">
-                      <Link
-                        to="/apply"
-                        className="viewlink btn btn-light justify-content-center w-full sm:w-auto text-center hidden md:block"
-                      >
-                        Apply Now
-                        <i className="pr-2 feather icon-arrow-left ms-2 hidden md:block"></i>
-                      </Link>
-                    </li>
-                  )}
-
+  
+                  <li className="nav-item px-3 py-2 hover:text-green-600 hover:bg-gray-200 rounded-lg transition-all duration-100 ease-in-out hidden lg:block">
+                    <a
+                      href="https://wa.me/971501234567" // Replace with your WhatsApp number in international format
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav-link text-gray-700 font-medium flex items-center gap-2"
+                    >
+                      <FaWhatsapp className="text-xl" />
+                      +971(04)3426666
+                    </a>
+                  </li>
                   {/* Session Related Links */}
                   {isSession && !isLoggedIn && (
                     <li className="hidden md:block">|</li>
                   )}
-
                   {isSession && !isLoggedIn && (
                     <>
                       <li className="nav-item px-3">
@@ -132,7 +120,6 @@ const Header = () => {
                       </li>
                     </>
                   )}
-
                   {/* Authentication Links */}
                   {isLoggedIn ? (
                     <>
@@ -586,11 +573,18 @@ const Header = () => {
                   </li>
                   {/* <li
                     className={
+                      location.pathname === routes.OurTeam ? "active" : ""
+                    }
+                  >
+                    <Link to={routes.Gallery}>{t("Our Gallery")}</Link>
+                  </li> */}
+                  <li
+                    className={
                       location.pathname === routes.blogs ? "active" : ""
                     }
                   >
                     <Link to={routes.blogs}>{t("Our Blogs")}</Link>
-                  </li> */}
+                  </li>
                 </ul>
                 <ul className="hidden lg:block">
                   {isAdmin() && (

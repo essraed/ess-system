@@ -21,7 +21,9 @@ const BlogDetails = () => {
   if(!blogs?.length){
     return (<>
     <Header/>
-     <LoadingSpinner/>;
+      <div className="text-center py-10">
+      <h2 className="text-xl font-semibold mt-4">No Blogs Yet</h2>
+    </div>
     <Footer/>
     </>)
   

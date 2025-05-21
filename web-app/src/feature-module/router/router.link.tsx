@@ -56,6 +56,8 @@ import TermsAndConditions from "../policy/TermsAndConditions";
 import Faq from "../policy/Faq";
 import FamilyAttachments from "../Prices/FamilyAttachments";
 import FamilyAttachmentsArabic from "../Prices/FamilyAttachmentsArabic";
+import CompanyProfile from "../Prices/CompanyProfile";
+import Gallery from "../gallery/gallery";
 
 
 
@@ -124,6 +126,10 @@ export const publicRoutes = [
     element: <PriceDetails />,
   },
   {
+    path: routes.CompanyProfile,
+    element: <CompanyProfile />,
+  },
+  {
     path: routes.FamilyAttachments,
     element: <FamilyAttachments />,
   },
@@ -136,9 +142,13 @@ export const publicRoutes = [
     element: <TeamManagement />,
   },
   // {
-  //   path: routes.blogs,
-  //   element: <BlogViewList />,
+  //   path: routes.Gallery,
+  //   element: <Gallery />,
   // },
+  {
+    path: routes.blogs,
+    element: <BlogViewList />,
+  },
   {
     path: routes.Posts,
     element: <BlogDetails />,
