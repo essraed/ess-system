@@ -59,5 +59,6 @@ namespace API.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<Post> Posts { get; set; }   
         public DbSet<PostSection> PostSections { get; set; }   
+        public DbSet<Testimonial> Testimonials { get; set; }   
     }
 }

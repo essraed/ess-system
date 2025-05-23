@@ -86,7 +86,6 @@ export default class BlogStore {
               ...item,
               createDate: formatDateTime(item.createDate),
               createdBy: item.createdBy ? item.createdBy : 'No set',
-              updateDate: formatDateTime(item.createDate)??"No Set"
             });
           });
 

@@ -74,7 +74,7 @@ const ContactList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearContacts();
       navigate("/login");
       toast.error("Unauthorized");

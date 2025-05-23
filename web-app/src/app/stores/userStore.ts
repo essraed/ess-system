@@ -176,6 +176,9 @@ export default class UserStore {
   isAdmin = () => {
     return this.hasRole("ADMIN");
   };
+  isMarketingManager = () => {
+    return this.hasRole("MARKETIGNMANAGER");
+  };
 
   isUser = (): boolean => {
     return this.hasRole("USER");

@@ -37,7 +37,7 @@ const WorkingTimeList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearNotification();
       navigate("/login");
       toast.error("Unauthorized");

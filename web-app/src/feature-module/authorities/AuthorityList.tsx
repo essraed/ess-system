@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Table from "../common/Table";
 import { observer } from "mobx-react-lite";
@@ -30,7 +28,7 @@ const AuthorityList = () => {
       pagination,
       setSearchTerm,
       deleteAuthority,
-      clearAuthorities
+      clearAuthorities,
     },
     userStore,
   } = useStore();
@@ -78,7 +76,7 @@ const AuthorityList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearAuthorities();
       navigate("/login");
       toast.error("Unauthorized");
@@ -88,7 +86,7 @@ const AuthorityList = () => {
   }, [userStore.token, loadAuthorities]);
 
   if (!authorities) return <LoadingSpinner />;
-  
+
   return (
     <div className="col-lg-12">
       <div className="row">
@@ -109,7 +107,6 @@ const AuthorityList = () => {
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
-
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
                   exceptColumns={["id"]}
@@ -129,7 +126,8 @@ const AuthorityList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(

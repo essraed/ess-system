@@ -58,6 +58,8 @@ import FamilyAttachments from "../Prices/FamilyAttachments";
 import FamilyAttachmentsArabic from "../Prices/FamilyAttachmentsArabic";
 import CompanyProfile from "../Prices/CompanyProfile";
 import Gallery from "../gallery/gallery";
+import TestimonialDashboard from "../Testimonial/TestimonialDashboard";
+import TestimonialsViewList from "../Testimonial/TestimonialsViewList";
 
 
 
@@ -141,14 +143,19 @@ export const publicRoutes = [
     path: routes.OurTeam,
     element: <TeamManagement />,
   },
-  // {
-  //   path: routes.Gallery,
-  //   element: <Gallery />,
-  // },
+  {
+    path: routes.Gallery,
+    element: <Gallery />,
+  },
   {
     path: routes.blogs,
     element: <BlogViewList />,
   },
+  {
+    path: routes.testimonials,
+    element: <TestimonialsViewList />,
+  },
+  
   {
     path: routes.Posts,
     element: <BlogDetails />,
@@ -240,6 +247,10 @@ export const listingroutes = [
   {
     path: routes.carDashboard,
     element: <CarDashboard />,
+  },
+  {
+    path: routes.testimonialsDashboard,
+    element: <TestimonialDashboard />,
   },
   // Blog
   {

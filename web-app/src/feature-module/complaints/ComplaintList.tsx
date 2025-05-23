@@ -78,7 +78,7 @@ const ComplaintList = () => {
   };
 
   useEffect(() => {
-    if (!userStore.isAdmin) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearComplaintItems();
       navigate("/login");
       toast.error("Unauthorized");

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Table from "../common/Table";
 import { observer } from "mobx-react-lite";
@@ -29,7 +28,7 @@ const BlogList = () => {
       pagination,
       setSearchTerm,
       deleteBlog,
-      clearBlogs
+      clearBlogs,
     },
     userStore,
   } = useStore();
@@ -77,7 +76,7 @@ const BlogList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       console.log("Hi");
       clearBlogs();
       navigate("/login");
@@ -105,14 +104,20 @@ const BlogList = () => {
               handleReset={handleReset}
             >
               {/* Add Category Form as a child */}
-              { <BlogForm /> }
+              {<BlogForm />}
             </TableFilterBar>
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id","fileEntities","posts","blogContent"]}
+                  exceptColumns={[
+                    "id",
+                    "fileEntities",
+                    "posts",
+                    "blogContent",
+                    "updateDate",
+                  ]}
                   data={blogs ?? []}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
@@ -129,7 +134,8 @@ const BlogList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(

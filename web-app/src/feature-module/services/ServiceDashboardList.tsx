@@ -76,7 +76,7 @@ const ServiceDashboardList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearServices();
       navigate("/login");
       toast.error("Unauthorized");

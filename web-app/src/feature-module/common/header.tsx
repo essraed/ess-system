@@ -10,7 +10,7 @@ import { set_is_mobile_sidebar } from "../../core/data/redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationsDropdown from "./NotificationsDropdown";
 import { Navbar } from "@nextui-org/react";
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from "react-icons/fa";
 
 const Header = () => {
   const routes = all_routes;
@@ -42,7 +42,15 @@ const Header = () => {
   const [locationPathname, setLocationPathname] = useState(location.pathname);
 
   const {
-    userStore: { isAdmin, logout, isLoggedIn, user, isUser, isMarketUser },
+    userStore: {
+      isAdmin,
+      logout,
+      isLoggedIn,
+      user,
+      isUser,
+      isMarketUser,
+      isMarketingManager,
+    },
     categoryStore: { categories, loadCategories },
     bookingStore: { isSession, getCurrentSessionBookings },
   } = useStore();
@@ -59,16 +67,17 @@ const Header = () => {
         <div className="custom-container ">
           <div className="flex flex-nowrap items-center justify-start md:justify-between">
             {/* Logo Section */}
-            <div className="w-full md:w-1/4 flex">
+            <div className="w-full md:w-1/4 flex items-center justify-center md:justify-start py-2">
               <Link to={routes.homeOne} className="navbar-brand logo">
                 <ImageWithBasePath
                   lazyLoad={true}
                   src="assets/img/ESSLogo1.png"
-                  className="img-fluid w-2/3"
+                  className="w-auto max-h-16 object-contain"
                   alt="Logo"
                 />
               </Link>
             </div>
+
             <div className="flex">
               <div
                 className={
@@ -87,7 +96,6 @@ const Header = () => {
                 }
               >
                 <ul className="flex flex-nowrap justify-end items-center bookings-container space-x-4 md:space-x-3">
-  
                   <li className="nav-item px-3 py-2 hover:text-green-600 hover:bg-gray-200 rounded-lg transition-all duration-100 ease-in-out hidden lg:block">
                     <a
                       href="https://wa.me/971501234567" // Replace with your WhatsApp number in international format
@@ -248,7 +256,7 @@ const Header = () => {
                     </ul>
                   </li>
 
-                  {(isUser() || isAdmin()) && (
+                  {(isUser() || isAdmin() || isMarketingManager()) && (
                     <li
                       className={`has-submenu ${location.pathname.includes("listing") ? "active" : ""}`}
                     >
@@ -276,38 +284,42 @@ const Header = () => {
                             {t("Letter List")}
                           </Link>
                         </li>
-                        <li
-                          className={
-                            locationPathname === routes.serviceDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.serviceDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.serviceDashboard)
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.serviceDashboard
+                                ? "active"
+                                : ""
                             }
                           >
-                            {t("Service List")}
-                          </Link>
-                        </li>
-                        <li
-                          className={
-                            locationPathname === routes.categoryDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.categoryDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.categoryDashboard)
+                            <Link
+                              to={routes.serviceDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.serviceDashboard)
+                              }
+                            >
+                              {t("Service List")}
+                            </Link>
+                          </li>
+                        )}
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.categoryDashboard
+                                ? "active"
+                                : ""
                             }
                           >
-                            {t("Category List")}
-                          </Link>
-                        </li>
+                            <Link
+                              to={routes.categoryDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.categoryDashboard)
+                              }
+                            >
+                              {t("Category List")}
+                            </Link>
+                          </li>
+                        )}
 
                         <li
                           className={
@@ -325,22 +337,24 @@ const Header = () => {
                             {t("Authority List")}
                           </Link>
                         </li>
-                        <li
-                          className={
-                            locationPathname === routes.carDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.carDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.carDashboard)
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.carDashboard
+                                ? "active"
+                                : ""
                             }
                           >
-                            {t("Car List")}
-                          </Link>
-                        </li>
+                            <Link
+                              to={routes.carDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.carDashboard)
+                              }
+                            >
+                              {t("Car List")}
+                            </Link>
+                          </li>
+                        )}
                         <li
                           className={
                             locationPathname === routes.notificationDashboard
@@ -373,22 +387,24 @@ const Header = () => {
                             {t("Booking List")}
                           </Link>
                         </li>
-                        <li
-                          className={
-                            locationPathname === routes.WorkingTimeDashboard
-                              ? "active"
-                              : ""
-                          }
-                        >
-                          <Link
-                            to={routes.WorkingTimeDashboard}
-                            onClick={() =>
-                              setLocationPathname(routes.WorkingTimeDashboard)
+                        {isAdmin() && (
+                          <li
+                            className={
+                              locationPathname === routes.WorkingTimeDashboard
+                                ? "active"
+                                : ""
                             }
                           >
-                            {t("WorkingTime List")}
-                          </Link>
-                        </li>
+                            <Link
+                              to={routes.WorkingTimeDashboard}
+                              onClick={() =>
+                                setLocationPathname(routes.WorkingTimeDashboard)
+                              }
+                            >
+                              {t("WorkingTime List")}
+                            </Link>
+                          </li>
+                        )}
                         <li
                           className={
                             locationPathname === routes.contactDashboard
@@ -421,26 +437,25 @@ const Header = () => {
                             {t("Lost List")}
                           </Link>
                         </li>
-                        {isAdmin() && (
-                          <li
-                            className={
-                              locationPathname === routes.ComplaintDashboard
-                                ? "active"
-                                : ""
+
+                        <li
+                          className={
+                            locationPathname === routes.ComplaintDashboard
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link
+                            to={routes.ComplaintDashboard}
+                            onClick={() =>
+                              setLocationPathname(routes.ComplaintDashboard)
                             }
                           >
-                            <Link
-                              to={routes.ComplaintDashboard}
-                              onClick={() =>
-                                setLocationPathname(routes.ComplaintDashboard)
-                              }
-                            >
-                              {t("Complaint List")}
-                            </Link>
-                          </li>
-                        )}
+                            {t("Complaint List")}
+                          </Link>
+                        </li>
 
-                        {isAdmin() && (
+                        {(isAdmin() || isMarketingManager()) && (
                           <li
                             className={
                               locationPathname === routes.blogDashboard
@@ -455,6 +470,26 @@ const Header = () => {
                               }
                             >
                               {t("Blog List")}
+                            </Link>
+                          </li>
+                        )}
+                        {(isAdmin() || isMarketingManager()) && (
+                          <li
+                            className={
+                              locationPathname === routes.testimonialsDashboard
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            <Link
+                              to={routes.testimonialsDashboard}
+                              onClick={() =>
+                                setLocationPathname(
+                                  routes.testimonialsDashboard
+                                )
+                              }
+                            >
+                              {t("Testimonial List")}
                             </Link>
                           </li>
                         )}
@@ -527,6 +562,24 @@ const Header = () => {
                             {t("Blog List")}
                           </Link>
                         </li>
+                          <li
+                            className={
+                              locationPathname === routes.testimonialsDashboard
+                                ? "active"
+                                : ""
+                            }
+                          >
+                            <Link
+                              to={routes.testimonialsDashboard}
+                              onClick={() =>
+                                setLocationPathname(
+                                  routes.testimonialsDashboard
+                                )
+                              }
+                            >
+                              {t("Testimonial List")}
+                            </Link>
+                          </li>
                       </ul>
                     </li>
                   )}
@@ -571,19 +624,26 @@ const Header = () => {
                   >
                     <Link to={routes.OurTeam}>{t("Our Team")}</Link>
                   </li>
-                  {/* <li
+                  <li
                     className={
                       location.pathname === routes.OurTeam ? "active" : ""
                     }
                   >
                     <Link to={routes.Gallery}>{t("Our Gallery")}</Link>
-                  </li> */}
+                  </li>
                   <li
                     className={
                       location.pathname === routes.blogs ? "active" : ""
                     }
                   >
                     <Link to={routes.blogs}>{t("Our Blogs")}</Link>
+                  </li>
+                  <li
+                    className={
+                      location.pathname === routes.testimonials ? "active" : ""
+                    }
+                  >
+                    <Link to={routes.testimonials}>{t("Reviews")}</Link>
                   </li>
                 </ul>
                 <ul className="hidden lg:block">

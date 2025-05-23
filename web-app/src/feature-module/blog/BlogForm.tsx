@@ -117,7 +117,7 @@ const BlogForm = () => {
 
   return (
     <>
-      {userStore.isMarketUser() && (
+      {(userStore.isMarketUser()||userStore.isMarketingManager()||userStore.isAdmin()) && (
         <Link
           to="#"
           data-bs-toggle="modal"

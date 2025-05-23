@@ -90,6 +90,10 @@ namespace API.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.ADMIN);
                 }
+                else if(model.Role==RolesNames.MARKETIGNMANAGER)
+                {
+                    await _userManager.AddToRoleAsync(user, RolesNames.MARKETIGNMANAGER);
+                }
                 var roles = await _userManager.GetRolesAsync(user!);
 
                 return await CreateUserObject(user, roles);

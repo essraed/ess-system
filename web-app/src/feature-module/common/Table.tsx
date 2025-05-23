@@ -32,7 +32,7 @@ const Table = ({
   getViewId,
 }: Props) => {
   const {
-    userStore: { isAdmin ,isMarketUser},
+    userStore: { isAdmin, isMarketingManager },
   } = useStore();
 
   // Action functions for icons in individual columns
@@ -80,6 +80,7 @@ const Table = ({
       routeUrl !== all_routes.contactDashboard &&
       routeUrl !== all_routes.lostDashboard &&
       routeUrl !== all_routes.ComplaintDashboard &&
+      routeUrl !== all_routes.testimonialsDashboard &&
       isAdmin() && (
         <Link to={`${routeUrl}/edit/${id}`}>
           <i className="feather icon-edit text-yellow-500 hover:text-yellow-700 cursor-pointer"></i>
@@ -91,8 +92,8 @@ const Table = ({
   const deleteAction = (rowData: any) => {
     const { id } = rowData;
 
-    return (
-      (isAdmin() || isMarketUser()) && (
+    if (isAdmin() || isMarketingManager()) {
+      return (
         <Link
           to="#"
           onClick={() => confirmDialog(id)}
@@ -101,8 +102,10 @@ const Table = ({
         >
           <i className="feather icon-trash text-red-500 hover:text-red-700 cursor-pointer"></i>
         </Link>
-      )
-    );
+      );
+    }
+
+    return null;
   };
 
   const completeAction = (rowData: any) => {
@@ -184,12 +187,11 @@ const Table = ({
                       style={{ textDecoration: "underline" }} // Make it underlined
                     >
                       <span
-                       
                         className="text-red-500 hover:text-black-700 font-bold"
                         style={{
                           textDecoration: "underline",
                           cursor: "pointer",
-                        }} 
+                        }}
                       >
                         {rowData[key]}
                       </span>
@@ -226,7 +228,7 @@ const Table = ({
                   return rowData[key] ? "Yes" : "No";
                 }
                 if (key === "nationalityName") {
-                  return rowData[key] ? rowData[key]: "No Data";
+                  return rowData[key] ? rowData[key] : "No Data";
                 }
                 return rowData[key];
               }}
@@ -240,7 +242,9 @@ const Table = ({
       {(routeUrl === all_routes.categoryDashboard ||
         routeUrl === all_routes.serviceDashboard ||
         routeUrl === all_routes.lostDashboard ||
-        routeUrl === all_routes.ComplaintDashboard) && (
+        routeUrl === all_routes.ComplaintDashboard||
+        routeUrl === all_routes.contactDashboard
+      ) && (
         <Column header="View" body={viewAction} />
       )}
 
@@ -254,11 +258,17 @@ const Table = ({
         routeUrl !== all_routes.WorkingTimeDashboard &&
         routeUrl !== all_routes.ComplaintDashboard &&
         routeUrl !== all_routes.blogDashboard &&
+        routeUrl !== all_routes.blogDashboard &&
+        routeUrl !== all_routes.testimonialsDashboard &&
         isAdmin() && <Column header="Edit" body={editAction} />}
-
-      {routeUrl !== all_routes.WorkingTimeDashboard && isAdmin() && (
+      {routeUrl !== all_routes.blogDashboard && isAdmin() && (
         <Column header="Delete" body={deleteAction} />
       )}
+
+      {routeUrl === all_routes.blogDashboard &&
+        (isAdmin() || isMarketingManager()) && (
+          <Column header="Delete" body={deleteAction} />
+        )}
 
       {(routeUrl === all_routes.lostDashboard ||
         routeUrl === all_routes.ComplaintDashboard) && (

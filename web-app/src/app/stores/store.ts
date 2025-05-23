@@ -17,6 +17,7 @@ import BlogStore from "./blogStore";
 import ClientStore from "./clientStore";
 import EventStore from "./eventStore";
 import EventPROStore from "./eventPROStore";
+import TestimonialStore from "./testimonialStore";
 
 
 interface Store {
@@ -38,6 +39,7 @@ interface Store {
   clientStore:ClientStore;
   eventStore:EventStore;
   eventPROStore:EventPROStore;
+  testimonialStore:TestimonialStore;
 
 }
 
@@ -60,6 +62,7 @@ export const store: Store = {
   clientStore:new ClientStore(),
   eventStore:new EventStore(),
   eventPROStore:new EventPROStore(),
+  testimonialStore:new TestimonialStore(),
 
 };
 

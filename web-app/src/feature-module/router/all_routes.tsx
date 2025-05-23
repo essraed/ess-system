@@ -1,7 +1,6 @@
 import EventDashboard from "../Event/EventDashboard";
 import PrivacyPolicy from "../policy/PrivacyPolicy ";
 
-
 export const all_routes = {
   // home routes
   homeOne: "/",
@@ -86,11 +85,15 @@ export const all_routes = {
   carEdit: "/listings/cars/edit/:id",
   carCreate: "/listings/cars/add",
 
-    //Blogs
-    blogDashboard: "/listings/blogs",
-    blogDetails: "/listings/blogs/view/:id",
-    blogEdit: "/listings/blogs/edit/:id",
-    blogCreate: "/listings/blogs/add",
+  //Blogs
+  blogDashboard: "/listings/blogs",
+  blogDetails: "/listings/blogs/view/:id",
+  blogEdit: "/listings/blogs/edit/:id",
+  blogCreate: "/listings/blogs/add",
+  
+  //Testimonials
+  testimonialsDashboard: "/listings/Testimonials",
+  testimonials: "/Testimonials",
 
 
   //Notifications
@@ -138,18 +141,17 @@ export const all_routes = {
   TermsAndConditions: "/TermsAndConditions",
   Faq: "/Faq",
   Complaints: "/Complaints",
-  PriceDetails:"/Price",
-  CompanyProfile:"/CompanyProfile",
-  // Gallery:"/Gallery",
-  FamilyAttachments:"/FamilyAttachments",
-  FamilyAttachmentsArabic:"/FamilyAttachmentsArabic",
-  OurTeam:"/TeamManagment",
-  admin: "/admin",
+  PriceDetails: "/Price",
+  CompanyProfile: "/CompanyProfile",
+  Gallery: "/Gallery",
+  FamilyAttachments: "/FamilyAttachments",
+  FamilyAttachmentsArabic: "/FamilyAttachmentsArabic",
+  OurTeam: "/TeamManagment",
+  admin: "/login",
   blogs: "/blogs",
   Posts: "/blogs/:id",
   // event :"/event",
   // eventPRO :"/eventPRO",
-  categories:"/categories",
-  track: "/booking/TrackOrder"
-
+  categories: "/categories",
+  track: "/booking/TrackOrder",
 };

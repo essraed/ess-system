@@ -42,6 +42,9 @@ import { EventSchema } from "../../lib/schemas/EventSchema";
 import { FileResponseData } from "../../types/filesTypes";
 import { EventPROData } from "../../types/eventPRO";
 import { EventPROSchema } from "../../lib/schemas/EventPROSchema";
+import { TestimonailData } from "../../types/testimonial";
+import { TestimonialSchema } from "../../lib/schemas/testimonialSchema ";
+import { Agent } from "http";
 
 
 
@@ -128,6 +131,12 @@ const Blogs = {
   uploadImageForPost: (formData: FormData) =>
     axios.post<string>("blog/upload-image-ForPost", formData).then(responseBody),
   delete: (id: string) => requests.del<string>(`blog/${id}`),
+};
+const Testimonials = {
+  getAll: (params: URLSearchParams) =>
+    axios.get<PagedResponse<TestimonailData[]>>("testimonial", { params }).then(responseBody),
+  create: (testimonial: TestimonialSchema) => requests.post<TestimonailData>("testimonial", testimonial),
+  delete: (id: string) => requests.del<string>(`testimonial/${id}`),
 };
 
 
@@ -398,6 +407,7 @@ const agent = {
   Clients,
   Events,
   EventPROs,
+  Testimonials,
 
 };
 

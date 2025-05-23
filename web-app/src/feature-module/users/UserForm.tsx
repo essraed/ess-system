@@ -110,6 +110,7 @@ const UserForm = () => {
                       <option value="USER">User</option>
                       <option value="MARKET">Market</option>
                       <option value="ADMIN">Admin</option>
+                      <option value="MARKETIGNMANAGER">MARKETIGNMANAGER</option>
                     </select>
                     {errors.role && (
                       <span className="text-red-500 text-sm">

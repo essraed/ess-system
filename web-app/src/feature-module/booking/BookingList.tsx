@@ -88,7 +88,7 @@ const BookingList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser()||userStore.isAdmin)) {
+    if (!(userStore.isUser() || userStore.isAdmin())) {
       clearBookings();
       navigate("/login");
       toast.error("Unauthorized");

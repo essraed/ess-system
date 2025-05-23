@@ -122,12 +122,11 @@ const BookingDetails = () => {
                 <h1 className="text-2xl font-bold text-gray-800">
                   Booking Details
                 </h1>
-        
-                  <BackToButton
-                    label="Back to Bookings"
-                    href={all_routes.bookingDashboard}
-                  />
-             
+
+                <BackToButton
+                  label="Back to Bookings"
+                  href={all_routes.bookingDashboard}
+                />
               </div>
 
               <div className="p-4 border rounded-lg bg-gray-50 w-full">
@@ -153,7 +152,7 @@ const BookingDetails = () => {
                         </div>
                       )}
                       {email && (
-                        <div >
+                        <div>
                           <p className="font-medium">Email:</p>
                           <p className="break-words">{email}</p>{" "}
                           {/* Ensures the text breaks into multiple lines if needed */}
@@ -304,106 +303,103 @@ const BookingDetails = () => {
                             )}
                           </div>
 
-                        
-                            <div className="flex space-x-2">
-                              {bookingStatus ===
-                                convertEnumToString(
-                                  BookingStatus.InProcess,
-                                  BookingStatus
-                                ) && (
-                                <>
-                                  <button
-                                    onClick={() => setStatusCompleted(id ?? "")}
-                                    className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
-                                  >
-                                    Completed
-                                  </button>
-                                  <button
-                                    onClick={() => setStatusPending(id ?? "")}
-                                    className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
-                                  >
-                                    Pending
-                                  </button>
-                                </>
-                              )}
-
-                              {bookingStatus ===
-                                convertEnumToString(
-                                  BookingStatus.Canceled,
-                                  BookingStatus
-                                ) && (
+                          <div className="flex space-x-2">
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.InProcess,
+                                BookingStatus
+                              ) && (
+                              <>
                                 <button
-                                  onClick={() => setStatusInProcess(id ?? "")}
-                                  className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                  onClick={() => setStatusCompleted(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg shadow hover:bg-green-600"
                                 >
-                                  In-Progress
+                                  Completed
                                 </button>
-                              )}
+                                <button
+                                  onClick={() => setStatusPending(id ?? "")}
+                                  className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                >
+                                  Pending
+                                </button>
+                              </>
+                            )}
 
-                              {bookingStatus ===
-                                convertEnumToString(
-                                  BookingStatus.Pending,
-                                  BookingStatus
-                                ) && (
-                                <div className="flex flex-col">
-                                  {!showReasonInput && (
-                                    <button
-                                      onClick={() => setShowReasonInput(true)}
-                                      className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
-                                    >
-                                      Canceled
-                                    </button>
-                                  )}
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.Canceled,
+                                BookingStatus
+                              ) && (
+                              <button
+                                onClick={() => setStatusInProcess(id ?? "")}
+                                className="px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                              >
+                                In-Progress
+                              </button>
+                            )}
 
-                                  {showReasonInput && (
-                                    <div className="p-2 col-span-1 flex flex-row ">
-                                      <textarea
-                                        value={canceledReason}
-                                        onChange={(e) =>
-                                          setCanceledReason(e.target.value)
-                                        }
-                                        className="w-full p-2 border border-gray-300 rounded-lg"
-                                        placeholder="Please provide a reason for cancellation..."
-                                      />
-                                      <div className="flex flex-col gap-2">
-                                        <button
-                                          onClick={handleCancelWithReason}
-                                          className="ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
-                                        >
-                                          Submit
-                                        </button>
-                                        <button
-                                          onClick={() =>
-                                            setShowReasonInput(false)
-                                          }
-                                          className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
-                                        >
-                                          Cancel
-                                        </button>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {!showReasonInput && (
-                                    <button
-                                      onClick={() =>
-                                        setStatusInProcess(id ?? "")
+                            {bookingStatus ===
+                              convertEnumToString(
+                                BookingStatus.Pending,
+                                BookingStatus
+                              ) && (
+                              <div className="flex flex-col">
+                                {!showReasonInput && (
+                                  <button
+                                    onClick={() => setShowReasonInput(true)}
+                                    className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow hover:bg-red-600"
+                                  >
+                                    Canceled
+                                  </button>
+                                )}
+
+                                {showReasonInput && (
+                                  <div className="p-2 col-span-1 flex flex-row ">
+                                    <textarea
+                                      value={canceledReason}
+                                      onChange={(e) =>
+                                        setCanceledReason(e.target.value)
                                       }
-                                      className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
-                                    >
-                                      In-Progress
-                                    </button>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          
+                                      className="w-full p-2 border border-gray-300 rounded-lg"
+                                      placeholder="Please provide a reason for cancellation..."
+                                    />
+                                    <div className="flex flex-col gap-2">
+                                      <button
+                                        onClick={handleCancelWithReason}
+                                        className="ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+                                      >
+                                        Submit
+                                      </button>
+                                      <button
+                                        onClick={() =>
+                                          setShowReasonInput(false)
+                                        }
+                                        className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-lg shadow hover:bg-gray-600"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
+                                {!showReasonInput && (
+                                  <button
+                                    onClick={() => setStatusInProcess(id ?? "")}
+                                    className="px-4 py-2 mt-2 text-sm font-medium text-white bg-yellow-500 rounded-lg shadow hover:bg-yellow-600"
+                                  >
+                                    In-Progress
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )}
                     </div>
                   </div>
 
                   {/* Admin Update Section */}
-               
+
+                  {(userStore.isAdmin() || userStore.isMarketingManager()) && (
                     <div className="space-y-6">
                       <h2 className="text-lg font-semibold text-gray-700 mb-4">
                         Admin Update Section
@@ -447,7 +443,7 @@ const BookingDetails = () => {
                         </Button>
                       </div>
                     </div>
-                 
+                  )}
                 </div>
               </div>
 

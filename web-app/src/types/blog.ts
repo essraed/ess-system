@@ -6,7 +6,6 @@ export interface BlogDetailsData {
   blogContent: string;
   createdBy?: string | null;
   createDate?: string;
-  updateDate?: string;
   fileEntities?: FileResponseData[];
   posts?:Post[];
 }
