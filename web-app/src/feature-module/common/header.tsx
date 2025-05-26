@@ -149,7 +149,7 @@ const Header = () => {
                           className="nav-link header-login text-gray-700 font-medium"
                           to="#"
                         >
-                          {user?.username}
+                          {user?.displayName}
                         </Link>
                       </li>
                     </>
