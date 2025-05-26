@@ -76,7 +76,13 @@ const AuthorityList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       clearAuthorities();
       navigate("/login");
       toast.error("Unauthorized");

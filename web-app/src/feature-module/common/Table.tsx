@@ -242,9 +242,8 @@ const Table = ({
       {(routeUrl === all_routes.categoryDashboard ||
         routeUrl === all_routes.serviceDashboard ||
         routeUrl === all_routes.lostDashboard ||
-        routeUrl === all_routes.ComplaintDashboard||
-        routeUrl === all_routes.contactDashboard
-      ) && (
+        routeUrl === all_routes.ComplaintDashboard ||
+        routeUrl === all_routes.contactDashboard) && (
         <Column header="View" body={viewAction} />
       )}
 
@@ -265,7 +264,8 @@ const Table = ({
         <Column header="Delete" body={deleteAction} />
       )}
 
-      {routeUrl === all_routes.blogDashboard &&
+      {(routeUrl === all_routes.blogDashboard ||
+        routeUrl === all_routes.testimonialsDashboard) &&
         (isAdmin() || isMarketingManager()) && (
           <Column header="Delete" body={deleteAction} />
         )}

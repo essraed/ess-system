@@ -52,14 +52,19 @@ const NotificationList = () => {
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
     loadNotifications(); // Reload categories with new page size
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       // clearNotification();
       navigate("/login");
       toast.error("Unauthorized");
@@ -76,20 +81,19 @@ const NotificationList = () => {
       <div className="row">
         <div className="col-lg-12 d-flex">
           <div className="card book-card flex-fill mb-0">
-          <TableFilterBar
+            <TableFilterBar
               pagination={pagination}
               pageSize={pageSize}
               handlePageSizeChange={handlePageSizeChange}
               handleReset={handleReset}
-            >
-            </TableFilterBar>
+            ></TableFilterBar>
 
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id", "pictureUrl","moreDetailsUrl"]}
+                  exceptColumns={["id", "pictureUrl", "moreDetailsUrl"]}
                   data={notifications}
                   pageSize={pageSize} // Use pageSize state variable here
                   rowsPerPageOptions={[10, 25, 50]}
@@ -107,10 +111,12 @@ const NotificationList = () => {
         </div>
       </div>
 
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title="Confirm Delete"
-        description="Are you sure you want to delete this Notification?"  />
+        description="Are you sure you want to delete this Notification?"
+      />
     </div>
   );
 };

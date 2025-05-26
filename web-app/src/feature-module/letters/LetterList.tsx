@@ -75,7 +75,13 @@ const LetterList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       clearDocuments();
       navigate("/login");
       toast.error("Unauthorized");
@@ -111,19 +117,11 @@ const LetterList = () => {
                   className="btn btn-view-custom d-inline-flex align-items-center"
                 >
                   <span>
-                    <IoMdAddCircleOutline
-                      size={24}
-                      className=""
-                    />
+                    <IoMdAddCircleOutline size={24} className="" />
                   </span>
                 </Link>
               </div>
-
             </TableFilterBar>
-
-
-
-
 
             <div className="flex flex-col card-body">
               <div className="table-responsive dashboard-table">
@@ -147,7 +145,8 @@ const LetterList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
         description={`${t("Are you sure you want to delete this")} ${t(

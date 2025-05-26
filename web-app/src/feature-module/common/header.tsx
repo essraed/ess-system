@@ -626,7 +626,7 @@ const Header = () => {
                   </li>
                   <li
                     className={
-                      location.pathname === routes.OurTeam ? "active" : ""
+                      location.pathname === routes.Gallery ? "active" : ""
                     }
                   >
                     <Link to={routes.Gallery}>{t("Our Gallery")}</Link>

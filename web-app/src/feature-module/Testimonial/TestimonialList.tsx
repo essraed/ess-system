@@ -76,7 +76,13 @@ const TestimonialList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+      if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isMarketUser()
+      )
+    ) {
       clearTestimonials();
       navigate("/login");
       toast.error("Unauthorized");
@@ -108,7 +114,7 @@ const TestimonialList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id","updateDate"]}
+                  exceptColumns={["id", "updateDate"]}
                   data={testimonials ?? []}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}

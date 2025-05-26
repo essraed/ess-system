@@ -78,7 +78,13 @@ const ComplaintList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       clearComplaintItems();
       navigate("/login");
       toast.error("Unauthorized");
@@ -140,7 +146,7 @@ const ComplaintList = () => {
                     "department",
                     "phone",
                     "Email",
-                    "updatedBy"
+                    "updatedBy",
                   ]}
                   data={complaintItems!}
                   pageSize={pageSize}
@@ -178,7 +184,7 @@ const ComplaintList = () => {
         title="Confirm Setting As Completed"
         description="Are you sure you want to set this Complaint as completed?"
       />
-       <ConfirmDialog
+      <ConfirmDialog
         modalId={dialogFlags.inProocess}
         onConfirm={handleInProcess}
         title="Confirm Setting As InProcess"

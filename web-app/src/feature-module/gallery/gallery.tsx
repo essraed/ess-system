@@ -9,18 +9,17 @@ const Gallerys: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const images = [
-    '/assets/img/gallery/gallery-01.jpg',
-    '/assets/img/gallery/gallery-02.jpg',
-    '/assets/img/gallery/gallery-03.jpg',
-    '/assets/img/gallery/gallery-04.jpg',
-    '/assets/img/gallery/gallery-05.jpg',
-    '/assets/img/gallery/gallery-06.jpg',
-    '/assets/img/gallery/gallery-07.jpg',
-    '/assets/img/gallery/gallery-08.jpg',
-    '/assets/img/gallery/gallery-09.jpg',
-    '/assets/img/gallery/gallery-10.jpg',
-    '/assets/img/gallery/gallery-11.jpg',
-    '/assets/img/gallery/gallery-12.jpg',
+    '/assets/img/gallery/gallery-01.png',
+    '/assets/img/gallery/gallery-02.png',
+    '/assets/img/gallery/gallery-03.png',
+    '/assets/img/gallery/gallery-04.png',
+    '/assets/img/gallery/gallery-05.png',
+    '/assets/img/gallery/gallery-06.png',
+    '/assets/img/gallery/gallery-07.png',
+    '/assets/img/gallery/gallery-09.png',
+    '/assets/img/gallery/gallery-10.png',
+    '/assets/img/gallery/gallery-11.png',
+    '/assets/img/gallery/gallery-12.png',
   ];
 
   return (

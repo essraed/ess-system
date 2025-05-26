@@ -76,7 +76,13 @@ const BlogList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isMarketUser()
+      )
+    ) {
       console.log("Hi");
       clearBlogs();
       navigate("/login");

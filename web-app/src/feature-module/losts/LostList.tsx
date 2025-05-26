@@ -76,7 +76,13 @@ const LostList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       clearLostItems();
       navigate("/login");
       toast.error("Unauthorized");
@@ -138,7 +144,7 @@ const LostList = () => {
                     "lostDepartment",
                     "phone",
                     "Email",
-                    "updatedBy"
+                    "updatedBy",
                   ]}
                   data={lostItems!}
                   pageSize={pageSize}
@@ -176,7 +182,7 @@ const LostList = () => {
         title="Confirm Setting As Completed"
         description="Are you sure you want to set this Lost as completed?"
       />
-       <ConfirmDialog
+      <ConfirmDialog
         modalId={dialogFlags.inProocess}
         onConfirm={handleInProcess}
         title="Confirm Setting As InProcess"

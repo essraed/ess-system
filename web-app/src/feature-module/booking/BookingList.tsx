@@ -88,7 +88,13 @@ const BookingList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (
+      !(
+        userStore.isMarketingManager() ||
+        userStore.isAdmin() ||
+        userStore.isUser()
+      )
+    ) {
       clearBookings();
       navigate("/login");
       toast.error("Unauthorized");
@@ -131,10 +137,10 @@ const BookingList = () => {
                     "adultsNumber",
                     "childrenNumber",
                     "duration",
-                    "processTime", 
+                    "processTime",
                     "carName",
                     "entryType",
-                    "updateDate"
+                    "updateDate",
                   ]}
                   data={bookings}
                   pageSize={pageSize}
