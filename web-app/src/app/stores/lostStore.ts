@@ -62,7 +62,6 @@ export default class LostStore {
     if (this.toDate) params.append("to", this.toDate);
     if (this.lostStatus) params.append("lostStatus", this.lostStatus);
 
-
     return params;
   }
 
@@ -86,11 +85,11 @@ export default class LostStore {
           lostItems.push({
             ...item,
             createDate: item.createDate
-            ? formatDateTime(item.createDate?.toString())
-            : "No Set",
-          updateDate: item.updateDate
-            ? formatDateTime(item.updateDate?.toString())
-            : "No Set",
+              ? formatDateTime(item.createDate?.toString())
+              : "No Set",
+            updateDate: item.updateDate
+              ? formatDateTime(item.updateDate?.toString())
+              : "No Set",
             lostDate: formatDateTime(item.lostDate),
             status: convertEnumToString(Number(item.status), lostStatus),
             createdBy: item.createdBy ? item.createdBy : "Customer",
@@ -111,15 +110,14 @@ export default class LostStore {
         this.currentLostItem = {
           ...result,
           createDate: result.createDate
-          ? formatDateTime(result.createDate?.toString())
-          : "No Set",
-        updateDate: result.updateDate
-          ? formatDateTime(result.updateDate?.toString())
-          : "No Set",
+            ? formatDateTime(result.createDate?.toString())
+            : "No Set",
+          updateDate: result.updateDate
+            ? formatDateTime(result.updateDate?.toString())
+            : "No Set",
           lostDate: formatDateTime(result.lostDate),
           status: convertEnumToString(Number(result.status), lostStatus),
           createdBy: result.createdBy ? result.createdBy : "Customer",
-
         };
       });
     } catch (error) {
@@ -127,24 +125,28 @@ export default class LostStore {
     }
   };
 
-  setStatusInProcess = async (id: string): Promise<ActionResult<string>> => {
+  setStatusInProcess = async (
+    id: string,
+    remark: string
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.setStatusInProcess(id);
+      await agent.Losts.setStatusInProcess(id, { remark });
       await this.getLostItem(id);
       return { status: "success", data: "Lost status set to 'In Process'." };
     } catch (error) {
-      console.error("Error updating booking status: ", error);
       return { status: "error", error: error as string };
     }
   };
 
-  setStatusCompleted = async (id: string): Promise<ActionResult<string>> => {
+  setStatusCompleted = async (
+    id: string,
+    remark: string
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.setStatusCompleted(id);
+      await agent.Losts.setStatusCompleted(id, { remark });
       await this.getLostItem(id);
       return { status: "success", data: "Lost status set to 'Completed'." };
     } catch (error) {
-      console.error("Error updating booking status: ", error);
       return { status: "error", error: error as string };
     }
   };

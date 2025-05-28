@@ -14,6 +14,7 @@ namespace API.DTOs.LostDto
         public required string Email { get; set; }
         public required string LostDepartment { get; set; }
         public required string Comments { get; set; }
+        public string? Remarks { get; set; }
         public required DateTime LostDate { get; set; }
         public required LostStatus Status { get; set; }
         public DateTime? CreateDate { get; set; }

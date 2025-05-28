@@ -399,7 +399,7 @@ const BookingDetails = () => {
 
                   {/* Admin Update Section */}
 
-                  {(userStore.isAdmin() || userStore.isMarketingManager()) && (
+
                     <div className="space-y-6">
                       <h2 className="text-lg font-semibold text-gray-700 mb-4">
                         Admin Update Section
@@ -443,7 +443,7 @@ const BookingDetails = () => {
                         </Button>
                       </div>
                     </div>
-                  )}
+
                 </div>
               </div>
 

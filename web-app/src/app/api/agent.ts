@@ -7,7 +7,10 @@ import { CategorySchema } from "../../lib/schemas/categorySchema";
 import { BusinessSchema } from "../../lib/schemas/businessSchema";
 import { LoginSchema } from "../../lib/schemas/loginSchema";
 import { NotificationSchema } from "../../lib/schemas/notificationSchema";
-import { RegisterForUpdateSchema, RegisterSchema } from "../../lib/schemas/registerSchema";
+import {
+  RegisterForUpdateSchema,
+  RegisterSchema,
+} from "../../lib/schemas/registerSchema";
 import { ServiceSchema } from "../../lib/schemas/serviceSchema";
 import { UserPromptSchema } from "../../lib/schemas/UserPromptSchema";
 import { WorkingTimeSchema } from "../../lib/schemas/workingTimeSchema ";
@@ -45,8 +48,6 @@ import { EventPROSchema } from "../../lib/schemas/EventPROSchema";
 import { TestimonailData } from "../../types/testimonial";
 import { TestimonialSchema } from "../../lib/schemas/testimonialSchema ";
 import { Agent } from "http";
-
-
 
 axios.defaults.baseURL = PUBLIC_API_URL;
 
@@ -123,37 +124,47 @@ const Cars = {
 
 const Blogs = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<BlogDetailsData[]>>("blog", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<BlogDetailsData[]>>("blog", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<BlogDetailsData>(`blog/${id}`),
   create: (blog: BlogSchema) => requests.post<BlogDetailsData>("blog", blog),
   uploadImage: (formData: FormData) =>
     axios.post<string>("blog/upload-image", formData).then(responseBody),
   uploadImageForPost: (formData: FormData) =>
-    axios.post<string>("blog/upload-image-ForPost", formData).then(responseBody),
+    axios
+      .post<string>("blog/upload-image-ForPost", formData)
+      .then(responseBody),
   delete: (id: string) => requests.del<string>(`blog/${id}`),
 };
 const Testimonials = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<TestimonailData[]>>("testimonial", { params }).then(responseBody),
-  create: (testimonial: TestimonialSchema) => requests.post<TestimonailData>("testimonial", testimonial),
+    axios
+      .get<PagedResponse<TestimonailData[]>>("testimonial", { params })
+      .then(responseBody),
+  create: (testimonial: TestimonialSchema) =>
+    requests.post<TestimonailData>("testimonial", testimonial),
   delete: (id: string) => requests.del<string>(`testimonial/${id}`),
 };
 
-
 const Events = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<EventData[]>>("event", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<EventData[]>>("event", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<EventData>(`event/${id}`),
   create: (event: EventSchema) => requests.post<EventData>("event", event),
 };
 
 const EventPROs = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<EventPROData[]>>("eventPRO", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<EventPROData[]>>("eventPRO", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<EventPROData>(`eventPRO/${id}`),
-  create: (eventPRO: EventPROSchema) => requests.post<EventPROData>("eventPRO", eventPRO),
+  create: (eventPRO: EventPROSchema) =>
+    requests.post<EventPROData>("eventPRO", eventPRO),
 };
-
 
 const Contacts = {
   getAll: (params: URLSearchParams) =>
@@ -171,10 +182,11 @@ const Losts = {
   getById: (id: string) => requests.get<LostData>(`lost/${id}`),
   create: (lost: LostSchema) => requests.post<LostData>("lost", lost),
   delete: (id: string) => requests.del<string>(`lost/${id}`),
-  setStatusInProcess: (id: string) =>
-    requests.put<string>(`lost/${id}/status/in-process`, {}),
-  setStatusCompleted: (id: string) =>
-    requests.put<string>(`lost/${id}/status/completed`, {}),
+  setStatusInProcess: (id: string, data: { remark: string }) =>
+    requests.put<string>(`lost/${id}/status/in-process`, data),
+
+  setStatusCompleted: (id: string, data: { remark: string }) =>
+    requests.put<string>(`lost/${id}/status/completed`, data),
 };
 const Complaints = {
   getAll: (params: URLSearchParams) =>
@@ -191,12 +203,17 @@ const Complaints = {
     requests.put<string>(`complaint/${id}/status/completed`, {}),
 };
 
-
 const Clients = {
   getAll: (params: URLSearchParams) =>
-    axios.get<PagedResponse<ClientData[]>>("client", { params }).then(responseBody),
+    axios
+      .get<PagedResponse<ClientData[]>>("client", { params })
+      .then(responseBody),
   getById: (id: string) => requests.get<ClientData>(`client/${id}`),
-  create: (client: { name: string; passportNumber: string; bookingId?: string | undefined; }) => requests.post<ClientData>("client", client),
+  create: (client: {
+    name: string;
+    passportNumber: string;
+    bookingId?: string | undefined;
+  }) => requests.post<ClientData>("client", client),
   delete: (id: string) => requests.del<string>(`client/${id}`),
   setStatusInProcess: (id: string) =>
     requests.put<string>(`client/${id}/status/in-process`, {}),
@@ -206,12 +223,9 @@ const Clients = {
     requests.put<string>(`client/${id}/status/accepted`, {}),
   uploadImage: (formData: FormData) =>
     axios.post<string>("client/upload-image", formData).then(responseBody),
-  sendEmail: (body: { email: string, files: FileResponseData[] }) =>
+  sendEmail: (body: { email: string; files: FileResponseData[] }) =>
     axios.post<string>("client/send-email", body).then(responseBody),
 };
-
-
-
 
 const Categories = {
   getAll: (params: URLSearchParams) =>
@@ -260,7 +274,8 @@ const Payment = {
   initiate: (data: FormData) => requests.post("payment/initiate-payment", data),
   callback: (data: FormData) => requests.post("payment/payment-callback", data),
   getById: (id: string) => requests.get(`payment/${id}`),
-  processGooglePayPayment: (paymentData: any) => requests.post(`payment/google-pay`,paymentData),
+  processGooglePayPayment: (paymentData: any) =>
+    requests.post(`payment/google-pay`, paymentData),
 };
 // Helper function to ensure the time is in the correct format (HH:mm)
 
@@ -272,7 +287,7 @@ const Bookings = {
   getById: (id: string) => requests.get<BookingDetailsData>(`booking/${id}`),
   getAvailableSlots: (date: string) =>
     requests.get<string[]>(`booking/available-slots/${date}`),
-  create: (booking: BookingSchema|DocumentBookingSchema) =>
+  create: (booking: BookingSchema | DocumentBookingSchema) =>
     requests.post<BookingData>("booking", booking),
   delete: (id: string) => requests.del<string>(`booking/${id}`),
   uploadImage: (formData: FormData) =>
@@ -287,16 +302,13 @@ const Bookings = {
   // Updated status methods
   setStatusInProcess: (id: string) =>
     requests.put<string>(`booking/${id}/status/in-process`, {}),
-  setStatusCanceled: (id: string,reason:CanceledReason) =>
+  setStatusCanceled: (id: string, reason: CanceledReason) =>
     requests.put<string>(`booking/${id}/status/canceled`, reason),
   setStatusCompleted: (id: string) =>
     requests.put<string>(`booking/${id}/status/completed`, {}),
   setStatusPending: (id: string) =>
     requests.put<string>(`booking/${id}/status/pending`, {}),
 };
-
-
-
 
 const Account = {
   current: () => requests.get<User>("account"),
@@ -312,8 +324,8 @@ const Account = {
   delete: (id: string) => requests.del(`account/${id}`),
   update: (id: string, userDto: RegisterForUpdateSchema) =>
     requests.put<string>(`account/${id}`, userDto),
-  getById:(id:string)=>requests.get<UserIdAndName>(`account/GetUserById/${id}`),
-
+  getById: (id: string) =>
+    requests.get<UserIdAndName>(`account/GetUserById/${id}`),
 };
 
 const AiHelper = {
@@ -408,7 +420,6 @@ const agent = {
   Events,
   EventPROs,
   Testimonials,
-
 };
 
 export default agent;

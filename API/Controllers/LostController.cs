@@ -59,7 +59,7 @@ namespace API.Controllers
                 var errorDetails = ex.InnerException?.Message ?? ex.Message;
                 return BadRequest(new { message = errorDetails });
             }
-        
+
         }
 
         [HttpDelete("{id}")]
@@ -82,11 +82,11 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/in-process")]
-        public async Task<IActionResult> SetLostStateInProcess(Guid id)
+        public async Task<IActionResult> SetLostStateInProcess(Guid id, [FromBody] LostStatusUpdateDto dto)
         {
             try
             {
-                await _lostService.SetLostStateInProcess(id);
+                await _lostService.SetLostStateInProcess(id, dto.Remark);
                 return Ok("Lost status set to 'In Process'.");
             }
             catch (KeyNotFoundException ex)
@@ -100,11 +100,11 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status/completed")]
-        public async Task<IActionResult> SetLostStateCompleted(Guid id)
+        public async Task<IActionResult> SetLostStateCompleted(Guid id, [FromBody] LostStatusUpdateDto dto)
         {
             try
             {
-                await _lostService.SetLostStateCompleted(id);
+                await _lostService.SetLostStateCompleted(id, dto.Remark);
                 return Ok("Lost status set to 'Completed'.");
             }
             catch (KeyNotFoundException ex)

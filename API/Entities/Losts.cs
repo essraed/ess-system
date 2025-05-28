@@ -13,6 +13,7 @@ namespace API.Entities
         public required string Phone { get; set; }
         public required string Email { get; set; }
         public required string Comments { get; set; }
+        public string? Remarks { get; set; }
         public required string LostDepartment { get; set; }
         public required LostStatus Status { get; set; } = LostStatus.Pending;
         public bool IsDeleted { get; set; } = false;

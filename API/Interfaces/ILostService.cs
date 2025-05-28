@@ -14,7 +14,7 @@ namespace API.Interfaces
         Task<LostDto> GetLostItemByIdAsync(Guid id);
         Task<LostDto> AddLostItemAsync(LostSaveDto lostSaveDto);
         Task DeleteLostItemAsync(Guid id);
-        Task SetLostStateInProcess(Guid id);
-        Task SetLostStateCompleted(Guid id);
+        Task SetLostStateInProcess(Guid id, string remark);
+        Task SetLostStateCompleted(Guid id, string remark);
     }
 }

@@ -105,21 +105,21 @@ const BookingCheckout = () => {
     ? bookings.reduce((sum, x) => sum + (Number(x?.totalPrice) || 0), 0)
     : 0;
 
-  const handleGooglePaySuccess = async (paymentData: any) => {
-    console.log("data to check", paymentData);
-    // // Send payment data to your API for processing (backend)
-    // try {
-    //   const response = await paymentStore.processGooglePayPayment(paymentData);
-    //   if (response?.status === "success") {
-    //     toast.success("Payment successful!");
-    //     await handleConfirmBooking();
-    //   } else {
-    //     toast.error("Payment processing failed.");
-    //   }
-    // } catch (error) {
-    //   toast.error("Error processing payment.");
-    // }
-  };
+  // const handleGooglePaySuccess = async (paymentData: any) => {
+  //   console.log("data to check", paymentData);
+  //   // // Send payment data to your API for processing (backend)
+  //   // try {
+  //   //   const response = await paymentStore.processGooglePayPayment(paymentData);
+  //   //   if (response?.status === "success") {
+  //   //     toast.success("Payment successful!");
+  //   //     await handleConfirmBooking();
+  //   //   } else {
+  //   //     toast.error("Payment processing failed.");
+  //   //   }
+  //   // } catch (error) {
+  //   //   toast.error("Error processing payment.");
+  //   // }
+  // };
 
   return (
     <>
@@ -246,7 +246,7 @@ const BookingCheckout = () => {
                         Online Payment
                       </span>
                     </label>
-                    <div className="flex justify-center py-4 px-9 w-full lg:w-auto border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100">
+                    {/* <div className="flex justify-center py-4 px-9 w-full lg:w-auto border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100">
                       <GooglePayButton
                         environment="TEST"
                         buttonColor="white"
@@ -288,7 +288,7 @@ const BookingCheckout = () => {
                         onLoadPaymentData={handleGooglePaySuccess}
                         className="w-full lg:w-auto"
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ) : (

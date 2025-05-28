@@ -40,6 +40,7 @@ const LostList = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [remark, setRemark] = useState<string>("");
 
   const handleGetNext = (page: number) => {
     setPagingParams(new PagingParams(page, pageSize));
@@ -65,6 +66,7 @@ const LostList = () => {
     if (selectedId) {
       await deleteLostItem(selectedId);
       loadLostItems();
+      setRemark("");
       navigate(location.pathname, { replace: true });
     }
   };
@@ -99,15 +101,18 @@ const LostList = () => {
 
   const handleComplete = async () => {
     if (selectedId) {
-      await setStatusCompleted(selectedId);
+      await setStatusCompleted(selectedId, remark);
       loadLostItems();
+      setRemark("");
       navigate(location.pathname, { replace: true });
     }
   };
+
   const handleInProcess = async () => {
     if (selectedId) {
-      await setStatusInProcess(selectedId);
+      await setStatusInProcess(selectedId, remark);
       loadLostItems();
+      setRemark("");
       navigate(location.pathname, { replace: true });
     }
   };
@@ -126,9 +131,7 @@ const LostList = () => {
               setSearchQuery={setSearchQuery}
               handleSearch={handleSearch}
               handleReset={handleReset}
-            >
-              {/* Add Category Form as a child */}
-            </TableFilterBar>
+            />
 
             {/* Table */}
             <div className="flex flex-col card-body">
@@ -145,6 +148,7 @@ const LostList = () => {
                     "phone",
                     "Email",
                     "updatedBy",
+                    "remarks"
                   ]}
                   data={lostItems!}
                   pageSize={pageSize}
@@ -163,30 +167,37 @@ const LostList = () => {
         </div>
       </div>
 
-      {/* Confirm Dialog */}
+      {/* Confirm Dialog - Delete */}
       <ConfirmDialog
         modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title={t("Confirm Delete")}
-        description={`${t("Are you sure you want to delete this")} ${t(
-          "Lost Item"
-        )}${t("?")}`}
+        description={`${t("Are you sure you want to delete this")} ${t("Lost Item")}${t("?")}`}
       />
 
-      {/* Category Details */}
+      {/* Lost Item Details Modal */}
       <LostDetails modalId={all_routes.lostDashboard} />
 
+      {/* Confirm Dialog - Complete */}
       <ConfirmDialog
         modalId={dialogFlags.completeDialog}
         onConfirm={handleComplete}
         title="Confirm Setting As Completed"
         description="Are you sure you want to set this Lost as completed?"
+        withRemark
+        remark={remark}
+        setRemark={setRemark}
       />
+
+      {/* Confirm Dialog - In Process */}
       <ConfirmDialog
         modalId={dialogFlags.inProocess}
         onConfirm={handleInProcess}
         title="Confirm Setting As InProcess"
         description="Are you sure you want to set this Lost as InProcess?"
+        withRemark
+        remark={remark}
+        setRemark={setRemark}
       />
     </div>
   );

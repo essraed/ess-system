@@ -82,12 +82,13 @@ public class LostService : ILostService
 
 
 
-    public async Task SetLostStateInProcess(Guid id)
+    public async Task SetLostStateInProcess(Guid id, string remark)
     {
         var lost = await _context.Losts.FindAsync(id);
         if (lost == null) throw new KeyNotFoundException($"Lost with id {id} not found.");
 
         lost.Status = LostStatus.InProcess;
+        lost.Remarks = remark;
         lost.UpdatedById = GetCurrentUserId();
         lost.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
@@ -95,12 +96,13 @@ public class LostService : ILostService
         if (!result) throw new Exception("Failed to change Lost status to 'InProcess'.");
     }
 
-    public async Task SetLostStateCompleted(Guid id)
+    public async Task SetLostStateCompleted(Guid id, string remark)
     {
         var lost = await _context.Losts.FindAsync(id);
         if (lost == null) throw new KeyNotFoundException($"Lost with id {id} not found.");
 
         lost.Status = LostStatus.Completed;
+        lost.Remarks = remark;
         lost.UpdatedById = GetCurrentUserId();
         lost.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
@@ -165,7 +167,7 @@ public class LostService : ILostService
                         </small>
                     </p>";
 
-                string coordinatorEmail = "inquiry@ess.ae"; 
+                string coordinatorEmail = "inquiry@ess.ae";
                 await _emailService.SendEmailAsync(coordinatorEmail, "New Lost Item Report", coordinatorBody);
             }
             catch (Exception ex)

@@ -11,6 +11,7 @@ export interface LostData {
   phone: string;
   email: string;
   comments:string;
+  remarks?:string|null;
   lostDepartment: string;
   status: lostStatus;
   lostDate: string;

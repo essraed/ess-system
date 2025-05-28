@@ -647,7 +647,7 @@ const Header = () => {
                   </li>
                 </ul>
                 <ul className="hidden lg:block">
-                  {isAdmin() && (
+                  {!isMarketUser() && (
                     <li
                       className={
                         location.pathname === routes.notificationDropdown

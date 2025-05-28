@@ -77,6 +77,14 @@ const LostDetails = ({ modalId }: Props) => {
                       <StatusBadge status={currentLostItem.status.toString()} />
                     </div>
                   )}
+                 {currentLostItem?.remarks && (
+                    <div>
+                      <p className="font-medium text-gray-700">Remarks:</p>
+                      <p className="text-gray-600 break-words">
+                        {currentLostItem.remarks}
+                      </p>
+                    </div>
+                  )}
                   {currentLostItem?.lostDate && (
                     <div>
                       <p className="font-medium text-gray-700">Lost Date:</p>
