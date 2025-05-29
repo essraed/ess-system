@@ -7,7 +7,7 @@ const CookiePolicy = () => {
   return (
     <div className="main-wrapper">
       <Header />
-      <Breadcrumbs title="Cookie Policy" subtitle="Pages" />
+      {/* <Breadcrumbs title="Cookie Policy" subtitle="Pages" /> */}
       <section className="bg-gray-50 py-10">
         <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="bg-white shadow-md rounded-xl p-8">

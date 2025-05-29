@@ -77,7 +77,7 @@ const Faq = () => {
   return (
     <div className="main-wrapper">
     <Header/>
-    <Breadcrumbs title="Faq" subtitle="Pages" />
+    {/* <Breadcrumbs title="Faq" subtitle="Pages" /> */}
     <div className="max-w-3xl mx-auto px-4 py-10">
       <h2 className="text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
       <div className="space-y-4">

@@ -7,9 +7,9 @@ const CarDashboard = () => {
   return (
     <>
       {/* // table filters */}
-      <div className="listing-page">
+      {/* <div className="listing-page">
         <Breadcrumbs title="Cars" subtitle="Listings" />
-      </div>
+      </div> */}
 
       {/* Car Grid View */}
       <section className="section car-listing pt-0">

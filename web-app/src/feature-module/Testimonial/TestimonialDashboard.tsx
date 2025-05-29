@@ -8,7 +8,7 @@ const TestimonialDashboard = () => {
     <>
       {/* // table filters */}
       <div className="listing-page">
-        <Breadcrumbs title="Testimonials" subtitle="Listings" />
+        {/* <Breadcrumbs title="Testimonials" subtitle="Listings" /> */}
       </div>
 
       {/* Car Grid View */}

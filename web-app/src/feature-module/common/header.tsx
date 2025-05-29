@@ -562,24 +562,22 @@ const Header = () => {
                             {t("Blog List")}
                           </Link>
                         </li>
-                          <li
-                            className={
-                              locationPathname === routes.testimonialsDashboard
-                                ? "active"
-                                : ""
+                        <li
+                          className={
+                            locationPathname === routes.testimonialsDashboard
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Link
+                            to={routes.testimonialsDashboard}
+                            onClick={() =>
+                              setLocationPathname(routes.testimonialsDashboard)
                             }
                           >
-                            <Link
-                              to={routes.testimonialsDashboard}
-                              onClick={() =>
-                                setLocationPathname(
-                                  routes.testimonialsDashboard
-                                )
-                              }
-                            >
-                              {t("Testimonial List")}
-                            </Link>
-                          </li>
+                            {t("Testimonial List")}
+                          </Link>
+                        </li>
                       </ul>
                     </li>
                   )}
@@ -645,7 +643,74 @@ const Header = () => {
                   >
                     <Link to={routes.testimonials}>{t("Reviews")}</Link>
                   </li>
+                  <div className="lg:hidden">
+                    <ul className="main-nav">
+                      <li
+                        className={
+                          location.pathname === all_routes.PrivacyPolicy
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={all_routes.PrivacyPolicy}>
+                          {t("Privacy Policy")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          location.pathname === all_routes.Faq ? "active" : ""
+                        }
+                      >
+                        <Link to={all_routes.Faq}>{t("Faq")}</Link>
+                      </li>
+                      <li
+                        className={
+                          location.pathname === all_routes.ReturnPolicy
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={all_routes.ReturnPolicy}>
+                          {t("Return Policy")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          location.pathname === all_routes.TermsAndConditions
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={all_routes.TermsAndConditions}>
+                          {t("Terms & Conditions")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          location.pathname === all_routes.CookiePolicy
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={all_routes.CookiePolicy}>
+                          {t("Cookie Policy")}
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          location.pathname === all_routes.Disclaimer
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <Link to={all_routes.Disclaimer}>
+                          {t("Disclaimer")}
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </ul>
+
                 <ul className="hidden lg:block">
                   {!isMarketUser() && (
                     <li

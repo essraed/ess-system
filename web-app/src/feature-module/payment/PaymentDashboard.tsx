@@ -9,7 +9,7 @@ const PaymentDashboard = () => {
     <>
     {/* // table filters */}
     <div className="listing-page">
-      <Breadcrumbs title="Payments" subtitle="Listings" />
+      {/* <Breadcrumbs title="Payments" subtitle="Listings" /> */}
 
       {/* Search */}
       <PaymentFilter/>

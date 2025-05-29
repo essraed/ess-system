@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="main-wrapper">
       <Header />
-      <Breadcrumbs title="Privacy Policy" subtitle="Pages" />
+      {/* <Breadcrumbs title="Privacy Policy" subtitle="Pages" /> */}
 
       <div className="section privacy-section">
         <div className="container">

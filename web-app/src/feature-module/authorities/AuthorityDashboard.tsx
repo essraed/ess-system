@@ -6,9 +6,9 @@ const AuthorityDashboard = () => {
   return (
     <>
       {/* // table filters */}
-      <div className="listing-page">
+      {/* <div className="listing-page">
         <Breadcrumbs title="Authorities" subtitle="Listings" />
-      </div>
+      </div> */}
 
       {/* Car Grid View */}
       <section className="section car-listing pt-0">
