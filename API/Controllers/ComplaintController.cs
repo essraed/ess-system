@@ -81,12 +81,13 @@ namespace API.Controllers
             }
         }
 
+        
         [HttpPut("{id}/status/in-process")]
-        public async Task<IActionResult> SetComplaintStateInProcess(Guid id)
+        public async Task<IActionResult> SetComplaintStateInProcess(Guid id, [FromBody] LostStatusUpdateDto dto)
         {
             try
             {
-                await _complaintService.SetComplaintStateInProcess(id);
+                await _complaintService.SetComplaintStateInProcess(id, dto.Remark);
                 return Ok("Complaint status set to 'In Process'.");
             }
             catch (KeyNotFoundException ex)
@@ -95,9 +96,10 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred while updating Complaint status: {ex.Message}");
+                return BadRequest($"An error occurred while updating Lost status: {ex.Message}");
             }
         }
+
 
         [HttpPut("{id}/status/completed")]
         public async Task<IActionResult> SetComplaintStateCompleted(Guid id)

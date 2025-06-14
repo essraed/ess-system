@@ -75,20 +75,30 @@ const LetterList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+  if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearDocuments();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized)  {
       clearDocuments();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadDocuments();
     }
-  }, [userStore.token, loadDocuments]);
+  }, [userStore.appLoaded,userStore.token, loadDocuments]);
 
   if (!documents) return <LoadingSpinner />;
 

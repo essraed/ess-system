@@ -75,14 +75,27 @@ const CategoryDashboardList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+    const token = userStore.token;
+
+    if (!token || !userStore.user) {
+      clearCategories();
+      navigate("/login");
+      toast.error("Unauthorized");
+      return;
+    }
+
+    const isAuthorized = userStore.isAdmin() || userStore.isUser();
+
+    if (!isAuthorized) {
       clearCategories();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadCategories();
     }
-  }, [userStore.token, loadCategories]);
+  }, [userStore.appLoaded,userStore.token, loadCategories]);
 
   if (!Array.isArray(categories)) return <LoadingSpinner />;
 

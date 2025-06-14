@@ -15,6 +15,7 @@ namespace API.Interfaces
         Task<LostDto> AddLostItemAsync(LostSaveDto lostSaveDto);
         Task DeleteLostItemAsync(Guid id);
         Task SetLostStateInProcess(Guid id, string remark);
-        Task SetLostStateCompleted(Guid id, string remark);
+        Task SetLosttateCompleted(Guid id);
+        Task<string> UploadImage(FileUploadNewDto model);
     }
 }

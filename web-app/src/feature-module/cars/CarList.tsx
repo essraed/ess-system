@@ -77,14 +77,30 @@ const CarList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearCars();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized)  {
       clearCars();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadCars();
     }
-  }, [userStore.token, loadCars]);
+  }, [userStore.appLoaded,userStore.token, loadCars]);
 
   if (!cars) return <LoadingSpinner />;
 

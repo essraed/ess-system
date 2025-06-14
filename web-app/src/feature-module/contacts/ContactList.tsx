@@ -74,20 +74,30 @@ const ContactList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+    const token = userStore.token;
+
+    if (!token || !userStore.user) {
+      clearContacts();
+      navigate("/login");
+      toast.error("Unauthorized");
+      return;
+    } // wait until user is populated
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized) {
       clearContacts();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadContact();
     }
-  }, [userStore.token, loadContact]);
+  }, [userStore.appLoaded,userStore.token, loadContact]);
 
   if (!Array.isArray(contacts)) return <LoadingSpinner />;
 

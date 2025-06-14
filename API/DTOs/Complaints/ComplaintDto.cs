@@ -13,6 +13,7 @@ namespace API.DTOs.LostDto
         public required string Phone { get; set; }
         public required string Email { get; set; }
         public required string Department { get; set; }
+        public string? Remarks { get; set; }
         public required string Comments { get; set; }
         public required ComplaintStatus Status { get; set; }
         public bool IsComplaint { get; set; }

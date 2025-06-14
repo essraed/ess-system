@@ -14,6 +14,7 @@ import { dialogFlags } from "../../constants/constants";
 import TableFilterBar from "../common/TableFilterBar";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BlogForm from "./BlogForm";
+import UserStore from "../../app/stores/userStore";
 
 const BlogList = () => {
   const { t } = useTranslation();
@@ -76,13 +77,23 @@ const BlogList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isMarketUser()
-      )
-    ) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearBlogs();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isMarketUser();
+
+    if (!isAuthorized) {
       console.log("Hi");
       clearBlogs();
       navigate("/login");
@@ -91,7 +102,7 @@ const BlogList = () => {
       loadBlogs();
       console.log("I'm here");
     }
-  }, [userStore.token, loadBlogs]);
+  }, [userStore.appLoaded,userStore.token, loadBlogs]);
 
   if (!blogs) return <LoadingSpinner />;
 

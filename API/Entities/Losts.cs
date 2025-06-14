@@ -24,5 +24,6 @@ namespace API.Entities
         public AppUser? CreatedBy { get; set; }
         public string? UpdatedById { get; set; }
         public AppUser? UpdatedBy { get; set; }
+        public ICollection<FileEntity>? FileEntities { get; set; }
     }
 }

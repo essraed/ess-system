@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Table from "../common/Table";
 import { observer } from "mobx-react-lite";
@@ -24,13 +23,13 @@ const UserList = () => {
       setPagingParams,
       pagination,
       setSearchTerm,
-      deleteUser
+      deleteUser,
     },
     userStore,
   } = useStore();
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [pageSize,  setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(10);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const handleGetNext = (page: number) => {
@@ -68,17 +67,26 @@ const UserList = () => {
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPagingParams(new PagingParams(1, newPageSize));
-    loadUsers(); 
+    loadUsers();
   };
 
   useEffect(() => {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+    const token = userStore.token;
+
+    if (!token || !userStore.user) {
+      navigate("/login");
+      toast.error("Unauthorized");
+      return;
+    }
     if (!userStore.isAdmin()) {
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadUsers();
     }
-  }, [userStore.token, loadUsers]);
+  }, [userStore.appLoaded,userStore.token, loadUsers]);
 
   if (!usersIdName) return <LoadingSpinner />;
 
@@ -104,7 +112,7 @@ const UserList = () => {
                 <Table
                   dialogFlags={dialogFlags}
                   setSelectedId={setDeleteId}
-                  exceptColumns={["id","password"]}
+                  exceptColumns={["id", "password"]}
                   data={usersIdName ?? []}
                   pageSize={pageSize}
                   rowsPerPageOptions={[10, 25, 50]}
@@ -121,7 +129,8 @@ const UserList = () => {
           </div>
         </div>
       </div>
-      <ConfirmDialog modalId={dialogFlags.deleteDialog}
+      <ConfirmDialog
+        modalId={dialogFlags.deleteDialog}
         onConfirm={handleDelete}
         title="Confirm Delete"
         description="Are you sure you want to delete this user?"

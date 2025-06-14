@@ -76,14 +76,27 @@ const ServiceDashboardList = () => {
   };
 
   useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+    const token = userStore.token;
+
+    if (!token || !userStore.user) {
+      clearServices();
+      navigate("/login");
+      toast.error("Unauthorized");
+      return;
+    } // wait until user is populated
+
+    const isAuthorized = userStore.isAdmin() || userStore.isUser();
+
+    if (!isAuthorized) {
       clearServices();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadServices();
     }
-  }, [userStore.token, loadServices]);
+  }, [userStore.appLoaded,userStore.token, loadServices]);
 
   if (!Array.isArray(services)) return <LoadingSpinner />;
 

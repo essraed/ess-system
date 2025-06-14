@@ -14,7 +14,9 @@ namespace API.Mappings
              .ForMember(dest => dest.CreatedBy, opt =>
                     opt.MapFrom(src => src.CreatedBy != null ? src.CreatedBy.DisplayName : null))
                 .ForMember(dest => dest.UpdatedBy, opt =>
-                    opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null));
+                    opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null))
+                    .ForMember(dest => dest.FileEntities, opt => opt.MapFrom(src =>
+                   src.FileEntities));
             CreateMap<LostSaveDto, Lost>();
         }
     }

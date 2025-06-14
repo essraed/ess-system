@@ -58,13 +58,22 @@ const NotificationList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+  if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized)  {
       // clearNotification();
       navigate("/login");
       toast.error("Unauthorized");
@@ -72,7 +81,7 @@ const NotificationList = () => {
       setIsReadParam(null);
       loadNotifications();
     }
-  }, [userStore.token, loadNotifications]);
+  }, [userStore.appLoaded,userStore.token, loadNotifications]);
 
   if (!Array.isArray(notifications)) return <LoadingSpinner />;
 

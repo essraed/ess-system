@@ -41,6 +41,7 @@ const ComplaintList = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [remark, setRemark] = useState<string>("");
 
   const handleGetNext = (page: number) => {
     setPagingParams(new PagingParams(page, pageSize));
@@ -78,13 +79,23 @@ const ComplaintList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearComplaintItems();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized)  {
       clearComplaintItems();
       navigate("/login");
       toast.error("Unauthorized");
@@ -108,8 +119,9 @@ const ComplaintList = () => {
   };
   const handleInProcess = async () => {
     if (selectedId) {
-      await setStatusInProcess(selectedId);
+      await setStatusInProcess(selectedId, remark);
       loadComplaintItems();
+      setRemark("");
       navigate(location.pathname, { replace: true });
     }
   };
@@ -188,7 +200,10 @@ const ComplaintList = () => {
         modalId={dialogFlags.inProocess}
         onConfirm={handleInProcess}
         title="Confirm Setting As InProcess"
-        description="Are you sure you want to set this Complaint as InProcess?"
+        description="Are you sure you want to set this Lost as InProcess?"
+        withRemark
+        remark={remark}
+        setRemark={setRemark}
       />
     </div>
   );

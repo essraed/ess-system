@@ -66,6 +66,23 @@ namespace API.Controllers
             }
         }
 
+
+
+
+        [HttpPost("create-payment-intent")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreatePaymentIntent([FromBody] CreatePaymentIntentDto dto)
+        {
+            try
+            {
+                var clientSecret = await _paymentService.CreatePaymentIntentAsync(dto);
+                return Ok(new { clientSecret });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
         // [HttpPost("google-pay")]
         // public async Task<IActionResult> ProcessGooglePay([FromBody] GooglePayPaymentRequest paymentRequest)
         // {

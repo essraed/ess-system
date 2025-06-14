@@ -125,6 +125,17 @@ export default class LostStore {
     }
   };
 
+  uploadImage = async (formData: FormData): Promise<ActionResult<string>> => {    
+    try {
+      await agent.Losts.uploadImage(formData);
+      await this.loadLostItems()
+      return { status: "success", data: "Category image uploaded successfully" };
+    } catch (error) {
+      console.error("Error uploading Category: ", error);
+      return { status: "error", error: error as string };
+    }
+  };
+
   setStatusInProcess = async (
     id: string,
     remark: string
@@ -138,18 +149,17 @@ export default class LostStore {
     }
   };
 
-  setStatusCompleted = async (
-    id: string,
-    remark: string
-  ): Promise<ActionResult<string>> => {
+  setStatusCompleted = async (id: string): Promise<ActionResult<string>> => {
     try {
-      await agent.Losts.setStatusCompleted(id, { remark });
+      await agent.Losts.setStatusCompleted(id);
       await this.getLostItem(id);
       return { status: "success", data: "Lost status set to 'Completed'." };
     } catch (error) {
+      console.error("Error updating booking status: ", error);
       return { status: "error", error: error as string };
     }
   };
+
 
   setPagingParams = (pagingParams: PagingParams) => {
     this.pagingParams = pagingParams;

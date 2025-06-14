@@ -36,8 +36,21 @@ const WorkingTimeList = () => {
     loadWorkingTimes(); // Reload documents after resetting filters
   };
 
-  useEffect(() => {
-    if (!(userStore.isUser() || userStore.isAdmin())) {
+  useEffect(() => { if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized) {
       clearNotification();
       navigate("/login");
       toast.error("Unauthorized");

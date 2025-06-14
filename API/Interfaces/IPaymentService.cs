@@ -12,6 +12,7 @@ namespace API.Interfaces
         Task<string> InitiatePayment(PaymentSaveDto paymentDto, string IDS);
 
         Task<string> PaymentCallback(PaymentCallbackDto callback);
+        Task<string> CreatePaymentIntentAsync(CreatePaymentIntentDto dto);
 
         // Task<PagedList<PaymentDto>> GetAllPaymentsAsync(PaymentParams paymentParams);
         // Task<PaymentDto> GetPaymentByIdAsync(Guid id);

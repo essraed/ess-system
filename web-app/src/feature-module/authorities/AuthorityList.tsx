@@ -76,20 +76,30 @@ const AuthorityList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+     if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearAuthorities();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized)  {
       clearAuthorities();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadAuthorities();
     }
-  }, [userStore.token, loadAuthorities]);
+  }, [userStore.appLoaded,userStore.token, loadAuthorities]);
 
   if (!authorities) return <LoadingSpinner />;
 

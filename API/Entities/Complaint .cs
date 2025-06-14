@@ -14,8 +14,9 @@ namespace API.Entities
         public required string Email { get; set; }
         public required string Comments { get; set; }
         public required string Department { get; set; }
+        public string? Remarks { get; set; }
         public required ComplaintStatus Status { get; set; } = ComplaintStatus.Pending;
-        public bool IsComplaint{ get; set; } = true;
+        public bool IsComplaint { get; set; } = true;
         public bool IsDeleted { get; set; } = false;
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }

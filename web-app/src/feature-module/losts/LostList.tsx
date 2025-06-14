@@ -78,32 +78,40 @@ const LostList = () => {
   };
 
   useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
+    if (!userStore.appLoaded) return; // Wait until user loading is done
+
+    const token = userStore.token;
+
+    if (!token || !userStore.user) {
+      clearLostItems();
+      navigate("/login");
+      toast.error("Unauthorized");
+      return;
+    } // wait until user is populated
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isUser();
+
+    if (!isAuthorized) {
       clearLostItems();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadLostItems();
     }
-  }, [userStore.token, loadLostItems]);
+  }, [userStore.appLoaded,userStore.token, loadLostItems]);
 
   if (!Array.isArray(lostItems)) return <LoadingSpinner />;
 
   const getViewId = (id: string) => {
     getLostItem(id);
   };
-
   const handleComplete = async () => {
     if (selectedId) {
-      await setStatusCompleted(selectedId, remark);
+      await setStatusCompleted(selectedId);
       loadLostItems();
-      setRemark("");
       navigate(location.pathname, { replace: true });
     }
   };
@@ -148,7 +156,7 @@ const LostList = () => {
                     "phone",
                     "Email",
                     "updatedBy",
-                    "remarks"
+                    "remarks",
                   ]}
                   data={lostItems!}
                   pageSize={pageSize}
@@ -183,10 +191,7 @@ const LostList = () => {
         modalId={dialogFlags.completeDialog}
         onConfirm={handleComplete}
         title="Confirm Setting As Completed"
-        description="Are you sure you want to set this Lost as completed?"
-        withRemark
-        remark={remark}
-        setRemark={setRemark}
+        description="Are you sure you want to set this Complaint as completed?"
       />
 
       {/* Confirm Dialog - In Process */}

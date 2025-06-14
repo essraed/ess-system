@@ -14,7 +14,7 @@ namespace API.Interfaces
         Task<ComplaintDto> GetComplaintItemByIdAsync(Guid id);
         Task<ComplaintDto> AddComplaintItemAsync(ComplaintSaveDto complaintSaveDto);
         Task DeleteComplaintItemAsync(Guid id);
-        Task SetComplaintStateInProcess(Guid id);
+        Task SetComplaintStateInProcess(Guid id, string remark);
         Task SetComplaintStateCompleted(Guid id);
     }
 }

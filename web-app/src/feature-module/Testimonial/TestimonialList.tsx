@@ -76,20 +76,30 @@ const TestimonialList = () => {
   };
 
   useEffect(() => {
-      if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isMarketUser()
-      )
-    ) {
+      if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearTestimonials();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+    const isAuthorized =
+      userStore.isMarketingManager() ||
+      userStore.isAdmin() ||
+      userStore.isMarketUser();
+
+    if (!isAuthorized)  {
       clearTestimonials();
       navigate("/login");
       toast.error("Unauthorized");
     } else {
       loadTestimonials();
     }
-  }, [userStore.token, loadTestimonials]);
+  }, [userStore.appLoaded,userStore.token, loadTestimonials]);
 
   if (!testimonials) return <LoadingSpinner />;
 

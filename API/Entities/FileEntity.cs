@@ -38,6 +38,8 @@ namespace API.Entities
         public Blog? Blog { get; set; }
         public Guid? PostId { get; set; }
         public Post? Post { get; set; }
+        public Guid? LostId { get; set; }
+        public Lost? Lost { get; set; }
     }
 
 }

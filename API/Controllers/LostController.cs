@@ -99,12 +99,28 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id}/status/completed")]
-        public async Task<IActionResult> SetLostStateCompleted(Guid id, [FromBody] LostStatusUpdateDto dto)
+
+
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage([FromForm] FileUploadNewDto model)
         {
             try
             {
-                await _lostService.SetLostStateCompleted(id, dto.Remark);
+                return Ok(await _lostService.UploadImage(model));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred while uploading service image: {ex.Message}");
+            }
+        }
+
+
+        [HttpPut("{id}/status/completed")]
+        public async Task<IActionResult> SetLostStateCompleted(Guid id)
+        {
+            try
+            {
+                await _lostService.SetLosttateCompleted(id);
                 return Ok("Lost status set to 'Completed'.");
             }
             catch (KeyNotFoundException ex)

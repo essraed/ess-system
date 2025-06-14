@@ -1,5 +1,6 @@
 using API.Interfaces;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 
 namespace API.Services
@@ -12,8 +13,8 @@ namespace API.Services
         // private readonly string _smtpUsername = "booking@kbc.center";
         // private readonly string _smtpPassword = "booking@224";
 
-        private readonly string _smtpServer = "ess.ae";
-        private readonly int _smtpPort = 465;
+         private readonly string _smtpServer = "ess.ae";
+        private readonly int _smtpPort = 587;
         private readonly string _smtpUsername = "notifications@ess.ae";
         private readonly string _smtpPassword = "notifications@123";
 
@@ -92,7 +93,7 @@ namespace API.Services
             {
                 try
                 {
-                    await smtpClient.ConnectAsync(_smtpServer, _smtpPort, MailKit.Security.SecureSocketOptions.SslOnConnect);
+                    await smtpClient.ConnectAsync(_smtpServer, _smtpPort, SecureSocketOptions.StartTls);
                     await smtpClient.AuthenticateAsync(_smtpUsername, _smtpPassword);
 
 

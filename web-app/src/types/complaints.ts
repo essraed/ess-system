@@ -10,6 +10,7 @@ export interface ComplaintData {
   phone: string;
   email: string;
   comments: string;
+  remarks?: string | null;
   department: string;
   status: complaintStatus;
   isComplaint?: string | null;

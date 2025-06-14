@@ -7,6 +7,8 @@ import { all_routes } from "../router/all_routes";
 import StatusBadge from "./StatusBadge";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import FileForm from "./FileForm";
+import { IMAGE_SERVER_PATH } from "../../environment";
 
 type Props = {
   data: any[];
@@ -33,7 +35,13 @@ const Table = ({
 }: Props) => {
   const {
     userStore: { isAdmin, isMarketingManager },
+    lostStore: { uploadImage },
   } = useStore();
+
+  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
+
+  
+
 
   // Action functions for icons in individual columns
   const viewAction = (rowData: any) => {
@@ -161,6 +169,10 @@ const Table = ({
     if (setSelectedId) setSelectedId(id);
   };
 
+  const hasLostDateField = data?.some((item) =>
+    Object.prototype.hasOwnProperty.call(item, "lostDate")
+  );
+
   return (
     <DataTable
       className="table datatable p-datatable-sm" // Small size for DataTable
@@ -230,11 +242,45 @@ const Table = ({
                 if (key === "nationalityName") {
                   return rowData[key] ? rowData[key] : "No Data";
                 }
+                if (key === "fileEntities" && hasLostDateField) {
+                  return rowData[key] && rowData[key].length > 0 ? (
+                    <div className="flex gap-2">
+                      {rowData[key].map((file: any, index: number) => (
+                        <a
+                          key={index}
+                          href={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={`${IMAGE_SERVER_PATH}/${file.filePath}`}
+                            alt={`Image ${index + 1}`}
+                            className="w-10 h-10 object-cover rounded shadow hover:scale-110 transition-transform"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  ) : (
+                    "No Data"
+                  );
+                }
+
                 return rowData[key];
               }}
               style={{ fontSize: "0.875rem", padding: "8px" }} // Adjust column font size and padding
             />
           ))}
+
+      {hasLostDateField && (
+        <Column
+          header="Upload File"
+          body={(rowData: any) => (
+            <div className="flex justify-center items-center py-2">
+              <FileForm entityId={rowData.id} uploadImage={uploadImage} />
+            </div>
+          )}
+        />
+      )}
 
       {status && <Column field="status" header="Status" body={status} />}
 

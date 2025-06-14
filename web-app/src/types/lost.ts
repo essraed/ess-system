@@ -1,17 +1,18 @@
-export enum lostStatus {
-    Pending = 0,
-    InProcess = 1,
-    Completed = 2,
-  }
+import { FileResponseData } from "./filesTypes";
 
+export enum lostStatus {
+  Pending = 0,
+  InProcess = 1,
+  Completed = 2,
+}
 
 export interface LostData {
   id: string;
   name: string;
   phone: string;
   email: string;
-  comments:string;
-  remarks?:string|null;
+  comments: string;
+  remarks?: string | null;
   lostDepartment: string;
   status: lostStatus;
   lostDate: string;
@@ -19,4 +20,5 @@ export interface LostData {
   updateDate?: string | null;
   createdBy?: string | null;
   updatedBy?: string | null;
+  fileEntities?: FileResponseData[];
 }

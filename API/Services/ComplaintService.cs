@@ -88,17 +88,18 @@ public class ComplaintService : ICompalintService
 
 
 
-    public async Task SetComplaintStateInProcess(Guid id)
+   public async Task SetComplaintStateInProcess(Guid id, string remark)
     {
         var complaint = await _context.Complaints.FindAsync(id);
-        if (complaint == null) throw new KeyNotFoundException($"Complaint with id {id} not found.");
+        if (complaint == null) throw new KeyNotFoundException($"complaint with id {id} not found.");
 
         complaint.Status = ComplaintStatus.InProcess;
+        complaint.Remarks = remark;
         complaint.UpdatedById = GetCurrentUserId();
         complaint.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         var result = await _context.SaveChangesAsync() > 0;
-        if (!result) throw new Exception("Failed to change Complaint status to 'InProcess'.");
+        if (!result) throw new Exception("Failed to change complaint status to 'InProcess'.");
     }
 
     public async Task SetComplaintStateCompleted(Guid id)

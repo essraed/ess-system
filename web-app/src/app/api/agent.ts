@@ -184,10 +184,13 @@ const Losts = {
   delete: (id: string) => requests.del<string>(`lost/${id}`),
   setStatusInProcess: (id: string, data: { remark: string }) =>
     requests.put<string>(`lost/${id}/status/in-process`, data),
+  uploadImage: (formData: FormData) =>
+    axios.post<string>("lost/upload-image", formData).then(responseBody),
 
-  setStatusCompleted: (id: string, data: { remark: string }) =>
-    requests.put<string>(`lost/${id}/status/completed`, data),
+  setStatusCompleted: (id: string) =>
+    requests.put<string>(`lost/${id}/status/completed`, {}),
 };
+
 const Complaints = {
   getAll: (params: URLSearchParams) =>
     axios
@@ -197,8 +200,8 @@ const Complaints = {
   create: (complaint: ComplaintSchema) =>
     requests.post<ComplaintData>("complaint", complaint),
   delete: (id: string) => requests.del<string>(`complaint/${id}`),
-  setStatusInProcess: (id: string) =>
-    requests.put<string>(`complaint/${id}/status/in-process`, {}),
+  setStatusInProcess: (id: string, data: { remark: string }) =>
+    requests.put<string>(`complaint/${id}/status/in-process`, data),
   setStatusCompleted: (id: string) =>
     requests.put<string>(`complaint/${id}/status/completed`, {}),
 };

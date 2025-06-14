@@ -18,6 +18,8 @@ using AutoMapper.QueryableExtensions;
 using System.Net.Http.Headers;
 using API.DTOs.PaymentDto;
 using System.ComponentModel;
+using Stripe;
+
 
 public class PaymentService : IPaymentService
 {
@@ -105,14 +107,14 @@ public class PaymentService : IPaymentService
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
-            
+
             // this it should be in the booking servicedepend on single Responsible principle     
             await _booking.SetThePaymentIdForBooking(payment.Id, IDS);
         }
         else
         {
             throw new Exception($"Payment URL is missing from the response. Content: {responseContent}");
-            
+
         }
 
         return paymentUrl;
@@ -234,6 +236,45 @@ public class PaymentService : IPaymentService
         {
             throw new Exception($"An error occurred: {ex.Message}");
         }
+    }
+
+    public async Task<string> CreatePaymentIntentAsync(CreatePaymentIntentDto dto)
+    {
+        var options = new PaymentIntentCreateOptions
+        {
+            Amount = dto.Amount,
+            Currency = dto.Currency ?? "usd",
+            AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+            {
+                Enabled = true,
+            },
+            Metadata = new Dictionary<string, string>
+            {
+                { "OrderID", dto.OrderID ?? "" },
+                { "OrderName", dto.OrderName ?? "" }
+            }
+        };
+
+        var service = new PaymentIntentService();
+        var intent = await service.CreateAsync(options);
+
+        var payment = new Payment
+        {
+            Id = Guid.NewGuid(),
+            TransactionAmount = (decimal)dto.Amount / 100m,
+            Currency = dto.Currency,
+            TransactionID = intent.Id,
+            TransactionStatus = intent.Status,
+            Status = "Pending",
+            OrderID = dto.OrderID,
+            OrderName = dto.OrderName,
+            CreateDate = DateTime.UtcNow
+        };
+
+        _context.Payments.Add(payment);
+        await _context.SaveChangesAsync();
+
+        return intent.ClientSecret;
     }
 
     // public async Task<PaymentResult> ProcessGooglePayPayment(GooglePayPaymentData paymentData)

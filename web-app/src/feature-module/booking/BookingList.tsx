@@ -87,21 +87,32 @@ const BookingList = () => {
     loadBookings();
   };
 
-  useEffect(() => {
-    if (
-      !(
-        userStore.isMarketingManager() ||
-        userStore.isAdmin() ||
-        userStore.isUser()
-      )
-    ) {
-      clearBookings();
-      navigate("/login");
-      toast.error("Unauthorized");
-    } else {
-      loadBookings();
-    }
-  }, [userStore.token, loadBookings]);
+ useEffect(() => {
+  if (!userStore.appLoaded) return; // Wait until user loading is done
+
+  const token = userStore.token;
+
+  if (!token || !userStore.user) {
+    clearBookings();
+    navigate("/login");
+    toast.error("Unauthorized");
+    return;
+  }
+
+  const isAuthorized =
+    userStore.isMarketingManager() ||
+    userStore.isAdmin() ||
+    userStore.isUser();
+
+  if (!isAuthorized) {
+    clearBookings();
+    navigate("/login");
+    toast.error("Unauthorized");
+  } else {
+    loadBookings();
+  }
+}, [userStore.appLoaded, userStore.user, loadBookings]);
+
 
   if (!bookings) return <LoadingSpinner />;
 

@@ -60,6 +60,9 @@ const TermsAndConditions = () => {
                       KBC reserves the right to reschedule or cancel
                       appointments due to availability or operational changes.
                     </li>
+                    <li>
+                     All services are subject to applicable taxes in  accordance with goverment regulations.
+                    </li>
                   </ul>
                 </li>
 

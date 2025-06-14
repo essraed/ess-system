@@ -6,8 +6,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using StripeIntegrationDemo.Models;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+DotNetEnv.Env.Load(); // this reads .env
+Stripe.StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("Stripe__SecretKey");
+
 
 // builder.WebHost.UseUrls("http://192.168.7.120:5000");
 
@@ -17,6 +24,9 @@ builder.Services.AddControllers(opt =>
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
+
+
+
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -68,7 +78,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        var logger = loggerFactory.CreateLogger<Program>(); 
+        var logger = loggerFactory.CreateLogger<Program>();
         logger.LogError(ex, "An error occurred during migration");
     }
 }

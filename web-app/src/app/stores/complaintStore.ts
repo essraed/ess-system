@@ -129,13 +129,15 @@ export default class ComplaintStore {
     }
   };
 
-  setStatusInProcess = async (id: string): Promise<ActionResult<string>> => {
+  setStatusInProcess = async (
+    id: string,
+    remark: string
+  ): Promise<ActionResult<string>> => {
     try {
-      await agent.Complaints.setStatusInProcess(id);
+      await agent.Complaints.setStatusInProcess(id, { remark });
       await this.getComplaintItem(id);
       return { status: "success", data: "Complaint status set to 'In Process'." };
     } catch (error) {
-      console.error("Error updating complaint status:", error);
       return { status: "error", error: error as string };
     }
   };

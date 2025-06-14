@@ -5,6 +5,7 @@ using API.Services;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.EntityFrameworkCore;
+using StripeIntegrationDemo.Models;
 using Wkhtmltopdf.NetCore;
 
 namespace API.Extensions
@@ -58,8 +59,8 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(EventProfile).Assembly);
             services.AddAutoMapper(typeof(NationalityProfile).Assembly);
             services.AddAutoMapper(typeof(ClientProfile).Assembly);
-            services.AddAutoMapper(typeof(EventPROProfile).Assembly);         
-            services.AddAutoMapper(typeof(TestimonialProfile).Assembly);         
+            services.AddAutoMapper(typeof(EventPROProfile).Assembly);
+            services.AddAutoMapper(typeof(TestimonialProfile).Assembly);
 
             services.AddHttpClient();
 
@@ -96,6 +97,16 @@ namespace API.Extensions
             services.AddScoped(typeof(IEventPROService), typeof(EventPROService));
             services.AddScoped(typeof(ITestimonialService), typeof(TestimonialService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+            var stripeSettings = new StripeSettings
+            {
+                SecretKey = Environment.GetEnvironmentVariable("Stripe__SecretKey"),
+                PublishableKey = Environment.GetEnvironmentVariable("Stripe__PublishableKey"),
+                WebhookSecret = Environment.GetEnvironmentVariable("Stripe__WebhookSecret")
+            };
+
+            services.AddSingleton(stripeSettings);
+
 
             // Report services
             services.AddWkhtmltopdf("wkhtmltopdf");

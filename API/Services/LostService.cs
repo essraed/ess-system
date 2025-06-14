@@ -22,8 +22,11 @@ public class LostService : ILostService
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LostService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IEmailService emailService)
+    private readonly IFileService _fileService;
+
+    public LostService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IEmailService emailService,IFileService fileService)
     {
+         _fileService = fileService;
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
@@ -37,6 +40,7 @@ public class LostService : ILostService
             .Where(x => !x.IsDeleted)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
+            .Include(x=>x.FileEntities)
             .AsNoTracking()
                         .OrderByDescending(x => x.CreateDate)
             .AsQueryable();
@@ -96,18 +100,17 @@ public class LostService : ILostService
         if (!result) throw new Exception("Failed to change Lost status to 'InProcess'.");
     }
 
-    public async Task SetLostStateCompleted(Guid id, string remark)
+    public async Task SetLosttateCompleted(Guid id)
     {
         var lost = await _context.Losts.FindAsync(id);
-        if (lost == null) throw new KeyNotFoundException($"Lost with id {id} not found.");
+        if (lost == null) throw new KeyNotFoundException($"Losts with id {id} not found.");
 
         lost.Status = LostStatus.Completed;
-        lost.Remarks = remark;
         lost.UpdatedById = GetCurrentUserId();
         lost.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
         var result = await _context.SaveChangesAsync() > 0;
-        if (!result) throw new Exception("Failed to change Lost status to 'Completed'.");
+        if (!result) throw new Exception("Failed to change Lost laint status to 'Completed'.");
     }
 
 
@@ -181,6 +184,137 @@ public class LostService : ILostService
         {
             throw new Exception("An error occurred while saving the lost item.");
         }
+    }
+
+
+
+    public async Task<string> UploadImage(FileUploadNewDto model)
+    {
+        var lost = await _context.Losts
+            .Include(x => x.FileEntities)
+            .FirstOrDefaultAsync(x => x.Id == model.EntityId);
+
+        if (lost == null) return null!;
+
+        // Case 1: Update existing files if they exist
+        if (lost.FileEntities?.Count > 0 && model.number != null)
+        {
+            var fileEntitiesList = lost.FileEntities.ToList();
+
+            if (model.Files.Count == 1 &&
+              int.TryParse(model.number, out var number) &&
+              number > 0 &&
+              lost.FileEntities.Count >= number)
+            {
+                var updatedFile = await _fileService.UpdateFileAsync(
+                fileEntitiesList[Convert.ToInt32(model.number) - 1].Id,
+                model.Files[0],
+                model.directory,
+                isImage: true
+            );
+
+                var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                fileEntity.LostId = model.EntityId;
+            }
+            else
+            {
+                for (int i = 0; i < model.Files.Count; i++)
+                {
+                    if (i < fileEntitiesList.Count &&
+              int.TryParse(model.number, out var num) &&
+              num > 0 &&
+              lost.FileEntities?.Count >= num)
+                    {
+
+                        var updatedFile = await _fileService.UpdateFileAsync(
+                                                fileEntitiesList[i].Id,
+                                                model.Files[i],
+                                                model.directory,
+                                                isImage: true
+                                            );
+
+                        // Ensure the lostId is properly set
+                        var fileEntity = await _fileService.GetFileByIdAsync(updatedFile.Id);
+                        fileEntity.LostId = model.EntityId;
+
+
+                    }
+                    else
+                    {
+                        var createdFile = await _fileService.SaveFileEntityAsync(model.Files[0], model.directory, isImage: true);
+                        // Add new file if model.Files has more files than existing FileEntities
+                        var newFileEntity = new FileEntity
+                        {
+                            Id = createdFile.Id,
+                            FileName = createdFile.FileName ?? "",
+                            FilePath = createdFile.FilePath ?? "",
+                            ContentType = createdFile.ContentType ?? "",
+                            Size = createdFile.Size,
+                            LostId = model.EntityId,
+                            CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                            CreatedById = GetCurrentUserId()
+                        };
+
+                        // Check if the entity is already being tracked
+                        var existingEntity = _context.ChangeTracker.Entries<FileEntity>()
+                            .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
+
+                        if (existingEntity != null)
+                        {
+                            // If already tracked, detach the existing instance
+                            _context.Entry(existingEntity.Entity).State = EntityState.Detached;
+                        }
+
+                        // Ensure the new entity is not being tracked before adding
+                        _context.Entry(newFileEntity).State = EntityState.Detached;
+
+                        // Add the new file entity to the lost
+                        lost.FileEntities?.Add(newFileEntity);
+                    }
+
+                }
+            }
+
+
+        }
+        else
+        {
+            // Case 2: Save new files if no existing FileEntities
+            foreach (var file in model.Files)
+            {
+                var createdFile = await _fileService.SaveFileEntityAsync(file, model.directory, isImage: true);
+
+                // Map FileResponseDto to FileEntity
+                var newFileEntity = new FileEntity
+                {
+                    Id = createdFile.Id,
+                    FileName = createdFile.FileName ?? "",
+                    FilePath = createdFile.FilePath ?? "",
+                    ContentType = createdFile.ContentType ?? "",
+                    Size = createdFile.Size,
+                    LostId = model.EntityId,
+                    CreateDate = TimeHelper.GetCurrentTimeInAbuDhabi(),
+                    CreatedById = GetCurrentUserId()
+                };
+
+                // Detach the new entity if already tracked
+                var trackedEntity = _context.ChangeTracker.Entries<FileEntity>()
+                    .FirstOrDefault(e => e.Entity.Id == newFileEntity.Id);
+
+                if (trackedEntity != null)
+                {
+                    _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
+                }
+
+                lost.FileEntities?.Add(newFileEntity);
+            }
+
+        }
+
+        await _context.SaveChangesAsync();
+
+        // Return the path of the first file or a default path
+        return lost.FileEntities?.FirstOrDefault()?.FilePath ?? "assets/img/Amer Services.png";
     }
 
 
