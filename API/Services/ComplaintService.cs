@@ -61,11 +61,11 @@ public class ComplaintService : ICompalintService
             query = query.Where(x => x.Status == complaintParams.ComplaintStatus);
         }
 
-         if (complaintParams.Type != "null")
-            {
-                bool IsComplaint=complaintParams.Type=="true"?true:false;
-                query = query.Where(x => x.IsComplaint ==IsComplaint);
-            }
+        if (complaintParams.Type != "null")
+        {
+            bool IsComplaint = complaintParams.Type == "true" ? true : false;
+            query = query.Where(x => x.IsComplaint == IsComplaint);
+        }
 
         return await PagedList<ComplaintDto>.CreateAsync(
             query.ProjectTo<ComplaintDto>(_mapper.ConfigurationProvider),
@@ -88,13 +88,13 @@ public class ComplaintService : ICompalintService
 
 
 
-   public async Task SetComplaintStateInProcess(Guid id, string remark)
+    public async Task SetComplaintStateInProcess(Guid id, string remark)
     {
         var complaint = await _context.Complaints.FindAsync(id);
         if (complaint == null) throw new KeyNotFoundException($"complaint with id {id} not found.");
 
         complaint.Status = ComplaintStatus.InProcess;
-        complaint.Remarks = remark;
+        complaint.Remarks += $"\n[{DateTime.Now:dd-MM-yyyy HH:mm}] {remark}";
         complaint.UpdatedById = GetCurrentUserId();
         complaint.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 

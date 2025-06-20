@@ -98,14 +98,14 @@ namespace API.Extensions
             services.AddScoped(typeof(ITestimonialService), typeof(TestimonialService));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
-            var stripeSettings = new StripeSettings
-            {
-                SecretKey = Environment.GetEnvironmentVariable("Stripe__SecretKey"),
-                PublishableKey = Environment.GetEnvironmentVariable("Stripe__PublishableKey"),
-                WebhookSecret = Environment.GetEnvironmentVariable("Stripe__WebhookSecret")
-            };
+            // // var stripeSettings = new StripeSettings
+            // // {
+            // //     SecretKey = Environment.GetEnvironmentVariable("Stripe__SecretKey"),
+            // //     PublishableKey = Environment.GetEnvironmentVariable("Stripe__PublishableKey"),
+            // //     WebhookSecret = Environment.GetEnvironmentVariable("Stripe__WebhookSecret")
+            // // };
 
-            services.AddSingleton(stripeSettings);
+            // services.AddSingleton(stripeSettings);
 
 
             // Report services

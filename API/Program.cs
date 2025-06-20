@@ -12,9 +12,10 @@ using StripeIntegrationDemo.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-DotNetEnv.Env.Load(); // this reads .env
-Stripe.StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("Stripe__SecretKey");
+// DotNetEnv.Env.Load(); // this reads .env
+// Stripe.StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("Stripe__SecretKey");
 
+Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // builder.WebHost.UseUrls("http://192.168.7.120:5000");
 

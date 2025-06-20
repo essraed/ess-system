@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using API.DTOs;
-using API.Interfaces;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using API.RequestParams;
-using API.DTOs.PaymentDto;
-using API.Data;
-using Stripe;
-using API.Migrations;
 using Microsoft.EntityFrameworkCore;
-
+using Stripe;
+using API.Data;
+using Microsoft.AspNetCore.Authorization;
+using API.Migrations;
 
 
 [ApiController]
@@ -25,61 +19,88 @@ public class StripeWebhookController : ControllerBase
         _context = context;
     }
 
-   [HttpPost]
-[AllowAnonymous]
-public async Task<IActionResult> Index()
-{
-    var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
-
-    try
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Index()
     {
-        var stripeSignature = Request.Headers["Stripe-Signature"];
-        var secret = Environment.GetEnvironmentVariable("Stripe__WebhookSecret");
+        var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
 
-        if (string.IsNullOrEmpty(stripeSignature) || string.IsNullOrEmpty(secret))
-            return BadRequest(new { error = "Missing Stripe signature or secret." });
-
-        var stripeEvent = EventUtility.ConstructEvent(json, stripeSignature, secret);
-
-        if (stripeEvent.Type == EventTypes.PaymentIntentSucceeded)
+        try
         {
-            var intent = stripeEvent.Data.Object as PaymentIntent;
-            if (intent != null)
+            var stripeSignature = Request.Headers["Stripe-Signature"];
+            var secret = _config["Stripe:WebhookSecret"];
+
+            if (string.IsNullOrEmpty(stripeSignature) || string.IsNullOrEmpty(secret))
+                return BadRequest(new { error = "Missing Stripe signature or secret." });
+
+            var stripeEvent = EventUtility.ConstructEvent(json, stripeSignature, secret);
+
+          switch (stripeEvent.Type)
             {
-                var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == intent.Id);
-                if (payment != null)
-                {
-                    payment.Status = "Completed";
-                    payment.TransactionStatus = intent.Status;
-                    await _context.SaveChangesAsync();
-                }
-            }
-        }
-        else if (stripeEvent.Type == EventTypes.PaymentIntentPaymentFailed)
-        {
-            var intent = stripeEvent.Data.Object as PaymentIntent;
-            if (intent != null)
-            {
-                var payment = await _context.Payments.FirstOrDefaultAsync(p => p.TransactionID == intent.Id);
-                if (payment != null)
-                {
-                    payment.Status = "Failed";
-                    payment.TransactionStatus = intent.Status;
-                    await _context.SaveChangesAsync();
-                }
-            }
-        }
-        else
-        {
-            Console.WriteLine($"Unhandled Stripe event type: {stripeEvent.Type}");
-        }
+                case "payment_intent.created":
+                case "payment_intent.payment_failed":
+                case "payment_intent.succeeded":
+                    var intent = stripeEvent.Data.Object as PaymentIntent;
+                    if (intent != null)
+                    {
+                        var payment = await _context.Payments
+                            .FirstOrDefaultAsync(p => p.TransactionID == intent.Id);
 
-        return Ok();
+                        if (payment != null)
+                        {
+                            payment.TransactionStatus = intent.Status;
+                            payment.Status = stripeEvent.Type switch
+                            {
+                                "payment_intent.created" => "Created",
+                                "payment_intent.payment_failed" => "Failed",
+                                "payment_intent.succeeded" => "Completed",
+                                _ => payment.Status
+                            };
+
+                            await _context.SaveChangesAsync();
+                            Console.WriteLine($"✔️ PaymentIntent handled: {intent.Id}, status: {intent.Status}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"⚠️ Payment record not found for PaymentIntent: {intent.Id}");
+                        }
+                    }
+                    break;
+
+                case "charge.succeeded":
+                case "charge.updated":
+                    var charge = stripeEvent.Data.Object as Charge;
+                    if (charge != null && charge.PaymentIntentId != null)
+                    {
+                        var payment = await _context.Payments
+                            .FirstOrDefaultAsync(p => p.TransactionID == charge.PaymentIntentId);
+
+                        if (payment != null)
+                        {
+                            payment.TransactionStatus = charge.Status;
+                            payment.Status = stripeEvent.Type == "charge.succeeded" ? "ChargeSucceeded" : "ChargeUpdated";
+                            await _context.SaveChangesAsync();
+                            Console.WriteLine($"💳 Charge event handled: {charge.Id}, status: {charge.Status}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"⚠️ Payment record not found for Charge intent: {charge.PaymentIntentId}");
+                        }
+                    }
+                    break;
+
+                default:
+                    Console.WriteLine($"Unhandled Stripe event type: {stripeEvent.Type}");
+                    break;
+            }
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Webhook error: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
     }
-    catch (Exception ex)
-    {
-        return BadRequest(new { error = ex.Message });
-    }
-}
 
 }

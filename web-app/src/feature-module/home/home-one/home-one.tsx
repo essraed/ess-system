@@ -460,7 +460,7 @@ const HomeOne = () => {
                 </AccordionItemHeading>
                 <AccordionItemPanel>
                   <p>
-                    <h4>DHA Medical Fitness Test </h4>
+                    <h4>DHA Medical Fitness Center For Residents Visa New/Renewal </h4>
                     {t("Monday - Saturday 07:00 AM - 10:00 PM")}
                     <br></br>
                     <br></br>
@@ -477,7 +477,7 @@ const HomeOne = () => {
                     <br></br>
                     {t("Friday - 07:30 AM - 11:00 AM")}
                     <br></br>
-                    {t("Friday - 04:30 AM - 08:00 AM")}
+                    {t("Friday - 04:30 PM - 08:00 PM")}
                     <br></br>
                     <br></br>
                     {t("Saturday & Sunday - Closed")}

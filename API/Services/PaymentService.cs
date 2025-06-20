@@ -257,6 +257,7 @@ public class PaymentService : IPaymentService
 
         var service = new PaymentIntentService();
         var intent = await service.CreateAsync(options);
+        Console.WriteLine("Stripe ClientSecret => " + intent.ClientSecret);
 
         var payment = new Payment
         {

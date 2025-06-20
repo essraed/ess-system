@@ -24,9 +24,9 @@ public class LostService : ILostService
 
     private readonly IFileService _fileService;
 
-    public LostService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IEmailService emailService,IFileService fileService)
+    public LostService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IFileService fileService)
     {
-         _fileService = fileService;
+        _fileService = fileService;
         _context = context;
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;
@@ -40,7 +40,7 @@ public class LostService : ILostService
             .Where(x => !x.IsDeleted)
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
-            .Include(x=>x.FileEntities)
+            .Include(x => x.FileEntities)
             .AsNoTracking()
                         .OrderByDescending(x => x.CreateDate)
             .AsQueryable();
@@ -92,7 +92,7 @@ public class LostService : ILostService
         if (lost == null) throw new KeyNotFoundException($"Lost with id {id} not found.");
 
         lost.Status = LostStatus.InProcess;
-        lost.Remarks = remark;
+        lost.Remarks += $"\n[{DateTime.Now:dd-MM-yyyy HH:mm}] {remark}";
         lost.UpdatedById = GetCurrentUserId();
         lost.UpdateDate = TimeHelper.GetCurrentTimeInAbuDhabi();
 
@@ -121,6 +121,7 @@ public class LostService : ILostService
         lostItem.CreateDate = DateTime.UtcNow;
 
         _context.Losts.Add(lostItem);
+        
         var result = await _context.SaveChangesAsync() > 0;
 
         if (result)

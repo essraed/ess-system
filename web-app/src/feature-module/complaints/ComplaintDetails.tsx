@@ -4,6 +4,7 @@ import { useStore } from "../../app/stores/store";
 import { Divider } from "@nextui-org/react";
 import { observer } from "mobx-react-lite";
 import StatusBadge from "../common/StatusBadge";
+import { formatDateTime } from "../../lib/utils";
 
 interface Props {
   modalId: string;
@@ -75,6 +76,14 @@ const ComplaintDetails = ({ modalId }: Props) => {
                     <div>
                       <p className="font-medium text-gray-700">Status:</p>
                       <StatusBadge status={currentComplaint.status.toString()} />
+                    </div>
+                  )}
+                   {currentComplaint?.remarks && (
+                    <div>
+                      <p className="font-medium text-gray-700">Remarks:</p>
+                      <p className="text-gray-600 break-words whitespace-pre-line">
+                        {currentComplaint.remarks}
+                      </p>
                     </div>
                   )}
                   {currentComplaint?.isComplaint? (
