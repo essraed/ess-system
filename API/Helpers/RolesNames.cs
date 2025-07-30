@@ -6,5 +6,6 @@ namespace API.Helpers
         public static string ADMIN = "ADMIN";
         public static string MARKETUSER= "MARKET";
         public static string MARKETIGNMANAGER= "MARKETIGNMANAGER";
+        public static string CUSTOMER= "CUSTOMER";
     }
 }

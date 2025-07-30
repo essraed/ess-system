@@ -1,4 +1,4 @@
-namespace StripeIntegrationDemo.Models
+    namespace StripeIntegrationDemo.Models
 {
     public class StripeSettings
     {

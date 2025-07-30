@@ -23,11 +23,14 @@ namespace API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
 
-        public AccountController(UserManager<AppUser> userManager, IMapper mapper,
+
+        public AccountController(UserManager<AppUser> userManager, IMapper mapper, IEmailService emailService,
             IAuthService authService)
         {
+            _emailService = emailService;
             _userManager = userManager;
             _authService = authService;
             _mapper = mapper;
@@ -52,7 +55,7 @@ namespace API.Controllers
             return BadRequest("Invalid Email or password");
         }
 
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> RegisterWithEmailAsync(RegisterDto model)
         {
@@ -78,19 +81,19 @@ namespace API.Controllers
                 // {
                 //     await _userManager.AddToRoleAsync(user, model.Role);
                 // }
-                if(model.Role==RolesNames.USER)
+                if (model.Role == RolesNames.USER)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.USER);
                 }
-                else if(model.Role==RolesNames.MARKETUSER)
+                else if (model.Role == RolesNames.MARKETUSER)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.MARKETUSER);
                 }
-                else if(model.Role==RolesNames.ADMIN)
+                else if (model.Role == RolesNames.ADMIN)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.ADMIN);
                 }
-                else if(model.Role==RolesNames.MARKETIGNMANAGER)
+                else if (model.Role == RolesNames.MARKETIGNMANAGER)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.MARKETIGNMANAGER);
                 }
@@ -102,8 +105,69 @@ namespace API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [HttpPost("register-with-otp")]
+        public async Task<ActionResult<UserDto>> RegisterWithEmailUsingOtpAsync([FromBody] RegisterDtoByEmail model)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
 
-        [Authorize(Roles ="ADMIN")]
+            var otpPassword = OTP.GenerateOtp(); // New OTP every time
+
+            if (user == null)
+            {
+                user = new AppUser
+                {
+                    DisplayName = model.DisplayName,
+                    Email = model.Email,
+                    UserName = model.Email.Split('@')[0],
+                };
+
+                var createResult = await _userManager.CreateAsync(user, otpPassword);
+                if (!createResult.Succeeded)
+                    return BadRequest(createResult.Errors);
+            }
+            else
+            {
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resetResult = await _userManager.ResetPasswordAsync(user, resetToken, otpPassword);
+                if (!resetResult.Succeeded)
+                    return BadRequest(resetResult.Errors);
+            }
+
+            // Assign role if not already assigned
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles.Count == 0)
+            {
+                var role = RolesNames.CUSTOMER;
+                await _userManager.AddToRoleAsync(user, role);
+            }
+
+            // Send OTP via email
+            string otp = OTP.GenerateOtp(); // e.g., "123456"
+
+            string otpBody = $@"
+                        <p>Dear Customer,</p>
+                        <p>Your one-time password (OTP) has been generated. Please use the code below to log in:</p>
+
+                        <h2 style='color: #28a745; font-size: 24px;'>{otp}</h2>
+
+                        <p>This code is valid for a limited time and should not be shared with anyone.</p>
+                        <p>Best regards,<br/>KBC Team</p>
+
+                        <p style='margin-top: 30px; font-size: 12px; color: #888;'>
+                            <small>This email was sent on {DateTime.Now:dd-MM-yyyy hh:mm tt}.</small>
+                        </p>
+                    ";
+
+            // Send the email
+            await _emailService.SendEmailAsync(user.Email, "Your One-Time Password (OTP)", otpBody);
+
+            roles = await _userManager.GetRolesAsync(user); // refresh roles
+            return await CreateUserObject(user, roles);
+        }
+
+
+
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UserIdAndNameDto userDto)
         {
@@ -145,7 +209,7 @@ namespace API.Controllers
         }
 
 
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeactivateUser(string Id)
         {
@@ -190,7 +254,7 @@ namespace API.Controllers
             };
         }
 
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("getUsersIdAndName")]
         public async Task<ActionResult<PagedList<UserIdAndNameDto>>> GetUsersIdAndName([FromQuery] UserParams userParams)
         {
@@ -214,7 +278,7 @@ namespace API.Controllers
         }
 
 
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("GetUserById/{id}")]
         public async Task<ActionResult<UserIdAndNameDto>> GetUSerById(Guid id)
         {

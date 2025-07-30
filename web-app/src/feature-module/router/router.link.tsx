@@ -58,8 +58,8 @@ import FamilyAttachments from "../Prices/FamilyAttachments";
 import FamilyAttachmentsArabic from "../Prices/FamilyAttachmentsArabic";
 import CompanyProfile from "../Prices/CompanyProfile";
 import Gallery from "../gallery/gallery";
-import TestimonialsViewList from "../testimonial/TestimonialsViewList";
-import TestimonialDashboard from "../testimonial/TestimonialDashboard";
+import TestimonialsViewList from "../Testimonial/TestimonialsViewList";
+import TestimonialDashboard from "../Testimonial/TestimonialDashboard";
 
 
 

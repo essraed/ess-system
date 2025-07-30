@@ -18,15 +18,16 @@ const BlogDetails = () => {
     loadBlogs();
   }, [loadBlogs]);
 
-  if(!blogs?.length){
-    return (<>
-    <Header/>
-      <div className="text-center py-10">
-      <h2 className="text-xl font-semibold mt-4">No Blogs Yet</h2>
-    </div>
-    <Footer/>
-    </>)
-  
+  if (!blogs?.length) {
+    return (
+      <>
+        <Header />
+        <div className="text-center py-10">
+          <h2 className="text-xl font-semibold mt-4">No Blogs Yet</h2>
+        </div>
+        <Footer />
+      </>
+    );
   }
 
   return (
@@ -40,7 +41,9 @@ const BlogDetails = () => {
               key={index}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 relative"
             >
-              {userStore.isMarketUser() && (
+              {(userStore.isMarketUser() ||
+                userStore.isAdmin() ||
+                userStore.isMarketingManager()) && (
                 <div className="absolute top-2 right-2 z-10">
                   <FileForm
                     entityId={blog.id}
@@ -49,26 +52,26 @@ const BlogDetails = () => {
                 </div>
               )}
               {blog.fileEntities && blog.fileEntities.length > 0 ? (
-               <div className="w-">
-               <ImageWithBasePath
-                 lazyLoad={true}
-                 src={
-                   !blog.fileEntities[0]?.filePath
-                     ? "assets/img/Amer Services.png"
-                     : blog.fileEntities[0].filePath
-                 }
-                 alt={blog.blogTitle ?? "Blog"}
-                 className="w-full h-auto object-contain"
-               />
-             </div>
+                <div className="w-">
+                  <ImageWithBasePath
+                    lazyLoad={true}
+                    src={
+                      !blog.fileEntities[0]?.filePath
+                        ? "assets/img/Amer Services.png"
+                        : blog.fileEntities[0].filePath
+                    }
+                    alt={blog.blogTitle ?? "Blog"}
+                    className="w-full h-auto object-contain"
+                  />
+                </div>
               ) : (
                 <div className="w-full">
-                <ImageWithBasePath
-                  lazyLoad={true}
-                  src="assets/img/Amer Services.png"
-                  alt={blog.blogTitle ?? "Blog"}
-                  className="w-full h-auto object-contain"
-                />
+                  <ImageWithBasePath
+                    lazyLoad={true}
+                    src="assets/img/Amer Services.png"
+                    alt={blog.blogTitle ?? "Blog"}
+                    className="w-full h-auto object-contain"
+                  />
                 </div>
               )}
               <div className="p-4">

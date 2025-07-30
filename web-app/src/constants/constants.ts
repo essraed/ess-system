@@ -39,6 +39,8 @@ export const fileOptions = [
   { label: "Passport Size Photo", value: "Passport Size Photo" },
   { label: "Copy Of Passport & UAE Residency Of a Relative", value: "Copy Of Passport & UAE Residency Of a Relative" },
   { label: "Fly Tickets & Hotel Booking" , value: "Fly Tickets & Hotel Booking" },
+  { label: "GCC Residency (If applicable)" , value: "GCC Residency (If applicable)" },
+
 ];
 
 export const lostDepartments = [

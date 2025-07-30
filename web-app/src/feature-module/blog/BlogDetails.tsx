@@ -20,7 +20,7 @@ const BlogDetailsById = () => {
   }, [id, getBlog]);
 
   if (!currentBlog?.posts) {
-    return <LoadingSpinner/>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -73,22 +73,21 @@ const BlogDetailsById = () => {
               >
                 {/* Case 1: Title includes "center" → show image centered */}
                 {isCenterTitle ? (
-                 <div className="relative w-[400px] h-[300px]">
-                 <ImageWithBasePath
-                   src={imageSrc}
-                   alt={imageName}
-                   className="w-full h-full object-cover rounded-xl"
-                 />
-                 <div className="absolute bottom-4 right-4 bg-white bg-opacity-80 p-2 rounded shadow">
-                   <FileForm
-                     entityId={post.id}
-                     uploadImage={(formData) =>
-                       uploadImageForPost(formData, post.id)
-                     }
-                   />
-                 </div>
-               </div>
-               
+                  <div className="relative w-[400px] h-[300px]">
+                    <ImageWithBasePath
+                      src={imageSrc}
+                      alt={imageName}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                    <div className="absolute bottom-4 right-4 bg-red-500 bg-opacity-80 p-2 rounded shadow">
+                      <FileForm
+                        entityId={post.id}
+                        uploadImage={(formData) =>
+                          uploadImageForPost(formData, post.id)
+                        }
+                      />
+                    </div>
+                  </div>
                 ) : !hasImage ? (
                   // Case 2: No image → show content centered
                   <div className="flex flex-col items-center justify-center text-center w-full h-full px-6 space-y-4 bg-white">
@@ -114,15 +113,18 @@ const BlogDetailsById = () => {
                         ))}
                       </div>
                     )}
-
-                    {userStore.isMarketUser() && (
-                      <FileForm
-                        entityId={post.id}
-                        uploadImage={(formData) =>
-                          uploadImageForPost(formData, post.id)
-                        }
-                      />
-                    )}
+                    <div className="absolute bg-red-500 bg-opacity-80 p-2 rounded shadow">
+                      {(userStore.isMarketUser() ||
+                        userStore.isAdmin() ||
+                        userStore.isMarketingManager()) && (
+                        <FileForm
+                          entityId={post.id}
+                          uploadImage={(formData) =>
+                            uploadImageForPost(formData, post.id)
+                          }
+                        />
+                      )}
+                    </div>
                   </div>
                 ) : (
                   // Case 3: Image + content in row layout
@@ -148,6 +150,7 @@ const BlogDetailsById = () => {
                       </p>
 
                       {/* Post Sections */}
+
                       {post.postSections && post.postSections.length > 0 && (
                         <div className="mt-1 space-y-4 border-t pt-4">
                           {post.postSections.map((section) => (
@@ -163,14 +166,18 @@ const BlogDetailsById = () => {
                         </div>
                       )}
 
-                      {userStore.isMarketUser() && (
-                        <FileForm
-                          entityId={post.id}
-                          uploadImage={(formData) =>
-                            uploadImageForPost(formData, post.id)
-                          }
-                        />
-                      )}
+                      <div className="absolute bottom-4 right-4 bg-red-500 bg-opacity-80 p-2 rounded shadow">
+                        {(userStore.isMarketUser() ||
+                          userStore.isAdmin() ||
+                          userStore.isMarketingManager()) && (
+                          <FileForm
+                            entityId={post.id}
+                            uploadImage={(formData) =>
+                              uploadImageForPost(formData, post.id)
+                            }
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
