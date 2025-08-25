@@ -17,6 +17,9 @@ namespace API.Entities
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy { get; set; }
 
+        public string? UpdatedById { get; set; }
+        public AppUser? UpdatedBy { get; set; }
+
         public bool IsDeleted { get; set; } = false;
 
         public ICollection<FileEntity>? FileEntities { get; set; }

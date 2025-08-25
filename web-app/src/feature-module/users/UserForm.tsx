@@ -24,13 +24,13 @@ const UserForm = () => {
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onTouched",
-    defaultValues:{
-      role:"USER",
-    }
+    defaultValues: {
+      role: "USER",
+    },
   });
 
   const onSubmit = async (data: RegisterSchema) => {
-    console.log("UserData",data);
+    console.log("UserData", data);
     const result = await userStore.register(data);
 
     if (result.status === "success") {
@@ -111,6 +111,8 @@ const UserForm = () => {
                       <option value="MARKET">Market</option>
                       <option value="ADMIN">Admin</option>
                       <option value="MARKETIGNMANAGER">MARKETIGNMANAGER</option>
+                      <option value="CASHIER">CASHIER</option>
+                      <option value="AIRPORTCASHIER">AIRPORTCASHIER</option>
                     </select>
                     {errors.role && (
                       <span className="text-red-500 text-sm">
