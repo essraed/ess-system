@@ -7,5 +7,7 @@ namespace API.Helpers
         public static string MARKETUSER= "MARKET";
         public static string MARKETIGNMANAGER= "MARKETIGNMANAGER";
         public static string CUSTOMER= "CUSTOMER";
+        public static string CASHIER= "CASHIER";
+        public static string AIRPORTCASHIER= "AIRPORTCASHIER";
     }
 }

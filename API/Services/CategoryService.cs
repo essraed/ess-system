@@ -38,6 +38,7 @@ public class CategoryService : ICategoryService
         .Include(x => x.CreatedBy)
         .Include(x => x.FileEntities)
         .Where(x => !x.IsDeleted)
+        .Where(x => !x.IsUber)
         .AsNoTracking()
                 .AsQueryable();
 

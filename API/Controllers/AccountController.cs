@@ -85,6 +85,14 @@ namespace API.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.USER);
                 }
+                if (model.Role == RolesNames.AIRPORTCASHIER)
+                {
+                    await _userManager.AddToRoleAsync(user, RolesNames.AIRPORTCASHIER);
+                }
+                if (model.Role == RolesNames.CASHIER)
+                {
+                    await _userManager.AddToRoleAsync(user, RolesNames.CASHIER);
+                }
                 else if (model.Role == RolesNames.MARKETUSER)
                 {
                     await _userManager.AddToRoleAsync(user, RolesNames.MARKETUSER);

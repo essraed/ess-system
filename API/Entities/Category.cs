@@ -20,6 +20,7 @@ namespace API.Entities
         public string? CreatedById { get; set; }
         public AppUser? CreatedBy {get; set; }
         public bool IsDeleted {get; set; } = false;
+        public bool IsUber {get; set; } = false;
 
         // related tables
         public ICollection<Service>? Services { get; set; }

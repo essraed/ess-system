@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Checkbox, Input } from "@nextui-org/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,8 +8,10 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
-import { categorySchema, CategorySchema } from "../../lib/schemas/categorySchema";
-
+import {
+  categorySchema,
+  CategorySchema,
+} from "../../lib/schemas/categorySchema";
 
 const CategoryForm = () => {
   const { categoryStore, userStore } = useStore();
@@ -43,7 +45,6 @@ const CategoryForm = () => {
       console.error("Submission error:", error);
     }
   };
-  
 
   return (
     <>
@@ -85,28 +86,21 @@ const CategoryForm = () => {
                   variant="bordered"
                   {...register("name")}
                   isInvalid={!!errors?.name}
-                  errorMessage={
-                    errors?.name?.message ? errors.name.message : ""
-                  }
+                  errorMessage={errors?.name?.message ?? ""}
                 />
+
                 <Input
                   className="my-3"
                   label={t("Category Description")}
                   variant="bordered"
                   {...register("description")}
                   isInvalid={!!errors?.description}
-                  errorMessage={
-                    errors?.description?.message ? errors.description.message : ""
-                  }
+                  errorMessage={errors?.description?.message ?? ""}
                 />
 
-                {/* <Input
-                  className="my-3 "
-                  label={t("Category Picture")}
-                  variant="bordered"
-                  type="file"
-                  onChange={handleFileChange}
-                /> */}
+                <Checkbox className="my-3" {...register("isUber")}>
+                  {t("Is Uber Category?")}
+                </Checkbox>
 
                 <div className="modal-btn" onClick={handleSubmit(onSubmit)}>
                   <Link to="#" className="btn btn-secondary w-100">

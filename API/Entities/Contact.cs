@@ -14,6 +14,8 @@ namespace API.Entities
         public string? LicenseType { get; set; }
         public bool? Ejari { get; set; }
         public bool? LocalAgent { get; set; }
+        public string? UpdatedById { get; set; }
+        public AppUser? UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
 
         [DisplayFormat(
