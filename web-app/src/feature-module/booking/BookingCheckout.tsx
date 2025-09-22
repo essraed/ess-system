@@ -53,7 +53,13 @@ const BookingCheckout = () => {
         (sum, x) => sum + (Number(x.totalPrice) || 0),
         0
       );
-      formData.append("TransactionAmount", totalAmount.toString());
+      let finalAmount = totalAmount + totalAmount * 0.03; // Add 3%
+
+      // ✅ If you need to round to 2 decimals (recommended for money):
+      finalAmount = finalAmount.toFixed(2);
+
+      formData.append("TransactionAmount", finalAmount.toString());
+
       const serviceNames = bookings.map((x) => x.serviceName).join(", ");
       const bookingIds = bookings.map((x) => x.id).join(" , ");
 
@@ -229,7 +235,7 @@ const BookingCheckout = () => {
                     {/* Online Payment with Etisalat Icon */}
                     <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 w-full lg:w-auto">
                       <img
-                        src="/assets/img/etisalatLogo.gif" 
+                        src="/assets/img/etisalatLogo.gif"
                         alt="Etisalat"
                         className="w-8 h-8"
                       />{" "}

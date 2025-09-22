@@ -29,7 +29,10 @@ public class ServiceService : IServiceService
     public async Task<PagedList<ServiceDto>> GetAllServicesAsync(ServiceParams serviceParams)
     {
         var query = _context.Services
-            .Where(x => !x.IsDeleted)
+        .Where(x => !x.IsDeleted &&
+                       (!x.Category!.IsUber
+    && x.Category.Name != "Visit Visa"
+    && x.Category.Name != "Pick & Drop"))
             .Include(x => x.CreatedBy)
             .Include(x => x.UpdatedBy)
             .Include(x => x.ServiceOptions)
@@ -125,10 +128,10 @@ public class ServiceService : IServiceService
 
                 for (int i = 0; i < model.Files.Count; i++)
                 {
-                   if (i < fileEntitiesList.Count &&
-                        int.TryParse(model.number, out var num) &&
-                        num > 0 &&
-                        service?.FileEntities?.Count >= num)
+                    if (i < fileEntitiesList.Count &&
+                         int.TryParse(model.number, out var num) &&
+                         num > 0 &&
+                         service?.FileEntities?.Count >= num)
                     {
 
                         var updatedFile = await _fileService.UpdateFileAsync(

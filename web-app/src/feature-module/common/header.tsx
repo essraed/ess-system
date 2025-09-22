@@ -223,6 +223,9 @@ const Header = () => {
                     >
                       {categories?.map((item, index) => {
                         const servicePath = `/services/${item.name.replace(/\s+/g, "-")}/${item.id}`;
+                        const isSpecialCategory =
+                          item.name === "Visit Visa" ||
+                          item.name === "Pick & Drop";
 
                         return (
                           <li
@@ -231,12 +234,28 @@ const Header = () => {
                               locationPathname === servicePath ? "active" : ""
                             }
                           >
-                            <Link
-                              to={servicePath}
-                              onClick={() => setLocationPathname(servicePath)}
-                            >
-                              {item.name}
-                            </Link>
+                            {isSpecialCategory ? (
+                              <Link
+                                to="#"
+                                onClick={(e) => {
+                                  e.preventDefault(); // prevent default navigation
+                                  window.open(
+                                    "https://uberevisa.com",
+                                    "_blank"
+                                  );
+                                }}
+                                className="cursor-pointer"
+                              >
+                                {item.name}
+                              </Link>
+                            ) : (
+                              <Link
+                                to={servicePath}
+                                onClick={() => setLocationPathname(servicePath)}
+                              >
+                                {item.name}
+                              </Link>
+                            )}
                           </li>
                         );
                       })}
@@ -712,7 +731,7 @@ const Header = () => {
                 </ul>
 
                 <ul className="hidden lg:block">
-                   {(isUser() || isAdmin() || isMarketingManager()) &&(
+                  {(isUser() || isAdmin() || isMarketingManager()) && (
                     <li
                       className={
                         location.pathname === routes.notificationDropdown
