@@ -475,10 +475,8 @@ const HomeOne = () => {
 
               <div>
                 <h4 className="font-bold text-[#0f8992]">{t("OHC")}</h4>
-                <p>{t("Monday - Thursday 07:30 AM - 08:00 PM")}</p>
-                <p>{t("Friday - 07:30 AM - 11:00 AM")}</p>
-                <p>{t("Friday - 04:30 PM - 08:00 PM")}</p>
-                <p>{t("Saturday & Sunday - Closed")}</p>
+                <p>{t("Monday - Saturday 07:00 AM - 03:30 PM")}</p>
+                <p>{t("Sunday - Closed")}</p>
               </div>
 
               <div>

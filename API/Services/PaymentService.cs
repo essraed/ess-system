@@ -19,6 +19,7 @@ using System.Net.Http.Headers;
 using API.DTOs.PaymentDto;
 using System.ComponentModel;
 using Stripe;
+using DotNetEnv;
 
 
 public class PaymentService : IPaymentService
@@ -240,6 +241,9 @@ public class PaymentService : IPaymentService
 
     public async Task<string> CreatePaymentIntentAsync(CreatePaymentIntentDto dto)
     {
+
+        StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("Stripe__SecretKey");
+
         var options = new PaymentIntentCreateOptions
         {
             Amount = dto.Amount,

@@ -26,6 +26,7 @@ export const contactData = [
     icon: "feather icon-clock",
     title: "Opening Hours",
     link: "#;",
-    text: `Monday - Thursday 7:00 AM -10:00 PM `,
+    text: `Monday - Saturday 7:00 AM -10:00 PM
+           Sunday 8:00 AM -8:00 PM  `,
   },
 ];
